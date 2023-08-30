@@ -1,4 +1,4 @@
-CLASS Integer EXTENDS AbstractInteger MODULE Core CLASSVARS '' VARS 'js'
+CLASS Integer EXTENDS AbstractInteger MODULE Core CLASSVARS '' VARS ''
 	"Instance variable 'js' contains a JS number that should be an integer."
 
 CLASSMETHODS
