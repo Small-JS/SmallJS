@@ -26,7 +26,7 @@ To install all the prerequisites, look at:
 >[./Documentation/Installing.md](./Documentation/Installing.md)
 
 For a first impression of SmallJS, you can start the Browser test project, see:
->[./Browser/README.md](./Browser/Browser.md)
+>[./Browser/Browser.md](./Browser/Browser.md)
 
 The complete documentation is indexed here:
->[./Documentation/README.md](./Documentation/Documentation.md)
+>[./Documentation/Documentation.md](./Documentation/Documentation.md)
