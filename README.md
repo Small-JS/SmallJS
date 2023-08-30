@@ -16,6 +16,10 @@ JS libraries already encapsulated in ST are:
 - Node.js: HTTP server, Express, 3 databases.
 - And an Example webshop client + server app template.
 
+# Example
+
+![./Documentation/SmallJS.png](./Documentation/IntegerClass.png)
+
 # Getting started
 
 SmallJS is currently set-up for use with Visual Studio Code, but other IDEs could be added.
