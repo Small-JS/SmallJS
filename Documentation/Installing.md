@@ -8,7 +8,8 @@ Download the latest version here:
 > [code.visualstudio.com/download](https://code.visualstudio.com/download)
 
 ### SmallJS langage extension for Visual Studio Code
-In the folder ./Extension run the script:
+This VSCode extension provides syntax coloring and step debugging for the Smalltalk language.
+To install it, in the folder ./Extension run the script:
 > `deploy.sh`
 
 ### GIT
