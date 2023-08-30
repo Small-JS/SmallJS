@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "Smalltalk",
+			"path": "../Smalltalk"
+		},
+		{
+			"name": "Node",
+			"path": "."
+		},
+		{
+			"name": "Database",
+			"path": "../Database"
+		},
+		{
+			"name": "Documentation",
+			"path": "../Documentation"
+		}
+	],
+	"settings": {}
+}

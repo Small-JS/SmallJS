@@ -1,0 +1,81 @@
+@import "Test/Import.css";
+
+body {
+	background-color: #B4E5EA;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: medium;
+}
+
+#welcomeTitle {
+	font-family: sans-serif;
+	font-size: X-Large;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.fieldsetAutoWidth {
+	display: inline-block;
+}
+
+fieldset legend {
+	float: none;
+	font-weight: bold;
+}
+
+table {
+	border: 2px solid gray;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+caption {
+	line-height: 200%;
+	font-size: Large;
+	display: table-caption;
+	text-align: center;
+  }
+
+.tableHeader {
+	border-color: grey;
+	border-bottom: 2px solid grey;
+	background-color: darkred; color: white;
+}
+
+table th + th {
+	border-left: 2px solid grey;
+}
+
+table td + td {
+	border-left: 2px solid grey;
+}
+
+table th + td {
+	border-left: 2px solid grey;
+}
+
+th, td {
+	text-align: left;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+td {
+	border: 0px solid black;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.field {
+	font-weight: bold;
+	font-size: medium;
+}
+
+.italicBold {
+	font-style: italic;
+	font-weight: bold;
+}
+

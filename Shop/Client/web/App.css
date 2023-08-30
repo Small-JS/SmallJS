@@ -1,0 +1,29 @@
+﻿
+body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#titleMessage {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	background-color: lightblue;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 1px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 400px;
+	box-shadow: 10px 10px 5px;
+}
+

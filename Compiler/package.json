@@ -1,0 +1,7 @@
+{
+	"type": "module",
+	"dependencies": {
+		"@types/node": "^20.5.7",
+		"source-map": "^0.7.4"
+	}
+}

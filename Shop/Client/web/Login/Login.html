@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shop login</title>
+    <link rel="stylesheet" href="Login.css" type="text/css" />
+	<script type="module">
+		import { stShopLogin$class } from "../Smalltalk/ShopClient.js";
+		stShopLogin$class.$new().$start();
+	</script>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<img id="shopLogo" src="../ShopLogo.png" alt="Shop logo" width="128" height="128"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p id="titleMessage">Welcome to the Shop</p>
+				<p id="pleaseLoginMessage">Please login:</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="loginTable">
+					<tr>
+						<td>
+							<label id="userNameLabel" class="loginLabel" for="userNameTextBox">User name</label>
+						</td>
+						<td>
+							<input id="userNameTextBox"  class="loginTextBox" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label id="passwordLabel" class="loginLabel" for="passwordTextBox">Password</label>
+						</td>
+						<td>
+							<input id="passwordTextBox" class="loginTextBox" type="password">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="button" id="loginButton">Login</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label id="loginErrorLabel"></label>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

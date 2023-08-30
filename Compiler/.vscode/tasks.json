@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"options": {
+		// Unfortunately, the "envFile" option is not supported here (VSCode 1.74.2)
+		// "envFile": "${workspaceFolder}/../Node/.env"
+		"env": {
+		  "SMALLJS_DATABASE": "postgres://postgres:postgres@localhost:5432/SmallJS"
+		},
+	 },
+	 "tasks": [
+		{
+			"label": "tsc: watch - tsconfig.json",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [ "$tsc-watch" ],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"runOptions": {	"runOn": "folderOpen" }
+		},
+		{
+			"label": "Run Node tests",
+			"type": "shell",
+			"command": "node",
+			"args": [  "out/App.js" ],
+			"options": {
+				"cwd": "${workspaceFolder}/../Node"
+			},
+			"problemMatcher": []
+		}
+	]
+}

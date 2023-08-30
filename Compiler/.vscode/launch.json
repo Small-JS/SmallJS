@@ -1,0 +1,22 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+
+	// This configuration compiles ST for/in the ../Node environment and then runs tests there.
+
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Program",
+			"skipFiles": [ "<node_internals>/**" ],
+			"cwd": "${workspaceFolder}/../Node",
+			"program": "${workspaceFolder}/out/App.js",
+			"args": [ "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
+			"envFile": "${workspaceFolder}/../Node/.env",
+			"postDebugTask": "Run Node tests"
+		}
+	]
+}

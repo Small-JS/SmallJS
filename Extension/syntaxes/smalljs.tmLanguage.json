@@ -1,0 +1,71 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "SmallJS",
+	"patterns": [
+		{ "include": "#strings" },
+		{ "include": "#constants" },
+		{ "include": "#keywords" },
+		{ "include": "#classes" },
+		{ "include": "#methods" },
+		{ "include": "#comments" }
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.smalljs",
+					"match": "\\b(self|super|nil|true|false|CLASS|EXTENDS|MODULE|CLASSVARS|VARS|CLASSMETHODS|METHODS|INLINE|await|async)\\b"
+				},
+				{
+					"name": "keyword.control.smalljs",
+					"match": "\\b(ifTrue|ifFalse|whileTrue)\\b"
+				},
+				{
+					"name": "keyword.control.smalljs",
+					"match": "[\\!\\#\\$\\%\\&\\*\\+\\,\\-\\/\\<\\=\\>\\@\\\\\\\\|\\~\\^\\:]+"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.single.smalljs",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{
+					"name": "constant.character.escape.smalljs",
+					"match": "\\\\."
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{	"name": "constant.character.smalljs",
+					"match": "[$]."
+				},
+				{	"name": "constant.numeric.smalljs",
+					"match": "[.]*\\b[0-9]+\\b"
+				}
+			]
+		},
+		"classes": {
+			"patterns": [
+				{	"name": "entity.name.class.smalljs",
+					"match": "\\b[A-Z][A-Za-z0-9]*\\b"
+				}
+			]
+		},
+		"methods": {
+			"patterns": [
+				{	"name": "entity.name.function.smalljs",
+					"match": "\\b[A-Za-z0-9]+\\b:"
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.smalljs",
+			"begin": "\"",
+			"end": "\""
+		}
+	},
+	"scopeName": "source.smalljs"
+}

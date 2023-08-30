@@ -1,0 +1,56 @@
+CLASS MariadbDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
+	"This class implements MariaDB database functionality.
+	 Variable 'js' will contain an instance of 'Mariadb.Connection'.
+
+	 Note: The method 'end' should be called when you are done with the database connection
+	 	   to free up resources and be able to terminate your app."
+
+INLINE 'import * as Mariadb from "mariadb";'
+
+"Connecting"
+
+connect: connectionString then: block
+	INLINE 'let savedThis = this;
+		Mariadb.createConnection( connectionString.js )
+			.then( function ( connection ) { savedThis.js = connection ; block.$value() } )'.
+!
+threadId
+	self isUndefined ifTrue: [ ^ nil ].
+	^ Integer fromJs: INLINE 'this.js.info.threadId'.
+!
+status
+	self isUndefined ifTrue: [ ^ nil ].
+	^ Integer fromJs: INLINE 'this.js.info.status'.
+!
+
+"Table"
+
+connectTable: name rowClass: rowClass
+	"Create a table connection within this database."
+	^ MariadbTable database: self name: name rowClass: rowClass.
+!
+
+"Querying"
+
+query: query then: block
+	INLINE 'this.js.query( query.js )
+		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )'.
+!
+query: query with: parameters then: block
+	INLINE 'this.js.query( query.js, parameters.$toJs() )
+		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )'.
+!
+onQuery: result then: block
+	"Result is a JsObject containing one of:
+		For INSERT, UPDATE, DELETE: a Mariadb.OkPacket
+		For SELECT: a JS array with result JS objects (rows)."
+
+	result jsClassName = 'OkPacket'
+		ifTrue: [ result := MariadbOkPacket fromJs: result js ]
+		ifFalse: [ result := Object fromJs: result js ].
+
+	block value: result.
+!
+end
+	INLINE 'this.js.end()'.
+!

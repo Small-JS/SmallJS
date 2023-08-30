@@ -1,0 +1,10 @@
+*.js
+*.map
+*.env
+*.lnk
+*.cmd
+**/node_modules
+**/out
+Love/
+Test/
+todo.txt

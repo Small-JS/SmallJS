@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shop login</title>
+    <link rel="stylesheet" href="Product.css" type="text/css" />
+	<script type="module">
+		import { stShopProduct$class } from "../Smalltalk/ShopClient.js";
+	    stShopProduct$class.$new().$start();
+	</script>
+</head>
+
+<body>
+	<link rel="stylesheet" href="../NavBar/NavBar.css" type="text/css" />
+
+	<div id="navBar">
+		<table>
+			<tr>
+				<td>
+					<img id="shopLogo" src="../ShopLogo.png" alt="Shop logo" width="32" height="32"/>
+				</td>
+				<td>
+					<label id="shopMenuLabel">Shop</label>
+				</td>
+				<td>
+					<a href="../Product/Product.html">Products</a>
+				<td>
+					<a href="../Order/Order.html">Orders</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<table id="formTable">
+		<tr>
+			<td>
+				<p id="titleMessage">Products</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="productTable" class="productTableClass">
+					<thead>
+						<tr>
+							<th scope="col">
+								<label id="productNameLabel" class="productTableHeader">Name</label>
+							</th>
+							<th scope="col">
+								<label id="productNameLabel" class="productTableHeader">Price</label>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>
+
+<!-- Resolve <include></include> tags -->
+<script type="module" src="/Tools/Include.js"></script>
+

@@ -1,0 +1,30 @@
+{
+  "name": "smalljs",
+  "displayName": "SmallJS",
+  "description": "SmallJS language support",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "smalljs",
+      "aliases": ["SmallJS", "smalljs"],
+      "extensions": [".st"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "smalljs",
+      "scopeName": "source.smalljs",
+      "path": "./syntaxes/smalljs.tmLanguage.json"
+    }],
+	"breakpoints": [
+		{
+			"language": "smalljs"
+		}
+	]
+  }
+}
