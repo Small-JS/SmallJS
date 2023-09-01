@@ -26,11 +26,35 @@ SmallJS is currently set-up for use with Visual Studio Code, but other IDEs coul
 For the back-end, Node.js is the framework of choice, also using Express.
 Databases Postgres, MariaDB and MySQL are supported out of the box.
 
+## Prerequisites
+
 To install all the prerequisites, look at:
 >[./Documentation/Installing.md](./Documentation/Installing.md)
 
-For a first impression of SmallJS, you can start the Browser test project, see:
+## Compiler
+
+First the compiler needs to be built.
+To do that open this workspace in VSCode: `./Compiler/Compiler.code-workspace` .
+TS to JS compilation should start automatically.
+Maybe you need to install the TS types for Node.js with: `npm install -g typescript@latest`
+To install npm dependencies type `npm install in a terminal`.
+You cannot run the compiler yet, because it's 'unit test' project `./Node` has not been built yet.
+(And `./Node` needs a working compiler, it's a bit of a catch-22 situation)
+
+## Node
+
+Now open this workspace in VSCode: `./Node/Node.code-workspace` .
+To install npm dependencies type `npm install` in a terminal.
+Now run the project and see that unit tests are performed succesfully.
+See more info in:
+> [./Node/Node.md](./Node/Node.md)
+
+## Browser
+
+For a first impression of running SmallJS code in a browser, you can start the Browser test project, see:
 >[./Browser/Browser.md](./Browser/Browser.md)
+
+# Documentation
 
 The complete documentation is indexed here:
 >[./Documentation/Documentation.md](./Documentation/Documentation.md)

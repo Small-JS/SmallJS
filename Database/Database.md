@@ -6,7 +6,7 @@ using MySQL in commercial software requires a payed license.
 
 # Resources
 
-The JS "driver" (client library) for each datatabase is already installed
+The JS "driver" (client library) for each database is already installed
 in the `./Node` and `./Shop/Server` projects.
 
 Here are the download locations for the database server and administration software:
@@ -29,16 +29,16 @@ The these can be installed with their default settings.
 
 # Create the SmallJS database
 
-Start the admin tool of the database of your choice \
-and run the SQL script ./\<database name\>/SmallJS.sql
+Start the admin tool of the database of your choice.
+First create a database called "smalljs".
+Then run the SQL script ./\<database name\>/SmallJS.sql from the admin tool.
 
-How to do this exacly is database dependent. Check the corresponding documentation.
-You will have to manually create a database called "smalljs" first before running the SQL script.
+How to do this exactly is database dependent. Check the corresponding documentation.
 
 # Testing your database
 
-The file **./Node/.env.example** contains exmaple connection strings to the databases.
-Copy the file to **.env**, uncomment the database(s) that you want te use
+The file **./Node/.env.example** contains example connection strings to the databases.
+Copy the file to **.env**, uncomment the database(s) that you want to use
 and set the correct port and credentials for connecting.
 
 Now the unit tests for these databases will be enabled automatically.
@@ -69,7 +69,7 @@ Connecting to a database is done with this line of ST code:
 
 where connectionString is something like:
 
-	'postgres://postgres:password@localhost:5432/MyDatabase'
+	'postgres://postgres:password@localhost:5432/smalljs
 
 For different databases please PostgresDatabase with MariadbDatabase or MysqlDatabase
 
@@ -119,7 +119,7 @@ Delete a product, using its id:
 ## Using a database without ORM
 
 This is done my executing SQL commands directly on the database.
-Note that these are always called queries, even of they contain mutation commands.
+Note that these are always called queries, even if they contain mutation commands.
 
 To query a Postgres table for which there is no SqlObject mapping, you can use:
 

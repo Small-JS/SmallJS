@@ -5,6 +5,7 @@
 *.cmd
 **/node_modules
 **/out
-/Love/
+!/Browser/web/Test/ScriptFunction.js
 /Test/
+/Love/
 todo.txt

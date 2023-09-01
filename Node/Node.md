@@ -1,11 +1,24 @@
 
 # SmallJS Node test project
 
-This project tests the Node.js libraries of SmallJS by running its unit test.
+This project tests the Node.js libraries of SmallJS by running its unit tests.
 Before running the tests, all ST sources are compiled first.
+
+## Getting started
+
+First install npm dependencies by running `npm install` in a terminal.
+Now start the project run the project and see that unit tests are performed successfully.
+
+The file `src/App.ts` (compiled to `out/App.js`) does application startup.
+It dynamically loads the compiled ST class NodeApp from `out/NodeApp.js` and call its start method.
+
+## Database support
 
 These databases are supported: Postgres, MariaDB and MySQL.
 To set them up look here: [../Database/Database.md](../Database/Database.md)
 
-The file `src/App.ts` (compiled to `out/App.js`) does application startup.
-It dynamically loads the compiled ST class NodeApp from `out/NodeApp.js` and call its start method.
+Database support is disabled by default.
+To enable it, copy the file `.env.example` to `.env`
+and uncomment the connection string(s) to the database(s) you want and enter the login credentials for your database server(s).
+
+Now the unit tests of the selected databases will run automatically.

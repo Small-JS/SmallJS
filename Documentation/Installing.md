@@ -7,22 +7,21 @@ To update components, check [Updating](Updating.md)
 Download the latest version here:
 > [code.visualstudio.com/download](https://code.visualstudio.com/download)
 
+### GIT
+Download the latest version here:
+> [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
 ### SmallJS langage extension for Visual Studio Code
 This VSCode extension provides syntax coloring and step debugging for the Smalltalk language.
 To install it, in the folder ./Extension run the script:
 > `deploy.sh`
 
-### GIT
-Download the latest version here:
-> [https://git-scm.com/downloads](https://git-scm.com/downloads)
+Note: Strange behavior in Git Bash on Windows
+The first time run, the working folder will be the Windows\System32. If that is the case exit the script and restart. Then the working folder will be the ./Extension folder.
 
 ### NodeJS
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
-
-### NPM
-Run this command in a terminal:
-> `npm install -g npm@latest`
 
 ### TypeScript
 To install TypeScript globally:
