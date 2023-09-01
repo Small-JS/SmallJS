@@ -5,6 +5,6 @@
 *.cmd
 **/node_modules
 **/out
-Love/
-Test/
+/Love/
+/Test/
 todo.txt
