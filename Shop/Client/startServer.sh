@@ -1,5 +1,6 @@
 #!/bin/bash
 cd ../Server
-export LOVE_PORT=3000
+# Check out ../Server/.env.example for the correct connect string
+SHOP_DATABASE='postgres://postgres:password@localhost:5432/smalljs'
 node out/App.js
 read -p "Press [Enter] to exit: "

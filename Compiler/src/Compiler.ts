@@ -4,6 +4,7 @@ import { CompiledClass } from "./CompiledClass.js";
 
 import { exit } from "process";
 import { SourceNode } from "source-map";
+
 import * as fs from "fs";
 
 export class Compiler
@@ -41,11 +42,21 @@ export class Compiler
 	{
 		console.log( "SmallJS compiling: " + inputFolders.join( ", " ) + " to: " + outputFolder );
 		if( this.noSourceMaps )
-			console.log( 'Source maps will not be generated.' );
+			console.log( 'Source maps will NOT be generated.' );
+
+		this.createOutputFolder( outputFolder );
 
 		this.compileFolders( inputFolders, outputFolder );
 
 		console.log( "Successfully compiled modules: " + this.modules.length + " classes: " + this.classes.length );
+	}
+
+	// Create output folder if it does not exist yet.
+
+	createOutputFolder( outputFolder: string )
+	{
+		if( ! fs.existsSync( outputFolder) )
+			fs.mkdirSync( outputFolder );
 	}
 
 	compileFolders( inputFolders: string[], outputFolder: string )
