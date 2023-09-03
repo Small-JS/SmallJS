@@ -26,35 +26,31 @@ SmallJS is currently set-up for use with Visual Studio Code, but other IDEs coul
 For the back-end, Node.js is the framework of choice, also using Express.
 Databases Postgres, MariaDB and MySQL are supported out of the box.
 
-## Prerequisites
+## Install prerequisites
 
 To install all the prerequisites, look at:
 >[./Documentation/Installing.md](./Documentation/Installing.md)
 
-## Compiler
+## Build SmallJS
 
-First the compiler needs to be built.
-To do that open this workspace in VSCode: `./Compiler/Compiler.code-workspace` .
-TS to JS compilation should start automatically.
-Maybe you need to install the TS types for Node.js with: `npm install -g typescript@latest`
-To install npm dependencies type `npm install in a terminal`.
-You cannot run the compiler yet, because it's 'unit test' project `./Node` has not been built yet.
-(And `./Node` needs a working compiler, it's a bit of a catch-22 situation)
+Run the bash script: `./build.sh`.\
+On Windows the `.sh` extension can be associated with Git Bash.
 
-## Node
+This script:
+- Checks if all prerequisites are available.
+- Builds the Smalltalk `./Compiler`, TS to JS.
+- Builds all other ST projects after installing any NPM packages needed\
+  and runs their unit tests if present.
 
-Now open this workspace in VSCode: `./Node/Node.code-workspace` .
-To install npm dependencies type `npm install` in a terminal.
-Now run the project and see that unit tests are performed succesfully.
-See more info in:
-> [./Node/Node.md](./Node/Node.md)
+Note that browser type ST projects are only compiled, not run or tested.\
+Check if everything builds successfully before going to the next step.
 
-## Browser
+## Browser project
 
 For a first impression of running SmallJS code in a browser, you can start the Browser test project, see:
 >[./Browser/Browser.md](./Browser/Browser.md)
 
 # Documentation
 
-The complete documentation is indexed here:
+The complete documentation is located here:
 >[./Documentation/Documentation.md](./Documentation/Documentation.md)
