@@ -4,9 +4,6 @@ CLASS TestRange EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| document range range2 node1 node2 node3 node4 parent documentFragment element element2 div |
 

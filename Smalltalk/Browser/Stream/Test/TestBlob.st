@@ -1,8 +1,5 @@
 CLASS TestBlob EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| blob |
 	blob := Blob fromArray: ( Uint8Array from: #( 4 5 6 7 ) ).

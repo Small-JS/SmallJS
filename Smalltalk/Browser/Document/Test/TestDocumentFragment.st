@@ -1,8 +1,5 @@
 CLASS TestDocumentFragment EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| documentFragment elementArray |
 	documentFragment := DocumentFragment new.

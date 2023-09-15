@@ -1,8 +1,5 @@
 CLASS TestHtmlScriptElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| script |
 

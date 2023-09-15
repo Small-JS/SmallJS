@@ -1,8 +1,5 @@
 CLASS TestHtmlImageElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| document image |
 

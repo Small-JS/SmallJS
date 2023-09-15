@@ -1,8 +1,5 @@
 CLASS TestDomTokenList EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| paragraph domTokenList |
 

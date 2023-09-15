@@ -1,8 +1,5 @@
 CLASS TestHtmlEmbedElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 testProperties
 	| embed |
 

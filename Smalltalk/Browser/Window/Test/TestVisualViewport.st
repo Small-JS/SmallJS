@@ -2,9 +2,6 @@ CLASS TestVisualViewport EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| visualViewport |
 	visualViewport := Window default visualViewport.

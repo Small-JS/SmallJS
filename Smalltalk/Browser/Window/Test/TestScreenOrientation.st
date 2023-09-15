@@ -2,9 +2,6 @@ CLASS TestScreenOrientation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| screenOrientation |
 	screenOrientation := Window default screen orientation.

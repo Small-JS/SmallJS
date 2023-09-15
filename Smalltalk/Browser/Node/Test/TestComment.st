@@ -2,9 +2,6 @@ CLASS TestComment EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| comment |
 

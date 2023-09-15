@@ -1,8 +1,5 @@
 CLASS TestDocument EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 testProperties
 	| document element |
 	document := Document default.

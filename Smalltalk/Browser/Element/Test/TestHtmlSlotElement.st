@@ -1,8 +1,5 @@
 CLASS TestHtmlSlotElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| slot paragraph |
 	slot := Document default getElementById: 'slot'.

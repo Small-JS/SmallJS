@@ -2,9 +2,6 @@ CLASS TestSelection EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	"Todo: Not all tests are checked with asserts yet."
 	| document selection range selectionInput selectionResultLabel text |

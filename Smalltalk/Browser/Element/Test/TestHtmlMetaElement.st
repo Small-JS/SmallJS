@@ -1,8 +1,5 @@
 CLASS TestHtmlMetaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| meta |
 	meta := Document default createElement: 'meta'.

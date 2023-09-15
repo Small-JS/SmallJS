@@ -4,9 +4,6 @@ CLASS TestCharacterData EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 testProperties
 	| text |
 

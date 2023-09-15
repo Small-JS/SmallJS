@@ -1,8 +1,5 @@
 CLASS TestHtmlTitleElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| title titleSpan titleText |
 	title := Document default getElementById: 'title'.

@@ -1,8 +1,5 @@
 CLASS TestHtmlLabelElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| label checkboxLabel outputLabel |
 

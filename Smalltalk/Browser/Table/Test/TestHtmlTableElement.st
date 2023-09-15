@@ -4,9 +4,6 @@ CLASS TestHtmlTableElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 testTable
 	| table tHead tBody tFoot |
 

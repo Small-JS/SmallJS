@@ -1,8 +1,5 @@
 CLASS TestLocation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 testProperties
 	| location |
 	location := Document default location.

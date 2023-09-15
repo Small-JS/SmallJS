@@ -1,8 +1,5 @@
 CLASS TestClipboard EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| clipboard clipboardReadButton clipboardWriteButton |
 

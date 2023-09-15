@@ -2,9 +2,6 @@ CLASS TestAttr EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| attr |
 

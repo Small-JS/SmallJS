@@ -2,9 +2,6 @@ CLASS TestFile EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 	"Files can only be created (selected) by user action.
 	 These tests are called from TestHtmlInputElement.testFile"
 
-browserOnly
-	^ true.
-!
 onTest: file
 	| outputLabel |
 	self assert: [ file class = File ].

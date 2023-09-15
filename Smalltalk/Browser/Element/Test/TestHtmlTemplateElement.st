@@ -1,8 +1,5 @@
 CLASS TestHtmlTemplateElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| template templateSpan |
 	template := Document default getElementById: 'template'.

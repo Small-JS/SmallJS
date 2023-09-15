@@ -4,9 +4,6 @@ CLASS TestValidityState EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| document fieldSet validityState |
 

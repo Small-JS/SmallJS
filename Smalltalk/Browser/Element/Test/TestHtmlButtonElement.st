@@ -1,9 +1,6 @@
 CLASS TestHtmlButtonElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 	"Form related properties are tested in TestHtmlFormElement."
 
-browserOnly
-	^ true.
-!
 test
 	| button |
 

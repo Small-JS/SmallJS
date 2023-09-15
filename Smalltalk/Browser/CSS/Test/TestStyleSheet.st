@@ -1,8 +1,5 @@
 CLASS TestStyleSheet EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| styleSheet |
 	styleSheet := Document default styleSheets first.

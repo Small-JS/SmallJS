@@ -1,8 +1,5 @@
 CLASS TestCssStyleSheet EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| cssStyleSheet index ruleText |
 

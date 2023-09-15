@@ -1,8 +1,5 @@
 CLASS TestHtmlFormElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| document form formLabel |
 

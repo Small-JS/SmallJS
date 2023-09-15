@@ -2,9 +2,6 @@ CLASS TestScreen EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| screen |
 	screen := Window default screen.

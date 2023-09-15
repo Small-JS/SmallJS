@@ -1,8 +1,5 @@
 CLASS TestHtmlLinkElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| link |
 	link := Document default getElementById: 'link'.

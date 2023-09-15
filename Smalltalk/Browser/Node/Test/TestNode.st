@@ -1,8 +1,5 @@
 CLASS TestNode EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| document node node2 text |
 

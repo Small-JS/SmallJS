@@ -2,9 +2,6 @@ CLASS TestWindow EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 testProperties
 	| window |
 	window := Window default.

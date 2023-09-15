@@ -2,9 +2,6 @@ CLASS TestShadowRoot EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| span shadow paragraph  |
 

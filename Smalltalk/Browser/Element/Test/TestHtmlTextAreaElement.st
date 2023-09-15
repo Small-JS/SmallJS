@@ -1,8 +1,5 @@
 CLASS TestHtmlTextAreaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| textArea defaultValue |
 	textArea := Document default getElementById: 'textArea'.

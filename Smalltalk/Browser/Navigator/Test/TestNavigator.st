@@ -1,8 +1,5 @@
 CLASS TestNavigator EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| navigator |
 

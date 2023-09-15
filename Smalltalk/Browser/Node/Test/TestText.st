@@ -2,9 +2,6 @@ CLASS TestText EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
-browserOnly
-	^ true.
-!
 test
 	| text paragraph |
 

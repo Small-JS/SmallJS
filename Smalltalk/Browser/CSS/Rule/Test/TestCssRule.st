@@ -2,9 +2,6 @@ CLASS TestCssRule EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 "Note: This class tests all the CssRule* classes."
 
-browserOnly
-	^ true.
-!
 testCssRule
 	| cssStyleSheet cssRule |
 

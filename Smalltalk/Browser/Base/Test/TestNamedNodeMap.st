@@ -1,8 +1,5 @@
 CLASS TestNamedNodeMap EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| namedNodeMap attr |
 	namedNodeMap := ( Document default getElementById: 'smallJsLogo' ) attributes.

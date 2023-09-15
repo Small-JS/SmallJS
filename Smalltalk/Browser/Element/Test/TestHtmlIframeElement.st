@@ -1,8 +1,5 @@
 CLASS TestHtmlIframeElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 test
 	| iframe expectedReferrerPolicy |
 

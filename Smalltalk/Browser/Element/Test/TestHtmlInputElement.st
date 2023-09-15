@@ -1,9 +1,6 @@
 CLASS TestHtmlInputElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 	"Form related properties are tested in TestHtmlFormElement."
 
-browserOnly
-	^ true.
-!
 test
 	| input outputLabel outputButton |
 	input := Document default getElementById: 'input'.

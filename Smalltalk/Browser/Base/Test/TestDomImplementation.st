@@ -1,8 +1,5 @@
 CLASS TestDomImplementation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
-browserOnly
-	^ true.
-!
 testCreateDocumentType
 	| documentType |
 	documentType := Document default implementation
