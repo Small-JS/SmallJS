@@ -12,7 +12,7 @@ To check for outdated global NPM packages:
 > `npm outdated -g`
 
 ## TypeScript
-> `npm update -g @typescript`
+> `npm update -g typescript`
 
 ## HTTP server
 > `npm update -g http-server`

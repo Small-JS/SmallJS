@@ -1,4 +1,4 @@
 #!/bin/bash
-# To install: npm install --global http-server
+# Start static web server as Shop Server
+# Use for testing HTML only
 http-server web -c-1 -p 3000
-read -p "Press [Enter] to exit: "
