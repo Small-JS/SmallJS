@@ -17,7 +17,7 @@ Download the latest version here:
 
 ### TypeScript
 To install TypeScript globally:
-> `npm install -g typescript@latest`
+> `npm install -g typescript`
 
 ### HTTP Server
 A static HTTP server is installed globally with this command:

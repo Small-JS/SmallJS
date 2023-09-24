@@ -18,7 +18,7 @@ JS libraries already encapsulated in ST are:
 
 # Example
 
-![./Documentation/SmallJS.png](./Documentation/IntegerClass.png)
+![./Documentation/Example.png](./Documentation/Example.png)
 
 # Getting started
 
@@ -31,14 +31,20 @@ Databases Postgres, MariaDB and MySQL are supported out of the box.
 To install all the prerequisites, look at:
 >[./Documentation/Installing.md](./Documentation/Installing.md)
 
-## Build SmallJS
-
-Run the bash script: `./build.sh`.\
-On Windows the `.sh` extension can be associated with Git Bash.
+Now run the bash script `./install.sh`.
+On Windows, the `.sh` extension can be associated with Git Bash.
 
 This script:
-- Checks if all prerequisites are available.
-- Builds the Smalltalk `./Compiler`, TS to JS.
+- Checks if manually installed prerequisites are present.
+- Installs the SmallJS language extension in VSCode.
+- Installs npm dependencies for all projects.
+
+## Build SmallJS projects
+
+Run the bash script: `./build.sh`.\
+
+This script:
+- First builds the Smalltalk `./Compiler`, TS to JS.
 - Builds all other ST projects after installing any NPM packages needed\
   and runs their unit tests if present.
 
