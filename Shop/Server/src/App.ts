@@ -1,5 +1,5 @@
-// Invoke the start method on a new NodeApp ST object.
+// Invoke the start method on an imported, new ShopServer ST object.
 
-let shopServerModuleName: string = "file://" + process.cwd()  + "/out/ShopServer.js";
+let shopServerModuleName: string = "./ShopServer.js";
 import( shopServerModuleName )
 	.then( module => { module.stShopServer$class.$new().$start(); } );

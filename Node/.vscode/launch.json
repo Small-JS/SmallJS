@@ -12,6 +12,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/out/App.js",
+			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
 			"preLaunchTask": "Compile Smalltalk"
 		}

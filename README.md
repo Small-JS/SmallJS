@@ -6,8 +6,8 @@ SmallJS is a compiler (transpiler) from the Smalltalk (ST) language to JavaScrip
 The generated JS code runs in all modern browsers or in Node.js.
 SmallJS has full syntax support for the simple and elegant Smalltalk-80 language.
 
-SmallJS is file based, not image based, so you can develop in your favorite IDE
-The default setup is for Visual Studio Code, with ST syntax coloring and step debugging!
+SmallJS is file based, not image based, so you can develop in your favorite IDE.
+The default setup is for Visual Studio Code, with ST syntax coloring and step debugging! You code separately from the SmallJS base libraries (image) and only the parts you use are imported automatically when running your app.
 
 SmallJS is *fully* object oriented, so customizable on every level.
 For usability, ST class and method names are kept mostly equal to their familiar JS counterparts.
@@ -44,16 +44,17 @@ This script:
 Run the bash script: `./build.sh`.\
 
 This script:
-- First builds the Smalltalk `./Compiler`, TS to JS.
-- Builds all other ST projects after installing any NPM packages needed\
-  and runs their unit tests if present.
+- First builds the Smalltalk `./Compiler`, compiling TS to JS.
+- Then builds all other ST projects
+- Runs their unit tests if present.
 
 Note that browser type ST projects are only compiled, not run or tested.\
 Check if everything builds successfully before going to the next step.
 
 ## Browser project
 
-For a first impression of running SmallJS code in a browser, you can start the Browser test project, see:
+For a first impression of running SmallJS code in a browser,
+start the Browser test project, see:
 >[./Browser/Browser.md](./Browser/Browser.md)
 
 # Documentation
