@@ -19,7 +19,7 @@
 			"label": "Compile server",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../../Compiler/out/App.js", "../../Smalltalk/Core", "../../Smalltalk/Node", "src", "out" ],
+			"args": [  "../../../Compiler/out/App.js", "../../../Smalltalk/Core", "../../../Smalltalk/Node", "src", "out" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},

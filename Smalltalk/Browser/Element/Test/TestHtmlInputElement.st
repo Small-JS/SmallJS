@@ -165,6 +165,8 @@ testNumber
 	numberInput := Document default getElementById: 'numberInput'.
 	self assert: [ numberInput class = HtmlInputElement ].
 
+	self assert: [ numberInput value = '78' ].
+
 	self assert: [ numberInput min = '1' ].
 	numberInput min: '2'.
 	self assert: [ numberInput min = '2' ].
@@ -209,6 +211,9 @@ testDate
 
 	dateInput value: '1900-01-01'.
 	self assert: [ dateInput value = '1900-01-01' ].
+	self assert: [ dateInput valueAsDate year = 1900 ].
+	self assert: [ dateInput valueAsNumber = -2208988800000 ].
+
 	dateInput stepUp: 2.
 	self assert: [ dateInput value = '1900-01-03' ].
 	dateInput stepDown: 1; stepDown: 1.

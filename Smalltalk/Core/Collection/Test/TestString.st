@@ -4,6 +4,7 @@ testCreation
 	self assert: [ String new = '' ].
 	self assert: [ ( String fromJs: INLINE '"a"' ) = 'a' ].
 	self assert: [ ( String fromCharacter: $A ) = 'A' ].
+	self assert: [ ( String fromCharCode: 66 ) = 'B' ].
 	self assert: [ ( ( String newline ) at: 0 ) code = 10 ].
 	self assert: [ 'a' toString = 'a' ].
 !

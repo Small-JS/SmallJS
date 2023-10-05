@@ -21,9 +21,9 @@
 			"preLaunchTask": "Compile client"
 		},
 		{
-			"name": "Launch Chrome",
+			"name": "Launch Firefox",
 			"request": "launch",
-			"type": "chrome",
+			"type": "firefox",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile client"

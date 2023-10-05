@@ -15,24 +15,7 @@
 
 <body>
 	<link rel="stylesheet" href="../NavBar/NavBar.css" type="text/css" />
-
-	<div id="navBar">
-		<table>
-			<tr>
-				<td>
-					<img id="shopLogo" src="../ShopLogo.png" alt="Shop logo" width="32" height="32"/>
-				</td>
-				<td>
-					<label id="shopMenuLabel">Shop</label>
-				</td>
-				<td>
-					<a href="../Product/Product.html">Products</a>
-				<td>
-					<a href="../Order/Order.html">Orders</a>
-				</td>
-			</tr>
-		</table>
-	</div>
+	<include src="../NavBar/NavBar.html"></include>
 
 	<table id="formTable">
 		<tr>
@@ -65,4 +48,3 @@
 
 <!-- Resolve <include></include> tags -->
 <script type="module" src="/Tools/Include.js"></script>
-

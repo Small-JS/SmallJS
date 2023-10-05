@@ -9,6 +9,9 @@ new
 fromCharacter: character
 	^ self fromJs: INLINE 'String.fromCharCode( character.js )'.
 !
+fromCharCode: code
+	^ self fromJs: INLINE 'String.fromCharCode( code.js )'.
+!
 newline
 	^ self fromCharacter: Character newline.
 !

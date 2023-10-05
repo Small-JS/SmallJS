@@ -52,7 +52,11 @@ fromJs: js
 
 METHODS
 
-"Conversion"
+"Copying"
+
+"TODO"
+
+"Converting"
 
 toJs
 	"Converts self to a JS object.
@@ -71,6 +75,12 @@ toJsObject
 	"Calls toJs and wraps result in a JsObject."
 
 	^ JsObject fromJs: self toJs.
+!
+toString
+	^ 'a ', self class name.
+!
+toLocaleString
+	^ self toString.
 !
 
 "Properties"
@@ -120,15 +130,6 @@ argIsEqualToFloat: float
 !
 argIsEqualToFraction: fraction
 	^ false.
-!
-
-"Converting"
-
-toString
-	^ 'a ', self class name.
-!
-toLocaleString
-	^ self toString.
 !
 
 "Error handling"

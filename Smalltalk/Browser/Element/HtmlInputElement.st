@@ -70,6 +70,15 @@ value
 value: value
 	INLINE 'this.js.value = value.js'.
 !
+valueAsDate
+	^ Date fromJs: INLINE 'this.js.valueAsDate'.
+!
+valueAsNumber
+	"Note: this method converts date/time elements to numbers.
+	 It does *not* convert integers or floats to numbers.
+	 See: https://stackoverflow.com/questions/18062069/why-does-valueasnumber-return-nan-as-a-value"
+	^ Integer fromJs: INLINE 'this.js.valueAsNumber'.
+!
 
 "Validation"
 

@@ -10,7 +10,7 @@ fromJs: jsBigInt
 
 METHODS
 
-"Conversions."
+"Conversion"
 
 toString
 	^ String fromJs: js.

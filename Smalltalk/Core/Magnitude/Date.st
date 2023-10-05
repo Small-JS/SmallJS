@@ -24,37 +24,43 @@ utcYear: year month: month day: day hours: hours minutes: minutes seconds: secon
 
 METHODS
 
-"Conversions."
+"Copying"
+
+copy
+	^ Date fromJs: INLINE 'new Date( this.js )'.
+!
+
+"Conversions"
 
 toString
 	^ String fromJs: INLINE 'this.js.toString()'.
 !
-asDateString
+toDateString
 	^ String fromJs: INLINE 'this.js.toDateString()'.
 !
-asLocaleDateString
+toLocaleDateString
 	^ String fromJs: INLINE 'this.js.toLocaleDateString()'.
 !
-asTimeString
+toTimeString
 	^ String fromJs: INLINE 'this.js.toTimeString()'.
 !
-asLocaleTimeString
+toLocaleTimeString
 	^ String fromJs: INLINE 'this.js.toLocaleTimeString()'.
 !
-asIsoString
+toIsoString
 	^ String fromJs: INLINE 'this.js.toISOString()'.
 !
-asUtcString
+toUtcString
 	^ String fromJs: INLINE 'this.js.toUTCString()'.
 !
-asJson
+toJson
 	^ String fromJs: INLINE 'this.js.toJSON()'.
 !
-asMilliseconds
+toMilliseconds
 	^ Integer fromJs: INLINE 'this.js.getTime()'.
 !
 
-"Accessing local times."
+"Accessing local times"
 
 year
 	^ Integer fromJs: INLINE 'this.js.getFullYear()'.
@@ -102,7 +108,7 @@ milliseconds: milliseconds
 	INLINE 'this.js.setMilliseconds( milliseconds.js )'.
 !
 
-"Accessing UTC times."
+"Accessing UTC times"
 
 utcYear
 	^ Integer fromJs: INLINE 'this.js.getUTCFullYear()'.

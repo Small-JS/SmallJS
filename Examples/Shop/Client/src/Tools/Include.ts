@@ -1,4 +1,4 @@
-// Replace tags <include> scr="<path name>" with referenced HTML
+// Replace tags <include scr="<path name>" with referenced HTML
 
 function loadIncludes()
 {
