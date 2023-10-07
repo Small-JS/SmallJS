@@ -11,14 +11,39 @@ fromJs: jsBool
 
 METHODS
 
-not
-	^ Boolean fromJs: INLINE '! this.js'.
+"Conversion"
+
+toString
+	^ self ifTrue: [ 'true' ] ifFalse: [ 'false' ].
 !
-ifTrue: aBlock
-	^ INLINE '( this.js ? aBlock.$value() : this )'.
+
+"Comparing"
+
+< boolean
+	^ Boolean fromJs: INLINE 'this.js < boolean.js'.
 !
-ifFalse: aBlock
-	^ INLINE '( this.js ? this : aBlock.$value() )'.
+> boolean
+	^ Boolean fromJs: INLINE 'this.js > boolean.js'.
+!
+<= boolean
+	^ Boolean fromJs: INLINE 'this.js <= boolean.js'.
+!
+>= boolean
+	^ Boolean fromJs: INLINE 'this.js >= boolean.js'.
+!
+compare: boolean
+	"Returns -1, 0 or if self is respectively smaller than, equal to or larger than aMagnitude."
+	^ self < boolean ifTrue: [ -1 ] ifFalse: [ self > boolean ifTrue: [ 1 ] ifFalse: [ 0 ] ].
+!
+
+
+"If true or false then block."
+
+ifTrue: block
+	^ INLINE '( this.js ? block.$value() : this )'.
+!
+ifFalse: block
+	^ INLINE '( this.js ? this : block.$value() )'.
 !
 ifTrue: trueBlock ifFalse: falseBlock
 	^ INLINE '( this.js ? trueBlock.$value() : falseBlock.$value() )'.
@@ -26,18 +51,21 @@ ifTrue: trueBlock ifFalse: falseBlock
 ifFalse: falseBlock ifTrue: trueBlock
 	^ INLINE '( this.js ? trueBlock.$value() : falseBlock.$value() )'.
 !
-toString
-	^ self ifTrue: [ 'true' ] ifFalse: [ 'false' ].
+and: block
+	^ self ifTrue: [ block value ] ifFalse: [ self ].
+!
+or: block
+	^ self ifTrue: [ self ] ifFalse: [ block value ].
+!
+
+"Operations"
+
+not
+	^ Boolean fromJs: INLINE '! this.js'.
 !
 & boolean
 	^ Boolean fromJs: INLINE 'this.js && boolean.js'.
 !
 | boolean
 	^ Boolean fromJs: INLINE 'this.js || boolean.js'.
-!
-and: block
-	^ self ifTrue: [ block value ] ifFalse: [ self ].
-!
-or: block
-	^ self ifTrue: [ self ] ifFalse: [ block value ].
 !

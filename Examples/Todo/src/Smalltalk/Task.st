@@ -1,9 +1,5 @@
 CLASS Task EXTENDS Object MODULE Todo CLASSVARS '' VARS 'title due done'
 
-CLASSMETHODS
-
-METHODS
-
 constructor
 	title := ''.
 	done := false.

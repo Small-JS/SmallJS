@@ -1,4 +1,4 @@
-CLASS String EXTENDS Collection MODULE Core CLASSVARS '' VARS ''
+CLASS String EXTENDS Magnitude MODULE Core CLASSVARS '' VARS ''
 	"The inherited variable 'js' contains a JS string."
 
 CLASSMETHODS

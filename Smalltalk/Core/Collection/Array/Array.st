@@ -157,7 +157,7 @@ removeAt: index
 
 sort
 	"Sort self in-place."
-	self sortWith: [ :a :b | a < b ifTrue: [ -1 ] ifFalse: [ a > b ifTrue: [ 1 ] ifFalse: [ 0 ] ] ].
+	self sortWith: [ :a :b | a compare: b ].
 !
 sortWith: compareBlock
 	"Sort self in-place using a 2-arg compareBlock

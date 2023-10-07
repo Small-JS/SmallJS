@@ -25,6 +25,9 @@ rm -r ./Node/out
 rm ./Browser/web/App.js*
 rm -r ./Browser/web/Smalltalk
 
+rm ./Examples/Todo/web/App.js*
+rm -r ./Examples/Todo/web/Smalltalk
+
 rm -r ./Examples/Shop/Server/node_modules
 rm -r ./Examples/Shop/Server/out
 

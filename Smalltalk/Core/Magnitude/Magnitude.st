@@ -14,3 +14,12 @@ METHODS
 >= magnitude
 	^ ( self < magnitude ) not.
 !
+compare: magnitude
+	"Returns -1, 0 or if self is respectively smaller than, equal to or larger than aMagnitude."
+	^ self < magnitude
+		ifTrue: [ -1 ]
+		ifFalse: [
+			self > magnitude
+				ifTrue: [ 1 ]
+				ifFalse: [ 0 ] ].
+!

@@ -1,5 +1,5 @@
 CLASS TodoApp EXTENDS Object MODULE Todo CLASSVARS ''
-	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable'
+	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable sortColumn sortDescending'
 
 start
 	self bindElements.
@@ -68,21 +68,51 @@ taskTableClicked: event
 
 	| cell position |
 	cell := HtmlElement fromJsSubElement: event target js.
-	cell class = HtmlTableCellElement ifTrue: [
-		position := Point x: cell cellIndex y: cell parentElement rowIndex.
-		cell cellIndex = 2 ifTrue: [ self toggleTaskDone: position cell: cell ].
-		cell cellIndex = 3 ifTrue: [ self deleteTask: position ] ].
+	cell class ~= HtmlTableCellElement ifTrue: [
+		cell := cell parentElement ].
+	position := Point x: cell cellIndex y: cell parentElement rowIndex.
+self log: position toString, ', ', cell toString.
+
+	"These actions check themselves if they should be activated, using position."
+	self sortColumn: position cell: cell.
+	self toggleTaskDone: position cell: cell.
+	self deleteTask: position cell: cell.
+!
+sortColumn: position cell: cell
+	"Sort colums "
+
+	| sortProperty sortBlock |
+
+	"Check if a column header cell was clicked."
+	( position x > 2  ) | ( position y ~= 1 ) ifTrue: [ ^ nil ].
+
+	sortProperty := #( 'title' 'due' 'done' ) at: position x.
+	sortDescending := ( position x = sortColumn ) ifTrue: [ sortDescending not ] ifFalse: [ false ].
+	sortBlock := sortDescending
+		ifTrue: [ [ :task1 :task2 | ( task2 atProperty: sortProperty ) compare: ( task1 atProperty: sortProperty ) ] ]
+		ifFalse: [ [ :task1 :task2 | ( task1 atProperty: sortProperty ) compare: ( task2 atProperty: sortProperty ) ] ].
+	tasks sortWith: sortBlock.
+	sortColumn := position x.
+
+	self showTasks.
 !
 toggleTaskDone: position cell: cell
 	"Toggle done value of task at position and update table."
 
 	| task |
+
+	"Check if done cell was clicked."
+	( position x ~= 2 ) | ( position y < 2 ) ifTrue: [ ^ nil ].
+
 	task := tasks at: position y - 2.
 	task done: task done not.
 	cell textContent: task doneString.
 !
-deleteTask: position
+deleteTask: position cell: cell
 	"Delete task at position and update table."
+
+	"Check if delete cell was clicked."
+	( position x ~= 3 ) | ( position y < 2 ) ifTrue: [ ^ nil ].
 
 	tasks removeAt: position y - 2.
 	taskTable deleteRow: position y.
