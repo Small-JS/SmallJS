@@ -19,7 +19,7 @@
 			"label": "Compile client",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../../../Compiler/out/App.js", "../../../Smalltalk/Core", "../../../Smalltalk/Browser", "src", "web/Smalltalk" ],
+			"args": [  "../../../Compiler/out/App.js", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},

@@ -61,8 +61,8 @@ METHODS
 toJs
 	"Converts self to a JS object.
 	 Array overloads this to convert array elements to JS also, recursively.
-	 So the resulting object does not contain any smalltalk objects anymore,
-	 and is suitable for passing to JS functions, and to convert to JSON."
+	 So the resulting object is a JS (not ST) object
+	 and is suitable for passing to JS functions, and conversion to JSON."
 
 	| result |
 
@@ -70,6 +70,10 @@ toJs
 	self ownPropertyNames do: [ :name |
 		result atJsProperty: name put: ( self atProperty: name ) ].
 	^ result js.
+!
+toJson
+	"Return a JSON string representing self."
+	^ String fromJs: INLINE 'JSON.stringify( this.$toJs() )'.
 !
 toJsObject
 	"Calls toJs and wraps result in a JsObject."

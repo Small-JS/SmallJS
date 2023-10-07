@@ -8,9 +8,9 @@
 
 	"configurations": [
 		{
+			"name": "Launch Compiler",
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
 			"skipFiles": [ "<node_internals>/**" ],
 			"cwd": "${workspaceFolder}/../Node",
 			"program": "${workspaceFolder}/out/App.js",

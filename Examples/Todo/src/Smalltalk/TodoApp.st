@@ -2,8 +2,8 @@ CLASS TodoApp EXTENDS Object MODULE Todo CLASSVARS ''
 	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable sortColumn sortDescending'
 
 start
-	self bindElements.
 	self loadTasks.
+	self bindElements.
 	self showTasks
 !
 bindElements
@@ -71,7 +71,6 @@ taskTableClicked: event
 	cell class ~= HtmlTableCellElement ifTrue: [
 		cell := cell parentElement ].
 	position := Point x: cell cellIndex y: cell parentElement rowIndex.
-self log: position toString, ', ', cell toString.
 
 	"These actions check themselves if they should be activated, using position."
 	self sortColumn: position cell: cell.

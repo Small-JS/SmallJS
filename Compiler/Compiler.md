@@ -10,18 +10,21 @@ To test itself after changes, the compiler starts the ../Node project and runs i
 
 ## Usage
 
-	node ./out/App.js [-s] <ST source folder>... <JS output folder>
-		-s: Don't generate source map files and remove existing ones.
+	node ./out/App.js [-s] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>
+		-s : Don't generate source map files and remove existing ones.
+		-t : Don't compile ./Test subfolders from following folders.
+		+t : Resume compiling ./Test subfolders from following folders.
 
-The -s option is convienient if you want to debug purely in JS, not a mix of ST and JS.
+The '-s' option is convienient if you want to debug purely in JS, and not a mix of ST and JS.\
+The '-t' and '+t' options can be used to skip compiling units tests for ST base libraries and for production deployment of your app.
 
 Example for Node projects:
 
-	node ./out/App.js ../Smalltalk/Core ../Smalltalk/Node", "src", "out"
+	node ./out/App.js -t ../Smalltalk/Core ../Smalltalk/Node +t src out
 
 Example for browser projects:
 
-	node ./out/App.js -s ../Smalltalk/Core ../Smalltalk/Browser", "src", "web"
+	node ./out/App.js -s -t ../Smalltalk/Core ../Smalltalk/Browser +t src web
 
 Note that for Node and browser projects, different parts of the ST image should compiled, otherwise runtime errors will occur in the compiled code.
 
@@ -29,7 +32,7 @@ The easiest way to start a new project is to make a copy of the ../Node or ../Br
 
 ## Deployment
 
-Just copy the generated JS module files (".js") to the deployment location,
-including the Runtime.js that contains some low level support classes written in JS.
-Exclude files named Test*.js files to skip unit tests.
-Also copy the source map files (*.map) files if you want to allow debugging.
+Just copy the generated JS module files (\*.js) to the deployment location,
+including the Runtime.js that contains some low level support classes.
+Exclude files named Test\*.js files to skip unit tests or use the -t option to prevent their compilation.
+Also copy the generated source map files (\*.map) files and ST source files (\*.st)  if you want to allow ST level debugging.

@@ -10,6 +10,7 @@ import * as fs from "fs";
 export class Compiler
 {
 	noSourceMaps: boolean = false;
+	skipTestFolders: boolean = false;
 	modules: CompiledModule[] = [];
 	classes: CompiledClass[] = [];
 
@@ -32,8 +33,10 @@ export class Compiler
 	usage()
 	{
 		console.log(
-			"SmallJS compiler usage: node Compiler/out/App.js [-s] <ST source folder>... <JS output folder>\n" +
-			"	-s: Don't generate source map files and remove existing ones." );
+			"node <compiler folder>/out/App.js [-s] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
+			"	-s: Don't generate source map files and remove existing ones.\n" +
+			"	-t : Don't compile ./Test subfolders from following folders.\n" +
+			"	+t : Resume compiling ./Test subfolders from following folders.\n" );
 
 		exit( 1 );
 	}
@@ -65,7 +68,12 @@ export class Compiler
 		this.classes = [];
 
 		for( let inputFolder of inputFolders )
-			this.loadClasses( inputFolder );
+			if( inputFolder == '-t' )
+				this.skipTestFolders = true;
+			else if( inputFolder == '+t' )
+				this.skipTestFolders = false;
+			else
+				this.loadClasses( inputFolder );
 
 		this.orderClasses();
 		new ClassCompiler().compileClasses( this.classes, outputFolder );
@@ -78,6 +86,9 @@ export class Compiler
 	loadClasses( inputFolder: string )
 	{
 		let inputFiles: string[] = fs.readdirSync( inputFolder );
+
+		if( this.skipTestFolders && inputFolder.toLocaleLowerCase().endsWith( "/test" ) )
+			return;
 
 		let inputFile: string;
 		for( inputFile of inputFiles ) {

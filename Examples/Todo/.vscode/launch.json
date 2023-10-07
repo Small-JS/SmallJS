@@ -10,7 +10,7 @@
 			"type": "chrome",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile client"
+			"preLaunchTask": "Compile Smalltalk"
 		},
 		{
 			"name": "Launch Edge",
@@ -18,7 +18,7 @@
 			"type": "msedge",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile client"
+			"preLaunchTask": "Compile Smalltalk"
 		},
 		{
 			"name": "Launch Firefox",
@@ -26,7 +26,7 @@
 			"type": "firefox",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile client"
+			"preLaunchTask": "Compile Smalltalk"
 		}
 	]
 }

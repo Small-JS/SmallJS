@@ -2,8 +2,8 @@ CLASS TestObject EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
 	| object |
-
 	object := Object new.
+
 	self assert: [ object isMemberOf: Object ].
 	self assert: [ String new isKindOf: Object ].
 	self assert: [ self isKindOf: Test ].
@@ -12,13 +12,24 @@ test
 	self assert: [ object == object ].
 	self assert: [ object ~= Object new ].
 
-	self assert: [ object toString = 'a Object' ].
 	self assertError: [ object error: 'My error.' ].
 	self assertError: [ object halt ].
 
 	self assert: [ object isNil not ].
 	self assert: [ object notNil ].
 	self assert: [ object yourself = object ].
+!
+testConversion
+	| object js |
+	object := Object new.
+
+	self assert: [ object toString = 'a Object' ].
+	"JS cannot compare objects for value quality, so use toJson for implecitly testing toJs."
+	self assert: [ object toJson = '{}' ].
+!
+testPerform
+	| object |
+	object := Object new.
 
 	self assert: [ ( object perform: 'toString' ) = 'a Object' ].
 	self assert: [ object perform: '=' with: object ].
