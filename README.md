@@ -1,6 +1,6 @@
 # SmallJS README
 
-# What is SmallJS?
+## What is SmallJS?
 
 SmallJS is a compiler (transpiler) from the Smalltalk (ST) language to JavaScript (JS).
 The generated JS code runs in all modern browsers or in Node.js.
@@ -16,11 +16,11 @@ JS libraries already encapsulated in ST are:
 - Node.js: HTTP server, Express, 3 databases.
 - And an Example webshop client + server app template.
 
-# Example
+## Example code
 
 ![./Documentation/Example.png](./Documentation/Example.png)
 
-# Getting started
+## Getting started
 
 SmallJS is currently set-up for use with Visual Studio Code, but other IDEs could be added.
 For the back-end, Node.js is the framework of choice, also using Express.
@@ -51,13 +51,12 @@ This script:
 Note that browser type ST projects are only compiled, not run or tested.\
 Check if everything builds successfully before going to the next step.
 
-## Browser project
+## Example projects
 
-For a first impression of running SmallJS code in a browser,
-start the Browser test project, see:
->[./Browser/Browser.md](./Browser/Browser.md)
+For a first impression of running SmallJS code, see the example projects:
+>[./Examples/Examples.md](./Examples/Examples.md)
 
-# Documentation
+## Documentation
 
 The complete documentation is located here:
 >[./Documentation/Documentation.md](./Documentation/Documentation.md)

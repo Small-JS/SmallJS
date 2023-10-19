@@ -13,4 +13,4 @@ echo "tsc Shop Client"
 tsc
 
 # Compile Smalltalk
-node ../../../Compiler/out/App.js ../../../Smalltalk/Core ../../../Smalltalk/Browser src web/Smalltalk
+node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Smalltalk

@@ -6,9 +6,11 @@ CLASSMETHODS
 
 myTest
 	"This is the first method compiled, used when testing the compiler."
-	| a |
+	| a b |
 	a := 1.
-	^ a + 2 negated.
+	true ifTrue: [
+		a increment ].
+	^ a.
 !
 
 new

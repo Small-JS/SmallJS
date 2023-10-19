@@ -19,9 +19,10 @@
 			"label": "Compile Smalltalk",
 			"type": "shell",
 			"command": "node",
-			// Without source maps (option "-s"), for easier JS debugging:
-			// "args": [  "../Compiler/out/App.js", "-s", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
-			"args": [  "../Compiler/out/App.js", "-s", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
+			"args": [  "../../Compiler/out/App.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
 			"problemMatcher": []
 		}
 	]

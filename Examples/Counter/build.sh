@@ -1,15 +1,15 @@
 #!/bin/bash
-# This script builds Todo project.
+# This script builds the Counter project.
 
 # Exit script if a step fails
 set -e
 
 cd "$(dirname "$0")"
 
-echo "==== Todo"
+echo "==== Counter"
 
 # Compile TypeScript
-echo "tsc Todo"
+echo "tsc Counter"
 tsc
 
 # Compile Smalltalk
