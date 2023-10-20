@@ -73,17 +73,17 @@ taskTableClicked: event
 	position := Point x: cell cellIndex y: cell parentElement rowIndex.
 
 	"These actions check themselves if they should be activated, using position."
-	self sortColumn: position cell: cell.
+	self sortColumn: position.
 	self toggleTaskDone: position cell: cell.
-	self deleteTask: position cell: cell.
+	self deleteTask: position.
 !
-sortColumn: position cell: cell
+sortColumn: position
 	"Sort colums "
 
 	| sortProperty sortBlock |
 
 	"Check if a column header cell was clicked."
-	( position x > 2  ) | ( position y ~= 1 ) ifTrue: [ ^ nil ].
+	( position x <= 2 ) & ( position y = 1 ) ifFalse: [ ^ nil ].
 
 	sortProperty := #( 'title' 'due' 'done' ) at: position x.
 	sortDescending := ( position x = sortColumn ) ifTrue: [ sortDescending not ] ifFalse: [ false ].
@@ -101,17 +101,17 @@ toggleTaskDone: position cell: cell
 	| task |
 
 	"Check if done cell was clicked."
-	( position x ~= 2 ) | ( position y < 2 ) ifTrue: [ ^ nil ].
+	( position x = 2 ) & ( position y >= 2 ) ifFalse: [ ^ nil ].
 
 	task := tasks at: position y - 2.
 	task done: task done not.
 	cell textContent: task doneString.
 !
-deleteTask: position cell: cell
+deleteTask: position
 	"Delete task at position and update table."
 
 	"Check if delete cell was clicked."
-	( position x ~= 3 ) | ( position y < 2 ) ifTrue: [ ^ nil ].
+	( position x = 3 ) & ( position y >= 2 ) ifFalse: [ ^ nil ].
 
 	tasks removeAt: position y - 2.
 	taskTable deleteRow: position y.
