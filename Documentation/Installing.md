@@ -11,6 +11,19 @@ Download the latest version here:
 Download the latest version here:
 > [code.visualstudio.com/download](https://code.visualstudio.com/download)
 
+### VSCode Extensions
+From Chrome and Edge, step debugging is built into VSCode.
+
+For debugging in Firefox you should install this extension: Debugger for Firefox.
+
+Note:
+If you are using Ubuntu with Firefox installed in a Snap container,\
+the extension wil not work because it does not have access to the `/tmp` dir.\
+To fix this, these lines should be added to the `luanch.json` file of your browser projects:
+
+        "timeout": 90000,
+        "tmpDir": "/some/folder/of/yours/with/write/perms",
+
 ### NodeJS
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)

@@ -7,10 +7,10 @@
 			"path": "."
 		},
 		{
-			"path": "../../Database"
+			"path": "../../../Database"
 		},
 		{
-			"path": "../../Documentation"
+			"path": "../../../Documentation"
 		}
 	],
 	"settings": {}
