@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start Node server
+# Start Node server. x
 
 cd "$(dirname "$0")"
 

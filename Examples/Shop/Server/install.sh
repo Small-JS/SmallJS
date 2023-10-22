@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script installs NPM dependencies of the Shop Server project.
+# This script installs NPM dependencies of the Shop Server project. x
 
 # Exit script if a step fails
 set -e

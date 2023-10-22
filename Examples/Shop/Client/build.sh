@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds Shop Client project.
+# This script builds Shop Client project. x
 
 # Exit script if a step fails
 set -e

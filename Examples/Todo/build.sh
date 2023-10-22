@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds Todo project.
+# This script builds Todo project. x
 
 # Exit script if a step fails
 set -e

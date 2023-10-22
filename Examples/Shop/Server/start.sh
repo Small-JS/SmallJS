@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start Shop Server
+# Start Shop Server. x
 
 cd "$(dirname "$0")"
 

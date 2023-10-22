@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds the Counter project.
+# This script builds the Counter project. x
 
 # Exit script if a step fails
 set -e
