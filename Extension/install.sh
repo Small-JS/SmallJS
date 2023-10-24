@@ -35,7 +35,7 @@ fi
 DEST=$DEST"/smalljs"
 echo "Copying language extension to: "$DEST
 if
-	! cp -r -u . $DEST
+	! cp -r . $DEST
 then
 	echo "Error: Copy SmallJS language extension to VSCode failed."
 	exit 1
