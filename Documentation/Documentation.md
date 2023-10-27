@@ -35,8 +35,6 @@ Test testing application for running SmallJS code in a web browser.
 
 A guide to installing and using supported databases with SmallJS.
 
-### ./Shop
+### [./Examples](../Examples/Examples.md)
 
-This is a small but complete example web application.\
-It contains a Node.js based, database enabled [Shop Server](../Shop/Server/ShopServer.md).\
-And a browser based  [Shop Client](../Shop/Client/ShopClient.md).
+Example projects written in SmallJS: Counter, Todo and Shop.

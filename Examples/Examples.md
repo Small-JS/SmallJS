@@ -1,6 +1,6 @@
 # Examples
 
-These are the SmallJS example projects.
+SmallJS example projects.
 
 ## Counter
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start Node server. x
+# Start Node server.
 
 cd "$(dirname "$0")"
 
@@ -8,3 +8,8 @@ source .env
 set +o allexport
 
 node out/App.js
+
+# Pause when called with -p
+if [ "$1" == "-p" ]
+then read -p "Press [Enter]: "
+fi
