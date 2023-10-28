@@ -26,7 +26,13 @@
 			"type": "firefox",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile Smalltalk"
+			"preLaunchTask": "Compile Smalltalk",
+			"pathMappings": [
+				{
+					"url": "http://localhost:3000/src/Smalltalk",
+					"path": "${workspaceFolder}/src/Smalltalk"
+				}
+			]
 		}
 	]
 }
