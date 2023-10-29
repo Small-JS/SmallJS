@@ -3,6 +3,7 @@
 *.env
 *.lnk
 *.cmd
+*.vsix
 **/node_modules
 **/out
 !/Browser/web/Test/ScriptFunction.js

@@ -1,30 +1,48 @@
 {
-  "name": "smalljs",
-  "displayName": "SmallJS",
-  "description": "SmallJS language support",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.76.0"
-  },
-  "categories": [
-    "Programming Languages"
-  ],
-  "contributes": {
-    "languages": [{
-      "id": "smalljs",
-      "aliases": ["SmallJS", "smalljs"],
-      "extensions": [".st"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "smalljs",
-      "scopeName": "source.smalljs",
-      "path": "./syntaxes/smalljs.tmLanguage.json"
-    }],
-	"breakpoints": [
-		{
-			"language": "smalljs"
-		}
-	]
-  }
+	"name": "smalljs",
+	"displayName": "SmallJS",
+	"description": "SmallJS Smalltalk language support",
+	"publisher": "RichardRonteltap",
+	"version": "1.0.0",
+	"icon": "SmallJS.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Small-JS/SmallJS/tree/main/Extension"
+	},
+	 "engines": {
+		"vscode": "^1.83.1"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"keywords": [
+		"smalltalk"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "smalljs",
+				"aliases": [
+					"SmallJS",
+					"smalljs"
+				],
+				"extensions": [
+					".st"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "smalljs",
+				"scopeName": "source.smalljs",
+				"path": "./syntaxes/smalljs.tmLanguage.json"
+			}
+		],
+		"breakpoints": [
+			{
+				"language": "smalljs"
+			}
+		]
+	}
 }

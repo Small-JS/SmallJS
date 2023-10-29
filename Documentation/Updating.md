@@ -11,13 +11,18 @@ Install an updated version from:
 To check for outdated global NPM packages:
 > `npm outdated -g`
 
-## TypeScript
+To update all global packages:
+> `npm update -g`
+
+For updating specific global packages:
+
+### TypeScript
 > `npm update -g typescript`
 
-## HTTP server
+### HTTP server
 > `npm update -g http-server`
 
-## NPM packages with the "NPM Check Updates" tool
+## NPM packages with the "NPM Check Updates" package
 To install the npm global package updater (once):
 > `npm i -g npm-check-updates`
 

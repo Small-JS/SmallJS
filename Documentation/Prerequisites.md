@@ -19,7 +19,7 @@ For debugging in Firefox you should install this extension: Debugger for Firefox
 Note:
 If you are using Ubuntu with Firefox installed in a Snap container,\
 the extension wil not work because it does not have access to the `/tmp` dir.\
-To fix this, these lines should be added to the `luanch.json` file of your browser projects:
+To fix this, these lines should be added to the `launch.json` file of your browser projects:
 
         "timeout": 90000,
         "tmpDir": "/some/folder/of/yours/with/write/perms",

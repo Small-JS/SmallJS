@@ -29,13 +29,14 @@ Databases Postgres, MariaDB and MySQL are supported out of the box.
 ## Install prerequisites
 
 To install all the prerequisites, look at:
->[./Documentation/Installing.md](./Documentation/Installing.md)
+>[./Documentation/Prerequisites.md](./Documentation/Prerequisites.md)
 
 Now run the bash script `./install.sh`.
-On Windows, the `.sh` extension can be associated with Git Bash.
+On Windows, the `.sh` extension should be associated with Git Bash once.
+Do this by clicking on the file in the explorer and then choose open with Git Bash always.
 
 This script:
-- Checks if manually installed prerequisites are present.
+- Checks if the prerequisites are present.
 - Installs the SmallJS language extension in VSCode.
 - Installs npm dependencies for all projects.
 

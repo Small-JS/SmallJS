@@ -16,6 +16,8 @@ cd "$(dirname "$0")"
 
 echo "Removing..."
 
+rm ./Extension/smalljs-*.vsix
+
 rm -r ./Compiler/node_modules
 rm -r ./Compiler/out
 

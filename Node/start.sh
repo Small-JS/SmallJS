@@ -11,5 +11,5 @@ node out/App.js
 
 # Pause when called with -p
 if [ "$1" == "-p" ]
-then read -p "Press [Enter]: "
+then read -p "Press [Enter] to exit: "
 fi

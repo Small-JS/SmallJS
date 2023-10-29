@@ -1,4 +1,7 @@
-CLASS MyTest EXTENDS JsObject MODULE Extension CLASSVARS 'classVar' VARS 'var1 var2'
+"This file is used to visually check syntax coloring of SmallJS *.st files.
+ It is not meant to be compiled or run."
+
+CLASS MyTest EXTENDS JsObject MODULE ExtensionTest CLASSVARS 'classVar' VARS 'var1 var2'
 	"This is a comment."
 
 CLASSMETHODS
