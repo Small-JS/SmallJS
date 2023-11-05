@@ -140,8 +140,15 @@ argIsEqualToFraction: fraction
 
 "Error handling"
 
+assert: block
+	block value ifFalse: [
+		self error: 'Assertion failed: ', block script ].
+!
 error: message
 	Error throw: message.
+!
+subclassResponsibility
+	self error: 'Method should be implemented by subclass.'
 !
 log: message
 	INLINE 'console.log( message.$toString().js )'.

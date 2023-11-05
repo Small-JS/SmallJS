@@ -31,7 +31,7 @@ toInteger
 	INLINE
 		'if( Number.isSafeInteger( Math.floor( this.js ) ) )
 			return stInteger$class.$fromJs$( this.js );
-		return stBigInt.$fromJs$( BigInt( this.js ) )'.
+		return stBigInt$class.$fromJs$( BigInt( this.js ) )'.
 !
 toFixed: decimals
 	^ String fromJs: INLINE 'this.js.toFixed( decimals.js )'.

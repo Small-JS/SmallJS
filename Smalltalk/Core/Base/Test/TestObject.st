@@ -12,7 +12,9 @@ test
 	self assert: [ object == object ].
 	self assert: [ object ~= Object new ].
 
+	self assert: [ true ].
 	self assertError: [ object error: 'My error.' ].
+	self assertError: [ object subclassResponsibility ].
 	self assertError: [ object halt ].
 
 	self assert: [ object isNil not ].

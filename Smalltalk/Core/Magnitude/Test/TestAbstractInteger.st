@@ -13,6 +13,10 @@ testIteration
 	sum := 0.
 	4 to: 1 by: -1 do: [ :num | sum := sum + num ].
 	self assert: [ sum = 10 ].
+
+	sum := 0.
+	3 timesRepeat: [ sum increment ].
+	self assert: [ sum = 3 ].
 !
 testFunctions
 	self assert: [ 8 even ].

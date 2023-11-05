@@ -103,21 +103,21 @@ addToInteger: integer
 		let jsResult = integer.js + this.js;
 		if( Number.isSafeInteger( jsResult ) )
 			return stInteger$class.$fromJs$( jsResult );
-		return stBigInt.$fromJs$( BigInt( integer.js ) + BigInt( this.js ) )'.
+		return stBigInt$class.$fromJs$( BigInt( integer.js ) + BigInt( this.js ) )'.
 !
 subtractFromInteger: integer
 	INLINE '
 		let jsResult = integer.js - this.js;
 		if( Number.isSafeInteger( jsResult ) )
 			return stInteger$class.$fromJs$( jsResult );
-		return stBigInt.$fromJs$( BigInt( integer.js ) - BigInt( this.js ) )'.
+		return stBigInt$class.$fromJs$( BigInt( integer.js ) - BigInt( this.js ) )'.
 !
 multiplyByInteger: integer
 	INLINE '
 		let jsResult = integer.js * this.js ;
 		if( Number.isSafeInteger( jsResult ) )
 			return stInteger$class.$fromJs$( jsResult );
-		return stBigInt.$fromJs$( BigInt( integer.js ) * BigInt( this.js ) )'.
+		return stBigInt$class.$fromJs$( BigInt( integer.js ) * BigInt( this.js ) )'.
 !
 divideIntoInteger: integer
 	INLINE '

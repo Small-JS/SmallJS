@@ -8,4 +8,4 @@ cd "$(dirname "$0")"
 
 echo "==== Extension"
 vsce package
-code --install-extension smalljs-1.0.0.vsix
+code --install-extension smalljs-1.0.1.vsix

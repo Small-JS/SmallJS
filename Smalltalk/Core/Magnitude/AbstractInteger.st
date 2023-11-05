@@ -64,6 +64,13 @@ to: limit by: by do: block
 		block value: index.
 		index := index + by ].
 !
+timesRepeat: block
+	| count |
+	count := self.
+	[ count > 0 ] whileTrue: [
+		block value.
+		count decrement ].
+!
 
 "Other arithmatic functions."
 

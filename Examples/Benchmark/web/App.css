@@ -1,0 +1,66 @@
+﻿
+body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#titleMessage {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color: black;
+	background-color: lightblue;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 400px;
+	color: grey;
+	box-shadow: 10px 10px 5px grey;
+}
+
+#benchmarkTable {
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-collapse: collapse;
+	border-width: 2px;
+	border-spacing: 0px;
+	text-align: left;
+}
+
+#benchmarkTable td, th {
+	padding: 4px;
+	border: 1px solid grey;
+	text-align: right;
+}
+
+#benchmarkTable th:nth-child( 1 )
+{
+	text-align: left;
+}
+
+#benchmarkTable td:nth-child( 1 )
+{
+	text-align: left;
+}
+
+.benchmarkTableHeader {
+	color: black;
+	font-weight: bold;
+}
+
+.benchmarkTableBody {
+	color: black;
+}
+

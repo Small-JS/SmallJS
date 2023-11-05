@@ -300,12 +300,13 @@ export class Parser
 	error( message: string )
 	{
 		let fullMessage: string =
-			this.filename + ": " +
-			"Compile error at line: " + String( this.position.line ) + ", " +
-			"column: " + String( this.position.tabbedColumn ) + ": " +
-			message;
+			"Compile error in file: " + this.filename +
+			", line: " + String( this.position.line ) + ", column: " + String( this.position.tabbedColumn ) +
+			": " + message;
 
-		throw new Error( fullMessage );
+		// throw new Error( fullMessage );
+		console.error( fullMessage )
+		process.exit( 1 );
 	}
 
 }

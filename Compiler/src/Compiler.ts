@@ -45,7 +45,7 @@ export class Compiler
 	{
 		console.log( "SmallJS compiling: " + inputFolders.join( ", " ) + " to: " + outputFolder );
 		if( this.noSourceMaps )
-			console.log( 'Source maps will NOT be generated.' );
+			console.log( 'Source maps will not be generated.' );
 
 		this.createOutputFolder( outputFolder );
 

@@ -9,6 +9,7 @@ cd "$(dirname "$0")"
 ./Compiler/build.sh
 ./Node/build.sh
 ./Browser/build.sh
+./Examples/Benchmark/build.sh
 ./Examples/Counter/build.sh
 ./Examples/Todo/build.sh
 ./Examples/Shop/Server/build.sh
