@@ -9,7 +9,12 @@ Download the latest version here:
 
 ### Visual Studio Code
 Download the latest version here:
-> [code.visualstudio.com/download](https://code.visualstudio.com/download)
+> [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
+
+On MacOS you should add VSCode to the path, this way:\
+In VSCode, open the Command Palette (Cmd+Shift+P) type 'shell command' to find:\
+`Shell Command: Install 'code' command in PATH command`\
+click on to add VSCode to the path.
 
 ### VSCode Extensions
 From Chrome and Edge, step debugging is built into VSCode.
@@ -27,6 +32,10 @@ To fix this, these lines should be added to the `launch.json` file of your brows
 ### NodeJS
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
+
+### VSCode extension installer
+This is needed to install the SmallJS language extension.
+> `npm install -g @vscode/vsce`
 
 ### TypeScript
 To install TypeScript globally:
