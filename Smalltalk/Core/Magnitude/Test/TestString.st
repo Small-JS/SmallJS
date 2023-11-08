@@ -55,7 +55,8 @@ testComparisons
 !
 testManipulation
 	self assert: [ 'aa', 'bb' = 'aabb' ].
-	self assert: [ 'cc', 'dd' = 'ccdd' ].
+	self assert: [ 'cc' + 'dd' = 'ccdd' ].
+	self assert: [ ( 'de' concat: 'f' ) = 'def' ].
 	self assert: [ ( 'aabb' substring: 1 ) = 'abb' ].
 	self assert: [ ( 'aabb' substring: 1 to: 3 ) = 'ab' ].
 

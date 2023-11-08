@@ -2,10 +2,16 @@ CLASS BenchmarkApp EXTENDS Object MODULE Benchmark CLASSVARS ''
 	VARS 'benchmarks size benchmarkTable runAllButton'
 
 start
-	BigInt.
+	self test.
 	self initializeBenchmarks.
 	self bindElements.
 	self clearBenchmarks.
+!
+test
+	"Refer to al least one test class from a module to import all its test classes automatically."
+	TestBenchmark.
+	"Run sync and async tests of all imported Test* classes."
+	Test all.
 !
 initializeBenchmarks
 	| benchmark |
@@ -19,8 +25,9 @@ initializeBenchmarks
 benchmarkConfigs
 	"Array of benchmark configurations, each containing benchmark class and size to run."
 	^ #(
-		#( PrimeBenchmark 100000 )
-		#( FibonacciBenchmark 100000 )
+		#( PrimesBenchmark 100000 )
+		#( FibonacciBenchmark 500000 )
+		#( PiBenchmark 10000 )
 	)
 !
 bindElements

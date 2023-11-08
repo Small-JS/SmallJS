@@ -115,6 +115,9 @@ localeCompare: string
 , string
 	^ self + string.
 !
+concat: string
+	^ self + string.
+!
 substring: start
 	^ String fromJs: INLINE 'this.js.substring( start.js )'.
 !
