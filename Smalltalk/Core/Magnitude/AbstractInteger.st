@@ -69,7 +69,7 @@ timesRepeat: block
 	count := self.
 	[ count > 0 ] whileTrue: [
 		block value.
-		count decrement ].
+		count := count - 1 ].
 !
 
 "Other arithmatic functions."

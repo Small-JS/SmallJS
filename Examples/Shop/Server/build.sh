@@ -1,14 +1,15 @@
 #!/bin/bash
-# This script builds the Shop Server project. x
+# This script builds the Shop Server project.
 
 # Exit script if a step fails
 set -e
-
+# Set working directory to script directory
 cd "$(dirname "$0")"
 
 echo "==== Shop Server"
 
 # Check and run .env file
+
 if
 	! test -f .env
 then
@@ -20,8 +21,15 @@ else
 fi
 
 # Compile TypeScript
+
 echo "tsc Shop Server"
 tsc
 
 # Compile Smalltalk
-node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core +t ../../../Smalltalk/Node src out
+
+node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
+
+# Run tests
+
+node out/App.js -test
+

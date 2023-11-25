@@ -1,4 +1,4 @@
-CLASS TestProduct EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name price'
+CLASS MyProduct EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name price'
 
 CLASSMETHODS
 

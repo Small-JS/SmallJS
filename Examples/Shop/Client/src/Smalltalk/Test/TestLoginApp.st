@@ -1,0 +1,24 @@
+CLASS TestLoginApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'loginApp'
+
+"Tests the GUI of the Shop client login page.
+ This class is not a subclass of Test so is not called automatically with Test all."
+
+test: aLoginApp
+	loginApp := aLoginApp.
+
+	"Run sync and async tests of all imported Test* classes and log results."
+	Test allThen: [
+		self testGui ].
+!
+testGui
+	"Check if login fields are filled correctly and then press login button.
+	 Should navigate tot producs page then."
+
+	Timer timeout: 500 then: [
+		self testLoginFields.
+		loginApp loginButton click ].
+!
+testLoginFields
+	self assert: [ loginApp userNameInput value = 'John' ].
+	self assert: [ loginApp passwordInput value = 'secret' ].
+!

@@ -29,7 +29,7 @@ body {
 	box-shadow: 10px 10px 5px grey;
 }
 
-#benchmarkTable {
+#resultsTable {
 	margin-left: auto;
 	margin-right: auto;
 	border: solid;
@@ -39,28 +39,28 @@ body {
 	text-align: left;
 }
 
-#benchmarkTable td, th {
+#resultsTable td, th {
 	padding: 4px;
 	border: 1px solid grey;
 	text-align: right;
 }
 
-#benchmarkTable th:nth-child( 1 )
+#resultsTable th:nth-child( 1 )
 {
 	text-align: left;
 }
 
-#benchmarkTable td:nth-child( 1 )
+#resultsTable td:nth-child( 1 )
 {
 	text-align: left;
 }
 
-.benchmarkTableHeader {
+.tableHeader {
 	color: black;
 	font-weight: bold;
 }
 
-.benchmarkTableBody {
+.tableBody {
 	color: black;
 }
 

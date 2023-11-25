@@ -2,6 +2,12 @@ CLASS Process EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+"Arguments"
+
+argv
+	^ Array fromJsStrings: INLINE 'process.argv'
+!
+
 "Environment"
 
 env
@@ -16,6 +22,9 @@ envAt: name put: value
 envDeleteAt: name
 	INLINE 'delete process.env[ name.js ]'.
 !
+
+"Directory"
+
 cwd
 	^ String fromJs: INLINE 'process.cwd()'.
 !

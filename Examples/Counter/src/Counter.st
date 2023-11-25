@@ -6,7 +6,7 @@ constructor
 value
 	^ value.
 !
-increase
+increment
 	value := value + 1.
 !
 reset

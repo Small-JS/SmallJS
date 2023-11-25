@@ -1,5 +1,14 @@
 CLASS Timer EXTENDS Object MODULE Core CLASSVARS '' VARS 'id'
 
+CLASSMETHODS
+
+timeout: timeout then: block
+	^ self new timeout: timeout then: block.
+!
+interval: interval then: block
+	^ self new interval: interval then: block.
+!
+
 METHODS
 
 "Timeout"

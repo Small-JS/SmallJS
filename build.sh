@@ -1,9 +1,9 @@
 #!/bin/bash
-# This script builds all SmallJS components and and tests where possible from the command line.
+# This script builds all SmallJS components and runs their tests.
 
 # Exit script if a step fails
 set -e
-
+# Set working directory to script directory.
 cd "$(dirname "$0")"
 
 ./Compiler/build.sh

@@ -21,9 +21,9 @@ onConnect
 	self assert: [ database threadId >= 0 ] .
 	self assert: [ database status >= 0 ] .
 
-	personTable := database connectTable: 'Person' rowClass: TestPerson.
-	productTable := database connectTable: 'Product' rowClass: TestProduct.
-	orderTable := database connectTable: 'Order' rowClass: TestOrder.
+	personTable := database connectTable: 'Person' rowClass: MyPerson.
+	productTable := database connectTable: 'Product' rowClass: MyProduct.
+	orderTable := database connectTable: 'Order' rowClass: MyOrder.
 
 	self databaseQuery.
 !
@@ -99,9 +99,9 @@ tableQueryId: product
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
 
-	self deleteTestPerson.
+	self deleteMyPerson.
 !
-deleteTestPerson
+deleteMyPerson
 	"Delete person named 'Test' in case it was left behind by by a previous error after inserting."
 	database query: 'DELETE FROM Person WHERE `name` = "Test"'
 	then: [ self tableInsert ].
@@ -109,7 +109,7 @@ deleteTestPerson
 tableInsert
 	| person |
 
-	person := TestPerson new name: 'Test'; password: 'secret'.
+	person := MyPerson new name: 'Test'; password: 'secret'.
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
 	self assert: [ person checkPassword: 'secret' ].

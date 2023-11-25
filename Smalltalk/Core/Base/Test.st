@@ -1,4 +1,4 @@
-CLASS Test EXTENDS Object MODULE Core CLASSVARS 'assertCount disabledModuleCount' VARS 'currentMethodName methodAssertCount'
+CLASS Test EXTENDS Object MODULE Core CLASSVARS 'globalAssertCount disabledModuleCount' VARS 'currentMethodName methodAssertCount'
 	"Base class for all unit test classes.
 	 Class method testAll calls all test* methods in subclasses.
 	 test* methods should call assert: [...] with the block returning the result as a boolean expression of a specific test.
@@ -10,9 +10,13 @@ CLASSMETHODS
 "Testing"
 
 all
-	"Invokes all test* methods on new instances of all Test* subclasses.
+	self allThen: [].
+!
+allThen: block
+	"Invokes all test* methods on new instances of all Test* subclasses loaded.
 	 Returns the number of test passed.
-	 Throws an error if any test fails."
+	 Throws an error if any test fails.
+	 Evaluates block after async tests have run."
 
 	Test resetAssertCount.
 	Test resetDisabledModuleCount.
@@ -21,30 +25,38 @@ all
 		( aClass inheritsFrom: Test ) ifTrue: [
 			aClass new all ] ].
 
-	self log: 'Successfully run sync tests: ', Test assertCount.
+	self log: 'Successfully run sync tests: ', Test globalAssertCount.
 
 	Test resetAssertCount.
-	Timer new timeout: 2000 then: [
-		self log: 'Successfully run async tests: ', Test assertCount.
-		self log: 'Disabled test modules: ', Test disabledModuleCount ].
+	Timer timeout: 2000 then: [
+		self log: 'Successfully run async tests: ', Test globalAssertCount.
+		self log: 'Disabled test modules: ', Test disabledModuleCount.
+		block value ].
 !
 
 "Accessing"
 
 resetAssertCount
-	assertCount := 0.
+	globalAssertCount := 0.
 !
 resetDisabledModuleCount
 	disabledModuleCount := 0.
 !
-assertCount
-	^ assertCount.
+globalAssertCount
+	globalAssertCount isNil ifTrue: [ globalAssertCount := 0 ].
+	^ globalAssertCount.
 !
 disabledModuleCount
+	disabledModuleCount isNil ifTrue: [ disabledModuleCount := 0 ].
 	^ disabledModuleCount.
 !
 
 METHODS
+
+constructor
+	currentMethodName := ''.
+	methodAssertCount := 0.
+!
 
 enabled
 	"Override this to conditionally disable tests."
@@ -56,19 +68,22 @@ all
 		ifFalse: [ Test disabledModuleCount increment ]
 		ifTrue: [
 			self class methodNames do: [ :methodName |
-				( methodName startsWith: 'test' ) ifTrue: [
+				 ( self isTestMethod: methodName ) ifTrue: [
 					currentMethodName := methodName.
 					methodAssertCount := 0.
 					self perform: methodName ] ] ]
 !
+isTestMethod: methodName
+	^ ( methodName startsWith: 'test' ) and: [ ( methodName endsWith: ':' ) not ]
+!
 assert: block
 	methodAssertCount increment.
-	Test assertCount increment.
+	Test globalAssertCount increment.
 
 	"If evaluation of block is not true, raise an error indicating the failed current test."
 
 	block value = true ifFalse: [
-		currentMethodName isNil ifTrue: [ currentMethodName := '<none>' ].
+		currentMethodName isNil ifTrue: [ currentMethodName := '<unknown>' ].
 		self error: 'Test failed: ', self class name, '.', currentMethodName, ' #', methodAssertCount toString, ': ', block script ].
 !
 assertError: block

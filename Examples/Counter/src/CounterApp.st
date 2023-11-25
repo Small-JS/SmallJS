@@ -1,14 +1,13 @@
-CLASS CounterApp EXTENDS Object MODULE Counter CLASSVARS ''
-	VARS 'counter counterLabel increaseButton resetButton'
+CLASS CounterApp EXTENDS ClientApp MODULE Counter CLASSVARS ''
+	VARS 'counter counterLabel incrementButton resetButton'
 
 start
-	self test.
 	counter := Counter new.
 	self bindElements.
 	self update.
-!
-test
-	TestCounter all.
+
+	self testMode ifTrue: [
+		TestCounterApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
@@ -16,23 +15,23 @@ bindElements
 	counterLabel := Document default getElementById: 'counterLabel'.
 	self assert: [ counterLabel class = HtmlLabelElement ].
 
-	increaseButton := Document default getElementById: 'incrementButton'.
-	self assert: [ increaseButton class = HtmlButtonElement ].
-	increaseButton addEventListener: 'click' then: [ self increase ].
+	incrementButton := Document default getElementById: 'incrementButton'.
+	self assert: [ incrementButton class = HtmlButtonElement ].
+	incrementButton onClick: [ self increment ].
 
 	resetButton := Document default getElementById: 'resetButton'.
 	self assert: [ resetButton class = HtmlButtonElement ].
-	resetButton addEventListener: 'click' then: [ self reset ].
+	resetButton onClick: [ self reset ].
 !
 update
 	"Update counter in HTML page."
 
 	counterLabel textContent: counter value toString.
 !
-increase
+increment
 	"Increase the counter and update the view."
 
-	counter increase.
+	counter increment.
 	self update.
 !
 reset
@@ -40,4 +39,16 @@ reset
 
 	counter reset.
 	self update.
+!
+
+"Accessing (used by tests)"
+
+counterLabel
+	^ counterLabel.
+!
+incrementButton
+	^ incrementButton.
+!
+resetButton
+	^ resetButton.
 !

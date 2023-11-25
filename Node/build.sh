@@ -3,7 +3,7 @@
 
 # Exit script if a step fails
 set -e
-
+# Set working directory to script directory.
 cd "$(dirname "$0")"
 
 echo "==== Node"
@@ -27,4 +27,4 @@ tsc
 node ../Compiler/out/App.js ../Smalltalk/Core ../Smalltalk/Node src out
 
 # Run unit tests
-node out/App.js
+./start.sh

@@ -21,9 +21,10 @@ test
 testJson
 	| object |
 
-	object := JsObject parse: '{ "a": 1, "b": { "b1": 21 }, "c": [ 31, 32 ] }'.
+	object := Object parse: '{ "a": 1, "b": { "b1": 21 }, "c": [ 31, 32 ] }'.
 
 	self assert: [ ( object atProperty: 'a' ) = 1 ].
 	self assert: [ ( ( object atProperty: 'b' ) atProperty: 'b1' ) = 21 ].
 	self assert: [ ( object atProperty: 'c' ) = #( 31 32 ) ].
 !
+

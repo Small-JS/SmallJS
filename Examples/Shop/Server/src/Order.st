@@ -5,6 +5,13 @@ CLASSMETHODS
 columns
 	^ #( 'person' 'product' 'amount' ).
 !
+fromObject: object
+	^ Order new
+		id: ( object atProperty: 'id' );
+		person: ( object atProperty: 'person' );
+		product: ( object atProperty: 'product' );
+		amount: ( object atProperty: 'amount' ).
+!
 
 METHODS
 

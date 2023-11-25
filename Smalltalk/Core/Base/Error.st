@@ -3,6 +3,12 @@ CLASS Error EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+new
+	^ super new js: INLINE 'new Error()'.
+!
+new: message
+	^ self fromJs: INLINE 'new Error( message.$toString().js )'.
+!
 throw: message
 	INLINE 'throw new Error( message.$toString().js )'.
 !
@@ -15,9 +21,12 @@ name
 message
 	^ String fromJs: INLINE 'this.js.message'.
 !
+message: message
+	INLINE 'this.js.message = message.js'.
+!
 toString
 	^ 'Error: ', self name, ': ', self message.
 !
 throw
-	INLINE 'throw new this.js'.
+	INLINE 'throw this.js'.
 !

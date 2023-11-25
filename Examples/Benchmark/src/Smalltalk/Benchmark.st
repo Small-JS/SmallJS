@@ -49,7 +49,8 @@ time: block
 	| start end |
 
 	start := Date new toMilliseconds.
-	self log: block value.
+	"self log: block value."
+	block value.
 	end := Date new toMilliseconds.
 
 	^ end - start

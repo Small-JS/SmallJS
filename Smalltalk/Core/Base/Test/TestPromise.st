@@ -4,7 +4,7 @@ test
 	| promise |
 
 	promise := Promise new: [ :resolve :reject |
-		Timer new timeout: 10 then: [
+		Timer timeout: 10 then: [
 			resolve value: 42 ] ].
 	promise then: [ :value | self assert: [ value = 42 ] ].
 

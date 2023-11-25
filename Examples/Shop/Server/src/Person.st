@@ -17,7 +17,7 @@ name: aName
 
 "Password"
 
-"Note: Passwords are stored internally as SHA256 digests of random salt + user password"
+"Passwords are stored internally as SHA256 digests of a random salt plus plaintext password"
 
 password
 	^ password.
@@ -26,11 +26,11 @@ password: aPassword
 	salt := ( Float random * 1000000 ) toInteger.
 	password := self hashPassword: aPassword.
 !
-checkPassword: aPassword
-	^ password = ( self hashPassword: aPassword ).
-!
 hashPassword: aPassword
 	^ ( Hash create: 'sha256' ) update: self salt toString + aPassword; digest: 'hex'.
+!
+checkPassword: aPassword
+	^ password = ( self hashPassword: aPassword ).
 !
 salt
 	^ salt.

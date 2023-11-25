@@ -52,11 +52,25 @@ fromJs: js
 	self error: 'Unknown JS classname: ', jsClassName.
 !
 
+"JSON"
+
+"21-NOV-2023: The built-in fetch() of Node.js (currently v21.2.0)
+ will not sometimes work and cause errors.
+ From Node.js, use the fetch: method from the Http class, that is based on the npm package 'node-fetch'"
+
+fetchObject: url then: block onError: errorBlock
+	"Retuns a ST object from the the fetched JSON response."
+	INLINE '
+		fetch( url.js )
+			.then( response => response.json() )
+			.then( js => block.$value$( stObject$class.$fromJs$( js ) ) )
+			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+!
+parse: json
+	^ Object fromJs: INLINE 'JSON.parse( json.js )'.
+!
+
 METHODS
-
-"Copying"
-
-"TODO"
 
 "Converting"
 
@@ -184,16 +198,3 @@ perform: methodName with: argument1 with: argument2 with: argument3
 	^ INLINE 'this[ Naming.methodStToJs( methodName.js ) ]( argument1, argument2, argument3 )'.
 !
 
-"JSON"
-
-fetchObject: url then: block onError: errorBlock
-	"Retuns a ST object from the the fetched JSON response."
-	INLINE '
-		fetch( url.js )
-			.then( response => response.json() )
-			.then( js => block.$value$( stObject$class.$fromJs$( js ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
-!
-parse: json
-	^ Object fromJs: INLINE 'JSON.parse( json.js )'.
-!

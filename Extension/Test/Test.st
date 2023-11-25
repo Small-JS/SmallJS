@@ -16,9 +16,11 @@ method1
 	var1 isNil ifTrue: [ ^ false ].
 	^ String new.
 !
-++
+++ var
 	"Binary method."
-	^ var1 + var2.
+	| locVar |
+	locVar := var + var.
+	^ self + locVar.
 !
 method2Arg1: aVar1 arg2: aVar2
 	INLINE 'this.js = null'.

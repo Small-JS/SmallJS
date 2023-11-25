@@ -1,4 +1,4 @@
-CLASS ShopOrder EXTENDS Object MODULE ShopClient CLASSVARS ''
+CLASS OrderApp EXTENDS ClientApp MODULE ShopClient CLASSVARS ''
 	VARS 'orderTable orderTableBody orders products'
 
 METHODS
@@ -12,7 +12,6 @@ start
 			self error: 'Could not find orderTable element.' ].
 
 	self loadOrders.
-	"self loadTestOrders."
 !
 loadOrders
 	|  ordersApi |
@@ -27,25 +26,17 @@ onLoadOrders: object
 	orders := ( object atProperty: 'orders' ) map: [ :object | Order fromObject: object ].
 	products := ( object atProperty: 'products' ) map: [ :object | Product fromObject: object ].
 
-	"Connect orders to products by direct reference, replacing product ids."
+	"Connect orders to products by direct references, replacing product ids."
 	orders do: [ :order |
 		order product: ( products find: [ :product | product id = order product ] ) ].
 
 	self showOrders.
+
+	self testMode ifTrue: [
+		TestOrderApp new test: self ].
 !
 onLoadOrdersError: error
 	self error: error message.
-!
-loadTestOrders
-	self onLoadOrders: ( JsObject parse: self jsonTestOrders ).
-!
-jsonTestOrders
-	^ '{ "orders" : [ \
-			{ "id": 1, "person": 1, "product": 1, "amount": 10 }, \
-			{ "id": 2, "person": 1,"product": 2,"amount": 5 } ], \
-		"products" : [ \
-			{ "id": 1, "name": "Apple", "price": 100 }, \
-			{ "id": 2, "name": "Orange", "price": 150 } ] }'.
 !
 showOrders
 	| row priceString |
@@ -58,4 +49,13 @@ showOrders
 		row insertCell textContent: order amount.
 		row insertCell textContent: order product priceString.
 	]
+!
+
+"Accessing (used by tests)"
+
+orderTable
+	^ orderTable.
+!
+orders
+	^ orders.
 !

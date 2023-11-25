@@ -16,9 +16,9 @@ test
 !
 onConnect
 	self assert: [ true ].		"Code reached."
-	personTable := database connectTable: 'person' rowClass: TestPerson.
-	productTable := database connectTable: 'product' rowClass: TestProduct.
-	orderTable := database connectTable: 'order' rowClass: TestOrder.
+	personTable := database connectTable: 'person' rowClass: MyPerson.
+	productTable := database connectTable: 'product' rowClass: MyProduct.
+	orderTable := database connectTable: 'order' rowClass: MyOrder.
 
 	self databaseQuery.
 !
@@ -102,7 +102,7 @@ tableQueryId: product
 tableInsert
 	| person |
 
-	person := TestPerson new name: 'Test'; password: 'secret'.
+	person := MyPerson new name: 'Test'; password: 'secret'.
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
 	self assert: [ person checkPassword: 'secret' ].

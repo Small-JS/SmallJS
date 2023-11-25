@@ -23,3 +23,9 @@ Consists of a client (browser) and a server (NodeJS) part.\
 
 >[./Shop/Shop.md](./Shop/Shop.md)
 
+## Benchmark
+
+Some benchmarks comparing SmallJS performance to native JS implementations.
+
+>[./Benchmark/Benchmark.md](./Benchmark/Benchmark.md)
+

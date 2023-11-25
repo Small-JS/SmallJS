@@ -3,7 +3,7 @@
 #productTable {
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
+	border: 2px solid grey;
 	border-collapse: collapse;
 	border-width: 2px;
 	border-spacing: 0px;
@@ -12,7 +12,8 @@
 
 #productTable td, th {
 	padding: 4px;
-	border: 1px solid black;
+	border: 2px solid grey;
+	color: black;
 }
 
 #productTable td:nth-child( 2 )

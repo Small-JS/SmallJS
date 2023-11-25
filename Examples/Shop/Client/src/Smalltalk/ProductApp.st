@@ -1,4 +1,4 @@
-CLASS ShopProduct EXTENDS Object MODULE ShopClient CLASSVARS '' VARS 'productTable products'
+CLASS ProductApp EXTENDS ClientApp MODULE ShopClient CLASSVARS '' VARS 'productTable products'
 
 METHODS
 
@@ -11,7 +11,9 @@ start
 			self error: 'Could not find product table element.' ].
 
 	self loadProducts.
-"	self loadTestProducts."
+
+	self testMode ifTrue: [
+		TestProductApp new test: self ].
 !
 
 "Loading"
@@ -19,7 +21,7 @@ start
 loadProducts
 	| productsApi |
 
-	productsApi := Window default location hostPath, '/api/products'.
+	productsApi := self url, '/api/products'.
 	Object
 		fetchObject: productsApi
 		then: [ :objects | self onLoadProducts: objects ]
@@ -31,14 +33,6 @@ onLoadProducts: objects
 !
 onLoadProductsError: error
 	self error: error message.
-!
-loadTestProducts
-	self onLoadProducts: ( Object parse: self jsonTestProducts ).
-!
-jsonTestProducts
-	^ '[ { "id": 1, "name" : "Apple", "price": 100 }, \
-		{ "id": 2, "name": "Orange", "price": 150 }, \
-		{ "id": 3, "name": "Mango", "price": 220 } ]'.
 !
 
 "Showing"
@@ -52,4 +46,13 @@ showProducts
 		row := productTable tBody insertRow: -1.
 		row insertCell textContent: product name.
 		row insertCell textContent: product priceString ].
+!
+
+"Accessing (used by tests)"
+
+productTable
+	^ productTable.
+!
+products
+	^ products.
 !

@@ -1,4 +1,4 @@
-CLASS TestCounter EXTENDS Test MODULE TestCounter CLASSVARS '' VARS ''
+CLASS TestCounter EXTENDS Test MODULE TestCounterClient CLASSVARS '' VARS ''
 
 test
 	| counter |
@@ -7,7 +7,7 @@ test
 
 	self assert: [ counter value = 0 ].
 
-	counter increase increase.
+	counter increment increment.
 	self assert: [ counter value = 2 ].
 
 	counter reset.

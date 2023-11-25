@@ -9,7 +9,7 @@ CLASS ShopServer EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'express ser
 METHODS
 
 start
-	self connectDatabase
+	self connectDatabase.
 !
 connectDatabase
 	| connectionString |
@@ -47,49 +47,48 @@ startServer
 	express get: '/api/orders'
 		then: [ :request :response | self orders: request response: response ].
 
-	server := express listen: port
-		then: [ self log: 'Started Shop server on port: ', port toString ].
+	server := express listen: port then: [ self onListen: port ].
 !
+onListen: port
+	self log: 'Started Shop server on port: ', port toString.
 
+	self testMode ifTrue: [
+		TestShopServer new test: self ].
+!
+testMode
+	^ Process argv length >= 3 and: [ ( Process argv at: 2 ) = '-test' ].
+!
 "Example login request:
-	localhost:3000/api/login?user=John&password=secret"
+	localhost:3000/api/login?user=John&password=secret
+ Example result:
+ 	{ true, 'Login succeeded' }"
 
 login: request response: response
-	| userName password query person |
+	| result userName password query person |
+
+	result := LoginResult success: false message: 'Unknown'.
 
 	userName := request query atJsProperty: 'user'.
-	userName isNil ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Login parameter "user" missing.' ].
-
-	password := request query atJsProperty: 'password'.
-	password isNil ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Login parameter "password" missing.' ].
-
-	query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-	"Note: Block returns are not allowed in pg callbacks."
-	personTable query: query  with: #( userName )
-		then: [ :persons |
-			persons length < 1
-				ifTrue: [ self sendLoginResponse: response success: false message: 'User not found: ', userName ]
+	userName isNil
+		ifTrue: [ response send: ( result message: 'Login parameter "user" missing' ) ]
+		ifFalse: [
+			password := request query atJsProperty: 'password'.
+			password isNil
+				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
 				ifFalse: [
-					person := persons first.
-					( person checkPassword: password ) not
-						ifTrue: [ self sendLoginResponse: response success: false message: 'Password check failed' ]
-						ifFalse: [
-							self sendLoginResponse: response success: true message: 'Login succeeded'.
-							user := person ] ] ].
-!
-
-"Example login response:
-	{ 'success' : true, 'message' : 'Login succeeded' }"
-
-sendLoginResponse: response success: success message: message
-	| jsResponse |
-	jsResponse := JsObject newEmpty
-		atJsProperty: 'success' put: success;
-		atJsProperty: 'message' put: message.
-
-	response send: jsResponse.
+					query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
+					"Note: Block returns are not allowed in pg callbacks."
+					"Note2: The next part is async."
+					personTable query: query  with: #( userName ) then: [ :persons |
+						persons length < 1
+							ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
+							ifFalse: [
+								person := persons first.
+								( person checkPassword: password ) not
+									ifTrue: [ response send: ( result message: 'Password check failed' ) ]
+									ifFalse: [
+										response send: ( result success: true; message: 'Login succeeded' ).
+										user := person ] ] ] ] ].
 !
 checkLogin
 	^ user class = Person.
@@ -138,4 +137,8 @@ orders: request response: response
 						atProperty: 'orders' put: orders;
 						atProperty: 'products' put: products.
 					response send: result toJsObject ] ].
+!
+stop
+	server terminate.
+	database end.
 !

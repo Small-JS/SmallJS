@@ -1,10 +1,13 @@
-CLASS TodoApp EXTENDS Object MODULE Todo CLASSVARS ''
+CLASS TodoApp EXTENDS ClientApp MODULE Todo CLASSVARS ''
 	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable sortColumn sortDescending'
 
 start
 	self loadTasks.
 	self bindElements.
-	self showTasks
+	self showTasks.
+
+	self testMode ifTrue: [
+		TestTodoApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
@@ -115,4 +118,22 @@ deleteTask: position
 
 	tasks removeAt: position y - 2.
 	taskTable deleteRow: position y.
+!
+
+"Accessing (used by tests)"
+
+tasks
+	^ tasks.
+!
+newTaskTitleInput
+	^ newTaskTitleInput.
+!
+newTaskDueInput
+	^ newTaskDueInput.
+!
+newTaskAddButton
+	^ newTaskAddButton.
+!
+taskTable
+	^ taskTable.
 !

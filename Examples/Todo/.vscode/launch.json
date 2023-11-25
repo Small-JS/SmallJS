@@ -13,6 +13,14 @@
 			"preLaunchTask": "Compile Smalltalk"
 		},
 		{
+			"name": "Launch Chrome test",
+			"request": "launch",
+			"type": "chrome",
+			"url": "http://localhost:3000/?test",
+			"webRoot": "${workspaceFolder}/web",
+			"preLaunchTask": "Compile Smalltalk"
+		},
+		{
 			"name": "Launch Edge",
 			"request": "launch",
 			"type": "msedge",
@@ -27,12 +35,6 @@
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk",
-			"pathMappings": [
-				{
-					"url": "http://localhost:3000/src/Smalltalk",
-					"path": "${workspaceFolder}/src/Smalltalk"
-				}
-			]
 		}
 	]
 }

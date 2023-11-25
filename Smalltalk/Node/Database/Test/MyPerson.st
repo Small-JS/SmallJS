@@ -1,4 +1,4 @@
-CLASS TestPerson EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name salt password'
+CLASS MyPerson EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name salt password'
 
 CLASSMETHODS
 

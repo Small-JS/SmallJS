@@ -1,23 +1,19 @@
-CLASS BenchmarkApp EXTENDS Object MODULE Benchmark CLASSVARS ''
-	VARS 'benchmarks size benchmarkTable runAllButton'
+CLASS BenchmarkApp EXTENDS ClientApp MODULE Benchmark CLASSVARS ''
+	VARS 'benchmarks size resultsTable runAllButton'
 
 start
-	self test.
-	self initializeBenchmarks.
+	self initializeBenchmarks: self benchmarkConfigs.
 	self bindElements.
 	self clearBenchmarks.
+
+	self testMode ifTrue: [
+		^ TestBenchmarkApp new test: self ].
 !
-test
-	"Refer to al least one test class from a module to import all its test classes automatically."
-	TestBenchmark.
-	"Run sync and async tests of all imported Test* classes."
-	Test all.
-!
-initializeBenchmarks
+initializeBenchmarks: configs
 	| benchmark |
 
 	benchmarks := Array new.
-	self benchmarkConfigs do: [ :benchmarkConfig |
+	configs do: [ :benchmarkConfig |
 		benchmark := ( benchmarkConfig at: 0 ) new.
 		benchmark size: ( benchmarkConfig at: 1 ).
 		benchmarks add: benchmark ].
@@ -25,25 +21,25 @@ initializeBenchmarks
 benchmarkConfigs
 	"Array of benchmark configurations, each containing benchmark class and size to run."
 	^ #(
-		#( PrimesBenchmark 100000 )
-		#( FibonacciBenchmark 500000 )
+		#( PrimesBenchmark 50000 )
+		#( FibonacciBenchmark 100000 )
 		#( PiBenchmark 10000 )
 	)
 !
 bindElements
-	benchmarkTable := Document default getElementById: 'benchmarkTable'.
-	self assert: [ benchmarkTable class = HtmlTableElement ].
+	resultsTable := Document default getElementById: 'resultsTable'.
+	self assert: [ resultsTable class = HtmlTableElement ].
 
 	runAllButton := Document default getElementById: 'runAllButton'.
 	self assert: [ runAllButton class = HtmlButtonElement ].
-	runAllButton addEventListener: 'click' then: [ self runAllButtonClicked ].
+	runAllButton onClick: [ self runAllButtonClicked ].
 !
 clearBenchmarks
 	"(Re)load benchmarkClasses into table and clear results."
 	| row |
-	benchmarkTable tBody innerHtml: ''.
+	resultsTable tBody innerHtml: ''.
 	benchmarks do: [ :benchmark |
-		row := benchmarkTable tBody insertRow: -1.
+		row := resultsTable tBody insertRow: -1.
 		row insertCell textContent: benchmark name.
 		row insertCell textContent: benchmark size.
 		3 timesRepeat: [ row insertCell ] ].
@@ -51,28 +47,25 @@ clearBenchmarks
 runAllButtonClicked
 	self clearBenchmarks.
 	self setCursor: 'wait'.
-
 	"Wait 0.1 seconds before starting benchmarks
 	 to give browser time to update the HTML first."
-	Timer new timeout: 100 then: [
+	Timer timeout: 100 then: [
 		self runBenchmarks ].
 !
 setCursor: value
 	Document default body style setProperty: 'cursor' value: value.
 	runAllButton style setProperty: 'cursor' value: value.
-	benchmarkTable style setProperty: 'cursor' value: value.
+	resultsTable style setProperty: 'cursor' value: value.
 !
 runBenchmarks
 	| benchmark row |
 
 	0 to: benchmarks length - 1 do: [ :index |
 		"Pause shortly between benchmarks to allow async GUI updates."
-		Timer new timeout: 100 then: [
+		Timer timeout: 100 then: [
 			benchmark := benchmarks at: index.
-			row := benchmarkTable rows at: index + 1.
+			row := resultsTable rows at: index + 1.
 			self runBenchmark: benchmark row: row ] ].
-
-	self setCursor: 'default'.
 !
 runBenchmark: benchmark row: row
 		benchmark timeRunJs.
@@ -82,4 +75,20 @@ runBenchmark: benchmark row: row
 		( row cells at: 3 ) textContent: benchmark stTime toString.
 
 		( row cells at: 4 ) textContent: ( benchmark factor toFixed: 1 ).
+
+		"Restrore cursor after last benchmark."
+		benchmark = benchmarks last ifTrue: [
+			self setCursor: 'default' ].
+!
+
+"Accessing (used by tests)"
+
+benchmarks
+	^ benchmarks.
+!
+resultsTable
+	^ resultsTable.
+!
+runAllButton
+	^ runAllButton.
 !

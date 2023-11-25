@@ -13,6 +13,14 @@
 			"preLaunchTask": "Compile client"
 		},
 		{
+			"name": "Launch Chrome test",
+			"request": "launch",
+			"type": "chrome",
+			"url": "http://localhost:3000/?test",
+			"webRoot": "${workspaceFolder}/web",
+			"preLaunchTask": "Compile client"
+		},
+		{
 			"name": "Launch Edge",
 			"request": "launch",
 			"type": "msedge",

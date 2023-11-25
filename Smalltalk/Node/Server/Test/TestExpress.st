@@ -11,39 +11,16 @@ test
 	server := express listen: port
 		then: [ :error | self onExpressListen: error ].
 !
-onExpressListenBug: error
-	"2023-03-07:
-	 Calling method fetchObject: in this code does work as intended,
-	 delivering re response to method onLoginResponse: .
-	 But in in the finalization of the fetch thread, the following error is wrongfully triggered:
-	 	Exception has occurred: TypeError [ERR_INVALID_STATE]: Invalid state: Writer has been released.
-	 Allthough this does not affect the program function, it is annoying when debugging,
-	 So this code is now replaced by a workaround below.
-	 In the normal use case for this, where fetch is called from a browser to nodeJS,
-	 the error does not occur."
-
+onExpressListen: error
 	| loginUrl |
 
 	error isNil ifFalse: [ error throw ].
 
 	loginUrl := 'http://localhost:', port toString, '/login?user=John&password=secret'.
-	JsObject
+	Http
 		fetchObject: loginUrl
-		then: [ :jsObject | self onLoginResponse: jsObject ]
+		then: [ :object | self onLoginResponse: object ]
 		onError: [ :error | self onLoginError: error ] .
-
-!
-onExpressListen: error
-	"Bybass version for now, avoiding library bug above."
-	| response |
-
-	self assert: [ error isNil ].
-
-	response := Object new
-		atProperty: 'success' put: true;
-		atProperty: 'message' put: 'Login succeeded'.
-	self onLoginResponse: response.
-
 !
 onLoginRequest: request response: response
 	| user password |
@@ -51,16 +28,10 @@ onLoginRequest: request response: response
 	self assert: [ true ].	"Callback reached."
 
 	user := request query atJsProperty: 'user'.
-	user isNil ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Login parameter "user" missing.' ].
-	user ~= 'John' ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Unknown user', user ].
+	self assert: [ user = 'John' ].
 
 	password := request query atJsProperty: 'password'.
-	password isNil ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Login parameter "password" missing.' ].
-	password ~= 'secret' ifTrue: [
-		^ self sendLoginResponse: response success: false message: 'Wrong password' ].
+	self assert: [ password = 'secret' ].
 
 	self sendLoginResponse: response success: true message: 'Login succeeded'.
 !

@@ -21,9 +21,9 @@ test
 onConnect
 	self assert: [ true ].	"Method reached."
 
-	personTable := database connectTable: 'Person' rowClass: TestPerson.
-	productTable := database connectTable: 'Product' rowClass: TestProduct.
-	orderTable := database connectTable: 'Order' rowClass: TestOrder.
+	personTable := database connectTable: 'Person' rowClass: MyPerson.
+	productTable := database connectTable: 'Product' rowClass: MyProduct.
+	orderTable := database connectTable: 'Order' rowClass: MyOrder.
 
 	self databaseQuery.
 !
@@ -107,7 +107,7 @@ tableQueryId: product
 tableInsert
 	| person |
 
-	person := TestPerson new name: 'Test'; password: 'secret'.
+	person := MyPerson new name: 'Test'; password: 'secret'.
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
 	self assert: [ person checkPassword: 'secret' ].

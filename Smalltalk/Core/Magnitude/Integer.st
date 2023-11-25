@@ -212,9 +212,7 @@ xor: number
 !
 
 gcd: number
-	"Answer greatest common denominator.
-	 Implemented in JS for speed, because of use when normalizing fractions."
-
+	"Answer greatest common denominator."
 	^ number gcdInteger: self
 !
 gcdInteger: number

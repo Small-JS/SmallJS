@@ -16,9 +16,8 @@ In VSCode, open the Command Palette (Cmd+Shift+P) type 'shell command' to find:\
 `Shell Command: Install 'code' command in PATH command`\
 click on to add VSCode to the path.
 
-### VSCode Extensions
+### VSCode Firefox extension
 From Chrome and Edge, step debugging is built into VSCode.
-
 For debugging in Firefox you should install this extension: Debugger for Firefox.
 
 Note:
@@ -29,7 +28,7 @@ To fix this, these lines should be added to the `launch.json` file of your brows
         "timeout": 90000,
         "tmpDir": "/some/folder/of/yours/with/write/perms",
 
-### NodeJS
+### Node.js
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
 

@@ -1,5 +1,5 @@
 // Invoke the start method on a new BrowserApp ST object.
 
-let browserAppModuleName: string = "./Smalltalk/BrowserApp.js";
-import( browserAppModuleName )
+let moduleName: string = "./Smalltalk/BrowserApp.js";
+import( moduleName )
 	.then( module => { module.stBrowserApp$class.$new().$start(); } );

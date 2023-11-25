@@ -1,6 +1,6 @@
 CLASS Server EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
 
-INLINE 'import http from "http";'
+"INLINE 'import http from 'http';'"
 INLINE 'import { createHttpTerminator } from "http-terminator";'
 
 close

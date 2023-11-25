@@ -13,10 +13,12 @@ SmallJS is *fully* object oriented, so customizable on every level.
 For usability, ST class and method names are kept mostly equal to their familiar JS counterparts.
 JS libraries already encapsulated in ST are:
 - Browser: Document, Window, HTML elements, events, CSS, streams.
-- Node.js: HTTP server, Express, 3 databases.
-- And an Example webshop client + server app template.
+- Node.js: HTTP server, Express, 3 databases, files.
 
-## Example code
+To get you started quickly, are several example projects\
+for development in the browser and / or a Node.js back-end.
+
+## Code example
 
 ![./Documentation/Example.png](./Documentation/Example.png)
 
@@ -40,16 +42,18 @@ This script:
 - Installs the SmallJS language extension in VSCode.
 - Installs npm dependencies for all projects.
 
-## Build SmallJS projects
+## Build and test SmallJS projects
 
-Run the bash script: `./build.sh`.\
+Run the bash script: `./build.sh`, that:
+- Builds the Smalltalk to JS `./Compiler`.
+- Builds all other ST projects and runs their unit tests.
 
-This script:
-- First builds the Smalltalk `./Compiler`, compiling TS to JS.
-- Then builds all other ST projects
-- Runs their unit tests if present.
+Note:
+To enable testing of web browser based projects, \
+you first have to copy the file `.env.example` to `.env`\
+and then uncomment the browsers you want to test with on your OS.\
+You can do this at al later time.
 
-Note that browser type ST projects are only compiled, not run or tested.\
 Check if everything builds successfully before going to the next step.
 
 ## Example projects

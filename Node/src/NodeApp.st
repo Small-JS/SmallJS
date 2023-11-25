@@ -5,19 +5,17 @@ CLASSMETHODS
 
 METHODS
 
-references
-	"These class references are needed to force importing their unit test modules.
-	 This code does not need to be executed."
+start
+	"These class references are needed to force importing their unit test modules."
 	TestObject.
 	TestExpress.
 	TestHash.
+	TestProcess.
 
 	TestPostgresDatabase.
 	TestMariadbDatabase.
 	TestMysqlDatabase.
-!
-start
-	Object myTest.
 
+	Object myTest.
 	Test all.
 !

@@ -5,6 +5,12 @@ CLASSMETHODS
 columns
 	^ #( 'name' 'price' ).
 !
+fromObject: object
+	^ Product new
+		id: ( object atProperty: 'id' );
+		name: ( object atProperty: 'name' );
+		price: ( object atProperty: 'price' ).
+!
 
 METHODS
 
@@ -19,4 +25,7 @@ price
 !
 price: aPrice
 	price := aPrice.
+!
+priceString
+	^ self price toFloat / 100 toFixed: 2.
 !
