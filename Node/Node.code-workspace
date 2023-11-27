@@ -1,19 +1,15 @@
 {
 	"folders": [
 		{
-			"name": "Smalltalk",
-			"path": "../Smalltalk"
-		},
-		{
-			"name": "Node",
 			"path": "."
 		},
 		{
-			"name": "Database",
+			"path": "../Smalltalk"
+		},
+		{
 			"path": "../Database"
 		},
 		{
-			"name": "Documentation",
 			"path": "../Documentation"
 		}
 	],

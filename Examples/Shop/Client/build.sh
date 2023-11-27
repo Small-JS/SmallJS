@@ -28,7 +28,15 @@ then
 fi
 source .env
 
-# Start Love server and remember PID.
+# Start Shop server and remember PID.
+
+if
+	! test -f ../Server/.env
+then
+	echo "Shop Server not configured, .env file missing."
+	echo "Skipping tests."
+	exit 0
+fi
 
 echo "Starting server."
 pushd ../Server > /dev/null
@@ -45,7 +53,7 @@ sleep 2
 # Otherwise you can inspect the error with the browser dev tools [F12].
 
 if
-	[[ -v browserChrome ]]
+	[ ! -z "$browserChrome" ]
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
@@ -55,7 +63,7 @@ then
 	sleep 10
 fi
 if
-	[[ -v browserEdge ]]
+	[ ! -z "$browserEdge" ]
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
@@ -65,7 +73,7 @@ then
 	sleep 10
 fi
 if
-	[[ -v browserFirefox ]]
+	[ ! -z "$browserFirefox" ]
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2

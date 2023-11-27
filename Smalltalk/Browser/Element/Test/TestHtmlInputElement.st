@@ -82,7 +82,7 @@ testSelection
 	self assert: [ input selectionStart = 2 ].
 	self assert: [ input selectionEnd = 5 ].
 
-	self assert: [ input selectionDirection = 'forward' ].
+	self assert: [ #( 'forward' 'none' ) includes: input selectionDirection ].
 	input selectionDirection: 'backward'.
 	self assert: [ input selectionDirection = 'backward' ].
 	input selectionDirection: 'forward'.

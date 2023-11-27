@@ -48,13 +48,13 @@ Run the bash script: `./build.sh`, that:
 - Builds the Smalltalk to JS `./Compiler`.
 - Builds all other ST projects and runs their unit tests.
 
-Note:
-To enable testing of web browser based projects, \
-you first have to copy the file `.env.example` to `.env`\
-and then uncomment the browsers you want to test with on your OS.\
-You can do this at al later time.
+Notes:
+- Browser testing is disabled by default. To enable it, check out:
+  > [./Documentation/Building.md](./Documentation/Building.md)
+- To run the Shop server, you first need to setup a database for the server. Check out:
+  > [./Examples/Shop/Shop.md](./Examples/Shop/Shop.md)
 
-Check if everything builds successfully before going to the next step.
+Check if everything builds tests successfully before going to the next step.
 
 ## Example projects
 

@@ -1,10 +1,9 @@
 CLASS TestHtmlImageElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
-	| document image |
+	| image |
 
-	document := Document default.
-	image := document getElementById: 'resultImage'.
+	image := Document default getElementById: 'resultImage'.
 	self assert: [ image class = HtmlImageElement ].
 
 	image complete
@@ -59,10 +58,10 @@ onComplete: image
 	self assert: [ image src endsWith: 'Missing.jpg' ].
 	image src: 'SmallJS.png'.
 
-	self assert: [ image srcSet = 'SmallJS2.png 2x' ].
+	self assert: [ image srcSet = '' ].
 	image srcSet: 'SmallJS2.png 4x'.
 	self assert: [ image srcSet = 'SmallJS2.png 4x' ].
-	image srcSet: 'SmallJS2.png 2x'.
+	image srcSet: ''.
 
 	self assert: [ image useMap = '' ].
 

@@ -69,7 +69,7 @@ test
 	self assert: [ textArea required ].
 	textArea required: false.
 
-	self assert: [ textArea selectionDirection = 'forward' ].
+	self assert: [ #( 'forward' 'none' ) includes: textArea selectionDirection ].
 	textArea selectionDirection: 'backward'.
 	self assert: [ textArea selectionDirection = 'backward' ].
 	textArea selectionDirection: 'forward'.

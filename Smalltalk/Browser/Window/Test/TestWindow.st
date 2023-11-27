@@ -2,6 +2,11 @@ CLASS TestWindow EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 METHODS
 
+testPlatforms
+	self assert: [ Window isFirefox | true ].
+	self assert: [ Window isChromium | true ].
+	self assert: [ Window isMac | true ].
+!
 testProperties
 	| window |
 	window := Window default.

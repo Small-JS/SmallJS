@@ -18,6 +18,7 @@ test
 	self assert: [ navigator mediaSession class = MediaSession ].
 	self assert: [ navigator onLine class = Boolean ].
 	self assert: [ navigator pdfViewerEnabled class = Boolean ].
+	self assert: [ navigator platform class = String ].
 	self assert: [ navigator permissions class = Permissions ].
 	self assert: [ navigator serviceWorker class = ServiceWorkerContainer ].
 	self assert: [ navigator storage class = StorageManager ].

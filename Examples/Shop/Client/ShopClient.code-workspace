@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "../../../Smalltalk"
+			"path": "."
 		},
 		{
-			"path": "."
+			"path": "../../../Smalltalk"
 		}
 	],
 	"settings": {}

@@ -49,6 +49,9 @@ pdfViewerEnabled
 permissions
 	^ Permissions fromJs: INLINE 'this.js.permissions'.
 !
+platform
+	^ String fromJs: INLINE 'this.js.platform'.
+!
 serviceWorker
 	^ ServiceWorkerContainer fromJs: INLINE 'this.js.serviceWorker'.
 !

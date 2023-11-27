@@ -8,18 +8,6 @@ cd "$(dirname "$0")"
 
 echo "==== Shop Server"
 
-# Check and run .env file
-
-if
-	! test -f .env
-then
-	echo "Warning: '.env' file missing. See '.env.example'."
-else
-	set -o allexport
-	source .env
-	set +o allexport
-fi
-
 # Compile TypeScript
 
 echo "tsc Shop Server"
@@ -29,7 +17,19 @@ tsc
 
 node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
 
+# Check and run .env file
+
+if
+	! test -f .env
+then
+	echo "Warning: '.env' file missing. See '.env.example'."
+	echo "Skipping tests."
+	exit 0
+fi
+set -o allexport
+source .env
+set +o allexport
+
 # Run tests
 
 node out/App.js -test
-

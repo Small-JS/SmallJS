@@ -39,12 +39,10 @@ sleep 2
 # Test in enabled browsers.
 # Browsers will close automatically if all tests succeed.
 # Otherwise you can inspect the error with the browser dev tools [F12].
-# For Edge, disable Settings > System and performance > Startup boost
-#	and disable ... > Continue running background extensions and apps when Microsoft Edge is closed
 # Enable popups for windows creation tests to succeed.
 
 if
-	[[ -v browserChrome ]]
+	[ ! -z "$browserChrome" ]
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
@@ -54,7 +52,7 @@ then
 	sleep 6
 fi
 if
-	[[ -v browserEdge ]]
+	[ ! -z "$browserEdge" ]
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
@@ -64,7 +62,7 @@ then
 	sleep 6
 fi
 if
-	[[ -v browserFirefox ]]
+	[ ! -z "$browserFirefox" ]
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2

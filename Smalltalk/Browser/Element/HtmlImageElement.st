@@ -108,7 +108,7 @@ srcSet
 	^ String fromJs: INLINE 'this.js.srcset'.
 !
 srcSet: srcSet
-	INLINE 'this.js.srcset  = srcSet.js'.
+	INLINE 'this.js.srcset = srcSet.js'.
 !
 useMap
 	^ String fromJs: INLINE 'this.js.useMap'.

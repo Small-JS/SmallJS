@@ -41,7 +41,7 @@ sleep 2
 # Otherwise you can inspect the error with the browser dev tools [F12].
 
 if
-	[[ -v browserChrome ]]
+	[ ! -z "$browserChrome" ]
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
@@ -51,7 +51,7 @@ then
 	sleep 12
 fi
 if
-	[[ -v browserEdge ]]
+	[ ! -z "$browserEdge" ]
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
@@ -61,7 +61,7 @@ then
 	sleep 12
 fi
 if
-	[[ -v browserFirefox ]]
+	[ ! -z "$browserFirefox" ]
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2
