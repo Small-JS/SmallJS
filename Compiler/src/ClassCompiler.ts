@@ -2,7 +2,6 @@
 import { CompiledClass } from "./CompiledClass.js";
 import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
-// import { ReceiverAndMessage } from "./ReceiverAndMessage.js";
 import { CharUtil, Naming } from "./Runtime.js";
 
 import { SourceNode } from "source-map";
