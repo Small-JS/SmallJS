@@ -29,28 +29,44 @@ export class ClassCompiler
 		this.class = new CompiledClass( filename, source );
 
 		this.parser.mustParseTerm( "CLASS" );
-		this.class.name = this.parser.parseIdentifier();
+		this.class.name = this.parser.parseClassName();
 
 		this.parser.mustParseTerm( "EXTENDS" );
-		this.class.superclassName = this.parser.parseIdentifier();
+		this.class.superclassName = this.parser.parseExtendsClassName();
 		if( this.class.superclassName != "nil" )
 			this.class.addReference( this.class.superclassName );
 
 		this.parser.mustParseTerm( "MODULE" );
-		this.class.moduleName = this.parser.parseIdentifier();
+		this.class.moduleName = this.parser.parseModuleName();
 
 		this.parser.mustParseTerm( "CLASSVARS" );
-		let classVarsString = this.parser.parseStringValue();
-		this.class.classVars = CompiledVariable.fromVariablesString( classVarsString );
+		this.class.classVars = this.loadVariables();
 
 		this.parser.mustParseTerm( "VARS" );
-		let instVarsString: string = this.parser.parseStringValue();
-		this.class.vars = CompiledVariable.fromVariablesString( instVarsString );
+		this.class.vars = this.loadVariables();
 
-		// Save position of the class body source code for the compilation phase.
+		// Save current position in the class body source code for the compilation phase.
 		this.class.bodyPosition = this.parser.position.copy();
 
 		return this.class;
+	}
+
+	// Load variables into argument array
+
+	loadVariables(): CompiledVariable[]
+	{
+		let variables: CompiledVariable[] = [];
+
+		if( this.parser.nextChar() != "'" )
+			this.error( "Expected single quoted variables list" );
+
+		while( this.parser.peekChar() != "'" )
+			variables.push( new CompiledVariable( this.parser.parseVariableName() ) );
+
+		this.parser.nextChar();
+		this.parser.skipSpace();
+
+		return variables;
 	}
 
 	compileClasses( classes: CompiledClass[], outputFolder: string )
@@ -111,16 +127,19 @@ export class ClassCompiler
 
 		this.method.name = this.parser.parseTerm();
 
-		if( this.method.isBinary() )
-			this.method.args.push( new CompiledVariable( this.parser.parseTerm() ) );
-		else if( this.method.isKeyword() ) {
-			this.method.args.push( new CompiledVariable( this.parser.parseTerm() ) );
+		if( this.method.isUnary() ) {}
+		else if( this.method.isBinary() )
+			this.compileMethodHeaderVariable();
+		else if( this.method.isKeywordSelector() ) {
+			this.compileMethodHeaderVariable();
 			// Check for more selectors ending with ":" plus argument.
 			while( !this.parser.atEnd() && Naming.methodIsKeyword( this.parser.peekTerm() ) ) {
 				this.method.name += this.parser.parseTerm();
-				this.method.args.push( new CompiledVariable( this.parser.parseTerm() ) );
+				this.compileMethodHeaderVariable();
 			}
 		}
+		else
+			this.error( "Illegal method name: " + this.method.name );
 
 		if( this.compilingClassMethods ) {
 			if( !this.class.addClassMethod( this.method ) )
@@ -130,6 +149,12 @@ export class ClassCompiler
 			if( !this.class.addMethod( this.method ) )
 				this.error( "Duplicate method: " + this.method.name );
 		}
+	}
+
+	compileMethodHeaderVariable()
+	{
+		let variableName = this.parser.parseVariableName();
+		this.method.args.push( new CompiledVariable( variableName ) );
 	}
 
 	compileMethodBody()
@@ -162,15 +187,12 @@ export class ClassCompiler
 
 	private compileLocalVariable()
 	{
-		let name: string = this.parser.parseIdentifier();
+		let variableName: string = this.parser.parseVariableName();
 
-		if( !CharUtil.isLowercase( name ) )
-			this.error( "Illegal local variable name: " + name );
+		if( [ 'true', 'false', 'nil', 'self', 'super', 'await' ].includes( variableName ) )
+			this.error( "Local variable name is reserved word: " + variableName );
 
-		if( [ 'true', 'false', 'nil', 'self', 'super', 'await' ].includes( name ) )
-			this.error( "Local variable name is reserved word: " + name );
-
-		let compiledVariable = new CompiledVariable( name );
+		let compiledVariable = new CompiledVariable( variableName );
 		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil;\n";
 		compiledVariable.node = this.sourceNode( source, "variable" );
 
@@ -263,7 +285,7 @@ export class ClassCompiler
 			node = this.compileBlock( false );
 		else if( term == "(" )
 			node = this.compileParenthesis();
-		else if( CharUtil.isIdentifier( term ) && ![ "nil", "true", "false" ].includes( term ) )
+		else if( CharUtil.isIdentifierStart( term ) && ![ "nil", "true", "false" ].includes( term ) )
 			node = this.compileIdentifier( term );
 		else
 			node = this.compileLiteral( term );
@@ -521,7 +543,7 @@ export class ClassCompiler
 
 	private compileCascadedMessages( receiver: SourceNode )
 	{
-		this.compileKeywordMessages( receiver );
+		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
 		if( ! this.parser.tryParseTerm( ";" ) )
@@ -533,7 +555,7 @@ export class ClassCompiler
 
 		do {
 			let cascadedReceiver = this.sourceNode( "$object$", "cascadedReceiver" );
-			this.compileKeywordMessages( cascadedReceiver );
+			this.compileKeywordMessage( cascadedReceiver );
 			if( cascadedReceiver.toString() == '$object$' )
 				this.error( "Expected cascaded message" );
 
@@ -549,12 +571,12 @@ export class ClassCompiler
 	// Compile keyword message sends but before that,
 	// compile higher precedence binary and unary message sends.
 
-	private compileKeywordMessages( receiver: SourceNode )
+	private compileKeywordMessage( receiver: SourceNode )
 	{
 		this.compileBinaryMessages( receiver );
 
 		// Not a keyword message
-		if( ! Naming.methodIsKeyword( this.parser.peekTerm() ) )
+		if( ! Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
 			return;
 
 		let message = this.positionedSourceNode( "", "keywordMessage" );
@@ -628,15 +650,15 @@ export class ClassCompiler
 
 	relativeFilename(): string
 	{
-		return this.outputPathRelative() + this.class.filename;
+		return this.relativeOutputPath() + this.class.filename;
 	}
 
 	// Return relative path from output folder to workspace folder.
-	// E.g. if output folder = "web" then relative path will be "../".
+	// E.g. if output folder is "web" then relative path will be "../".
 	// Note: This currently only works with output folders that are subfolders,
 	//       Not with parent relative folders nor with absolute folders.
 
-	outputPathRelative(): string
+	relativeOutputPath(): string
 	{
 		let folder = this.outputFolder;
 		if( folder == "." || folder == "./" )

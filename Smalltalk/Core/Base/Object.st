@@ -5,12 +5,10 @@ INLINE 'import { Naming } from "./Runtime.js";'
 CLASSMETHODS
 
 myTest
-	"This is the first method compiled, used when testing the compiler."
-	| a b |
-	a := 1.
-	true ifTrue: [
-		a increment ].
-	^ a.
+	"This is the first method compiled.
+	Can be used when testing the compiler."
+
+	| a |
 !
 
 new

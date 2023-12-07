@@ -64,7 +64,7 @@ export class Parser
 			term = this.parseString();
 		else if( CharUtil.isDigit( char ) )
 			term = this.parseNumber();
-		else if( CharUtil.isIdentifier( char ) )
+		else if( CharUtil.isIdentifierStart( char ) )
 			term = this.parseIdentifier();
 		else
 			term = this.parseSpecial();
@@ -129,7 +129,6 @@ export class Parser
 	}
 
 	// Parse number as a string.
-	// Only works for integers, for now.
 
 	parseNumber(): string
 	{
@@ -182,7 +181,7 @@ export class Parser
 	{
 		this.skipSpace();
 
-		if( !CharUtil.isIdentifier( this.peekChar() ) )
+		if( !CharUtil.isIdentifierStart( this.peekChar() ) )
 			this.error( "Illegal identifier." );
 
 		let id: string = '';
@@ -196,6 +195,83 @@ export class Parser
 		this.skipSpace();
 
 		return id;
+	}
+
+	parseClassName(): string
+	{
+		let className = this.parseWord();
+
+		if( !CharUtil.isUppercase( className ) )
+			this.error( "Class name must start with uppercase letter: " + className );
+
+		for( let i = 1; i < className.length; ++i )
+			if( !CharUtil.isIdentifierNext( className[ i ] ) )
+				this.error( "Illegal character in class name: " + className );
+
+		return className;
+	}
+
+	parseExtendsClassName(): string
+	{
+		let className = this.parseWord();
+
+		// Class Object extends nil (no class)
+		if( className == "nil" )
+			return className;
+
+		if( !CharUtil.isUppercase( className ) )
+			this.error( "Extends class name must start with uppercase letter: " + className );
+
+		for( let i = 1; i < className.length; ++i )
+			if( !CharUtil.isIdentifierNext( className[ i ] ) )
+				this.error( "Illegal character in extends class name: " + className );
+
+		return className;
+	}
+
+	parseModuleName(): string
+	{
+		let moduleName = this.parseWord();
+
+		if( !CharUtil.isIdentifierStart( moduleName ) )
+			this.error( "invalid start character of module name: " + moduleName );
+
+		for( let i = 1; i < moduleName.length; ++i )
+			if( !CharUtil.isIdentifierNext( moduleName[ i ] ) )
+				this.error( "Illegal character in module name: " + moduleName );
+
+		return moduleName;
+	}
+
+	parseVariableName(): string
+	{
+		let variableName = this.parseWord();
+
+		if( !CharUtil.isLowercase( variableName ) )
+			this.error( "Variable name must start with lower case letter: " + variableName );
+
+		for( let i = 1; i < variableName.length; ++i )
+			if( !CharUtil.isIdentifierNext( variableName[ i ] ) )
+				this.error( "Illegal character in variable name: " + variableName );
+
+		return variableName;
+	}
+
+	// Return next identifier word delimited by whitespaces or special chars.
+
+	parseWord(): string
+	{
+		this.skipSpace();
+
+		let word = '';
+
+		// while( !this.atEnd() && !this.atSpace() )
+		while( !this.atEnd() && CharUtil.isIdentifierNext( this.peekChar() ) )
+			word += this.nextChar();
+
+		this.skipSpace();
+
+		return word;
 	}
 
 	// Skip whitespace and comments.
@@ -225,7 +301,7 @@ export class Parser
 
 	atLetter(): boolean
 	{
-		return CharUtil.isIdentifier( this.peekChar() );
+		return CharUtil.isIdentifierStart( this.peekChar() );
 	}
 
 	atDigit(): boolean

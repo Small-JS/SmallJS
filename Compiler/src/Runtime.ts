@@ -110,21 +110,58 @@ export class Naming
 
 	static methodIsUnary( term: string ): boolean
 	{
-		return term.length > 0 && CharUtil.isIdentifier( term ) && ! term.endsWith( ":" );
+		if( term.length < 1 )
+			return false;
+
+		if( ! CharUtil.isIdentifierStart( term ) )
+			return false;
+
+		for( let i = 1; i < term.length; ++i )
+			if( ! CharUtil.isIdentifierNext( term[ i ] ) )
+				return false;
+
+		return true;
 	}
 
 	// Return true if argument is a message selector consists of allowed operator characters.
 
 	static methodIsBinary( term: string ): boolean
 	{
-		return term.length > 0 && this.operatorMap.has( term.charAt( 0 ) );
+		if( term.length < 1 )
+			return false;
+
+		for( let char of term )
+			if( ! this.operatorMap.has( char ) )
+				return false;
+
+		return true;
 	}
 
-	// Return true if argument is a message selector in the form "name:"
+	// Return true if argument is a message selector in the form "selector1:selector2:"
 
 	static methodIsKeyword( term: string )
 	{
-		return term.length > 0 && CharUtil.isIdentifier( term ) && term.endsWith( ":" );
+		return term.length > 0 && CharUtil.isIdentifierStart( term ) && term.endsWith( ":" );
+	}
+
+	// Return true if argument is a message selector in the form "selector1:"
+
+	static methodIsKeywordSelector( term: string )
+	{
+		if( term.length < 2 )
+			return false;
+
+		if( ! term.endsWith( ":" ) )
+			return false;
+
+		if( ! CharUtil.isIdentifierStart( term ) )
+			return false;
+
+		for( let i = 1; i < term.length - 1 ; ++i )
+			if( ! CharUtil.isIdentifierNext( term[ i ] ) )
+				return false;
+
+		return true;
 	}
 
 	// Map ST binaray method name, consisting of operator characters, to valid JS method name
@@ -234,10 +271,18 @@ export class CharUtil
 {
 	// Return true if first character in string is an alphabetical character or underscore
 
-	static isIdentifier( str: string ): boolean
+	static isIdentifierStart( str: string ): boolean
 	{
 		let code: number = str.charCodeAt( 0 );
 		return ( code >= 65 && code < 91 ) || ( code >= 97 && code < 123 ) || code == 95;
+	}
+
+	// Return true if first character in string is an alphabetical character or underscore or a number
+
+	static isIdentifierNext( str: string ): boolean
+	{
+		let code: number = str.charCodeAt( 0 );
+		return ( code >= 65 && code < 91 ) || ( code >= 97 && code < 123 ) || code == 95 || ( code >= 48 && code <= 57 );
 	}
 
 	static isLetter( str: string ): boolean

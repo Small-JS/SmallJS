@@ -74,6 +74,11 @@ export class CompiledMethod
 		return Naming.methodIsConstructor( this.name );
 	}
 
+	isUnary(): boolean
+	{
+		return Naming.methodIsUnary( this.name );
+	}
+
 	isBinary(): boolean
 	{
 		return Naming.methodIsBinary( this.name );
@@ -82,6 +87,11 @@ export class CompiledMethod
 	isKeyword(): boolean
 	{
 		return Naming.methodIsKeyword( this.name );
+	}
+
+	isKeywordSelector(): boolean
+	{
+		return Naming.methodIsKeywordSelector( this.name );
 	}
 
 	checkVariableReference( compiledVariable: CompiledVariable ): boolean
