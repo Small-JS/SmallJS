@@ -4,12 +4,8 @@ CLASS OrderApp EXTENDS ClientApp MODULE ShopClient CLASSVARS ''
 METHODS
 
 start
-	| document |
-	document := Document default.
-
-	orderTable := document getElementById: 'orderTable'.
-	orderTable class = HtmlTableElement ifFalse: [
-			self error: 'Could not find orderTable element.' ].
+	orderTable := Document default getElementById: 'orderTable'.
+	self assert: [ orderTable class = HtmlTableElement ].
 
 	self loadOrders.
 !

@@ -9,6 +9,7 @@ CLASS ShopServer EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'express ser
 METHODS
 
 start
+	self log: 'Shop Server.'.
 	self connectDatabase.
 !
 connectDatabase
@@ -18,6 +19,7 @@ connectDatabase
 	connectionString isNil ifTrue: [
 			self error: 'Environment variable "SHOP_DATABASE" not set.' ].
 
+	self log: 'Connecting to database.'.
 	database := SqlDatabase newFor: connectionString.
 	database connect: connectionString then: [ self connectTables ].
 !
@@ -47,10 +49,11 @@ startServer
 	express get: '/api/orders'
 		then: [ :request :response | self orders: request response: response ].
 
+	self log: 'Starting server.'.
 	server := express listen: port then: [ self onListen: port ].
 !
 onListen: port
-	self log: 'Started Shop server on port: ', port toString.
+	self log: 'Server started on port: ', port toString.
 
 	self testMode ifTrue: [
 		TestShopServer new test: self ].

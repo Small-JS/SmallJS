@@ -12,7 +12,7 @@ test: aProductApp
 	Timer timeout: 1000 then: [
 		self testProductFields.
 		Timer timeout: 1000 then: [
-			productApp navigateTo: '../Order/Order.html' ] ].
+			self navigateToOrders ] ].
 !
 testProductFields
 	| tBody cells |
@@ -25,4 +25,14 @@ testProductFields
 	self assert: [ cells length = 2 ].
 	self assert: [ ( cells at: 0 ) textContent = 'Apple' ].
 	self assert: [ ( cells at: 1 ) textContent = '1.00' ].
+!
+navigateToOrders
+	| ordersLink |
+
+	ordersLink := Document default getElementById: 'ordersLink'.
+	self assert: [ ordersLink class = HtmlAnchorElement ].
+	"Cannot click on navigation bar, because then window close with not be allowed anymore."
+	"ordersLink href: ordersLink href, '?test'.
+	 ordersLink click."
+	productApp navigateTo: ordersLink href.
 !

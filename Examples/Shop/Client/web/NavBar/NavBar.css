@@ -4,7 +4,12 @@
 	justify-content: center;
 }
 
+#navBarLabel {
+	font-weight: bold;
+}
+
 #navBar a {
+	font-weight: bold;
 	color: black;
 	text-align: center;
 	padding: 14px 16px;
@@ -15,8 +20,3 @@
 	background: #C0C0C0;
 	color: black;
 }
-
-#shopMenuLabel {
-	font-weight: bold;
-}
-
