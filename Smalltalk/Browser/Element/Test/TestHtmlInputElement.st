@@ -3,7 +3,7 @@ CLASS TestHtmlInputElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| input outputLabel outputButton |
-	input := Document default getElementById: 'input'.
+	input := Document getElementById: 'input'.
 	self assert: [ input class = HtmlInputElement ].
 
 	self assert: [ input name = 'inputName' ].
@@ -43,16 +43,16 @@ test
 	self assert: [ input readOnly ].
 	input readOnly: false.
 
-	outputLabel := Document default getElementById: 'inputOutputLabel'.
+	outputLabel := Document getElementById: 'inputOutputLabel'.
 	self assert: [ outputLabel class = HtmlLabelElement ].
 
-	outputButton := Document default getElementById: 'inputOutputButton'.
+	outputButton := Document getElementById: 'inputOutputButton'.
 	self assert: [ outputButton type = 'button' ].
 	outputButton addEventListener: 'click' then: [ outputLabel textContent: input value ].
 !
 testValidation
 	| input |
-	input := Document default getElementById: 'input'.
+	input := Document getElementById: 'input'.
 	self assert: [ input class = HtmlInputElement ].
 
 	self assert: [ input class = HtmlInputElement ].
@@ -66,7 +66,7 @@ testValidation
 !
 testSelection
 	| input |
-	input := Document default getElementById: 'input'.
+	input := Document getElementById: 'input'.
 	self assert: [ input class = HtmlInputElement ].
 
 	input selectionStart: 1.
@@ -94,7 +94,7 @@ testSelection
 !
 testCheckbox
 	| checkbox |
-	checkbox := Document default getElementById: 'checkbox'.
+	checkbox := Document getElementById: 'checkbox'.
 	self assert: [ checkbox class = HtmlInputElement ].
 
 	self assert: [ checkbox checked not ].
@@ -104,9 +104,9 @@ testCheckbox
 !
 testRadio
 	| radio1 radio2 |
-	radio1 := Document default getElementById: 'radio1'.
+	radio1 := Document getElementById: 'radio1'.
 	self assert: [ radio1 class = HtmlInputElement ].
-	radio2 := Document default getElementById: 'radio2'.
+	radio2 := Document getElementById: 'radio2'.
 	self assert: [ radio2 class = HtmlInputElement ].
 
 	self assert: [ radio1 checked ].
@@ -127,7 +127,7 @@ testRadio
 !
 testImageInput
 	| imageInput |
-	imageInput := Document default getElementById: 'imageInput'.
+	imageInput := Document getElementById: 'imageInput'.
 	self assert: [ imageInput class = HtmlInputElement ].
 
 	self assert: [ imageInput alt = 'SmallJS logo' ].
@@ -143,7 +143,7 @@ testImageInput
 !
 testFileInput
 	| fileInput |
-	fileInput := Document default getElementById: 'fileInput'.
+	fileInput := Document getElementById: 'fileInput'.
 	self assert: [ fileInput type = 'file' ].
 
 	self assert: [ fileInput accept = 'image/png, image/jpeg' ].
@@ -157,12 +157,12 @@ testFileInput
 !
 onFileInputChange
 	| file |
-	( Document default getElementById: 'fileInput' ) files do: [ :file |
+	( Document getElementById: 'fileInput' ) files do: [ :file |
 		TestFile new onTest: file. ].
 !
 testNumber
 	| numberInput outputButton outputLabel |
-	numberInput := Document default getElementById: 'numberInput'.
+	numberInput := Document getElementById: 'numberInput'.
 	self assert: [ numberInput class = HtmlInputElement ].
 
 	self assert: [ numberInput value = '78' ].
@@ -197,16 +197,16 @@ testNumber
 	self assert: [ numberInput placeholder = 'Alt text' ].
 	numberInput placeholder: 'Two digit number'.
 
-	outputLabel := Document default getElementById: 'numberInputOutputLabel'.
+	outputLabel := Document getElementById: 'numberInputOutputLabel'.
 	self assert: [ outputLabel class = HtmlLabelElement ].
 
-	outputButton := Document default getElementById: 'numberInputOutputButton'.
+	outputButton := Document getElementById: 'numberInputOutputButton'.
 	self assert: [ outputButton type = 'button' ].
 	outputButton addEventListener: 'click' then: [ outputLabel textContent: numberInput value ].
 !
 testDate
 	| dateInput date pickButton outputButton outputLabel |
-	dateInput := Document default getElementById: 'dateInput'.
+	dateInput := Document getElementById: 'dateInput'.
 	self assert: [ dateInput type = 'date' ].
 
 	dateInput value: '1900-01-01'.
@@ -219,14 +219,14 @@ testDate
 	dateInput stepDown: 1; stepDown: 1.
 	self assert: [ dateInput value = '1900-01-01' ].
 
-	pickButton := Document default getElementById: 'dateInputPickButton'.
+	pickButton := Document getElementById: 'dateInputPickButton'.
 	self assert: [ pickButton type = 'button' ].
 	pickButton addEventListener: 'click' then: [ dateInput showPicker ].
 
-	outputLabel := Document default getElementById: 'dateInputOutputLabel'.
+	outputLabel := Document getElementById: 'dateInputOutputLabel'.
 	self assert: [ outputLabel class = HtmlLabelElement ].
 
-	outputButton := Document default getElementById: 'dateInputOutputButton'.
+	outputButton := Document getElementById: 'dateInputOutputButton'.
 	self assert: [ outputButton type = 'button' ].
 	outputButton addEventListener: 'click' then: [ outputLabel textContent: dateInput value ].
 !

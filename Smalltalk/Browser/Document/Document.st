@@ -9,7 +9,11 @@ new
 default
 	^ self fromJs: INLINE 'document'.
 !
+getElementById: id
+	"Convenience method because it's used often."
 
+	^ self default getElementById: id.
+!
 METHODS
 
 "Properties."

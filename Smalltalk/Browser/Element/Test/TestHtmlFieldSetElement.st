@@ -3,7 +3,7 @@ CLASS TestHtmlFieldSetElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 testProperties
 	| fieldSet |
 
-	fieldSet := Document default getElementById: 'fieldSet'.
+	fieldSet := Document getElementById: 'fieldSet'.
 	self assert: [ fieldSet class = HtmlFieldSetElement ].
 
 	self assert: [ fieldSet disabled not ].
@@ -21,7 +21,7 @@ testProperties
 testMethods
 	| fieldSet |
 
-	fieldSet := Document default getElementById: 'fieldSet'.
+	fieldSet := Document getElementById: 'fieldSet'.
 	self assert: [ fieldSet class = HtmlFieldSetElement ].
 
 	self assert: [ fieldSet checkValidity ].

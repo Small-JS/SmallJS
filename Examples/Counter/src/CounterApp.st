@@ -12,14 +12,14 @@ start
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
 
-	counterLabel := Document default getElementById: 'counterLabel'.
+	counterLabel := Document getElementById: 'counterLabel'.
 	self assert: [ counterLabel class = HtmlLabelElement ].
 
-	incrementButton := Document default getElementById: 'incrementButton'.
+	incrementButton := Document getElementById: 'incrementButton'.
 	self assert: [ incrementButton class = HtmlButtonElement ].
 	incrementButton onClick: [ self increment ].
 
-	resetButton := Document default getElementById: 'resetButton'.
+	resetButton := Document getElementById: 'resetButton'.
 	self assert: [ resetButton class = HtmlButtonElement ].
 	resetButton onClick: [ self reset ].
 !

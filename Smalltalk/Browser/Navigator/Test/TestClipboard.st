@@ -6,11 +6,11 @@ test
 	clipboard := Window default navigator clipboard.
 	self assert: [ clipboard class = Clipboard ].
 
-	clipboardReadButton := Document default getElementById: 'clipboardReadButton'.
+	clipboardReadButton := Document getElementById: 'clipboardReadButton'.
 	self assert: [ clipboardReadButton class = HtmlButtonElement ].
 	clipboardReadButton addEventListener: 'click' then: [ self onClipboardReadButton ].
 
-	clipboardWriteButton := Document default getElementById: 'clipboardWriteButton'.
+	clipboardWriteButton := Document getElementById: 'clipboardWriteButton'.
 	self assert: [ clipboardWriteButton class = HtmlButtonElement ].
 	clipboardWriteButton addEventListener: 'click' then: [ self onClipboardWriteButton ].
 
@@ -18,7 +18,7 @@ test
 onClipboardReadButton
 	| clipboardResultLabel |
 
-	clipboardResultLabel := Document default getElementById: 'clipboardResultLabel'.
+	clipboardResultLabel := Document getElementById: 'clipboardResultLabel'.
 	self assert: [ clipboardResultLabel class = HtmlLabelElement ].
 
 	Window default navigator clipboard readTextThen:
@@ -27,10 +27,10 @@ onClipboardReadButton
 onClipboardWriteButton
 	| clipboardInput clipboardResultLabel |
 
-	clipboardInput := Document default getElementById: 'clipboardInput'.
+	clipboardInput := Document getElementById: 'clipboardInput'.
 	self assert: [ clipboardInput class = HtmlInputElement ].
 
-	clipboardResultLabel := Document default getElementById: 'clipboardResultLabel'.
+	clipboardResultLabel := Document getElementById: 'clipboardResultLabel'.
 	self assert: [ clipboardResultLabel class = HtmlLabelElement ].
 
 	Window default navigator clipboard writeText: clipboardInput value then:

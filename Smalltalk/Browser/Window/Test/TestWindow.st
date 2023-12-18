@@ -59,7 +59,7 @@ testCallback
 !
 onCallback
 	| label |
-	label := Document default getElementById: 'callbackLabel'.
+	label := Document getElementById: 'callbackLabel'.
 	label textContent: 'Called back!'.
 !
 onDontCallback
@@ -106,12 +106,12 @@ onAlert
 onConfirm
 	| result |
 	result := Window default confirm: 'My Confirm'.
-	( Document default getElementById: 'dialogResultLabel' ) textContent: result toString.
+	( Document getElementById: 'dialogResultLabel' ) textContent: result toString.
 !
 onPrompt
 	| result |
 	result := Window default prompt: 'My Prompt'.
-	( Document default getElementById: 'dialogResultLabel' ) textContent: result toString.
+	( Document getElementById: 'dialogResultLabel' ) textContent: result toString.
 !
 onPrint
 	Window default print.
@@ -122,7 +122,7 @@ testOtherMethods
 
 	window blur.
 	window focus.
-	element := Document default getElementById: 'welcomeTitle'.
+	element := Document getElementById: 'welcomeTitle'.
 	self assert:[ ( window getComputedStyle: element ) class = CssStyleDeclaration ].
 	self assert:[ ( window matchMedia: 'myMedia' ) class = MediaQueryList ].
 

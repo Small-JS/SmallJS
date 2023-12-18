@@ -19,7 +19,7 @@ test
 	selection := document getSelection.
 	self assert: [ selection toString = 'text' ].
 
-	selectionResultLabel := Document default getElementById: 'selectionResultLabel'.
+	selectionResultLabel := Document getElementById: 'selectionResultLabel'.
 	selectionResultLabel textContent: selection toString.
 
 	self assert: [ selection anchorNode class = HtmlTableCellElement ].
@@ -66,11 +66,11 @@ test
 !
 testSelectionOutputButton
 	| selectionOutputButton |
-	selectionOutputButton := Document default getElementById: 'selectionOutputButton'.
+	selectionOutputButton := Document getElementById: 'selectionOutputButton'.
 	selectionOutputButton addEventListener: 'click' then: [ :event | self onSelectionOutputButton: event ].
 !
 onSelectionOutputButton: event
 	| selectionResultLabel |
-	selectionResultLabel := Document default getElementById: 'selectionResultLabel'.
+	selectionResultLabel := Document getElementById: 'selectionResultLabel'.
 	selectionResultLabel textContent: Selection new toString.
 !

@@ -3,7 +3,7 @@ CLASS TestHtmlIframeElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| iframe expectedReferrerPolicy |
 
-	iframe := Document default getElementById: 'iframe'.
+	iframe := Document getElementById: 'iframe'.
 	self assert: [ iframe class = HtmlIframeElement ].
 
 	self assert: [ iframe allow = 'geolocation' ].

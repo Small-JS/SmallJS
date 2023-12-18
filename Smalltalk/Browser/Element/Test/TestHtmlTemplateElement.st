@@ -2,10 +2,10 @@ CLASS TestHtmlTemplateElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| template templateSpan |
-	template := Document default getElementById: 'template'.
+	template := Document getElementById: 'template'.
 	self assert: [ template class = HtmlTemplateElement ].
 
-	templateSpan := Document default getElementById: 'templateSpan'.
+	templateSpan := Document getElementById: 'templateSpan'.
 	self assert: [ templateSpan class = HtmlSpanElement ].
 
 	templateSpan removeChildren.

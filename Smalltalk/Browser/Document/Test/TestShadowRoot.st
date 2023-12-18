@@ -5,7 +5,7 @@ METHODS
 test
 	| span shadow paragraph  |
 
-	span := Document default getElementById: 'shadowRootSpan'.
+	span := Document getElementById: 'shadowRootSpan'.
 	self assert: [ span class = HtmlSpanElement ].
 	shadow := span shadowRoot.
 	shadow isNil ifTrue: [

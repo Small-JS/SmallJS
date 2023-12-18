@@ -14,17 +14,17 @@ start
 		TestLoginApp new test: self ].
 !
 bindElements
-	userNameInput := Document default getElementById: 'userNameInput'.
+	userNameInput := Document getElementById: 'userNameInput'.
 	self assert: [ userNameInput class = HtmlInputElement ].
 
-	passwordInput := Document default getElementById: 'passwordInput'.
+	passwordInput := Document getElementById: 'passwordInput'.
 	self assert: [ passwordInput class = HtmlInputElement ].
 
-	loginButton := Document default getElementById: 'loginButton'.
+	loginButton := Document getElementById: 'loginButton'.
 	self assert: [ loginButton class = HtmlButtonElement ].
 	loginButton onClick: [ :event | self onLogin ].
 
-	loginErrorLabel := Document default getElementById: 'loginErrorLabel'.
+	loginErrorLabel := Document getElementById: 'loginErrorLabel'.
 	self assert: [ loginErrorLabel class = HtmlLabelElement ].
 !
 onLogin

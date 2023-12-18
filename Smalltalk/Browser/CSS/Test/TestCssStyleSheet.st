@@ -21,8 +21,8 @@ testApplyRemove
 	( document getElementById: 'cssRemoveButton' ) onClick: [ :event | self onRemove ].
 !
 onApply
-	( Document default getElementById: 'cssResultLabel' ) classList add: 'italicBold'.
+	( Document getElementById: 'cssResultLabel' ) classList add: 'italicBold'.
 !
 onRemove
-	( Document default getElementById: 'cssResultLabel' ) classList remove: 'italicBold'.
+	( Document getElementById: 'cssResultLabel' ) classList remove: 'italicBold'.
 !

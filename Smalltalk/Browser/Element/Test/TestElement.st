@@ -3,7 +3,7 @@ CLASS TestElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 testProperties
 	| element element2 |
 
-	element := Document default getElementById: 'element'.
+	element := Document getElementById: 'element'.
 	self assert: [ element id = 'element' ].
 	self assert: [ element assignedSlot = nil ].
 	self assert: [ ( element attributes getNamedItem: 'id' ) value = 'element' ].

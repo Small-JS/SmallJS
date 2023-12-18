@@ -3,7 +3,7 @@ CLASS TestHtmlImageElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| image |
 
-	image := Document default getElementById: 'resultImage'.
+	image := Document getElementById: 'resultImage'.
 	self assert: [ image class = HtmlImageElement ].
 
 	image complete

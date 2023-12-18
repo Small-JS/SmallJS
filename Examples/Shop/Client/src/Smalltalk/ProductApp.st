@@ -3,7 +3,7 @@ CLASS ProductApp EXTENDS ClientApp MODULE ShopClient CLASSVARS '' VARS 'productT
 METHODS
 
 start
-	productTable := Document default getElementById: 'productTable'.
+	productTable := Document getElementById: 'productTable'.
 	productTable class = HtmlTableElement ifFalse: [
 			self error: 'Could not find product table element.' ].
 

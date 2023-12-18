@@ -2,7 +2,7 @@ CLASS TestHtmlTextAreaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| textArea defaultValue |
-	textArea := Document default getElementById: 'textArea'.
+	textArea := Document getElementById: 'textArea'.
 	self assert: [ textArea class = HtmlTextAreaElement ].
 	defaultValue := 'aa\nbb'.
 

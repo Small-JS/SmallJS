@@ -55,7 +55,7 @@ test
 !
 testSubmitButton
 	| button |
-	button := Document default getElementById: 'formSubmitButton'.
+	button := Document getElementById: 'formSubmitButton'.
 
 	self assert: [ button form class = HtmlFormElement ].
 	self assert: [ button formAction startsWith: 'http' ].
@@ -66,7 +66,7 @@ testSubmitButton
 !
 testInput
 	| input |
-	input := Document default getElementById: 'formInput'.
+	input := Document getElementById: 'formInput'.
 
 	self assert: [ input form class = HtmlFormElement ].
 	self assert: [ input formAction startsWith: 'http' ].

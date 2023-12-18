@@ -3,7 +3,7 @@ CLASS TestHtmlElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 testProperties
 	| element |
 
-	element := Document default getElementById: 'htmlElement'.
+	element := Document getElementById: 'htmlElement'.
 	self assert: [ element class = HtmlParagraphElement ].
 
 	self assert: [ element accessKey = 'p' ].

@@ -1,4 +1,4 @@
-// Replace tags <include scr="<path name>"> with referenced HTML
+// Replace tags <include src="<file path>"> with referenced HTML
 
 function loadIncludes()
 {
@@ -6,12 +6,14 @@ function loadIncludes()
 	for( const includeNode of includeNodes ) {
 		let filePath = includeNode.getAttribute( 'src' );
 		if( filePath )
-			fetch( filePath ).then( file => {
-					file.text().then( content => {
-						includeNode.insertAdjacentHTML( 'afterend', content );
-						includeNode.remove();
-						} );
+			fetch( filePath ).then( file =>
+			{
+				file.text().then( content =>
+				{
+					includeNode.insertAdjacentHTML( 'afterend', content );
+					includeNode.remove();
 				} );
+			} );
 	};
 }
 

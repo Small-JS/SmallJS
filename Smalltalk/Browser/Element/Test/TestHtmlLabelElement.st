@@ -3,11 +3,11 @@ CLASS TestHtmlLabelElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| label checkboxLabel outputLabel |
 
-	label := Document default getElementById: 'label'.
+	label := Document getElementById: 'label'.
 	self assert: [ label class = HtmlLabelElement ].
 	self assert: [ label form isNil ].
 
-	checkboxLabel := Document default getElementById: 'checkboxLabel'.
+	checkboxLabel := Document getElementById: 'checkboxLabel'.
 	self assert: [ checkboxLabel control class = HtmlInputElement ].
 
 	self assert: [ checkboxLabel htmlFor = 'checkbox' ].
@@ -15,6 +15,6 @@ test
 	self assert: [ checkboxLabel htmlFor = 'nothing' ].
 	checkboxLabel htmlFor: 'checkbox'.
 
-	outputLabel := Document default getElementById: 'outputLabel'.
+	outputLabel := Document getElementById: 'outputLabel'.
 	outputLabel textContent: label textContent.
 !
