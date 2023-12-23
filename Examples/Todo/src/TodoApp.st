@@ -19,10 +19,10 @@ bindElements
 	newTaskDueInput value: ( Date new toIsoString substring: 0 to: 10 ).
 
 	newTaskAddButton := Document getElementById: 'newTaskAddButton' class: HtmlButtonElement.
-	newTaskAddButton addEventListener: 'click' then: [ self addNewTask ].
+	newTaskAddButton onClick: [ self addNewTask ].
 
 	taskTable := Document getElementById: 'taskTable' class: HtmlTableElement.
-	taskTable addEventListener: 'click' then: [ :event | self taskTableClicked: event ].
+	taskTable onClick: [ :event | self taskTableClicked: event ].
 !
 loadTasks
 	"Load some generated tasks into tasks array."

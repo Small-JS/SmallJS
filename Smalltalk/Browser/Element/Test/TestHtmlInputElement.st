@@ -46,7 +46,7 @@ test
 
 	outputButton := Document getElementById: 'inputOutputButton' class: HtmlButtonElement.
 	self assert: [ outputButton type = 'button' ].
-	outputButton addEventListener: 'click' then: [ outputLabel textContent: input value ].
+	outputButton onClick: [ outputLabel textContent: input value ].
 !
 testValidation
 	| input |
@@ -190,7 +190,7 @@ testNumber
 	outputLabel := Document getElementById: 'numberInputOutputLabel' class: HtmlLabelElement.
 	outputButton := Document getElementById: 'numberInputOutputButton' class: HtmlButtonElement.
 	self assert: [ outputButton type = 'button' ].
-	outputButton addEventListener: 'click' then: [ outputLabel textContent: numberInput value ].
+	outputButton onClick: [ outputLabel textContent: numberInput value ].
 !
 testDate
 	| dateInput date pickButton outputButton outputLabel |
@@ -209,10 +209,10 @@ testDate
 
 	pickButton := Document getElementById: 'dateInputPickButton' class: HtmlButtonElement.
 	self assert: [ pickButton type = 'button' ].
-	pickButton addEventListener: 'click' then: [ dateInput showPicker ].
+	pickButton onClick: [ dateInput showPicker ].
 
 	outputLabel := Document getElementById: 'dateInputOutputLabel' class: HtmlLabelElement.
 	outputButton := Document getElementById: 'dateInputOutputButton' class: HtmlButtonElement.
 	self assert: [ outputButton type = 'button' ].
-	outputButton addEventListener: 'click' then: [ outputLabel textContent: dateInput value ].
+	outputButton onClick: [ outputLabel textContent: dateInput value ].
 !

@@ -67,7 +67,7 @@ test
 testSelectionOutputButton
 	| selectionOutputButton |
 	selectionOutputButton := Document getElementById: 'selectionOutputButton' class: HtmlButtonElement.
-	selectionOutputButton addEventListener: 'click' then: [ :event | self onSelectionOutputButton: event ].
+	selectionOutputButton onClick: [ :event | self onSelectionOutputButton: event ].
 !
 onSelectionOutputButton: event
 	| selectionResultLabel |

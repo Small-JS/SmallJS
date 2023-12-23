@@ -2,9 +2,6 @@ CLASS HtmlButtonElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
 
 METHODS
 
-onClick: eventBlock
-	self addEventListener: 'click' then: eventBlock.
-!
 autofocus
 	^ Boolean fromJs: INLINE 'this.js.autofocus'.
 !

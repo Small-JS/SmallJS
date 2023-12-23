@@ -42,12 +42,12 @@ test
 testClick
 	| button inactiveButton eventBlock |
 	button := Document getElementById: 'button' class: HtmlButtonElement.
-	button addEventListener: 'click' then: [ :event | self onTestButton: event ].
+	button onClick: [ :event | self onTestButton: event ].
 	button click.
 
 	inactiveButton := Document getElementById: 'inactiveButton' class: HtmlButtonElement.
 	eventBlock := [ :event | self onInactiveButton: event ].
-	inactiveButton addEventListener: 'click' then: eventBlock.
+	inactiveButton onClick: eventBlock.
 	inactiveButton removeEventListener: 'click' then: eventBlock.
 	self assert: [ inactiveButton eventIds length = 0 ].
 !

@@ -7,10 +7,10 @@ test
 	self assert: [ clipboard class = Clipboard ].
 
 	clipboardReadButton := Document getElementById: 'clipboardReadButton' class: HtmlButtonElement.
-	clipboardReadButton addEventListener: 'click' then: [ self onClipboardReadButton ].
+	clipboardReadButton onClick: [ self onClipboardReadButton ].
 
 	clipboardWriteButton := Document getElementById: 'clipboardWriteButton' class: HtmlButtonElement.
-	clipboardWriteButton addEventListener: 'click' then: [ self onClipboardWriteButton ].
+	clipboardWriteButton onClick: [ self onClipboardWriteButton ].
 
 !
 onClipboardReadButton
