@@ -2,8 +2,7 @@ CLASS TestHtmlTextAreaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| textArea defaultValue |
-	textArea := Document getElementById: 'textArea'.
-	self assert: [ textArea class = HtmlTextAreaElement ].
+	textArea := Document getElementById: 'textArea' class: HtmlTextAreaElement.
 	defaultValue := 'aa\nbb'.
 
 	"Auto capitalization does not seem to work in Edge 107."

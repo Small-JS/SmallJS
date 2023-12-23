@@ -17,12 +17,12 @@ test
 testApplyRemove
 	| document  |
 	document := Document default.
-	( document getElementById: 'cssApplyButton' ) onClick: [ :event | self onApply ].
-	( document getElementById: 'cssRemoveButton' ) onClick: [ :event | self onRemove ].
+	( document getElementById: 'cssApplyButton' class: HtmlButtonElement ) onClick: [ :event | self onApply ].
+	( document getElementById: 'cssRemoveButton' class: HtmlButtonElement ) onClick: [ :event | self onRemove ].
 !
 onApply
-	( Document getElementById: 'cssResultLabel' ) classList add: 'italicBold'.
+	( Document getElementById: 'cssResultLabel' class: HtmlLabelElement ) classList add: 'italicBold'.
 !
 onRemove
-	( Document getElementById: 'cssResultLabel' ) classList remove: 'italicBold'.
+	( Document getElementById: 'cssResultLabel' class: HtmlLabelElement ) classList remove: 'italicBold'.
 !

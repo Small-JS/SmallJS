@@ -27,11 +27,8 @@ benchmarkConfigs
 	)
 !
 bindElements
-	resultsTable := Document getElementById: 'resultsTable'.
-	self assert: [ resultsTable class = HtmlTableElement ].
-
-	runAllButton := Document getElementById: 'runAllButton'.
-	self assert: [ runAllButton class = HtmlButtonElement ].
+	resultsTable := Document getElementById: 'resultsTable' class: HtmlTableElement.
+	runAllButton := Document getElementById: 'runAllButton' class: HtmlButtonElement.
 	runAllButton onClick: [ self runAllButtonClicked ].
 !
 clearBenchmarks

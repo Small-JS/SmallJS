@@ -4,8 +4,7 @@ htmlPath
 	^ 'Product/Product.html'.
 !
 start
-	productTable := Document getElementById: 'productTable'.
-	self assert: [ productTable class = HtmlTableElement ].
+	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
 	NavBarComponent new app: self app;
 		loadIntoElement: 'productNavBar' then: [

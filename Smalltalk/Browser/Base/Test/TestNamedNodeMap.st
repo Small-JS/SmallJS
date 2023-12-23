@@ -2,7 +2,7 @@ CLASS TestNamedNodeMap EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| namedNodeMap attr |
-	namedNodeMap := ( Document getElementById: 'smallJsLogo' ) attributes.
+	namedNodeMap := ( Document getElementById: 'smallJsLogo' class: HtmlImageElement ) attributes.
 
 	self assert: [ namedNodeMap length = 5 ].
 	self assert: [ ( namedNodeMap getNamedItem: 'src' ) value = 'SmallJS.png' ].

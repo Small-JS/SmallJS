@@ -10,11 +10,11 @@ test
 	document := Document default.
 	range := document createRange.
 
-	node1 := document getElementById: 'rangeSelect1'.
+	node1 := document getElementById: 'rangeSelect1' class: HtmlParagraphElement.
 	self assert: [ node1 textContent = 'Select 1'  ].
-	node2 := document getElementById: 'rangeSelect2'.
+	node2 := document getElementById: 'rangeSelect2' class: HtmlParagraphElement.
 	self assert: [ node2 textContent = 'Select 2'  ].
-	node3 := document getElementById: 'rangeSelect3'.
+	node3 := document getElementById: 'rangeSelect3' class: HtmlParagraphElement.
 	self assert: [ node3 textContent = 'Select 3'  ].
 
 	self assert: [ range commonAncestorContainer class = Document ].

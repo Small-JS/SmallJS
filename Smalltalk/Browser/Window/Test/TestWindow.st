@@ -59,7 +59,7 @@ testCallback
 !
 onCallback
 	| label |
-	label := Document getElementById: 'callbackLabel'.
+	label := Document getElementById: 'callbackLabel' class: HtmlLabelElement.
 	label textContent: 'Called back!'.
 !
 onDontCallback
@@ -95,10 +95,10 @@ testDialogs
 
 	document := Document default.
 
-	( document getElementById: 'alertButton' ) onClick: [ :event | self onAlert ].
-	( document getElementById: 'confirmButton' ) onClick: [ :event | self onConfirm ].
-	( document getElementById: 'promptButton' ) onClick: [ :event | self onPrompt ].
-	( document getElementById: 'printButton' ) onClick: [ :event | self onPrint ].
+	( document getElementById: 'alertButton' class: HtmlButtonElement ) onClick: [ :event | self onAlert ].
+	( document getElementById: 'confirmButton' class: HtmlButtonElement ) onClick: [ :event | self onConfirm ].
+	( document getElementById: 'promptButton' class: HtmlButtonElement ) onClick: [ :event | self onPrompt ].
+	( document getElementById: 'printButton' class: HtmlButtonElement ) onClick: [ :event | self onPrint ].
 !
 onAlert
 	Window default alert: 'My Alert'.
@@ -106,12 +106,12 @@ onAlert
 onConfirm
 	| result |
 	result := Window default confirm: 'My Confirm'.
-	( Document getElementById: 'dialogResultLabel' ) textContent: result toString.
+	( Document getElementById: 'dialogResultLabel' class: HtmlLabelElement ) textContent: result toString.
 !
 onPrompt
 	| result |
 	result := Window default prompt: 'My Prompt'.
-	( Document getElementById: 'dialogResultLabel' ) textContent: result toString.
+	( Document getElementById: 'dialogResultLabel' class: HtmlLabelElement ) textContent: result toString.
 !
 onPrint
 	Window default print.
@@ -122,7 +122,7 @@ testOtherMethods
 
 	window blur.
 	window focus.
-	element := Document getElementById: 'welcomeTitle'.
+	element := Document getElementById: 'welcomeTitle' class: HtmlParagraphElement.
 	self assert:[ ( window getComputedStyle: element ) class = CssStyleDeclaration ].
 	self assert:[ ( window matchMedia: 'myMedia' ) class = MediaQueryList ].
 

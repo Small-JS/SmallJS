@@ -12,16 +12,16 @@ start
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
 
-	newTaskTitleInput := Document getElementById: 'newTaskTitleInput'.
+	newTaskTitleInput := Document getElementById: 'newTaskTitleInput' class: HtmlInputElement.
 	newTaskTitleInput value: 'New task'.
 
-	newTaskDueInput := Document getElementById: 'newTaskDueInput'.
+	newTaskDueInput := Document getElementById: 'newTaskDueInput' class: HtmlInputElement.
 	newTaskDueInput value: ( Date new toIsoString substring: 0 to: 10 ).
 
-	newTaskAddButton := Document getElementById: 'newTaskAddButton'.
+	newTaskAddButton := Document getElementById: 'newTaskAddButton' class: HtmlButtonElement.
 	newTaskAddButton addEventListener: 'click' then: [ self addNewTask ].
 
-	taskTable := Document getElementById: 'taskTable'.
+	taskTable := Document getElementById: 'taskTable' class: HtmlTableElement.
 	taskTable addEventListener: 'click' then: [ :event | self taskTableClicked: event ].
 !
 loadTasks

@@ -9,7 +9,7 @@ onTest: file
 	self assert: [ file lastModified > 0 ].
 	self assert: [ file webkitRelativePath = '' ].
 
-	outputLabel := Document getElementById: 'fileInputOutputLabel'.
+	outputLabel := Document getElementById: 'fileInputOutputLabel' class: HtmlLabelElement.
 	outputLabel textContent: file name.
 !
 

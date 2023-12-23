@@ -3,9 +3,7 @@ CLASS ProductApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS '' VARS 'product
 METHODS
 
 start
-	productTable := Document getElementById: 'productTable'.
-	productTable class = HtmlTableElement ifFalse: [
-			self error: 'Could not find product table element.' ].
+	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
 	self loadProducts.
 

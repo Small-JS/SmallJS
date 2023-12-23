@@ -7,8 +7,7 @@ htmlPath
 	^ 'Order/Order.html'.
 !
 start
-	orderTable := Document getElementById: 'orderTable'.
-	self assert: [ orderTable class = HtmlTableElement ].
+	orderTable := Document getElementById: 'orderTable' class: HtmlTableElement.
 
 	NavBarComponent new app: self app;
 		loadIntoElement: 'orderNavBar' then: [

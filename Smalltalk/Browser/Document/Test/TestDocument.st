@@ -12,7 +12,7 @@ testProperties
 	self assert: [ document body class = HtmlBodyElement ].
 	document body: document body.
 
-	element := ( document getElementById: 'input' ) focus.
+	element := ( document getElementById: 'input' class: HtmlInputElement ) focus.
 	self assert: [ document activeElement = element ].
 
 	self assert: [ document characterSet = 'UTF-8' ].
@@ -87,7 +87,12 @@ testMethods
 	"These won't work if the window is in a scrolled state:
 	self assert: [ ( document elementFromPoint: 0 @ 0 ) class = HtmlHtmlElement ].
 	self assert: [ ( document elementsFromPoint: 0 @ 0 ) first class = HtmlHtmlElement ]."
-	self assert: [ ( document getElementById: 'element' ) id = 'element' ].
+
+	self assert: [ ( document getElementById: 'element' class: HtmlParagraphElement ) id = 'element' ].
+	document getElementById: 'documentInfoLabel' class: HtmlLabelElement.	"Assert built-in."
+	self assert: [ ( Document getElementById: 'element' class: HtmlParagraphElement ) id = 'element' ].
+	Document getElementById: 'documentInfoLabel' class: HtmlLabelElement.	"Assert built-in."
+
 	self assert: [ ( document getElementsByName: 'elementName' ) first name = 'elementName' ].
 	self assert: [ ( document getElementsByClassName: 'field' ) first className = 'field' ].
 	self assert: [ ( document getElementsByTagName: 'IMG' ) first class = HtmlImageElement ].
@@ -133,6 +138,6 @@ testPage
 	self assert: [ document contentType = 'text/html' ].
 	self assert: [ document characterSet = 'UTF-8' ].
 
-	( document getElementById: 'documentInfoLabel' ) textContent:
+	( document getElementById: 'documentInfoLabel' class: HtmlLabelElement ) textContent:
 		document documentUri, ' ', document contentType, ' ', document characterSet.
 !

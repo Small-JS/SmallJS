@@ -8,18 +8,15 @@ start
 	self bindElements.
 !
 bindElements
-	label := Document getElementById: 'myComponentLabel'.
-	self assert: [ label class = HtmlLabelElement ].
+	label := Document getElementById: 'myComponentLabel' class: HtmlLabelElement.
 
-	button := Document getElementById: 'myComponentButton'.
-	self assert: [ button class = HtmlButtonElement ].
+	button := Document getElementById: 'myComponentButton' class: HtmlButtonElement.
 	button onClick: [ :event | self buttonClicked ].
 !
 buttonClicked
 	| resultLabel |
 
-	resultLabel := Document getElementById: 'componentResultLabel'.
-	self assert: [ resultLabel class = HtmlLabelElement ].
+	resultLabel := Document getElementById: 'componentResultLabel' class: HtmlLabelElement.
 	resultLabel textContent: 'Component clicked.'.
 !
 

@@ -5,8 +5,7 @@ test
 
 	self assert: [ HtmlScriptElement supports: 'module' ].
 
-	script := Document getElementById: 'script'.
-	self assert: [ script class = HtmlScriptElement ].
+	script := Document getElementById: 'script' class: HtmlScriptElement.
 
 	self assert: [ script type = 'application/javascript' ].
 	script type: 'application/ecmascript'.
@@ -45,7 +44,7 @@ test
 !
 testButton
 	| scriptButton |
-	scriptButton := Document getElementById: 'scriptButton'.
+	scriptButton := Document getElementById: 'scriptButton' class: HtmlButtonElement.
 	scriptButton onClick: [ INLINE 'ScriptFunction()' ].
 	scriptButton click.
 !

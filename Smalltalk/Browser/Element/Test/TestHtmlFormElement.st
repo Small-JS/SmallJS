@@ -4,10 +4,9 @@ test
 	| document form formLabel |
 
 	document := Document default.
-	form := document getElementById: 'form'.
-	self assert: [ form class = HtmlFormElement ].
+	form := document getElementById: 'form' class: HtmlFormElement.
 
-	formLabel := document getElementById: 'formLabel'.
+	formLabel := document getElementById: 'formLabel' class: HtmlLabelElement.
 	formLabel textContent: document location search.
 
 	self assert: [ form elements length = 2 ].
@@ -55,7 +54,7 @@ test
 !
 testSubmitButton
 	| button |
-	button := Document getElementById: 'formSubmitButton'.
+	button := Document getElementById: 'formSubmitButton' class: HtmlButtonElement.
 
 	self assert: [ button form class = HtmlFormElement ].
 	self assert: [ button formAction startsWith: 'http' ].
@@ -66,7 +65,7 @@ testSubmitButton
 !
 testInput
 	| input |
-	input := Document getElementById: 'formInput'.
+	input := Document getElementById: 'formInput' class: HtmlInputElement.
 
 	self assert: [ input form class = HtmlFormElement ].
 	self assert: [ input formAction startsWith: 'http' ].

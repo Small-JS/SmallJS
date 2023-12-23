@@ -2,8 +2,7 @@ CLASS TestHtmlLinkElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| link |
-	link := Document getElementById: 'link'.
-	self assert: [ link class = HtmlLinkElement ].
+	link := Document getElementById: 'link' class: HtmlLinkElement.
 
 	self assert: [ link as = '' ].
 	link as: 'style'.
@@ -47,7 +46,7 @@ test
 
 	self assert: [ link relList values first = 'stylesheet' ].
 	"The attribute sheet only works for the CSS link in the header."
-	self assert: [ ( Document getElementById: 'stylesheet' ) sheet class = CssStyleSheet ].
+	self assert: [ ( Document getElementById: 'stylesheet' class: HtmlLinkElement ) sheet class = CssStyleSheet ].
 
 	self assert: [ link type = 'text/css' ].
 	link type: 'alternate'.

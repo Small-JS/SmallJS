@@ -8,8 +8,7 @@ test
 	| document fieldSet validityState |
 
 	document := Document default.
-	fieldSet := document getElementById: 'fieldSet'.
-	self assert: [ fieldSet class = HtmlFieldSetElement ].
+	fieldSet := document getElementById: 'fieldSet' class: HtmlFieldSetElement.
 
 	validityState := fieldSet validity.
 	self assert: [ validityState class = ValidityState ].

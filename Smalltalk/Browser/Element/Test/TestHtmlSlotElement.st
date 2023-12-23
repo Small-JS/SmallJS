@@ -2,8 +2,7 @@ CLASS TestHtmlSlotElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 
 test
 	| slot paragraph |
-	slot := Document getElementById: 'slot'.
-	self assert: [ slot class = HtmlSlotElement ].
+	slot := Document getElementById: 'slot' class: HtmlSlotElement.
 
 	self assert: [ slot name = 'slot-name' ].
 	slot name: 'slot-new-name'.

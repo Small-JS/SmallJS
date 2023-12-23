@@ -4,7 +4,7 @@ CLASS TestHtmlButtonElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| button |
 
-	button := Document getElementById: 'button'.
+	button := Document getElementById: 'button' class: HtmlButtonElement.
 	self assert: [ button class = HtmlButtonElement ].
 
 	self assert: [ button autofocus not ].
@@ -41,11 +41,11 @@ test
 !
 testClick
 	| button inactiveButton eventBlock |
-	button := Document getElementById: 'button'.
+	button := Document getElementById: 'button' class: HtmlButtonElement.
 	button addEventListener: 'click' then: [ :event | self onTestButton: event ].
 	button click.
 
-	inactiveButton := Document getElementById: 'inactiveButton'.
+	inactiveButton := Document getElementById: 'inactiveButton' class: HtmlButtonElement.
 	eventBlock := [ :event | self onInactiveButton: event ].
 	inactiveButton addEventListener: 'click' then: eventBlock.
 	inactiveButton removeEventListener: 'click' then: eventBlock.
@@ -53,7 +53,7 @@ testClick
 !
 onTestButton: event
 	| buttonOutputLabel |
-	buttonOutputLabel := Document getElementById: 'buttonOutputLabel'.
+	buttonOutputLabel := Document getElementById: 'buttonOutputLabel' class: HtmlLabelElement.
 	buttonOutputLabel textContent: 'Test button clicked'.
 !
 onInactiveButton: event

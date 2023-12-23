@@ -14,12 +14,12 @@ test
 	selection := Selection new.
 	self assert: [ selection class = Selection ].
 
-	selectionInput := document getElementById: 'selectionInput'.
+	selectionInput := document getElementById: 'selectionInput' class: HtmlInputElement.
 	selectionInput focus setSelectionRange: 7 to: 11.
 	selection := document getSelection.
 	self assert: [ selection toString = 'text' ].
 
-	selectionResultLabel := Document getElementById: 'selectionResultLabel'.
+	selectionResultLabel := Document getElementById: 'selectionResultLabel' class: HtmlLabelElement.
 	selectionResultLabel textContent: selection toString.
 
 	self assert: [ selection anchorNode class = HtmlTableCellElement ].
@@ -61,16 +61,16 @@ test
 	selection removeAllRanges.
 
 	selection selectAllChildren: document body.
-	selection setBase: ( document getElementById: 'selectionInput' )
-		extent: ( document getElementById: 'selectionResultLabel' ).
+	selection setBase: ( document getElementById: 'selectionInput' class: HtmlInputElement )
+		extent: ( document getElementById: 'selectionResultLabel' class: HtmlLabelElement ).
 !
 testSelectionOutputButton
 	| selectionOutputButton |
-	selectionOutputButton := Document getElementById: 'selectionOutputButton'.
+	selectionOutputButton := Document getElementById: 'selectionOutputButton' class: HtmlButtonElement.
 	selectionOutputButton addEventListener: 'click' then: [ :event | self onSelectionOutputButton: event ].
 !
 onSelectionOutputButton: event
 	| selectionResultLabel |
-	selectionResultLabel := Document getElementById: 'selectionResultLabel'.
+	selectionResultLabel := Document getElementById: 'selectionResultLabel' class: HtmlLabelElement.
 	selectionResultLabel textContent: Selection new toString.
 !

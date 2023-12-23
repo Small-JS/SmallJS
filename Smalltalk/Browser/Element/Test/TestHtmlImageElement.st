@@ -3,8 +3,7 @@ CLASS TestHtmlImageElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| image |
 
-	image := Document getElementById: 'resultImage'.
-	self assert: [ image class = HtmlImageElement ].
+	image := Document getElementById: 'resultImage' class: HtmlImageElement.
 
 	image complete
 		ifTrue: [ self onComplete: image ]

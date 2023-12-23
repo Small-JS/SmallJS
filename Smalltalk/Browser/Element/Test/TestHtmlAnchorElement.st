@@ -3,7 +3,7 @@ CLASS TestHtmlAnchorElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	| anchor host hostname href port protocol |
 
-	anchor := Document getElementById: 'anchor'.
+	anchor := Document getElementById: 'anchor' class: HtmlAnchorElement.
 	self assert: [ anchor class = HtmlAnchorElement ].
 
 	self assert: [ anchor download = '' ].

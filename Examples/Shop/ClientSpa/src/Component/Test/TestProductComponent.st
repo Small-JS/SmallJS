@@ -29,7 +29,6 @@ testProductFields
 navigateToOrders
 	| ordersLabel |
 
-	ordersLabel := Document getElementById: 'navBarOrdersLabel'.
-	self assert: [ ordersLabel class = HtmlLabelElement ].
+	ordersLabel := Document getElementById: 'navBarOrdersLabel' class: HtmlLabelElement.
 	ordersLabel click.
 !

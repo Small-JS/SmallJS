@@ -3,7 +3,7 @@ CLASS TestElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 testProperties
 	| element element2 |
 
-	element := Document getElementById: 'element'.
+	element := Document getElementById: 'element' class: HtmlParagraphElement.
 	self assert: [ element id = 'element' ].
 	self assert: [ element assignedSlot = nil ].
 	self assert: [ ( element attributes getNamedItem: 'id' ) value = 'element' ].
@@ -54,10 +54,10 @@ testMethods
 
 	document := Document default.
 
-	element := document getElementById: 'element'.
+	element := document getElementById: 'element' class: HtmlParagraphElement.
 	self assert: [ element id = 'element' ].
 
-	element2 := document getElementById: 'element2'.
+	element2 := document getElementById: 'element2' class: HtmlParagraphElement.
 	self assert: [ element2 id = 'element2' ].
 
 	element3 := ( document createElement: 'p' ) id: 'element3'; textContent: 'Element 3'.
@@ -97,7 +97,7 @@ testMethods2
 	| document element paragraph text div elements attr |
 
 	document := Document default.
-	element := document getElementById: 'element'.
+	element := document getElementById: 'element' class: HtmlParagraphElement.
 
 	div := document createElement: 'div'.
 	paragraph := ( document createElement: 'p' ) textContent: 'Prepend paragraph'.
@@ -138,7 +138,7 @@ testScrolling
 	| document element |
 
 	document := Document default.
-	element := document getElementById: 'element'.
+	element := document getElementById: 'element' class: HtmlParagraphElement.
 	self assert: [ element id = 'element' ].
 
 	"These 4 calls don't have any effect because is nothing to scroll:"
@@ -151,7 +151,7 @@ testScrolling
 	element scrollIntoView: true.
 	element scrollIntoViewBehavior: 'smooth' block: 'center' inline: 'center'.
 
-	element := document getElementById: 'input'.
+	element := document getElementById: 'input' class: HtmlInputElement.
 	element toggleAttribute: 'disabled'.
 	self assert: [ ( element getAttribute: 'disabled' ) = '' ].
 	self assert: [ ( element toggleAttribute: 'disabled' force: false ) not ].

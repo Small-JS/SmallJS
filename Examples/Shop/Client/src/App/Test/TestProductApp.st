@@ -29,8 +29,7 @@ testProductFields
 navigateToOrders
 	| ordersLink |
 
-	ordersLink := Document getElementById: 'ordersLink'.
-	self assert: [ ordersLink class = HtmlAnchorElement ].
+	ordersLink := Document getElementById: 'ordersLink' class: HtmlAnchorElement.
 	"Cannot click on navigation bar, because then window close with not be allowed anymore."
 	"ordersLink href: ordersLink href, '?test'.
 	 ordersLink click."

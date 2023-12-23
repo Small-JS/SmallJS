@@ -15,18 +15,13 @@ start
 		TestLoginComponent new test: self ].
 !
 bindElements
-	userNameInput := Document getElementById: 'userNameInput'.
-	self assert: [ userNameInput class = HtmlInputElement ].
+	userNameInput := Document getElementById: 'userNameInput' class: HtmlInputElement.
+	passwordInput := Document getElementById: 'passwordInput' class: HtmlInputElement.
 
-	passwordInput := Document getElementById: 'passwordInput'.
-	self assert: [ passwordInput class = HtmlInputElement ].
-
-	loginButton := Document getElementById: 'loginButton'.
-	self assert: [ loginButton class = HtmlButtonElement ].
+	loginButton := Document getElementById: 'loginButton' class: HtmlButtonElement.
 	loginButton onClick: [ :event | self onLogin ].
 
-	loginErrorLabel := Document getElementById: 'loginErrorLabel'.
-	self assert: [ loginErrorLabel class = HtmlLabelElement ].
+	loginErrorLabel := Document getElementById: 'loginErrorLabel' class: HtmlLabelElement.
 !
 onLogin
 	| userName password loginApi |

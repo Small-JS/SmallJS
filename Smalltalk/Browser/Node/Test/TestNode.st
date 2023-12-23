@@ -4,7 +4,7 @@ test
 	| document node node2 text |
 
 	document := Document default.
-	node := document getElementById: 'node'.
+	node := document getElementById: 'node' class: HtmlParagraphElement.
 	self assert: [ node textContent = 'Node' ].
 
 	self assert: [ node isConnected ].

@@ -5,7 +5,7 @@ METHODS
 test
 	| attr |
 
-	attr := ( Document getElementById: 'smallJsLogo' ) attributes item: 1.
+	attr := ( Document getElementById: 'smallJsLogo' class: HtmlImageElement ) attributes item: 1.
 	self assert: [ attr localName = 'id' ].
 	self assert: [ attr name = 'id' ].
 	self assert: [ attr value = 'smallJsLogo' ].

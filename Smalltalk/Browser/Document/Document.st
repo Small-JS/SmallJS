@@ -14,6 +14,11 @@ getElementById: id
 
 	^ self default getElementById: id.
 !
+getElementById: id class: class
+	"Convenience method because it's used often."
+
+	^ self default getElementById: id class: class.
+!
 METHODS
 
 "Properties."
@@ -177,6 +182,13 @@ elementsFromPoint: point
 !
 getElementById: id
 	^ Element fromJsSubElement: INLINE 'this.js.getElementById( id.js )'.
+!
+getElementById: id class: class
+	"Check returned class from getElementById with assert."
+	| element |
+	element := Element fromJsSubElement: INLINE 'this.js.getElementById( id.js )'.
+	self assert: [ element class = class ].
+	^ element.
 !
 getElementsByClassName: className
 	^ Element fromJsSubElements: INLINE 'this.js.getElementsByClassName( className.js )'.
