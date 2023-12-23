@@ -1,4 +1,4 @@
-CLASS BrowserApp EXTENDS ClientApp MODULE BrowserApp CLASSVARS '' VARS ''
+CLASS MyBrowserApp EXTENDS BrowserApp MODULE BrowserApp CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

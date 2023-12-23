@@ -1,4 +1,4 @@
-CLASS CounterApp EXTENDS ClientApp MODULE Counter CLASSVARS ''
+CLASS CounterApp EXTENDS BrowserApp MODULE Counter CLASSVARS ''
 	VARS 'counter counterLabel incrementButton resetButton'
 
 start

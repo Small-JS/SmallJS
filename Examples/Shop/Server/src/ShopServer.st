@@ -31,7 +31,7 @@ connectTables
 	self startServer.
 !
 startServer
-	| portString port |
+	| portString port clientPath |
 
 	portString := Process envAt: 'SHOP_PORT'.
 	portString isNil ifTrue: [
@@ -40,8 +40,13 @@ startServer
 	( port <= 0 ) | ( port >= 65536 ) ifTrue: [
 		self error: 'Invalid port number: ', portString ].
 
+	clientPath := Process envAt: 'SHOP_CLIENT'.
+	clientPath isNil ifTrue: [
+		self error: 'Environment variable "SHOP_CLIENT" not set.' ].
+	self log: 'Client path: ', clientPath.
+
 	express := Express new.
-	express static: '../Client/web'.
+	express static: clientPath.
 	express get: '/api/login'
 		then: [ :request :response | self login: request response: response ].
 	express get: '/api/products'
@@ -49,7 +54,7 @@ startServer
 	express get: '/api/orders'
 		then: [ :request :response | self orders: request response: response ].
 
-	self log: 'Starting server.'.
+	self log: 'Starting webserver.'.
 	server := express listen: port then: [ self onListen: port ].
 !
 onListen: port

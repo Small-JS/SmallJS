@@ -17,3 +17,10 @@ The client access the server through a JSON web API.
 A login is required before accessing other pages.
 
 >[./Client/ShopClient.md](./Client/ShopClient.md)
+
+## Shop Client Single Page Application (SPA)
+
+Shop client with same functionality as above,
+but implemented as a Single Page Application (SPA).
+
+>[./Client/ShopClient.md](./Client/ShopClientSpa.md)

@@ -20,7 +20,7 @@ onExpressListen: error
 	Http
 		fetchObject: loginUrl
 		then: [ :object | self onLoginResponse: object ]
-		onError: [ :error | self onLoginError: error ] .
+		catch: [ :error | self onLoginError: error ] .
 !
 onLoginRequest: request response: response
 	| user password |

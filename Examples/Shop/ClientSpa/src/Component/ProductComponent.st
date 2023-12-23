@@ -1,16 +1,15 @@
-CLASS ProductApp EXTENDS ClientApp MODULE ShopClient CLASSVARS '' VARS 'productTable products'
+CLASS ProductComponent EXTENDS Component MODULE ShopClient CLASSVARS '' VARS 'productTable products'
 
-METHODS
-
+htmlPath
+	^ 'Product/Product.html'.
+!
 start
 	productTable := Document getElementById: 'productTable'.
-	productTable class = HtmlTableElement ifFalse: [
-			self error: 'Could not find product table element.' ].
+	self assert: [ productTable class = HtmlTableElement ].
 
-	self loadProducts.
-
-	self testMode ifTrue: [
-		TestProductApp new test: self ].
+	NavBarComponent new app: self app;
+		loadIntoElement: 'productNavBar' then: [
+			self loadProducts ].
 !
 
 "Loading"
@@ -18,15 +17,18 @@ start
 loadProducts
 	| productsApi |
 
-	productsApi := self url, '/api/products'.
-	Object
-		fetchObject: productsApi
+	productsApi := self app url, '/api/products'.
+	Fetch
+		object: productsApi
 		then: [ :objects | self onLoadProducts: objects ]
-		onError: [ :error | self onLoadProductsError: error ] .
+		catch: [ :error | self onLoadProductsError: error ] .
 !
 onLoadProducts: objects
 	products := objects map: [ :object | Product fromObject: object ].
 	self showProducts.
+
+	self app testMode ifTrue: [
+		TestProductComponent new test: self ].
 !
 onLoadProductsError: error
 	self error: error message.

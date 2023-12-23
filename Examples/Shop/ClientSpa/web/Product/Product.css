@@ -1,0 +1,25 @@
+﻿#productTable {
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px solid grey;
+	border-collapse: collapse;
+	border-width: 2px;
+	border-spacing: 0px;
+	text-align: left;
+}
+
+#productTable td, th {
+	padding: 4px;
+	border: 2px solid grey;
+	color: black;
+}
+
+#productTable td:nth-child( 2 )
+{
+	text-align: right;
+}
+
+.productTableHeader {
+	font-weight: bold;
+}
+

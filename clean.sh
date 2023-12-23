@@ -41,3 +41,6 @@ rm -r ./Examples/Shop/Server/out
 
 rm ./Examples/Shop/Client/web/App.js*
 rm -r ./Examples/Shop/Client/web/Smalltalk
+
+rm ./Examples/Shop/ClientSpa/web/App.js*
+rm -r ./Examples/Shop/ClientSpa/web/Smalltalk

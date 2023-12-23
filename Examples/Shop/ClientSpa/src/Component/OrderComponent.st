@@ -1,22 +1,27 @@
-CLASS OrderApp EXTENDS ClientApp MODULE ShopClient CLASSVARS ''
+CLASS OrderComponent EXTENDS Component MODULE ShopClient CLASSVARS ''
 	VARS 'orderTable orderTableBody orders products'
 
 METHODS
 
+htmlPath
+	^ 'Order/Order.html'.
+!
 start
 	orderTable := Document getElementById: 'orderTable'.
 	self assert: [ orderTable class = HtmlTableElement ].
 
-	self loadOrders.
+	NavBarComponent new app: self app;
+		loadIntoElement: 'orderNavBar' then: [
+			self loadOrders ].
 !
 loadOrders
 	|  ordersApi |
 
 	ordersApi := Window default location hostPath, '/api/orders'.
-	Object
-		fetchObject: ordersApi
+	Fetch
+		object: ordersApi
 		then: [ :object | self onLoadOrders: object ]
-		onError: [ :error | self onLoadOrdersError: error ] .
+		catch: [ :error | self onLoadOrdersError: error ] .
 !
 onLoadOrders: object
 	orders := ( object atProperty: 'orders' ) map: [ :object | Order fromObject: object ].
@@ -28,8 +33,8 @@ onLoadOrders: object
 
 	self showOrders.
 
-	self testMode ifTrue: [
-		TestOrderApp new test: self ].
+	self app testMode ifTrue: [
+		TestOrderComponent new test: self ].
 !
 onLoadOrdersError: error
 	self error: error message.

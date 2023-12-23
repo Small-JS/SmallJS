@@ -1,0 +1,31 @@
+﻿@import "../App.css";
+
+#orderTable {
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px solid grey;
+	border-collapse: collapse;
+	border-width: 2px block;
+	border-spacing: 0px;
+	text-align: left;
+}
+
+#orderTable td, th {
+	padding: 4px;
+	border: 2px solid grey;
+	color: black;
+}
+
+.orderTableHeader {
+	font-weight: bold;
+}
+
+#orderTable td:nth-child( 2 )
+{
+	text-align: right;
+}
+
+#orderTable td:nth-child( 3 )
+{
+	text-align: right;
+}

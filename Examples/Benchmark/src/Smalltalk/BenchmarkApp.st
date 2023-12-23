@@ -1,4 +1,4 @@
-CLASS BenchmarkApp EXTENDS ClientApp MODULE Benchmark CLASSVARS ''
+CLASS BenchmarkApp EXTENDS BrowserApp MODULE Benchmark CLASSVARS ''
 	VARS 'benchmarks size resultsTable runAllButton'
 
 start

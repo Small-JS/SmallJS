@@ -1,4 +1,4 @@
-CLASS LoginApp EXTENDS ClientApp MODULE ShopClient CLASSVARS ''
+CLASS LoginApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
 	VARS 'userNameInput passwordInput loginButton loginErrorLabel'
 
 METHODS
@@ -34,10 +34,10 @@ onLogin
 	password := passwordInput value.
 	loginApi := self url, '/api/login?user=', userName, '&password=', password.
 
-	Object
-		fetchObject: loginApi
+	Fetch
+		object: loginApi
 		then: [ :object | self onLoginResponse: object ]
-		onError: [ :error | self onLoginError: error ] .
+		catch: [ :error | self onLoginError: error ] .
 !
 onLoginResponse: object
 	| success message |

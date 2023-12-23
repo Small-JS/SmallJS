@@ -2,4 +2,4 @@
 
 let moduleName: string = "./Smalltalk/BrowserApp.js";
 import( moduleName )
-	.then( module => { module.stBrowserApp$class.$new().$start(); } );
+	.then( module => { module.stMyBrowserApp$class.$new().$start(); } );

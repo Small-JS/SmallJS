@@ -20,7 +20,7 @@ testLogin
 	Http
 		fetchObject: 'http://localhost:3000/api/login?user=John&password=secret'
 		then: [ :object | self onLogin: object ]
-		onError: [ :error | error throw ] .
+		catch: [ :error | error throw ] .
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch login timer expired' ].
@@ -40,7 +40,7 @@ testProducts
 	Http
 		fetchObject: 'http://localhost:3000/api/products'
 		then: [ :objects | self onProducts: objects ]
-		onError: [ :error | error throw ] .
+		catch: [ :error | error throw ] .
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch products timer expired' ].
@@ -63,7 +63,7 @@ testOrders
 	Http
 		fetchObject: 'http://localhost:3000/api/orders'
 		then: [ :objects | self onOrders: objects ]
-		onError: [ :error | error throw ] .
+		catch: [ :error | error throw ] .
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch orders timer expired' ].

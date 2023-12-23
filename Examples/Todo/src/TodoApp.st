@@ -1,4 +1,4 @@
-CLASS TodoApp EXTENDS ClientApp MODULE Todo CLASSVARS ''
+CLASS TodoApp EXTENDS BrowserApp MODULE Todo CLASSVARS ''
 	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable sortColumn sortDescending'
 
 start
