@@ -54,6 +54,9 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLTableRowElement' ifTrue: [ ^ HtmlTableRowElement fromJs: jsElement ].
 	jsClassName = 'HTMLTableSectionElement' ifTrue: [ ^ HtmlTableSectionElement fromJs: jsElement ].
 
+	jsClassName = 'HTMLDataListElement' ifTrue: [ ^ HtmlDataListElement fromJs: jsElement ].
+	jsClassName = 'HTMLOptionElement' ifTrue: [ ^ HtmlOptionElement fromJs: jsElement ].
+
 	^ self error: 'Element.fromJsSubElement: Unknown JS element class: ', jsClassName.
 !
 fromJsSubElements: jsArray

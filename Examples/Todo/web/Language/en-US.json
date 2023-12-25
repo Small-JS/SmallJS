@@ -1,0 +1,13 @@
+{
+	"todoImage": "Todo logo",
+	"titleLabel": "Todo",
+	"languageLabel": "Language",
+	"newTaskLabel": "New task",
+	"newTaskTitleLabel": "Title",
+	"newTaskDueLabel": "Due",
+	"newTaskAddButton": "Add",
+	"tasksLabel": "Tasks",
+	"taskTitleLabel": "Title",
+	"taskDueLabel": "Due",
+	"taskDoneLabel": "Done"
+}

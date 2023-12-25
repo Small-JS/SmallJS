@@ -1,16 +1,36 @@
 CLASS TodoApp EXTENDS BrowserApp MODULE Todo CLASSVARS ''
-	VARS 'tasks newTaskTitleInput newTaskDueInput newTaskAddButton taskTable sortColumn sortDescending'
+	VARS 'language tasks
+		languageInput languageDataList
+		newTaskTitleInput newTaskDueInput newTaskAddButton
+		taskTable sortColumn sortDescending'
 
 start
 	self loadTasks.
 	self bindElements.
+	self loadDefaultLanguage.
 	self showTasks.
 
 	self testMode ifTrue: [
 		TestTodoApp new test: self ].
 !
+loadDefaultLanguage
+	| languageName |
+	language := Language supported: #( 'en-US' 'es' ).
+
+	self testMode
+		ifTrue: [ language load: 'en-US' ]
+		ifFalse: [ language load: Window default navigator language ].
+
+	languageName := ( languageDataList children at: language currentIndex ) value.
+	languageInput value: languageName.
+!
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
+
+	languageInput := Document getElementById: 'languageInput' class: HtmlInputElement.
+	languageInput addEventListener: 'input' then: [ self loadLanguage ].
+
+	languageDataList := Document getElementById: 'languageDataList' class: HtmlDataListElement.
 
 	newTaskTitleInput := Document getElementById: 'newTaskTitleInput' class: HtmlInputElement.
 	newTaskTitleInput value: 'New task'.
@@ -23,6 +43,12 @@ bindElements
 
 	taskTable := Document getElementById: 'taskTable' class: HtmlTableElement.
 	taskTable onClick: [ :event | self taskTableClicked: event ].
+!
+loadLanguage
+	| index |
+	index := languageDataList indexOf: languageInput value.
+	index >= 0 ifTrue: [
+		language load: ( language supported at: index ) ].
 !
 loadTasks
 	"Load some generated tasks into tasks array."
@@ -124,6 +150,12 @@ deleteTask: position
 
 tasks
 	^ tasks.
+!
+languageInput
+	^ languageInput.
+!
+languageDataList
+	^ languageDataList.
 !
 newTaskTitleInput
 	^ newTaskTitleInput.

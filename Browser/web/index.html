@@ -230,8 +230,8 @@
 					<p class="field">Input</p>
 				</th>
 				<td>
-					<input id="input" name="inputName" type="input" value="Test input"
-					autocomplete="on" size="20" selectionDirection="forward">
+					<input id="input" name="inputName" type="input" value="Test input" autocomplete="on" size="20"
+						selectionDirection="forward">
 					<button id="inputOutputButton" type="button">Output</button>
 				</td>
 				<td>
@@ -266,6 +266,27 @@
 				</td>
 				<td>
 					<label id="checkboxOutputLabel">[Output]</label>
+				</td>
+			</tr>
+
+			<!-- ============================= Input - DataList -->
+
+			<tr>
+				<th scope="row">
+					<p class="field">Input - DataList</p>
+				</th>
+				<td>
+					<input id="dataListInput" list="dataList" placeholder="Select option"
+						onfocus="this.value=''" onchange="this.blur();">
+						<!-- The previous line makes sure the options remain selectable on second selection -->
+
+					<datalist id="dataList">
+						<option value="First">
+						<option value="Second">
+					</datalist>
+				</td>
+				<td>
+					<label id="dataListOutputLabel">[Output]</label>
 				</td>
 			</tr>
 
@@ -353,7 +374,7 @@
 					<p class="field">Label</p>
 				</th>
 				<td>
-						<label id="label">Label text</label>
+					<label id="label">Label text</label>
 				</td>
 				<td>
 					<label id="outputLabel">[output label]</label>
@@ -372,7 +393,7 @@
 						crossorigin="anonymous" hreflang="en" referrerpolicy="origin" />
 				</td>
 				<td>
-					<link id="updatedLink"/>
+					<link id="updatedLink" />
 				</td>
 			</tr>
 
@@ -383,7 +404,8 @@
 					<p class="field">Link - Anchor (hyperlink)</p>
 				</th>
 				<td>
-					<a id="anchor" href="SmallJS.png" download hreflang="en" referrerpolicy="origin" target="_self" type="image/png">SmallJS.png</a>
+					<a id="anchor" href="SmallJS.png" download hreflang="en" referrerpolicy="origin" target="_self"
+						type="image/png">SmallJS.png</a>
 					<button id="anchorUpdateButton">Link update</button>
 				</td>
 				<td>
@@ -398,7 +420,7 @@
 					<p class="field">Node</p>
 				</th>
 				<td>
-					<p id= "node">Node</p>
+					<p id="node">Node</p>
 				</td>
 				<td>
 				</td>
@@ -411,12 +433,12 @@
 					<p class="field">Node - Element</p>
 				</th>
 				<td>
-					<p id= "element" name="elementName" class="elementClass" part="elementPart" accesskey="p" dir="ltr"
+					<p id="element" name="elementName" class="elementClass" part="elementPart" accesskey="p" dir="ltr"
 						enterKeyHint="done">Element</p>
-					<p id= "element2"></p>
+					<p id="element2"></p>
 				</td>
 				<td>
-					<p id= "elementOutput" >[Element output]</p>
+					<p id="elementOutput">[Element output]</p>
 				</td>
 			</tr>
 
@@ -427,7 +449,7 @@
 					<p class="field">Node - HTML element</p>
 				</th>
 				<td>
-					<p id= "htmlElement" accesskey="p" dir="ltr" enterKeyHint="done" lang="en"
+					<p id="htmlElement" accesskey="p" dir="ltr" enterKeyHint="done" lang="en"
 						title="HTML element title">HTML element</p>
 				</td>
 				<td>
@@ -489,7 +511,9 @@
 					<p class="field">Slot</p>
 				</th>
 				<td>
-					<p><slot id="slot" name="slot-name">Slot text</slot></p>
+					<p>
+						<slot id="slot" name="slot-name">Slot text</slot>
+					</p>
 				</td>
 				<td>
 				</td>

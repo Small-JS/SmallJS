@@ -3,6 +3,9 @@ CLASS Event EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+type: type
+	^ self fromJs: INLINE 'new Event( type.js )'.
+!
 fromJsSubEvent: jsEvent
 	"Create ST Event subclass object from JS Event subclass object.
 	 Defaults to Event."

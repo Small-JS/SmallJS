@@ -50,9 +50,12 @@ testAssignment
 	object1 := object2 := 2.0.
 	self assert: [ ( object1 = 2.0 ) & ( object2 = 2.0 ) ].
 !
-testVariables
+testProperties
 	| point |
 	point := ( 2 @ 3 ).
+
+	self assert: [ point keys = #( 'x' 'y' ) ].
+	self assert: [ point entries first = #( 'x' 2 ) ].
 
 	self assert: [ point ownPropertyNames = #( 'x' 'y' ) ].
 	self assert: [ ( point atProperty: 'x' ) = 2 ].

@@ -99,6 +99,13 @@ atProperty: name
 atProperty: name put: value
 	INLINE 'this[ name.js ] = value'.
 !
+keys
+	^ Array fromJs: INLINE 'Object.keys( this )' elementClass: String.
+!
+entries
+	^ Array fromJs: INLINE 'Array.from( Object.entries( this ) )' elementConverter:
+		[ :jsEntry | Array with: INLINE 'stString$class.$fromJs$( jsEntry[ 0 ] )' with: INLINE 'jsEntry[ 1 ]' ].
+!
 
 "Comparing"
 

@@ -20,7 +20,8 @@ testGui
 		self testCompleteTaskThen: [
 			self testDeleteTaskThen: [
 				self testSortTasksThen: [
-					self stop ] ] ] ].
+					self testLanguageThen: [
+						self stop ] ] ] ] ].
 !
 testTasksLoaded
 	self assert: [ todoApp taskTable tBody rows length = todoApp tasks length ].
@@ -69,6 +70,21 @@ testSortTasksThen: block
 		self assert: [ todoApp taskTable tBody rows last cells first textContent ~= lastTaskTitle ].
 		self assert: [ todoApp taskTable tBody rows last cells first textContent = todoApp tasks last title ].
 
+		block value ].
+!
+testLanguageThen: block
+	"Select second language (Spanish) and check of GUI changed to it."
+
+	| languageName inputEvent titleLabel |
+
+	languageName := ( todoApp languageDataList children at: 1 ) value.
+	todoApp languageInput value: languageName.
+	inputEvent := Event type: 'input'.
+	todoApp languageInput dispatchEvent: inputEvent.
+
+	Timer timeout: 1000 then: [
+		titleLabel := Document getElementById: 'titleLabel' class: HtmlLabelElement.
+		self assert: [ titleLabel textContent = 'Hacer' ].
 		block value ].
 !
 stop

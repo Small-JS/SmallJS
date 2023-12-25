@@ -16,8 +16,19 @@
 			<td class="title">
 				<div class="vertical-center">
 					<img id="todoImage" src="Todo.png" height="40"></img>
-					<span id="titleMessage">&nbsp;Todo</span>
+					<label>&nbsp;</label>
+					<label id="titleLabel">Todo</label>
 				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label id="languageLabel">Language: </label>
+				<input id="languageInput" value="" list="languageDataList" onfocus="this.value=''" onchange="this.blur();" />
+				<datalist id="languageDataList">
+					<option value="English">
+					<option value="Española">
+				</datalist>
 			</td>
 		</tr>
 		<tr>
@@ -26,21 +37,21 @@
 					<thead>
 						<tr>
 							<th colspan="2" scope="col" style="text-align: center" class="title">
-								<label >New task</label>
+								<label id="newTaskLabel">New task</label>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>
-								<label for="newTaskTitleInput"><b>Title</b></label>
+								<label id="newTaskTitleLabel" for="newTaskTitleInput"><b>Title</b></label>
 							<td>
 								<input id="newTaskTitleInput"></input>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="newTaskDueInput"><b>Due</b></label>
+								<label id="newTaskDueLabel" for="newTaskDueInput"><b>Due</b></label>
 							</td>
 							<td>
 								<input id="newTaskDueInput" type="date"></input>
@@ -61,18 +72,18 @@
 					<thead>
 						<tr>
 							<th colspan="4" scope="col" style="text-align: center" class="title">
-								<label>Tasks</label>
+								<label id="tasksLabel">Tasks</label>
 							</th>
 						</tr>
 						<tr>
 							<th scope="col">
-								<label id="taskTitleLabel" class="taskTableHeader">Title &#8597;</label>
+								<label id="taskTitleLabel" class="taskTableHeader">Title</label><label> &#8597;</label>
 							</th>
 							<th scope="col">
-								<label id="taskDueLabel" class="taskTableHeader">Due &#8597;</label>
+								<label id="taskDueLabel" class="taskTableHeader">Due</label><label> &#8597;</label>
 							</th>
 							<th scope="col">
-								<label id="taskDoneLabel" class="taskTableHeader">Done &#8597;</label>
+								<label id="taskDoneLabel" class="taskTableHeader">Done</label><label> &#8597;</label>
 							</th>
 							<th scope="col">
 								<label id="taskDeleteLabel" class="taskTableHeader">&#10005</label>
