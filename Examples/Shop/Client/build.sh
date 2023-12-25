@@ -42,6 +42,7 @@ echo "Starting server."
 pushd ../Server > /dev/null
 set -o allexport
 source ../Server/.env
+SHOP_CLIENT="../Client/web"
 set +o allexport
 node out/App.js &
 serverPid=$!

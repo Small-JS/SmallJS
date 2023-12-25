@@ -42,7 +42,8 @@ startServer
 
 	clientPath := Process envAt: 'SHOP_CLIENT'.
 	clientPath isNil ifTrue: [
-		self error: 'Environment variable "SHOP_CLIENT" not set.' ].
+		clientPath := '../Client/web'.
+		self log: 'Environment variable "SHOP_CLIENT" not set, defaulting to: ', clientPath ].
 	self log: 'Client path: ', clientPath.
 
 	express := Express new.
