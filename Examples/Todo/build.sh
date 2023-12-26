@@ -48,7 +48,7 @@ then
 	"$browserChrome" http://localhost:3000/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
-	sleep 6
+	sleep 10
 fi
 if
 	[ ! -z "$browserEdge" ]
@@ -58,7 +58,7 @@ then
 	"$browserEdge" http://localhost:3000/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
-	sleep 6
+	sleep 10
 fi
 if
 	[ ! -z "$browserFirefox" ]
@@ -68,7 +68,7 @@ then
 	"$browserFirefox" http://localhost:3000/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
-	sleep 6
+	sleep 10
 fi
 
 # Stop web server
