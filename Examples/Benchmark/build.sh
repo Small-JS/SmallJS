@@ -10,7 +10,7 @@ echo "==== Benchmark"
 
 # Compile TypeScript
 
-echo "tsc Browser"
+echo "tsc Benchmark"
 tsc
 
 # Compile Smalltalk

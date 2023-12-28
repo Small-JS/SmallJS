@@ -1,4 +1,4 @@
-CLASS Language EXTENDS Object MODULE Browser CLASSVARS '' VARS 'current supported translations'
+CLASS Language EXTENDS Object MODULE DOM CLASSVARS '' VARS 'current supported translations'
 	"Manages the displayed language for the user.
 	 It works by replacing text in HTML elements using their id's.
 	 The translated languages are loaded JSON files with an array of <id>, <text>.

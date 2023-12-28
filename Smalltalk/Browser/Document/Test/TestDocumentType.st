@@ -10,5 +10,5 @@ testDocumentTypeProperties
 !
 testDocumentTypeMethods
 	"Methods before, after and replaceWith place nodes in the document.
-	 They seem duplicates of document functionality and not usefull fon HTML documents."
+	 They seem duplicates of document functionality and not usefull for HTML documents."
 !

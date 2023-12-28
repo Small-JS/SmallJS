@@ -1,4 +1,4 @@
-CLASS Component EXTENDS Object MODULE Browser CLASSVARS '' VARS 'app parent'
+CLASS Component EXTENDS Object MODULE DOM CLASSVARS '' VARS 'app parent'
 	"Base class for client (browser) components.
 	 Instances can be thought of as lightweight React or Angular components.
 	 A component has an HTML fragment, that may include a CSS file,
