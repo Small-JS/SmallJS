@@ -67,6 +67,9 @@ isArray
 isObject
 	^ Boolean fromJs: INLINE 'typeof this.js == "object"'.
 !
+isEmpty
+	^ Boolean fromJs: INLINE 'Object.keys( this.js ).length === 0'.
+!
 
 "Converting"
 

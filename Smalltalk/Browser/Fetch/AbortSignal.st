@@ -2,6 +2,9 @@ CLASS AbortSignal EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+new
+	^ self formJs: INLINE 'new AbortSignal()'.
+!
 abort
 	^ AbortSignal fromJs: INLINE 'AbortSignal.abort()'.
 !

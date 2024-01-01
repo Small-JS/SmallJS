@@ -1,4 +1,4 @@
-CLASS RequestOption  EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS RequestOptions  EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
 
 	"Implements the JS object that can be sent with a request.
 	 The Request object cannot be changed after it was created with these options.
@@ -26,7 +26,7 @@ headers: headers
 	INLINE 'this.js.headers = headers.js'.
 !
 body
-	^ ReadableStream fromJs: INLINE 'this.body'.
+	^ ArrayBuffer fromJs: INLINE 'this.js.body'.
 !
 body: body
 	INLINE 'this.js.body = body.js'.

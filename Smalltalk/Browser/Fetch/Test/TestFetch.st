@@ -3,11 +3,11 @@ CLASS TestFetch EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
 test
 	Fetch file: 'Test/MyObject.json'
 		then: [ :string | self onFetchFile: string ]
-		catch: [ :error | self error: 'Fetch file Test/MyObject.json failed: ', error message ].
+		catch: [ :error | error throw ].
 
 	Fetch object: 'Test/MyObject.json'
 		then: [ :object | self onFetchObject: object ]
-		catch: [ :error | self error: 'Fetch object Test/MyObject.json failed: ', error message ].
+		catch: [ :error | error throw ].
 
 !
 onFetchFile: string

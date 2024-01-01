@@ -2,6 +2,9 @@ CLASS ArrayBuffer EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+new: byteLength
+	^ self fromJs: INLINE 'new ArrayBuffer( byteLength.js )'.
+!
 isView: buffer
 	^ Boolean fromJs: INLINE 'ArrayBuffer.isView( buffer )'.
 !

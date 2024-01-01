@@ -7,10 +7,10 @@ error
 	^ Response fromJs: INLINE 'Response.error()'.
 !
 json: data
-	^ Response fromJs: INLINE 'Response.json( data )'.
+	^ Response fromJs: INLINE 'Response.json( data.js )'.
 !
 redirect: url
-	^ Response fromJs: INLINE 'Response.json( url )'.
+	^ Response fromJs: INLINE 'Response.json( url.js )'.
 !
 
 METHODS
@@ -40,6 +40,9 @@ status
 !
 statusText
 	^ String fromJs: INLINE 'this.js.statusText'.
+!
+statusAndText
+	^ self status toString, ': ', self statusText.
 !
 type
 	^ String fromJs: INLINE 'this.js.type'.

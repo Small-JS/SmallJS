@@ -1,10 +1,10 @@
 CLASS TestRequest EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
-	"Also tests Response, Headers"
+	"Also tests Response, Headers."
 
 testRequest
 	| request |
 
-	request := Request new: 'Test/MyObject.json'.
+	request := Request url: 'Test/MyObject.json'.
 
 	self assert: [ request class = Request ].
 	self assert: [ request bodyUsed not ].

@@ -3,8 +3,11 @@ CLASS Request EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
-new: input
-	^ self fromJs: INLINE 'new Request( input.js )'.
+url: url
+	^ self fromJs: INLINE 'new Request( url.js )'.
+!
+url: url options: options
+	^ self fromJs: INLINE 'new Request( url.js, options.js )'.
 !
 
 METHODS
@@ -67,7 +70,7 @@ clone
 !
 formDataThen: block
 	INLINE 'this.js.formData().then( formData =>
-		block.$value$( stFormData$class.$fromJs$( buffer ) ) )'.
+		block.$value$( stFormData$class.$fromJs$( formData ) ) )'.
 !
 jsonThen: block
 	INLINE 'this.js.json().then( object =>

@@ -3,6 +3,7 @@ CLASS TestJsObject EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 test
 	| jsObject |
 
+	self assert: [ JsObject newEmpty isEmpty ].
 	self assert: [ ( JsObject fromJs: INLINE 'null' ) isNull ].
 	self assert: [ ( JsObject fromJs: INLINE 'undefined' ) isNull ].
 
