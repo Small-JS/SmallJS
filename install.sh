@@ -9,19 +9,29 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== Detecting prerequisite applications"
+echo "Note: See Documentation/Prerequisites.md for installation instructions."
 
-echo -n "Detecting NPM: "
-npm -v
+echo "==== Detecting prerequisite applications"
 
 echo -n "Detecting Node.js: "
 node -v
 
+echo -n "Detecting Visual Studio Code: "
+code -v
+
+echo "==== Detecting global NPM packages"
+
+echo -n "Detecting NPM: "
+npm -v
+
 echo -n "Detecting TypeScript: "
 tsc -v
 
-echo -n "Detecting Visual Studio Code: "
-code -v
+echo -n "Detecting VS Code Extension Manager: "
+vsce --version
+
+echo -n "Detecting http-server: "
+http-server -v
 
 ./Extension/install.sh
 
