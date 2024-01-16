@@ -5,8 +5,17 @@ CLASSMETHODS
 columns
 	^ #( 'name' 'salt' 'password' ).
 !
+fromObject: object
+	^ self new
+		id: ( object atProperty: 'id' );
+		name: ( object atProperty: 'name' );
+		password: ( object atProperty: 'password' );
+		salt: ( object atProperty: 'salt' ).
+!
 
 METHODS
+
+"Accessing"
 
 name
 	^ name.
@@ -14,15 +23,23 @@ name
 name: aName
 	name := aName.
 !
-
-"Password"
-
-"Passwords are stored internally as SHA256 digests of a random salt plus plaintext password"
-
 password
 	^ password.
 !
 password: aPassword
+	password := aPassword.
+!
+salt
+	^ salt.
+!
+salt: aSalt
+	salt := aSalt.
+!
+
+"Password management
+ Passwords are stored internally as a SHA256 digests of a random salt prefixed to the plaintext password."
+
+setPassword: aPassword
 	salt := ( Float random * 1000000 ) toInteger.
 	password := self hashPassword: aPassword.
 !
@@ -31,7 +48,4 @@ hashPassword: aPassword
 !
 checkPassword: aPassword
 	^ password = ( self hashPassword: aPassword ).
-!
-salt
-	^ salt.
 !

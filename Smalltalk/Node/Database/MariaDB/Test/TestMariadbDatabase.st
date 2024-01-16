@@ -109,7 +109,7 @@ deleteMyPerson
 tableInsert
 	| person |
 
-	person := MyPerson new name: 'Test'; password: 'secret'.
+	person := MyPerson new name: 'Test'; setPassword: 'secret'.
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
 	self assert: [ person checkPassword: 'secret' ].

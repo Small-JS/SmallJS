@@ -1,4 +1,4 @@
-CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer timer'
+CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer timer cookie'
 
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
@@ -14,39 +14,42 @@ testApi
 	self log: 'Starting API tests.'.
 
 	"The tests are chained end-to-start because they must run async."
-	self testLogin.
+	self requestLogin.
 !
-testLogin
-	Http
-		fetchObject: 'http://localhost:3000/api/login?user=John&password=secret'
-		then: [ :object | self onLogin: object ]
+requestLogin
+	Fetch
+		request: 'http://localhost:3000/api/login?user=John&password=secret'
+		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch login timer expired' ].
 !
-onLogin: object
+onLoginResponse: response
 	| result |
 
 	timer clearTimeout.
 
-	result := LoginResult fromObject: object.
-	self assert: [ result success ].
-	self assert: [ result message = 'Login succeeded' ].
+	self assert: [ response status = 200 ].
+	response jsonThen: [ :object |
+		result := LoginResult fromObject: object.
+		self assert: [ result success ].
+		self assert: [ result message = 'Login succeeded' ].
 
-	self testProducts.
+		cookie := response cookie.
+		self assert: [ cookie includes: 'connect.sid' ].
+
+		self requestProducts ].
 !
-testProducts
-	Http
-		fetchObject: 'http://localhost:3000/api/products'
-		then: [ :objects | self onProducts: objects ]
-		catch: [ :error | error throw ] .
+requestProducts
+	self fetchObject: 'http://localhost:3000/api/products'
+		then: [ :objects | self onProductsResponse: objects ].
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch products timer expired' ].
 !
-onProducts: objects
-	| product |
+onProductsResponse: objects
+	| products product |
 
 	timer clearTimeout.
 
@@ -57,18 +60,16 @@ onProducts: objects
 	self assert: [ product name = 'Apple' ].
 	self assert: [ product price = 100 ].
 
-	self testOrders.
+	self requestOrders.
 !
-testOrders
-	Http
-		fetchObject: 'http://localhost:3000/api/orders'
-		then: [ :objects | self onOrders: objects ]
-		catch: [ :error | error throw ] .
+requestOrders
+	self fetchObject: 'http://localhost:3000/api/orders'
+		then: [ :objects | self onOrdersResponse: objects ].
 
 	timer := Timer timeout: 5000 then: [
 			Error throw: 'Fetch orders timer expired' ].
 !
-onOrders: object
+onOrdersResponse: object
 	"'object' should contain properties 'orders' and 'products'
 	 each containting an array of objects with values of the type indicated.
 	 The products are the ones referenced by the orders."
@@ -97,6 +98,21 @@ onOrders: object
 	self assert: [ product price = 150 ].
 
 	self stopServer.
+!
+fetchObject: url then: block
+	"Fetch object while setting cookie."
+	| options headers |
+
+	headers := Headers new
+		set: 'cookie' value: cookie.
+	options := RequestOptions new
+		headers: headers.
+
+	Fetch
+		object: url
+		options: options
+		then: [ :objects | block value: objects ]
+		catch: [ :error | error throw ] .
 !
 stopServer
 	self log: 'API tests successful.'.

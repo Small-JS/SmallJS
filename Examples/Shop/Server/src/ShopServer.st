@@ -1,4 +1,4 @@
-CLASS ShopServer EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'express server user database personTable productTable orderTable'
+CLASS ShopServer EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'express server database personTable productTable orderTable'
 	"This app provides a Shop API for users, products and orders in the /api route.
 	 It alse provites a stetic http server for that content.
 	 It uses Postgres a back-end database, with the 'pg' npm library, so both should be installed.
@@ -47,6 +47,7 @@ startServer
 	self log: 'Client path: ', clientPath.
 
 	express := Express new.
+	express useSession.
 	express static: clientPath.
 	express get: '/api/login'
 		then: [ :request :response | self login: request response: response ].
@@ -86,9 +87,8 @@ login: request response: response
 				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
 				ifFalse: [
 					query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-					"Note: Block returns are not allowed in pg callbacks."
-					"Note2: The next part is async."
 					personTable query: query  with: #( userName ) then: [ :persons |
+						"Note: Block returns are not allowed in pg callbacks."
 						persons length < 1
 							ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
 							ifFalse: [
@@ -96,14 +96,24 @@ login: request response: response
 								( person checkPassword: password ) not
 									ifTrue: [ response send: ( result message: 'Password check failed' ) ]
 									ifFalse: [
-										response send: ( result success: true; message: 'Login succeeded' ).
-										user := person ] ] ] ] ].
+										request session set: 'user' to: person.
+										response send: ( result success: true; message: 'Login succeeded' ) ] ] ] ] ].
 !
-checkLogin
-	^ user class = Person.
+getRequestUser: request response: response
+	"Returns the logged-in user (Person) from the request or nil if it does not exist.
+ 	 If the user is not found, a server response 500 is sent also.
+ 	 Requests can only contain serialized data, so the ST object has to be reconstructed from that."
+
+	| userObject |
+	userObject := request session get: 'user'.
+	userObject isNil ifTrue: [
+		response sendStatus: 500 message: 'Not logged in.'.
+		^ nil ].
+
+	^ Person fromObject: userObject.
 !
-notLoggedIn: response
-	response sendStatus: 500 message: 'Not logged in.'
+checkRequestUser: request response: response
+	^ ( self getRequestUser: request response: response ) notNil.
 !
 
 "Example products request:
@@ -115,8 +125,7 @@ returns:
 "
 
 products: request response: response
-	self checkLogin ifFalse: [
-		^ self notLoggedIn: response ].
+	( self checkRequestUser: request response: response ) ifFalse: [ ^ nil ].
 
 	productTable queryAllThen:
 		[ :products | response send: products toJsObject ].
@@ -129,23 +138,22 @@ products: request response: response
  	and an array of all products associated with the orders."
 
 orders: request response: response
-	| query userId result |
+	| query user userId result |
 
-	self checkLogin ifFalse: [
-		^ self notLoggedIn: response ].
+	user := self getRequestUser: request response: response.
+	user isNil ifTrue: [ ^ nil ].
 
 	query := ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ).
 	userId := user id.
-	orderTable query: query with: #( userId )
-		then: [ :orders |
-			query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
-				' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
-			productTable query: query with: #( userId )
-				then: [ :products |
-					result := Object new
-						atProperty: 'orders' put: orders;
-						atProperty: 'products' put: products.
-					response send: result toJsObject ] ].
+	orderTable query: query with: #( userId ) then: [ :orders |
+		query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
+			' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
+		productTable query: query with: #( userId )
+			then: [ :products |
+				result := Object new
+					atProperty: 'orders' put: orders;
+					atProperty: 'products' put: products.
+				response send: result toJsObject ] ].
 !
 stop
 	server terminate.

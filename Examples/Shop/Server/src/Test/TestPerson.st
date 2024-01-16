@@ -9,7 +9,7 @@ test
 	person name: 'Test'.
 	self assert:[ person name = 'Test' ].
 
-	person password: 'secret'.
+	person setPassword: 'secret'.
 	self assert:[ person checkPassword: 'secret' ].
 	self assert:[ person salt >= 0 ].
 	self assert:[ person password length = 64 ].

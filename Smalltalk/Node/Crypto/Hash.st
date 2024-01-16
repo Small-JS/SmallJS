@@ -1,4 +1,4 @@
-CLASS Hash EXTENDS JsObject MODULE Node CLASSVARS '' VARS ''
+CLASS Hash EXTENDS JsObject MODULE Crypto CLASSVARS '' VARS ''
 	"This class implements the Express framework.
 	 Variable 'js' will contain an instance of the express() application object (function)'."
 

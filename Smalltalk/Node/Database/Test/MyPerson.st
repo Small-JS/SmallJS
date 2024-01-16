@@ -22,7 +22,7 @@ name: aName
 password
 	^ password.
 !
-password: aPassword
+setPassword: aPassword
 	salt := ( Float random * 1000000 ) toInteger.
 	password := self hashPassword: aPassword.
 !

@@ -13,7 +13,7 @@ METHODS
 "Conversions."
 
 toString
-	^ String fromJs: js.
+	^ String fromJs: INLINE 'String( this.js )'.
 !
 toBigInt
 	^ BigInt fromJs: js.

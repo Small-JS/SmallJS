@@ -4,6 +4,7 @@ CLASS Express EXTENDS JsObject MODULE Server CLASSVARS '' VARS 'port'
 
 INLINE 'import express from "express";'
 INLINE 'import cors from "express";'
+INLINE 'import session from "express-session";'
 
 METHODS
 
@@ -31,7 +32,7 @@ generateSessionKey
 	| key |
 	key := ''.
 	8 timesRepeat: [
-		key := key + ( ( Float random * 100 ) floor toString padStart: 2 with: '0' ) ].
+		key := key + ( ( Float random * 100 ) toInteger toString padStart: 2 with: '0' ) ].
 	^ key.
 !
 useCors

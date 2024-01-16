@@ -1,3 +1,8 @@
+CLASS Response EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
+	"Implements the *client* side of a node-fetch fetch() API response."
+
+METHODS
+
 CLASS Response EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
 	"Implements the JS Response API used in the JS fetch() API in browsers."
 
@@ -75,4 +80,10 @@ jsonThen: block
 textThen: block
 	INLINE 'this.js.text().then( string =>
 		block.$value$( stString$class.$fromJs$( string ) ) )'.
+!
+
+"Cookie"
+
+cookie
+	^ String fromJs: INLINE 'this.js.headers.get( "set-cookie" )'.
 !
