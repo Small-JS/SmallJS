@@ -26,7 +26,7 @@ listen: port then: block
 useSession
 	| key |
 	key := self generateSessionKey.
-	INLINE 'this.js.use( session( { secret: key.js } ) );'.
+	INLINE 'this.js.use( session( { secret: key.js, resave: false, saveUninitialized: true } ) );'.
 !
 generateSessionKey
 	| key |
