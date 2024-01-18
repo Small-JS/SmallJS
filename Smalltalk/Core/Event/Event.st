@@ -1,4 +1,4 @@
-CLASS Event EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Event EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 	"Encapsulates the JS Event class."
 
 CLASSMETHODS

@@ -1,4 +1,4 @@
-CLASS Request EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Request EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 	"Implements the JS Request API used inn the JS fetch() API in browsers."
 
 CLASSMETHODS

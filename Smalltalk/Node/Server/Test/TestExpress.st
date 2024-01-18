@@ -66,9 +66,7 @@ requestProducts
 		headers: headers.
 
 	url := 'http://localhost:', port toString, '/products'.
-	Fetch
-		file: url
-		options: options
+	Fetch text: url options: options
 		then: [ :response | self onProductsResponse: response ]
 		catch: [ :error | error throw ] .
 !

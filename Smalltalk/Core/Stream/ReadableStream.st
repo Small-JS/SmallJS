@@ -1,4 +1,4 @@
-CLASS ReadableStream EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS ReadableStream EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 METHODS
 

@@ -1,4 +1,4 @@
-CLASS UiEvent EXTENDS Event MODULE DOM CLASSVARS '' VARS ''
+CLASS UiEvent EXTENDS Event MODULE Core CLASSVARS '' VARS ''
 	"Encapsulates the JS UIEvent class."
 
 METHODS

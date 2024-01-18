@@ -1,7 +1,7 @@
-CLASS TestFetch EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestFetch EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
-	Fetch file: 'Test/MyObject.json'
+	Fetch text: 'Test/MyObject.json'
 		then: [ :string | self onFetchFile: string ]
 		catch: [ :error | error throw ].
 

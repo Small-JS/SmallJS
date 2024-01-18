@@ -1,4 +1,4 @@
-CLASS RequestOptions  EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS RequestOptions  EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 	"Implements the JS object that can be sent with a request.
 	 The Request object cannot be changed after it was created with these options.

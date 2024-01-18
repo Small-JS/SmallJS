@@ -1,4 +1,4 @@
-CLASS TestRequest EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestRequest EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 	"Also tests Response, Headers."
 
 testRequest

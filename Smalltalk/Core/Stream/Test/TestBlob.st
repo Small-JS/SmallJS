@@ -1,4 +1,4 @@
-CLASS TestBlob EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestBlob EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
 	| blob |

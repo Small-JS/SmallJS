@@ -1,4 +1,4 @@
-CLASS ReadableStreamDefaultWriter EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS ReadableStreamDefaultWriter EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 METHODS
 

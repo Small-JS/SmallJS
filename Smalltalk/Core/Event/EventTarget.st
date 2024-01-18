@@ -1,4 +1,4 @@
-CLASS EventTarget EXTENDS JsObject MODULE DOM CLASSVARS '' VARS 'eventIds'
+CLASS EventTarget EXTENDS JsObject MODULE Core CLASSVARS '' VARS 'eventIds'
 	"Implements JS EventTarget abstract class.
 	 Variable value holds the JS object associated ST objects of subsclasses,
 	 so is unrelated to EventTargert functionality."

@@ -1,4 +1,4 @@
-CLASS WritableStream EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS WritableStream EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 METHODS
 

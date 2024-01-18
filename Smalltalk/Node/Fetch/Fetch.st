@@ -3,7 +3,8 @@ CLASS Fetch EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
 "2024.01.11, Node.js v21.5:
  The built-in version of fetch() of Nose.js is not used (yet) because of this issue:
  https://github.com/nodejs/undici/issues/2540
- This class is now based on npm package 'node-fetch' that does not have the issue."
+ This class is now based on npm package 'node-fetch' that does not have the issue.
+ When the error is fixed, the separate Fetch class for in Browser and Node can be merged to Core."
 
 INLINE 'import fetch from "node-fetch";'
 
@@ -14,6 +15,7 @@ request: request then: block catch: errorBlock
 !
 request: request options: options then: block catch: errorBlock
 	"Calls the block with the fetched file content as a string."
+	Response.  "Force import"
 	INLINE '
 		fetch( request.js, options.js )
 			.then( response => block.$value$( stResponse$class.$fromJs$( response ) ) )
@@ -34,10 +36,10 @@ onObject: response then: block catch: errorBlock
 		ifTrue: [ response jsonThen: [ :object | block value: object  ] ]
 		ifFalse: [ errorBlock value: ( Error new: response statusAndText ) ].
 !
-file: url then: block catch: errorBlock
-	self file: url options: RequestOptions new then: block catch: errorBlock
+text: url then: block catch: errorBlock
+	self text: url options: RequestOptions new then: block catch: errorBlock
 !
-file: url options: options then: block catch: errorBlock
+text: url options: options then: block catch: errorBlock
 	"Calls the block with the fetched file content as a string."
 	self request: url
 		options: options

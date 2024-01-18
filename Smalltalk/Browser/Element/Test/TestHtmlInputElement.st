@@ -148,8 +148,18 @@ testFileInput
 !
 onFileInputChange
 	| file |
-	( Document getElementById: 'fileInput' class: HtmlInputElement ) files do: [ :file |
-		TestFile new onTest: file. ].
+	( Document getElementById: 'fileInput' class: HtmlInputElement ) files do:
+		[ :file | self onTestFile: file. ].
+!
+onTestFile: file
+	| outputLabel |
+	self assert: [ file class = File ].
+
+	self assert: [ file lastModified > 0 ].
+	self assert: [ file webkitRelativePath = '' ].
+
+	outputLabel := Document getElementById: 'fileInputOutputLabel' class: HtmlLabelElement.
+	outputLabel textContent: file name.
 !
 testNumber
 	| numberInput outputButton outputLabel |

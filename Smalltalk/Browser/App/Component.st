@@ -46,8 +46,9 @@ loadIntoElement: elementId then: block
 	element := Document getElementById: elementId.
 	self assert: [ element notNil ].
 
-	Fetch file: self htmlPath
-		then: [ :text |	element innerHtml: text.
+	Fetch text: self htmlPath
+		then: [ :text |
+			element innerHtml: text.
 			self start.
 			block value ]
 		catch: [ :error | self log: 'Failed to fetch component HTML: ', self htmlPath, ': ', error message ].

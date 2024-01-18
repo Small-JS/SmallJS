@@ -1,4 +1,4 @@
-CLASS TestRequestOptions EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestRequestOptions EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
 	| options request |

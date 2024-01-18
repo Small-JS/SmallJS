@@ -1,4 +1,4 @@
-CLASS EventId EXTENDS Object MODULE DOM CLASSVARS '' VARS 'type block jsBlock'
+CLASS EventId EXTENDS Object MODULE Core CLASSVARS '' VARS 'type block jsBlock'
 	"Implement an association between ST and JS event blocks,
 	 needed when removing event listeners."
 

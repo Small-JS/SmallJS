@@ -1,0 +1,2 @@
+CLASS TestEventTarget EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
+

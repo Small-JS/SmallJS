@@ -7,7 +7,8 @@ request: url then: block catch: errorBlock
 	self request: url options: RequestOptions new then: block catch: errorBlock
 !
 request: url options: options then: block catch: errorBlock
-	"Calls the block with the fetched file content as a string."
+	"Calls the block with the fetched Response object."
+	Response.  "Force import"
 	INLINE '
 		fetch( url.js, options.js )
 			.then( response => block.$value$( stResponse$class.$fromJs$( response ) ) )
@@ -28,11 +29,11 @@ onObject: response then: block catch: errorBlock
 		ifTrue: [ response jsonThen: [ :object | block value: object  ] ]
 		ifFalse: [ errorBlock value: ( Error new: response statusAndText ) ].
 !
-file: url then: block catch: errorBlock
-	self file: url options: RequestOptions new then: block catch: errorBlock
+text: url then: block catch: errorBlock
+	self text: url options: RequestOptions new then: block catch: errorBlock
 !
-file: url options: options then: block catch: errorBlock
-	"Calls the block with the fetched file content as a string."
+text: url options: options then: block catch: errorBlock
+	"Calls the block with the fetched file content as a text string."
 	self request: url
 		options: options
 		then: [ :response | self onFile: response then: block catch: errorBlock ]
