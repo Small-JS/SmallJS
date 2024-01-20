@@ -100,21 +100,22 @@ export class Compiler
 		}
 	}
 
-	loadClass( filename: string )
+	loadClass( fileName: string )
 	{
-		let source: string = fs.readFileSync( filename ).toString();
-		let newClass = new ClassCompiler().loadClass( filename, source );
+		let source: string = fs.readFileSync( fileName ).toString();
+		let newClass = new ClassCompiler().loadClass( fileName, source );
 
-		this.addClass( newClass, filename );
+		this.addClass( newClass );
 		this.addModule( newClass.moduleName );
 	}
 
-	// Add compiled class. Throw error if the class name already exists.
+	// Add compiled class. Report compile error if the class name already exists.
 
-	addClass( newClass: CompiledClass, inputPath: string )
+	addClass( newClass: CompiledClass )
 	{
-		if( this.classes.find( _class => _class.name == newClass.name ) != undefined )
-			throw new Error( "Duplicate class name: '" + newClass.name + "' in file: '" + inputPath + "'" );
+		let duplicateClass = this.classes.find( _class => _class.name == newClass.name );
+		if( duplicateClass )
+			this.error( "Duplicate class name: " + newClass.name, newClass.fileName + " and: " + duplicateClass.fileName );
 
 		this.classes.push( newClass );
 	}
@@ -132,39 +133,38 @@ export class Compiler
 
 	orderClasses()
 	{
+		// Find class Object as first ordered class.
+
 		let unorderedClasses: CompiledClass[] = this.classes;
-		let orderedClasses: CompiledClass[] = [];
-
-		// Class Object must go first, because of inheritance dependencies.
-
 		let index: number = unorderedClasses.findIndex( ( _class ) => _class.name == "Object" );
 		if( index < 0 )
-			throw new Error( "Can't find class: Object." );
+			this.error( "Can't find class: Object." );
 		let objectClass: CompiledClass = unorderedClasses[ index ];
-		orderedClasses.push( objectClass );
 		unorderedClasses.splice( index, 1 );
 
+		let orderedClasses: CompiledClass[] = [ objectClass ];
 		let orderedClassesIndex: number = 0;
-		let _class: CompiledClass = objectClass;
+		let superClass: CompiledClass = objectClass;
+
+		// Now order all subclasses, in iterations.
 
 		while( unorderedClasses.length > 0 ) {
 			let remainingUnorderedClasses: CompiledClass[] = [];
-			let subClass: CompiledClass;
-			for( subClass of unorderedClasses )
-				if( subClass.superclassName == _class.name ) {
-					subClass.superclass = _class;
-					orderedClasses.push( subClass );
+			for( let unorderedClass of unorderedClasses )
+				if( unorderedClass.superclassName == superClass.name ) {
+					unorderedClass.superclass = superClass;
+					orderedClasses.push( unorderedClass );
 				}
 				else
-					remainingUnorderedClasses.push( subClass );
+					remainingUnorderedClasses.push( unorderedClass );
 			unorderedClasses = remainingUnorderedClasses;
 
 			if( ++orderedClassesIndex >= orderedClasses.length ) {
-				let unorderedClassName: string = unorderedClasses.length == 0 ? "[unknown]" : unorderedClasses[ 0 ].name;
-				throw new Error( "Ordering classes failed for: " + unorderedClassName + ", check inheritance tree (EXTENDS)." );
+				let unorderedClass = unorderedClasses[ 0 ];
+				this.error( "Ordering classes failed for: " + unorderedClass.name + ". Check inheritance tree (EXTENDS).", unorderedClass.fileName );
 			}
 
-			_class = orderedClasses[ orderedClassesIndex ];
+			superClass = orderedClasses[ orderedClassesIndex ];
 		}
 
 		this.classes = orderedClasses;
@@ -213,4 +213,16 @@ export class Compiler
 		fs.copyFileSync( runTimePath, outputPath );
 		fs.copyFileSync( runTimePath + ".map", outputPath + ".map" );
 	}
+
+	error( message: string, fileName?: string )
+	{
+		let fullMessage: string = "Compile error";
+		if( fileName )
+			fullMessage += " in file: " + fileName;
+		fullMessage += ": " + message
+
+		console.error( fullMessage )
+		process.exit( 1 );
+	}
+
 }

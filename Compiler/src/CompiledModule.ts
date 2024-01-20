@@ -109,7 +109,7 @@ export class CompiledModule
 
 	// Generate class initialization code
 	// I.e.: Call the initizalize() function on import.
-	// Must be done at end of file to prevent dependency errors.
+	// Must be done at end of the generated file to prevent errors with circular references.
 
 	generateClassesInitalization(): SourceNode
 	{

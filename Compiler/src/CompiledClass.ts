@@ -6,7 +6,7 @@ import { Position } from "./Position.js";
 
 export class CompiledClass
 {
-	filename: string;
+	fileName: string;
 	source: string;
 	bodyPosition!: Position;
 
@@ -27,7 +27,7 @@ export class CompiledClass
 
 	constructor( filename: string, source: string )
 	{
-		this.filename = filename;
+		this.fileName = filename;
 		this.source = source;
 	}
 
@@ -61,7 +61,7 @@ export class CompiledClass
 	}
 
 	// Add method to class.
-	// Return false on error: duplicate method.
+	// Return false on duplicate method.
 
 	addMethod( method: CompiledMethod ): boolean
 	{

@@ -81,7 +81,7 @@ export class ClassCompiler
 	compileClass( _class: CompiledClass )
 	{
 		this.class = _class;
-		this.parser = new Parser( _class.filename, _class.source );
+		this.parser = new Parser( _class.fileName, _class.source );
 		this.parser.setPosition( _class.bodyPosition );
 
 		// The default is compiling istance methods.
@@ -650,7 +650,7 @@ export class ClassCompiler
 
 	relativeFilename(): string
 	{
-		return this.relativeOutputPath() + this.class.filename;
+		return this.relativeOutputPath() + this.class.fileName;
 	}
 
 	// Return relative path from output folder to workspace folder.

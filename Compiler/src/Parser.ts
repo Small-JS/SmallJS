@@ -13,7 +13,7 @@ export class Parser
 		this.source = source;
 	}
 
-	// Match argument term. if it fails, throw an error.
+	// Match argument term. if it fails, report compile error.
 
 	mustParseTerm( term: string )
 	{
@@ -380,7 +380,6 @@ export class Parser
 			", line: " + String( this.position.line ) + ", column: " + String( this.position.tabbedColumn ) +
 			": " + message;
 
-		// throw new Error( fullMessage );
 		console.error( fullMessage )
 		process.exit( 1 );
 	}

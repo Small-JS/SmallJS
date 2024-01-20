@@ -16,7 +16,7 @@
 		{
 			"label": "Run Node tests",
 			"type": "shell",
-			"windows": { "command": "./start.sh", "args": [ "-p" ] },
+			"windows": { "command": "start.sh", "args": [ "-p" ] },
 			"linux": { "command": "./start.sh" },
 			"osx": { "command": "./start.sh" },
 			"options": {
