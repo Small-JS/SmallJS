@@ -30,6 +30,12 @@ source .env
 
 # Start web server and remember PID.
 
+# 2024-01-21: http-server v14.1.1:
+# The warning: "(node:12104) [DEP0066] DeprecationWarning: OutgoingMessage.prototype._headers is deprecated"
+# Has been been reported here: https://github.com/http-party/http-server/issues/537
+# Suppress warnings for now:
+export NODE_NO_WARNINGS=1
+
 webServer="http-server web --port 3000 -c-1 --silent"
 echo "Starting web server: "$webServer
 $webServer &
