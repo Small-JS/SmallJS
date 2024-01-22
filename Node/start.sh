@@ -11,8 +11,3 @@ source .env
 set +o allexport
 
 node out/App.js
-
-# Pause when called with -p
-if [ "$1" == "-p" ]
-then read -p "Press [Enter] to exit: "
-fi

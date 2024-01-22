@@ -3,6 +3,10 @@ CLASS TestTodoApp EXTENDS Object MODULE TestTodo CLASSVARS '' VARS 'todoApp'
 "Test TodoApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
+references
+	"Prevent minimizing of unit tests."
+	TestTask.
+!
 test: aTodoApp
 	todoApp := aTodoApp.
 

@@ -3,25 +3,41 @@ import { CompiledModule } from "./CompiledModule.js";
 import { CompiledClass } from "./CompiledClass.js";
 
 import { exit } from "process";
-import { SourceNode } from "source-map";
-
 import * as fs from "fs";
 
 export class Compiler
 {
-	noSourceMaps: boolean = false;
-	skipTestFolders: boolean = false;
 	modules: CompiledModule[] = [];
 	classes: CompiledClass[] = [];
+	sourceMaps: boolean = true;
+	skipTestFolders: boolean = false;
+	minimize: boolean = false;
+	minimizeStartClassName: string = '';
+	minimizedCount = 0;
 
 	start()
 	{
 		let args: string[] = process.argv.slice( 2 );
 
-		if( args.length > 0 && args[ 0 ] == '-s' ) {
-			this.noSourceMaps = true;
-			args.shift();
+		// Parse compiler opions
+
+		while( args.length > 0 ) {
+			if( args[ 0 ] == '-s' ) {
+				this.sourceMaps = false;
+				args.shift();
+			}
+			else if( args[ 0 ] == '-m' ) {
+				this.minimize = true;
+				args.shift();
+				if( args.length < 1 )
+					this.usage();
+				this.minimizeStartClassName = <string> args.shift();
+			}
+			else
+				break;
 		}
+
+		// Need at least 1 input and 1 output folder
 
 		if( args.length < 2 )
 			this.usage();
@@ -33,8 +49,9 @@ export class Compiler
 	usage()
 	{
 		console.log(
-			"node <compiler folder>/out/App.js [-s] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
+			"node <compiler folder>/out/App.js [-s] [-m <class name>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
 			"	-s: Don't generate source map files and remove existing ones.\n" +
+			"	-m: Minimize generated classes from specified starting class.\n" +
 			"	-t : Don't compile ./Test subfolders from following folders.\n" +
 			"	+t : Resume compiling ./Test subfolders from following folders.\n" );
 
@@ -44,7 +61,7 @@ export class Compiler
 	compile( inputFolders: string[], outputFolder: string )
 	{
 		console.log( "SmallJS compiling: " + inputFolders.join( ", " ) + " to: " + outputFolder );
-		if( this.noSourceMaps )
+		if( ! this.sourceMaps )
 			console.log( 'Source maps will not be generated.' );
 
 		this.createOutputFolder( outputFolder );
@@ -52,13 +69,16 @@ export class Compiler
 		this.compileFolders( inputFolders, outputFolder );
 
 		console.log( "Successfully compiled modules: " + this.modules.length + " classes: " + this.classes.length );
+
+		if( this.minimize )
+			console.log( 'Minimized from class: ' + this.minimizeStartClassName + ", stripped classes: " + this.minimizedCount );
 	}
 
 	// Create output folder if it does not exist yet.
 
 	createOutputFolder( outputFolder: string )
 	{
-		if( ! fs.existsSync( outputFolder) )
+		if( !fs.existsSync( outputFolder ) )
 			fs.mkdirSync( outputFolder );
 	}
 
@@ -77,6 +97,7 @@ export class Compiler
 
 		this.orderClasses();
 		new ClassCompiler().compileClasses( this.classes, outputFolder );
+		this.minimizeClasses();
 		this.generateModules( outputFolder );
 		this.generateRuntime( outputFolder );
 	}
@@ -170,34 +191,56 @@ export class Compiler
 		this.classes = orderedClasses;
 	}
 
+	// When -m option is uses: Remove unreferenced classes from starting class.
+
+	minimizeClasses()
+	{
+		if( !this.minimize )
+			return;
+
+		let startClass = this.classes.find( ( _class ) => _class.name == this.minimizeStartClassName );
+		if( !startClass )
+			this.error( "Can't find starting class for -m option: " + this.minimizeStartClassName );
+
+		// Mark all non-test classes as candidates from minimizing (stripping)
+		for( let _class of this.classes )
+			_class.minimize = true;
+		this.minimizedCount = this.classes.length;
+
+		// Unset 'minimize' recursively
+		this.minimizeFrom( <CompiledClass> startClass );
+
+		// for( let _class of this.classes )
+		// 	if( _class.minimize )
+		// 		console.log( "Minimized class: " + _class.name );
+
+		// Filter out minimized classes
+		this.classes = this.classes.filter( _class => ! _class.minimize );
+	}
+
+	// Recursively *unset* minimize form argument class,
+	// setting property 'strip' to false for referenced classes.
+
+	minimizeFrom( _class: CompiledClass )
+	{
+		if( ! _class.minimize )
+			return;
+
+		_class.minimize = false;
+		this.minimizedCount--;
+
+		for( let reference of _class.references ) {
+			let referencedClass = this.classes.find( ( _class ) => _class.name == reference );
+			if( !referencedClass )
+				this.error( "Can't referenced class: " + reference );
+			this.minimizeFrom( <CompiledClass> referencedClass )
+		}
+	}
+
 	generateModules( outputFolder: string )
 	{
-		for( let module of this.modules ) {
-			let codeFilename = module.name + CompiledModule.outputFileExtension;
-			let codePathname = outputFolder + "/" + codeFilename;
-
-			let mapFilename = codeFilename + CompiledModule.mapFileExtension;
-			let mapPathname = outputFolder + "/" + mapFilename;
-
-			let rootNode: SourceNode = module.generate( this.classes );
-
-			// codeWithSourceMap interface: { code: String, map: SourceMapGenerator }
-			let codeWithSourceMap = rootNode.toStringWithSourceMap( { file: mapFilename } );
-
-			if( !this.noSourceMaps ) {
-				// The comment directive "//# sourceMappingURL" must be added
-				// te enable the browser debugger to find the source map.
-				codeWithSourceMap.code += "\n//# sourceMappingURL=" + mapFilename + "\n";
-			}
-
-			fs.writeFileSync( codePathname, codeWithSourceMap.code );
-
-			if( this.noSourceMaps )
-				fs.unlink( mapPathname, ( err ) => { } );
-			else
-				fs.writeFileSync( mapPathname, codeWithSourceMap.map.toString() );
-
-		}
+		for( let module of this.modules )
+			module.generate( this.classes, outputFolder, this.sourceMaps );
 	}
 
 	// Copy Runtime.js to output folder.
@@ -219,9 +262,9 @@ export class Compiler
 		let fullMessage: string = "Compile error";
 		if( fileName )
 			fullMessage += " in file: " + fileName;
-		fullMessage += ": " + message
+		fullMessage += ": " + message;
 
-		console.error( fullMessage )
+		console.error( fullMessage );
 		process.exit( 1 );
 	}
 

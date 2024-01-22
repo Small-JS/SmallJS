@@ -8,6 +8,13 @@ INLINE 'import session from "express-session";'
 
 METHODS
 
+references
+	"Force import of classes that are referenced in INLINE statements."
+
+	IncomingMessage.
+	ServerResonse.
+!
+
 constructor
 	INLINE 'this.js = express()'.
 !

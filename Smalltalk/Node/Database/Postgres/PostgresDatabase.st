@@ -9,6 +9,12 @@ INLINE 'import pg from "pg";'
 
 METHODS
 
+references
+	"Force import of classes that are referenced in INLINE statements."
+
+	PostgresQueryResult.
+!
+
 "Connecting"
 
 connectTable: name rowClass: rowClass

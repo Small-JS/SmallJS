@@ -21,7 +21,8 @@ export class CompiledClass
 	methods: CompiledMethod[] = [];
 	classMethods: CompiledMethod[] = [];
 
-	references: string[] = [ "Object", "Class", "Method", "String" ];
+	references: string[] = [ "Object", "Class", "String" ];
+	minimize: boolean = false;
 
 	classInline?: SourceNode;
 

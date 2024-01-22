@@ -2,6 +2,7 @@ import { CompiledClass } from "./CompiledClass.js";
 import { Naming } from "./Runtime.js";
 
 import { SourceNode } from "source-map";
+import * as fs from "fs";
 
 export class CompiledModule
 {
@@ -17,10 +18,18 @@ export class CompiledModule
 		this.name = name;
 	}
 
-	generate( allClasses: CompiledClass[] ): SourceNode
+	generate( allClasses: CompiledClass[], outputFolder: string, sourceMaps: boolean )
 	{
 		this.classes = allClasses.filter( _class => _class.moduleName == this.name );
+		if( this.classes.length < 1 )
+			return;
 
+		let rootNode = this.generateSourceTree( allClasses );
+		this.generateFiles( rootNode, outputFolder, sourceMaps );
+	}
+
+	generateSourceTree( allClasses: CompiledClass[] ): SourceNode
+	{
 		return new SourceNode( null, null, null, "" )
 			.add( this.generateModuleImports( allClasses ) )
 			.add( this.generateClasses() )
@@ -28,6 +37,31 @@ export class CompiledModule
 			.add( this.generateClassesInitalization() )
 			.add( this.generateClassesInheritance() )
 			.add( this.generateClassesList() );
+	}
+
+	generateFiles( rootNode: SourceNode, outputFolder: string, sourceMaps: boolean )
+	{
+		let codeFilename = this.name + CompiledModule.outputFileExtension;
+		let codePathname = outputFolder + "/" + codeFilename;
+
+		let mapFilename = codeFilename + CompiledModule.mapFileExtension;
+		let mapPathname = outputFolder + "/" + mapFilename;
+
+		// codeWithSourceMap interface: { code: String, map: SourceMapGenerator }
+		let codeWithSourceMap = rootNode.toStringWithSourceMap( { file: mapFilename } );
+
+		if( sourceMaps ) {
+			// The comment directive "//# sourceMappingURL" must be added
+			// te enable the browser debugger to find the source map.
+			codeWithSourceMap.code += "\n//# sourceMappingURL=" + mapFilename + "\n";
+		}
+
+		fs.writeFileSync( codePathname, codeWithSourceMap.code );
+
+		if( sourceMaps )
+			fs.writeFileSync( mapPathname, codeWithSourceMap.map.toString() );
+		else
+			fs.unlink( mapPathname, ( error ) => { } );
 	}
 
 	// Generate combined imports for classes in module.
@@ -134,7 +168,7 @@ export class CompiledModule
 
 		for( let _class of this.classes )
 			if( _class.superclassName != "nil" )
-				 node.add( Naming.metaClassSingletonStToJs( _class.name ) +
+				node.add( Naming.metaClassSingletonStToJs( _class.name ) +
 					".$superclass$( " + Naming.metaClassSingletonStToJs( _class.superclassName ) + " );\n" );
 
 		node.add( "\n" );

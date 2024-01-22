@@ -9,6 +9,12 @@ INLINE 'import * as MySql from "mysql2";'
 
 METHODS
 
+references
+	"Force import of classes that are referenced in INLINE statements."
+
+	MysqlQueryError.
+!
+
 "Connecting"
 
 async connect: connectionString then: block

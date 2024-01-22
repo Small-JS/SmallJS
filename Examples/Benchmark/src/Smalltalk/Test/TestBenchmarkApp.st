@@ -6,9 +6,6 @@ CLASS TestBenchmarkApp EXTENDS Object MODULE TestBenchmark CLASSVARS '' VARS 'be
 test: aBenchmarkApp
 	benchmarkApp := aBenchmarkApp.
 
-	"Refer to one test class in a module to force importing all classes of that module."
-	TestBenchmark.
-
 	"Run sync and async tests of all imported Test* classes and log results."
 	Test allThen: [
 		self testGui ].
@@ -24,8 +21,7 @@ testGui
 	benchmarkApp runAllButton click.
 	Timer timeout: 10000 then: [
 		self checkResults.
-		Timer timeout: 2000 then: [
-			benchmarkApp stop ] ].
+		benchmarkApp stop ].
 !
 checkResults
 	"Check if all benchmark results contain numbers."

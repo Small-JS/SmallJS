@@ -1,5 +1,12 @@
 CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer timer cookie'
 
+references
+	"Force import of Unit tests."
+	TestPerson.
+	TestOrder.
+	TestLoginResult.
+!
+
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
 

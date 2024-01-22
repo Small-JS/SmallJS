@@ -14,7 +14,7 @@ isFirefox
 	^ self default navigator userAgent includes: 'Firefox'.
 !
 isChromium
-	"Shortcut method to test for Cromium based browser: Chrome or Edge."
+	"Shortcut method to test for Chromium based browser: Chrome or Edge."
 	^ self default navigator userAgent includes: 'Chrome'.
 !
 isMac

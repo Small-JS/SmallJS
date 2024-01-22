@@ -3,6 +3,11 @@ CLASS LoginApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
 
 METHODS
 
+references
+	"Prevent minimizing of apps for other pages."
+	OrderApp.
+	ProductApp.
+!
 start
 	self bindElements.
 

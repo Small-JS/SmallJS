@@ -17,6 +17,17 @@
 			"args": [ "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
 			"envFile": "${workspaceFolder}/../Node/.env",
 			"postDebugTask": "Run Node tests"
+		},
+		{
+			"name": "Launch Compiler with minimize",
+			"type": "node",
+			"request": "launch",
+			"skipFiles": [ "<node_internals>/**" ],
+			"cwd": "${workspaceFolder}/../Node",
+			"program": "${workspaceFolder}/out/App.js",
+			"args": [ "-m", "NodeApp", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
+			"envFile": "${workspaceFolder}/../Node/.env",
+			"postDebugTask": "Run Node tests"
 		}
 	]
 }

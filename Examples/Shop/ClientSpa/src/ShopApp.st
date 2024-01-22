@@ -2,6 +2,11 @@ CLASS ShopApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS '' VARS ''
 
 METHODS
 
+references
+	"Prevent minimizing of unit tests."
+	TestProduct.
+	TestOrder.
+!
 start
 	self loadComponent: LoginComponent.
 !
