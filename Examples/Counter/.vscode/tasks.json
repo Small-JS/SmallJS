@@ -19,6 +19,16 @@
 			"label": "Compile Smalltalk",
 			"type": "shell",
 			"command": "node",
+			"args": [  "../../Compiler/out/App.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Compile Smalltalk minimized",
+			"type": "shell",
+			"command": "node",
 			"args": [  "../../Compiler/out/App.js", "-m", "CounterApp", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
 			"options": {
 				"cwd": "${workspaceFolder}"

@@ -1,4 +1,4 @@
-CLASS ServerResonse EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
+CLASS ServerResponse EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
 
 METHODS
 

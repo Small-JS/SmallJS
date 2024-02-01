@@ -20,7 +20,7 @@
 			"type": "shell",
 			"command": "node",
 			"args": [ "../Compiler/out/App.js", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
-			// Without source maps (option "-s"), for easier JS debugging:
+			// Compile without source maps (option "-s"), for easier JS debugging:
 			// "args": [  "../Compiler/out/App.js", "-s", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
 			"problemMatcher": []
 		}

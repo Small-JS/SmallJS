@@ -15,6 +15,7 @@ export class ClassCompiler
 	class!: CompiledClass;
 	method!: CompiledMethod;
 	allClasses: CompiledClass[] = [];
+	methodCount = 0;
 
 	// True if last compiled object was a variable.
 	// Then it's possible to assign a value to it.
@@ -118,6 +119,7 @@ export class ClassCompiler
 
 		this.compileMethodHeader();
 		this.compileMethodBody();
+		this.methodCount++;
 	}
 
 	compileMethodHeader()
@@ -347,7 +349,7 @@ export class ClassCompiler
 
 		this.method.args = oldArgs;
 
-		this.class.addReference( "Block" );
+		this.addClassReferenceToClassAndMethod( "Block" );
 
 		return node;
 	}
@@ -424,11 +426,11 @@ export class ClassCompiler
 			node.add( this.compileNumber( literal ) );
 		else if( literal.charAt( 0 ) == "'" ) {
 			node.add( "stString$class.$fromJs$( " + literal + " )" );
-			this.class.addReference( "String" );
+			this.addClassReferenceToClassAndMethod( "String" );
 		}
 		else if( literal.charAt( 0 ) == "$" ) {
 			node.add( "stCharacter$class.$fromJs$( " + literal.charCodeAt( 1 ) + " )" );
-			this.class.addReference( "Character" );
+			this.addClassReferenceToClassAndMethod( "Character" );
 		}
 		else if( literal == "#" )
 			node = this.compileArray();
@@ -458,7 +460,7 @@ export class ClassCompiler
 			stClass = "BigInt";
 			num += "n";
 		}
-		this.class.addReference( stClass );
+		this.addClassReferenceToClassAndMethod( stClass );
 
 		return "st" + stClass + "$class.$fromJs$( " + negate + num + " )";
 	}
@@ -471,7 +473,7 @@ export class ClassCompiler
 		while( !this.parser.tryParseTerm( ")" ) )
 			node.add( ".$add$( " ).add( this.compileReceiver() ).add( " )" );
 
-		this.class.addReference( "Array" );
+		this.addClassReferenceToClassAndMethod( "Array" );
 
 		return node;
 	}
@@ -499,7 +501,7 @@ export class ClassCompiler
 		if( !this.checkClassReference( name ) )
 			this.error( "Cannot find class reference: " + name );
 
-		this.class.addReference( name );
+		this.addClassReferenceToClassAndMethod( name );
 
 		return Naming.metaClassSingletonStToJs( name );
 	}
@@ -533,6 +535,12 @@ export class ClassCompiler
 	private checkClassReference( name: string ): boolean
 	{
 		return this.allClasses.find( _class => _class.name == name ) != undefined;
+	}
+
+	private addClassReferenceToClassAndMethod( className: string )
+	{
+		this.class.addReference( className );
+		this.method.addClassReference( className );
 	}
 
 	// ======================================== Compile message sends
@@ -591,6 +599,9 @@ export class ClassCompiler
 			args.push( arg );
 		} while( Naming.methodIsKeyword( this.parser.peekTerm() ) );
 
+		// Save method reference for minimizing
+		this.method.addMethodReference( methodName );
+
 		// Generate JS
 		message.add( "." + Naming.methodStToJs( methodName ) + "( " + args[ 0 ] );
 		for( let index = 1; index < args.length; ++index )
@@ -608,8 +619,12 @@ export class ClassCompiler
 		this.compileUnaryMessages( receiver );
 
 		while( Naming.methodIsBinary( this.parser.peekTerm() ) ) {
+			let methodName = this.parser.parseTerm();
+			// Save method reference for minimizing
+			this.method.addMethodReference( methodName );
+
 			let message = this.positionedSourceNode( "", "binaryMessage" );
-			message.add( "." + Naming.methodStToJs( this.parser.parseTerm() ) + "( " );
+			message.add( "." + Naming.methodStToJs( methodName ) + "( " );
 			let arg = this.compileReceiver();
 			this.compileUnaryMessages( arg );
 			message.add( arg ).add( " )" );
@@ -622,8 +637,12 @@ export class ClassCompiler
 	private compileUnaryMessages( receiver: SourceNode )
 	{
 		while( Naming.methodIsUnary( this.parser.peekTerm() ) ) {
+			let methodName = this.parser.parseTerm();
+			// Save method reference for minimizing
+			this.method.addMethodReference( methodName );
+
 			let message = this.positionedSourceNode( "", "unaryMessage" );
-			message.add( "." + Naming.methodStToJs( this.parser.parseTerm() ) + "()" );
+			message.add( "." + Naming.methodStToJs( methodName ) + "()" );
 			receiver.add( message );
 		}
 	}

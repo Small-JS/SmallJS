@@ -13,6 +13,10 @@ export class CompiledMethod
 	hasReturnFromBlock: boolean = false;
 	isAsync: boolean = false;
 
+	classReferences: string[] = [];
+	methodReferences: string[] = [];
+	minimized: boolean = false;
+
 	generate(): SourceNode
 	{
 		let node = new SourceNode( null, null, "", "", "method" );
@@ -99,4 +103,17 @@ export class CompiledMethod
 		return compiledVariable.includedIn( this.args ) ||
 			compiledVariable.includedIn( this.vars );
 	}
+
+	addMethodReference( methodName: string )
+	{
+		if( ! this.methodReferences.includes( methodName ) )
+			this.methodReferences.push( methodName );
+	}
+
+	addClassReference( className: string )
+	{
+		if( ! this.classReferences.includes( className ) )
+			this.classReferences.push( className );
+	}
+
 }

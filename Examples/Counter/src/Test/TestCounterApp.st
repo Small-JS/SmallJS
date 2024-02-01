@@ -1,4 +1,4 @@
-CLASS TestCounterApp EXTENDS Object MODULE TestCounterClient CLASSVARS '' VARS 'counterApp'
+CLASS TestCounterApp EXTENDS Object MODULE TestCounterApp CLASSVARS '' VARS 'counterApp'
 
 "Test CounterApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."

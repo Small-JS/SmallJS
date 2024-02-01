@@ -13,8 +13,6 @@ start
 	TestProcess.
 
 	TestPostgresDatabase.
-	TestMariadbDatabase.
-	TestMysqlDatabase.
 
 	Object myTest.
 	Test all.

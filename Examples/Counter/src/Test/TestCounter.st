@@ -1,4 +1,4 @@
-CLASS TestCounter EXTENDS Test MODULE TestCounterClient CLASSVARS '' VARS ''
+CLASS TestCounter EXTENDS Test MODULE TestCounterApp CLASSVARS '' VARS ''
 
 test
 	| counter |

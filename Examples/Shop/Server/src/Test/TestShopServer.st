@@ -1,21 +1,22 @@
 CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer timer cookie'
 
-references
-	"Force import of Unit tests."
-	TestPerson.
-	TestOrder.
-	TestLoginResult.
-!
-
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
 
 test: aShopServer
+	self references.
+
 	shopServer := aShopServer.
 
 	"Run sync and async unit tests of all imported Test* classes and log results."
 	Test allThen: [
 		self testApi ].
+!
+references
+	"Force import of unit tests."
+	TestPerson.
+	TestOrder.
+	TestLoginResult.
 !
 testApi
 	self log: 'Starting API tests.'.

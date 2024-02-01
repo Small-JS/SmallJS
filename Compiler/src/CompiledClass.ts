@@ -6,14 +6,14 @@ import { Position } from "./Position.js";
 
 export class CompiledClass
 {
-	fileName: string;
-	source: string;
-	bodyPosition!: Position;
-
 	name: string = "";
 	moduleName: string = "";
 	superclassName: string = "";
 	superclass?: CompiledClass;
+
+	fileName: string;
+	source: string;
+	bodyPosition!: Position;
 
 	vars: CompiledVariable[] = [];
 	classVars: CompiledVariable[] = [];
@@ -22,7 +22,7 @@ export class CompiledClass
 	classMethods: CompiledMethod[] = [];
 
 	references: string[] = [ "Object", "Class", "String" ];
-	minimize: boolean = false;
+	minimized: boolean = false;
 
 	classInline?: SourceNode;
 
@@ -57,7 +57,7 @@ export class CompiledClass
 	addReference( reference: string )
 	{
 		if( reference != this.name )
-			if( this.references.indexOf( reference ) < 0 )
+			if( ! this.references.includes( reference ) )
 				this.references.push( reference );
 	}
 
@@ -66,30 +66,30 @@ export class CompiledClass
 
 	addMethod( method: CompiledMethod ): boolean
 	{
-		if( this.findMethodName( method.name ) )
+		if( this.findMethodName( method.name ) != undefined )
 			return false;
 
 		this.methods.push( method );
 		return true;
 	}
 
-	findMethodName( methodName: string ): boolean
+	findMethodName( methodName: string ): CompiledMethod | undefined
 	{
-		return this.methods.find( method => method.name == methodName ) != undefined;
+		return this.methods.find( method => method.name == methodName );
 	}
 
 	addClassMethod( method: CompiledMethod ): boolean
 	{
-		if( this.findClassMethodName( method.name ) )
+		if( this.findClassMethodName( method.name ) != undefined )
 			return false;
 
 		this.classMethods.push( method );
 		return true;
 	}
 
-	findClassMethodName( methodName: string ): boolean
+	findClassMethodName( methodName: string ): CompiledMethod | undefined
 	{
-		return this.classMethods.find( method => method.name == methodName ) != undefined;
+		return this.classMethods.find( method => method.name == methodName );
 	}
 
 	// Generate JavaScript class for instatiation objects of this ST class.

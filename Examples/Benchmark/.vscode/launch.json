@@ -21,6 +21,14 @@
 			"preLaunchTask": "Compile client"
 		},
 		{
+			"name": "Launch Chrome minimized",
+			"request": "launch",
+			"type": "chrome",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/web",
+			"preLaunchTask": "Compile client minimized"
+		},
+		{
 			"name": "Launch Edge",
 			"request": "launch",
 			"type": "msedge",

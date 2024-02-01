@@ -19,6 +19,16 @@
 			"label": "Compile server",
 			"type": "shell",
 			"command": "node",
+			"args": [  "../../../Compiler/out/App.js", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node",  "+t", "src", "out" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Compile server minimized",
+			"type": "shell",
+			"command": "node",
 			"args": [  "../../../Compiler/out/App.js", "-m", "ShopServer", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node",  "+t", "src", "out" ],
 			"options": {
 				"cwd": "${workspaceFolder}"

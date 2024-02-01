@@ -4,16 +4,21 @@ import { CompiledClass } from "./CompiledClass.js";
 
 import { exit } from "process";
 import * as fs from "fs";
+import { CompiledMethod } from "./CompiledMethod.js";
 
 export class Compiler
 {
+	classCompiler = new ClassCompiler();
+
 	modules: CompiledModule[] = [];
 	classes: CompiledClass[] = [];
+
 	sourceMaps: boolean = true;
 	skipTestFolders: boolean = false;
+
 	minimize: boolean = false;
 	minimizeStartClassName: string = '';
-	minimizedCount = 0;
+	minimizedMethodCount = 0;
 
 	start()
 	{
@@ -50,10 +55,10 @@ export class Compiler
 	{
 		console.log(
 			"node <compiler folder>/out/App.js [-s] [-m <class name>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
-			"	-s: Don't generate source map files and remove existing ones.\n" +
-			"	-m: Minimize generated classes from specified starting class.\n" +
+			"	-s : Don't generate source map files and remove existing ones.\n" +
 			"	-t : Don't compile ./Test subfolders from following folders.\n" +
-			"	+t : Resume compiling ./Test subfolders from following folders.\n" );
+			"	+t : Resume compiling ./Test subfolders from following folders.\n" +
+			"	-m : Minimize generated classes from specified starting class.\n" );
 
 		exit( 1 );
 	}
@@ -61,20 +66,13 @@ export class Compiler
 	compile( inputFolders: string[], outputFolder: string )
 	{
 		console.log( "SmallJS compiling: " + inputFolders.join( ", " ) + " to: " + outputFolder );
-		if( ! this.sourceMaps )
+		if( !this.sourceMaps )
 			console.log( 'Source maps will not be generated.' );
 
 		this.createOutputFolder( outputFolder );
 
 		this.compileFolders( inputFolders, outputFolder );
-
-		console.log( "Successfully compiled modules: " + this.modules.length + " classes: " + this.classes.length );
-
-		if( this.minimize )
-			console.log( 'Minimized from class: ' + this.minimizeStartClassName + ", stripped classes: " + this.minimizedCount );
 	}
-
-	// Create output folder if it does not exist yet.
 
 	createOutputFolder( outputFolder: string )
 	{
@@ -96,7 +94,11 @@ export class Compiler
 				this.loadClasses( inputFolder );
 
 		this.orderClasses();
-		new ClassCompiler().compileClasses( this.classes, outputFolder );
+
+		this.classCompiler.compileClasses( this.classes, outputFolder );
+		console.log( "Successfully compiled modules: " + this.modules.length +
+			": classes: " + this.classes.length + " methods: " + this.classCompiler.methodCount );
+
 		this.minimizeClasses();
 		this.generateModules( outputFolder );
 		this.generateRuntime( outputFolder );
@@ -127,26 +129,23 @@ export class Compiler
 		let newClass = new ClassCompiler().loadClass( fileName, source );
 
 		this.addClass( newClass );
-		this.addModule( newClass.moduleName );
 	}
 
-	// Add compiled class. Report compile error if the class name already exists.
+	// Add compiled class .
+	// Report compile error if the class name already exists.
 
 	addClass( newClass: CompiledClass )
 	{
 		let duplicateClass = this.classes.find( _class => _class.name == newClass.name );
 		if( duplicateClass )
-			this.error( "Duplicate class name: " + newClass.name, newClass.fileName + " and: " + duplicateClass.fileName );
-
+			this.error( "Duplicate class name: " + newClass.name, +
+				" in files: " + newClass.fileName + " and: " + duplicateClass.fileName );
 		this.classes.push( newClass );
-	}
 
-	// Add named module is if is new.
+		// Add class to existing module or create new module for it.
 
-	addModule( moduleName: string )
-	{
-		if( !this.modules.find( module => module.name == moduleName ) )
-			this.modules.push( new CompiledModule( moduleName ) );
+		if( ! this.modules.find( module => module.name == newClass.moduleName ) )
+			this.modules.push( new CompiledModule( newClass.moduleName ) );
 	}
 
 	// Return a list of classes in inheritance order and with superclasses set.
@@ -191,51 +190,122 @@ export class Compiler
 		this.classes = orderedClasses;
 	}
 
-	// When -m option is uses: Remove unreferenced classes from starting class.
-
 	minimizeClasses()
 	{
 		if( !this.minimize )
 			return;
 
-		let startClass = this.classes.find( ( _class ) => _class.name == this.minimizeStartClassName );
-		if( !startClass )
-			this.error( "Can't find starting class for -m option: " + this.minimizeStartClassName );
+		for( let _class of this.classes ) {
+			_class.minimized = true;
+			for( let method of _class.methods )
+				method.minimized = true;
+			for( let classMethod of _class.classMethods )
+				classMethod.minimized = true;
+		}
+		this.minimizedMethodCount = this.classCompiler.methodCount;
 
-		// Mark all non-test classes as candidates from minimizing (stripping)
+		// Minimize from the starting class plus some classes that are hardcoded into the compiler.
+
+		let startClassNames: string[] = [  this.minimizeStartClassName, "Array", "Block", "Boolean", "Class", "JsObject", "Nil", "Test" ];
+		for( let className of startClassNames )
+			this.minimizeFromClassName( className )
+
+		// Now remove all classes and methods where minimized is true.
+
+		let classesUsed: CompiledClass[] = [];
 		for( let _class of this.classes )
-			_class.minimize = true;
-		this.minimizedCount = this.classes.length;
+			if( ! _class.minimized ) {
+				classesUsed.push( _class );
+				_class.methods = _class.methods.filter( ( method ) => ! method.minimized );
+			}
+		this.classes = classesUsed;
 
-		// Unset 'minimize' recursively
-		this.minimizeFrom( <CompiledClass> startClass );
+		// Regenerate modules from used classes.
 
-		// for( let _class of this.classes )
-		// 	if( _class.minimize )
-		// 		console.log( "Minimized class: " + _class.name );
+		let modulesUsed: CompiledModule[] = [];
+		for( let _class of this.classes )
+			if( ! modulesUsed.find( module => module.name == _class.moduleName ) )
+				modulesUsed.push( new CompiledModule( _class.moduleName ) );
+		this.modules = modulesUsed;
 
-		// Filter out minimized classes
-		this.classes = this.classes.filter( _class => ! _class.minimize );
+		console.log( 'Minimized from class: ' + this.minimizeStartClassName +
+			": modules: " + this.modules.length +
+			" classes: " + this.classes.length +
+			" methods: " + this.minimizedMethodCount );
+	}
+
+	minimizeFromClassName( className: string )
+	{
+		let _class = this.classes.find( ( _class ) => _class.name == className );
+		if( !_class )
+			this.error( "Can't find starting class for -m option: " + className );
+
+		// Unset minimized for current class and super classes.
+
+		let superClass = _class;
+		while( superClass != undefined && superClass.minimized ) {
+			superClass.minimized = false;
+			superClass = superClass.superclass;
+		}
+
+		// Then unset 'minimize' for classes and methods referenced recursively
+
+		for( let method of _class!.methods )
+			this.minimizeFromMethod( method );
+
+		for( let classMethod of _class!.classMethods )
+			this.minimizeFromMethod( classMethod );
+	}
+
+	minimizeFromMethod( method: CompiledMethod )
+	{
+		if( ! method.minimized )
+			return;		// Already visited, stop recursion.
+
+		method.minimized = false;
+		this.minimizedMethodCount--;
+
+		// All class references and their superclasses to used classes
+
+		for( let className of method.classReferences ) {
+			let _class = this.findClass( className );
+			while( _class != undefined && _class.minimized ) {
+				_class.minimized = false;
+				this.minimizeFromConstructor( _class )
+				_class = _class.superclass;
+			}
+		}
+
+		// For all method references of this method,
+		// recurse into all used classes that implement that method.
+
+		for( let methodName of method.methodReferences )
+			for( let _class of this.classes ) {
+				let method = _class.methods.find( method => method.name == methodName );
+				if( method )
+					this.minimizeFromMethod( method );
+
+				let classMethod = _class.classMethods.find( method => method.name == methodName );
+				if( classMethod )
+					this.minimizeFromMethod( classMethod );
+			}
+	}
+
+	// Minimize classes from constructor, if present
+
+	minimizeFromConstructor( _class: CompiledClass )
+	{
+		let constructor = _class.findMethodName( 'constructor' )
+		if( constructor )
+			this.minimizeFromMethod( constructor );
+	}
+	findClass( name: string ): CompiledClass | undefined
+	{
+		return this.classes.find( ( _class ) => _class.name == name );
 	}
 
 	// Recursively *unset* minimize form argument class,
 	// setting property 'strip' to false for referenced classes.
-
-	minimizeFrom( _class: CompiledClass )
-	{
-		if( ! _class.minimize )
-			return;
-
-		_class.minimize = false;
-		this.minimizedCount--;
-
-		for( let reference of _class.references ) {
-			let referencedClass = this.classes.find( ( _class ) => _class.name == reference );
-			if( !referencedClass )
-				this.error( "Can't referenced class: " + reference );
-			this.minimizeFrom( <CompiledClass> referencedClass )
-		}
-	}
 
 	generateModules( outputFolder: string )
 	{

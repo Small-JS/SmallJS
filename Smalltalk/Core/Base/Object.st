@@ -8,7 +8,13 @@ myTest
 	"This is the first method compiled.
 	Can be used when testing the compiler."
 
-	| a |
+	| a s |
+
+	a := 1.
+	a := 2 negated.
+	a := 3 * 4.
+	a := 12 gcd: 6.
+	a := Array new: 2.
 !
 
 "Creating"

@@ -8,7 +8,7 @@
 
 	"configurations": [
 		{
-			"name": "Launch Compiler",
+			"name": "Launch Compiler on Node",
 			"type": "node",
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
@@ -19,7 +19,7 @@
 			"postDebugTask": "Run Node tests"
 		},
 		{
-			"name": "Launch Compiler with minimize",
+			"name": "Launch Compiler on Node with minimize",
 			"type": "node",
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
@@ -28,6 +28,18 @@
 			"args": [ "-m", "NodeApp", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
 			"envFile": "${workspaceFolder}/../Node/.env",
 			"postDebugTask": "Run Node tests"
+		},
+		{
+			"name": "Launch Compiler on Counter with minimize",
+			"type": "node",
+			"request": "launch",
+			"skipFiles": [ "<node_internals>/**" ],
+			"cwd": "${workspaceFolder}/../Examples/Counter",
+			"program": "${workspaceFolder}/out/App.js",
+			"args": [ "-m", "CounterApp", "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Smalltalk" ],
+			// "args": [ "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Smalltalk" ],
+			"envFile": "${workspaceFolder}/../Examples/Counter/.env"
 		}
+
 	]
 }

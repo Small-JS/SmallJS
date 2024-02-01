@@ -28,6 +28,18 @@
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
 			"preLaunchTask": "Compile server"
+		},
+		{
+			"name": "Launch Server minimized",
+			"type": "node",
+			"request": "launch",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/out/App.js",
+			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
+			"preLaunchTask": "Compile server minimized"
 		}
 	]
 }

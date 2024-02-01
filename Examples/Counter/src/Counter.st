@@ -1,4 +1,4 @@
-CLASS Counter EXTENDS Object MODULE Counter CLASSVARS '' VARS 'value'
+CLASS Counter EXTENDS Object MODULE CounterApp CLASSVARS '' VARS 'value'
 
 constructor
 	value := 0.

@@ -8,23 +8,20 @@ INLINE 'import session from "express-session";'
 
 METHODS
 
-references
-	"Force import of classes that are referenced in INLINE statements."
-
-	IncomingMessage.
-	ServerResonse.
-!
-
 constructor
 	INLINE 'this.js = express()'.
 !
 get: path then: block
 	"Block should take 2 arguments, an IncomingMessage and a ServerResonse."
 
+	"Force references to prevent minimizing."
+	IncomingMessage.
+	ServerResponse.
+
 	INLINE 'this.js.get( path.js,
 		( request, response ) => block.js(
 			stIncomingMessage$class.$fromJs$( request ),
-			stServerResonse$class.$fromJs$( response ) ) )'.
+			stServerResponse$class.$fromJs$( response ) ) )'.
 !
 listen: port then: block
 	Error. "Force import."

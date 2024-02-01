@@ -15,7 +15,7 @@ tsc
 
 # Compile Smalltalk
 
-node ../../../Compiler/out/App.js -m ShopServer -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
+node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
 
 # Check and run .env file
 

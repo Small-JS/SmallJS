@@ -3,12 +3,8 @@ CLASS LoginApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
 
 METHODS
 
-references
-	"Prevent minimizing of apps for other pages."
-	OrderApp.
-	ProductApp.
-!
 start
+	self references.
 	self bindElements.
 
 	"For easy access :-)"
@@ -17,6 +13,12 @@ start
 
 	self testMode ifTrue: [
 		TestLoginApp new test: self ].
+!
+references
+	"Prevent minimizing of apps for other HTML pages."
+	^ true. 	"Don't actually execute the references now."
+	ProductApp start.
+	OrderApp start.
 !
 bindElements
 	userNameInput := Document getElementById: 'userNameInput' class: HtmlInputElement.

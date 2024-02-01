@@ -29,10 +29,14 @@ connect: connectionString then: block
 	INLINE 'this.js.connect().then( () => block.$value() )'.
 !
 query: query then: block
+	"Force reference to prevent minimizing."
+	PostgresQueryResult.
 	INLINE 'this.js.query( query.js ).
 		then( ( result ) => block.$value$( stPostgresQueryResult$class.$fromJs$( result ) ) )'.
 !
 query: query with: parameters then: block
+	"Force reference to prevent minimizing."
+	PostgresQueryResult.
 	INLINE 'this.js.query( query.js, parameters.$toJs() ).
 		then( ( result ) => block.$value$( stPostgresQueryResult$class.$fromJs$( result ) ) )'.
 !
