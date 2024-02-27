@@ -47,3 +47,6 @@ isLowercase
 isLetter
 	^ self isUppercase | self isLowercase.
 !
+isDigit
+	^ Boolean fromJs: INLINE 'this.js >= 48 && this.js <= 57'.
+!

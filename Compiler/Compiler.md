@@ -10,11 +10,11 @@ To test itself after changes, the compiler starts the ../Node project and runs i
 
 ## Usage
 
-	node ./out/App.js [-s] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>
+	node ./out/App.js [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>
 		-s : Don't generate source map files and remove existing ones.
-		-t : Don't compile ./Test subfolders from following folders.
-		+t : Resume compiling ./Test subfolders from following folders.
 		-m : Minimize generated classes from specified starting class.
+		-t : Don't compile ./Test subfolders in following folders.
+		+t : Resume compiling ./Test subfolders in following folders.
 
 The '-s' option is convienient if you want to debug purely in JS, and not a mix of ST and JS.\
 The '-t' and '+t' options can be used to skip compiling units tests for ST base libraries and for production deployment of your app.\
