@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SmallJS - Home</title>
+	<link rel="stylesheet" href="Home.css" type="text/css" />
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<include src="../NavBar/NavBar.html"></include>
+			</td>
+		</tr>
+		<tr class="horizontal-center">
+			<td>
+				<p class="title">Welcome to SmallJS !</p>
+				<br>
+				<img id="SmallJSLogo" src="../SmallJS.png" alt="SmallJS logo" width="300" height="300" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>
+				<p><b>SmallJS</b> is a free and open source implementation of the elegant and powerful Smalltalk-80 (ST) language.
+					It compiles to JavaScript (JS) than runs in modern browsers or in Node.js.
+				</p>
+				<p>
+					SmallJS is file based, not image based, so you can develop in your favorite IDE.
+					The default setup is for Visual Studio Code, with ST syntax coloring and step debugging!
+					You code separately from the SmallJS base libraries (image) and only the parts you use are imported
+					automatically when running your app.
+				</p>
+				<p>
+					SmallJS is <i>fully</i> object oriented, so customizable on every level.
+					For usability, ST class and method names are kept mostly equal to their familiar JS counterparts.
+					JS libraries already encapsulated in ST are:
+				</p>
+				<ul>
+					<li>Browsers: Document, Window, HTML elements, events, CSS, streams.</li>
+					<li>Node.js: HTTP server, Express, 3 databases, files.</li>
+				</ul>
+				<p>
+					To get you started quickly, there are several example projects
+					for development in the browser or a Node.js back-end.
+				</p>
+			</td>
+		</tr>
+		<tr class="title">
+			<td>
+				<label>Code sample</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>SmallJS code sample from the Todo app.</label>
+			</td>
+		</tr>
+		<tr class="horizontal-center">
+			<td>
+				<img id="smallJSLogo" src="Example.png" alt="SmallJS code example" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h1 class="title">About - Vision</h1>
+				<p>SmallJS is targeted at new and experienced developers that want to
+					learn and more elegant language than JavaScript and use it to (incementatlly) build front end and
+					back-ends apps with it.</p>
+				<p>If you want to contribute to SmallJS main development,
+					or have any other questions,
+					please send an email to: info at small-js.org.</p>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+
+<!-- Resolve <include></include> tags -->
+<script type="module" src="/Tools/Include.js"></script>

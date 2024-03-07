@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SmallJS - Examples</title>
+	<link rel="stylesheet" href="Examples.css" type="text/css" />
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<include src="../NavBar/NavBar.html"></include>
+			</td>
+		</tr>
+		<tr>
+			<td class="title">
+				<label id="titleLabel">SmallJS example apps</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Below some example client web apps written in SmallJS are shown.<br>
+				For a back-end example in Node.js with a database run the Shop example from GitHub.</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="title">
+				<label id="titleLabel">Counter example</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>A simple counter app, the minimal client app.</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="horizontal-center">
+				<iframe src="Counter/index.html" title="Counter app" width="500" height="300"></iframe>
+			</td>
+		</tr>
+		<tr>
+			<td class="title">
+				<label id="titleLabel">Todo example</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>A todo app, with inserting, sorting and deleting with two UI languages.</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="horizontal-center">
+				<iframe src="Todo/index.html" title="Todo app" width="500" height="540"></iframe>
+			</td>
+		</tr>
+		<tr>
+			<td class="title">
+				<label id="titleLabel">Benchmark  example</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>A benchmarking app, comparing SmallJS speed to JavaScript for different operations.</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="horizontal-center">
+				<iframe src="Benchmark/index.html" title="Benchhmar app" width="500" height="300"></iframe>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+
+<!-- Resolve <include></include> tags -->
+<script type="module" src="/Tools/Include.js"></script>

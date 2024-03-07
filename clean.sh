@@ -45,3 +45,4 @@ rm -r ./Examples/Shop/ClientSpa/web/Smalltalk
 rm ./Examples/Todo/web/App.js*
 rm -r ./Examples/Todo/web/Smalltalk
 
+rm ./Website/web/App.js*

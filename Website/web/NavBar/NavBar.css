@@ -1,0 +1,22 @@
+﻿#navBar {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#navBarLabel {
+	font-weight: bold;
+}
+
+#navBar a {
+	font-weight: bold;
+	color: black;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+#navBar a:hover {
+	background: #C0C0C0;
+	color: black;
+}

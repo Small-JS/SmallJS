@@ -1,0 +1,8 @@
+﻿@import "../App.css";
+
+#codeButton
+{
+	font-weight: bold;
+	color: white;
+	background-color: green;
+}

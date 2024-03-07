@@ -1,0 +1,54 @@
+
+body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	border-color: grey;
+	width: 800px;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	background-color: #C5ECF9;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.horizontal-center {
+	text-align: center;
+}
+
+.horizontal-left {
+	text-align: left;
+}
+
+.bold-horizontal-center {
+	text-align: center;
+	font-weight: bold;
+}
+
+.vertical-center
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bold
+{
+	font-weight: bold;
+}
+

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SmallJS - Learning</title>
+	<link rel="stylesheet" href="Learning.css" type="text/css" />
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<include src="../NavBar/NavBar.html"></include>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="title">Learning Smalltalk</p>
+				<p>If you're new to the wonderfully elegant Smalltalk language,
+					it's probably a good idea to study one or more of these resources. </p>
+				<p>It's best to first try these tutorials in the Smalltalk implementations they are written for,
+					because in SmallJS, the names of classes and methods are based on their JS equivalents,
+					not on the Smalltalk-80 standard.</p>
+				<p>You can then also appreciate the different approach of SmallJS compared to
+					image-based Smalltalk implementations with and integrated IDE.</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="learningTable">
+					<tr>
+						<th>Resource</th>
+						<th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://amber-lang.net/learn.html">Learn Smalltalk with professor Stef</a>
+						</td>
+						<td>
+							Brief tutorial in Amber Smalltalk.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://learnxinyminutes.com/docs/smalltalk">Learn X in Y minutes</a>
+						</td>
+						<td>
+							Where X = Smalltalk
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://wiki.squeak.org/squeak/6546">Squeak by example</a>
+						</td>
+						<td>
+							Full book based on Squeak Smalltalk.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="https://www.e-booksdirectory.com/details.php?ebook=3297">Digitalk Smalltalk/V
+								Tutorial and Programming Handbook</a>
+						</td>
+						<td>
+							You can't run Smalltalk/V anymore,<br>
+							but chapters 1 and 3 are excellent into's to Smalltalk concepts.
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API">MDN DOM HTML</a>
+						</td>
+						<td>
+							Modzilla Developer Network<br>
+							SmallJS class and method names match mostly to this.
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="title">Syntax of SmallJS</p>
+				<p>The SmallJS syntax is mostly compatible with Smalltalk-80<br>
+					Some keywords have been added to allow it to be file based and call JS functions.
+				</p>
+				<p>A quick guide to the SmallJS syntax and its source code organisation<br>
+					can be found in this subfolder on GitHub: <b>
+						<a
+							href="https://github.com/Small-JS/SmallJS/blob/main/Smalltalk/Smalltalk.md">Smalltalk/Smalltalk.md</a>
+				</p>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+
+<!-- Resolve <include></include> tags -->
+<script type="module" src="/Tools/Include.js"></script>
