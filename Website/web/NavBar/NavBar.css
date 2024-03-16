@@ -1,7 +1,12 @@
 ﻿#navBar {
-	width: 100%;
-	display: flex;
+	max-width: 100%;
 	justify-content: center;
+}
+
+#navBarTable
+{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #navBarLabel {
@@ -12,8 +17,9 @@
 	font-weight: bold;
 	color: black;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 6px 6px;
 	text-decoration: none;
+	line-height: 1.8;
 }
 
 #navBar a:hover {

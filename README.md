@@ -1,6 +1,11 @@
 # SmallJS README
 
-<img id="SmallJSLogo" src="Documentation/SmallJS.png" alt="SmallJS logo" width="300" height="300" style="margin:auto"/>
+<p align="center" width="100%" style="font-size: large; font-weight: bold;">
+	<img src="Documentation/SmallJS.png" alt="SmallJS logo" width="300" height="300"/>
+	<br>
+	<label>Official website: </label>
+	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
+</p>
 
 ## Introducing SmallJS
 

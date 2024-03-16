@@ -1,8 +1,7 @@
-
 body {
-    font-family: system-ui;
-    font-size: medium;
-    background-color: #F0F0F0;
+	font-family: system-ui;
+	font-size: medium;
+	background-color: #F0F0F0;
 }
 
 #formTable {
@@ -14,8 +13,14 @@ body {
 	border-spacing: 16px;
 	border-radius: 10px;
 	border-color: grey;
-	width: 800px;
+	width: 100%;
 	box-shadow: 10px 10px 5px grey;
+}
+
+@media (min-width: 800px) {
+	#formTable {
+		width: 800px;
+	}
 }
 
 .title {
@@ -40,15 +45,12 @@ body {
 	font-weight: bold;
 }
 
-.vertical-center
-{
+.vertical-center {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.bold
-{
+.bold {
 	font-weight: bold;
 }
-
