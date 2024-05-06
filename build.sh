@@ -15,6 +15,7 @@ cd "$(dirname "$0")"
 ./Examples/Shop/Server/build.sh
 ./Examples/Shop/Client/build.sh
 ./Examples/Shop/ClientSpa/build.sh
+./Playground/build.sh
 ./Website/build.sh
 
 echo "==== All builds successful"

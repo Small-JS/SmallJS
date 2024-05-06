@@ -30,3 +30,9 @@ cp -r ../Examples/Counter/web web/Examples/Counter
 
 rm -rf web/Examples/Todo
 cp -r ../Examples/Todo/web web/Examples/Todo
+
+echo "Copying playground"
+
+rm -rf web/Playground/Playground
+cp -r ../Playground/web web/Playground/Playground
+

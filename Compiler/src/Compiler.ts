@@ -1,10 +1,11 @@
 ﻿import { ClassCompiler } from "./ClassCompiler.js";
 import { CompiledModule } from "./CompiledModule.js";
 import { CompiledClass } from "./CompiledClass.js";
+import { CompiledClassJson } from "./CompiledClassJson.js";
+import { CompiledMethod } from "./CompiledMethod.js";
 
 import { exit } from "process";
 import * as fs from "fs";
-import { CompiledMethod } from "./CompiledMethod.js";
 
 export class Compiler
 {
@@ -101,6 +102,7 @@ export class Compiler
 
 		this.minimizeClasses();
 		this.generateModules( outputFolder );
+		this.generateMetaData( outputFolder );
 		this.generateRuntime( outputFolder );
 	}
 
@@ -311,6 +313,17 @@ export class Compiler
 	{
 		for( let module of this.modules )
 			module.generate( this.classes, outputFolder, this.sourceMaps );
+	}
+
+	generateMetaData( outputFolder: string )
+	{
+		let classesJson: CompiledClassJson[] = [];
+
+		for( let _class of this.classes )
+			classesJson.push( CompiledClassJson.fromCompiledClass( _class ) );
+
+		let script: string = "export let compiledClassesJson = " + JSON.stringify( classesJson, undefined, "\t" ) + ";\n";
+		fs.writeFileSync( outputFolder + "/CompiledClassesJson.js", script );
 	}
 
 	// Copy Runtime.js to output folder.

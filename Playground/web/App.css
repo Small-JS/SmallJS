@@ -1,0 +1,59 @@
+﻿body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	border-color: grey;
+	text-align: center;
+	width: 320px;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+	background-color: #B4E5EA;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#evaluatorTable {
+	text-align: left;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#evaluatorTable td {
+	padding: 10px;
+}
+
+#helpExamplesDiv {
+    font-family: monospace;
+}
+
+#evaluateButton {
+	background-color: lightgreen;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: large;
+}
+
+.vertical-center
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+

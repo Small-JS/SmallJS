@@ -1,7 +1,10 @@
 import { CompiledClass } from "./CompiledClass.js";
 import { Naming } from "./Runtime.js";
 
+// Playground uses local SourceNode class
+// import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
+
 import * as fs from "fs";
 
 export class CompiledModule
@@ -17,6 +20,19 @@ export class CompiledModule
 	{
 		this.name = name;
 	}
+
+	// In Playground replace the method generate(...) below with this
+	/*
+	generate( allClasses: CompiledClass[] ): string
+	{
+		this.classes = allClasses.filter( _class => _class.moduleName == this.name );
+		if( this.classes.length < 1 )
+			return "";
+
+		let rootNode = this.generateSourceTree( allClasses );
+		return rootNode.toString();
+	}
+	*/
 
 	generate( allClasses: CompiledClass[], outputFolder: string, sourceMaps: boolean )
 	{
@@ -38,6 +54,8 @@ export class CompiledModule
 			.add( this.generateClassesInheritance() )
 			.add( this.generateClassesList() );
 	}
+
+	// In the Playground comment out this method:
 
 	generateFiles( rootNode: SourceNode, outputFolder: string, sourceMaps: boolean )
 	{
@@ -90,7 +108,8 @@ export class CompiledModule
 					Naming.classStToJs( _class.name ) + ", " +
 					Naming.metaClassStToJs( _class.name ) + ", " +
 					Naming.metaClassSingletonStToJs( _class.name );
-				node.add( "import { " + referenceString + " } from './" + _class.moduleName + CompiledModule.outputFileExtension + "';\n" );
+				node.add( "import { " + referenceString + " } from '" + this.importBaseFolder() +
+					_class.moduleName + CompiledModule.outputFileExtension + "';\n" );
 			}
 		}
 
@@ -103,11 +122,20 @@ export class CompiledModule
 	{
 		let node = this.sourceNode( "defaultImports" );
 
-		node.add( "import { BlockReturn } from './Runtime.js';\n" );
+		node.add( "import { BlockReturn } from '" + this.importBaseFolder() + "Runtime.js';\n" );
 		if( this.name != "Core" )
-			node.add( "import { stNil, stTrue, stFalse } from './Core.js';\n" );
+			node.add( "import { stNil, stTrue, stFalse } from '" + this.importBaseFolder() + "Core.js';\n" );
 
 		return node;
+	}
+
+	// Playground evaluator always runs in the web root
+	// so we hardcode the location of the compiled Smalltalk folder
+	// if the moduile name is "Evaluator".
+
+	importBaseFolder(): string
+	{
+		return this.name == "Evaluator" ? "./Smalltalk/" : "./";
 	}
 
 	generateClasses(): SourceNode

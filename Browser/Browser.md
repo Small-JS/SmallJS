@@ -4,7 +4,9 @@
 This project tests the browser (HTML / DOM) libraries of SmallJS.
 First run `startWebBrowser.sh` to start a static web server.
 When the app is started, all ST sources are compiled first.
-Then all unit tests are run and tests can be done interactively in a browser. These browsers are supported: Chrome, Edge, Firefox. Select your preferred browser in the VSCode debug configuration.
+Then all unit tests are run and tests can be done interactively in a browser.
+These browsers are supported: Chrome, Edge, Firefox.
+Select your preferred browser in the VSCode debug configuration.
 
 Currently only common, standard HTML 5 features are supported.
 If you want to add browser specific features use these methods to test which one is currently running:

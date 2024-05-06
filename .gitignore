@@ -21,6 +21,10 @@
 /Examples/Shop/ClientSpa/web/Smalltalk
 /Examples/Todo/web/App.js
 /Examples/Todo/web/Smalltalk
+/Playground/web/App.js
+/Playground/web/Evaluator.js
+/Playground/web/Compiler
+/Playground/web/Smalltalk
 /Test/
 todo.txt
 /Website/web/App.js
@@ -28,4 +32,5 @@ todo.txt
 /Website/web/Examples/Benchmark
 /Website/web/Examples/Counter
 /Website/web/Examples/Todo
+/Website/web/Playground/Playground
 /Website/web/Tools

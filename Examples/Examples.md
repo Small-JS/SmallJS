@@ -14,7 +14,7 @@ Examine it to check out the SmallJS browser development environment.
 A small task manager application (browser only).\
 This is a somewhat more complex browser app using more types of HTML elements.
 
->[./Todo/Counter.md](./Todo/Counter.md)
+>[./Todo/Todo.md](./Todo/Todo.md)
 
 ## Shop
 

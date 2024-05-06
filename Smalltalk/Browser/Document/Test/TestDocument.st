@@ -44,8 +44,10 @@ testHtmlProperties
 	| document title |
 	document := Document default.
 
-	document cookie: 'chocolateChip'.
-	self assert: [ document cookie = 'chocolateChip' ].
+	"This test starting failing with Chrome 124 when Chrome is started from build.sh"
+	Window isChromium ifFalse: [
+		document cookie: 'name=chocolateChip'.
+		self assert: [ document cookie = 'name=chocolateChip' ] ].
 
 	self assert: [ document defaultView class = Window ].
 

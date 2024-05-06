@@ -50,7 +50,7 @@ Explanation of syntax used:
 - `^ 42` : Return a value.
 - `#( 1 3.14 'aaa' )` : array with 3 values.
 - `[ 1 + 2 ]` : block, like JS lambda functions.
-	- `[ :a | :b | ^ a + b ]` : block with 2 arguments returning sub from **method**.
+	- `[ :a | :b | ^ a + b ]` : block with 2 arguments returning sum from **method** (not block).
 - `INLINE` : Inline JS code, not transpiled.\
   ST variables can be accessed in it using the same name
 - Control flow statements in ST use messages and blocks from above.

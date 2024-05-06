@@ -10,7 +10,7 @@
 ## Introducing SmallJS
 
 SmallJS is a free and open source implementation of the elegant and powerful Smalltalk-80 (ST) language.
-It compiles to JavaScript (JS) than runs in modern browsers or in Node.js.
+It compiles to JavaScript (JS) that runs in modern browsers or in Node.js.
 
 SmallJS is file based, not image based, so you can develop in your favorite IDE.
 The default setup is for Visual Studio Code, with ST syntax coloring and step debugging!
@@ -24,10 +24,7 @@ JS libraries already encapsulated in ST are:
 - Browsers: Document, Window, HTML elements, events, CSS, streams.
 - Node.js: HTTP server, Express, 3 databases, files.
 
-To get you started quickly, there are several example projects for development in the browser and a Node.js back-end.<
-
-To get you started quickly, are several example projects\
-for development in the browser and / or a Node.js back-end.
+To get you started quickly, there are several example projects.
 
 ## Code example
 
@@ -71,6 +68,16 @@ Check if everything builds tests successfully before going to the next step.
 
 For a first impression of running SmallJS code, see the example projects:
 >[./Examples/Examples.md](./Examples/Examples.md)
+
+## Playground
+
+To get a feed for Smalltalk and to quickly test out ST expressions.
+There's a browser based playground to compile and evaluate them in real-time.
+Check for more info, read:
+>[./Playground/Playground.md](./Playground/Playground.md)
+
+The playground is also accessible though the offical website
+>[small-js.org/Playground/Playground.html](https://small-js.org/Playground/Playground.html)
 
 ## Documentation
 

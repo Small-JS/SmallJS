@@ -1,6 +1,8 @@
 import { CompiledVariable } from "./CompiledVariable.js";
 import { Naming } from "./Runtime.js";
 
+// Playground uses local SourceNode class
+// import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
 
 export class CompiledMethod
