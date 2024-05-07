@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Counter</title>
+	<title>Playgrond</title>
 	<link rel="stylesheet" href="App.css" type="text/css" />
 	<script src="App.js"></script>
 </head>
@@ -24,14 +24,13 @@
 			<td>
 				<table id="evaluatorTable">
 					<tr>
-						<th>
-							<p class="field">Help</p>
-						</th>
 						<td>
+							<h1 class="field">Help</h1>
 							<div id="helpTitleDiv">
 								Enter any Smalltalk expression below and then press [>Evaluate].<br>
 								For more help on the syntax of SmallJS, look at
-								<a href="https://github.com/Small-JS/SmallJS/blob/main/Smalltalk/Smalltalk.md" target="_blank">Smalltalk.md</a>
+								<a href="https://github.com/Small-JS/SmallJS/blob/main/Smalltalk/Smalltalk.md"
+									target="_blank">Smalltalk.md</a>
 							</div>
 							<p style="margin:5px;"></p>
 							<div id="helpExamplesTitleDiv">
@@ -39,33 +38,27 @@
 							</div>
 							<p style="margin:5px;"></p>
 							<div id="helpExamplesDiv">
-								&nbsp&nbsp 'Hello, ' , 'World' , $! toString<br>
-								&nbsp&nbsp 1 + 2 < 4 ifTrue: [ 'smaller' ]<br>
-								&nbsp&nbsp #( 1 2 3 ) map: [ :n | n squared ]<br>
+								&nbsp 'Hello, ' , 'World' , $! toString<br>
+								&nbsp 1 + 2 < 4 ifTrue: [ 'smaller' ]<br>
+								&nbsp #( 1 2 3 ) map: [ :n | n squared ]<br>
 							</div>
 							<p style="margin:5px;"></p>
 						</td>
 					</tr>
 					<tr>
-						<th>
-							<p class="field">Expression</p>
-						</th>
 						<td>
-							<textarea id="expressionTextArea" rows="5" cols="60"></textarea>
+							<h1>Expression</h1>
+							<textarea id="expressionTextArea" rows="5"></textarea>
 						</td>
 					</tr>
 					<tr>
-						<th>
-						</th>
 						<td style="text-align:center">
 							<button id="evaluateButton" accesskey="e">&#9655; Evaluate</button>
 						</td>
 					</tr>
 					<tr>
-						<th>
-							<p class="field">Result</p>
-						</th>
 						<td>
+							<h1>Result</h1>
 							<textarea id="resultTextArea" rows="5" cols="60"></textarea>
 						</td>
 					</tr>

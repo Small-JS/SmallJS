@@ -4,6 +4,17 @@
     background-color: #F0F0F0;
 }
 
+h1 {
+	font-size: large;
+	line-height: 0px;
+	margin-top: 0px;
+	margin-bottom: 18px;
+}
+
+textarea {
+	width: 100%;
+}
+
 #formTable {
 	background-color: white;
 	margin-left: auto;
