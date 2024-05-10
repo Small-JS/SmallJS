@@ -7,6 +7,7 @@ test
 	self assert: [ object isMemberOf: Object ].
 	self assert: [ String new isKindOf: Object ].
 	self assert: [ self isKindOf: Test ].
+	self assert: [ 10 respondsTo: '+' ].
 
 	self assert: [ object = object ].
 	self assert: [ object == object ].

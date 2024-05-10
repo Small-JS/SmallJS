@@ -12,6 +12,10 @@ test
 	self assert: [ Class classMethodNames includes: 'classes' ].
 	self assert: [ Boolean methodNames includes: '|' ].
 	self assert: [ Boolean methodNames includes: 'not' ].
+
+	self assert: [ Boolean canUnderstand: 'not' ].
+	self assert: [ Boolean canUnderstand: 'isNil' ].
+	self assert: [ ( Boolean canUnderstand: 'XisNil' ) not ].
 !
 testCompiler
 	| a_b |

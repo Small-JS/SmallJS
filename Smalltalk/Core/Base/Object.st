@@ -180,6 +180,9 @@ isKindOf: aClass
 isMemberOf: aClass
 	^ self class = aClass.
 !
+respondsTo: methodName
+	^ self class canUnderstand: methodName.
+!
 
 "Methods"
 

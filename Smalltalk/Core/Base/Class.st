@@ -32,6 +32,17 @@ methodNames
 	^ Array fromJs: INLINE 'Object.getOwnPropertyNames( this.$jsClass() )'
 		elementConverter: [ :jsName | String fromJs: INLINE 'Naming.methodJsToSt( jsName )' ].
 !
+canUnderstand: methodName
+	"Return true if this or a superclass implement the argument method."
+	| class |
+	class := self.
+	[
+		( class methodNames includes: methodName ) ifTrue: [ ^ true ].
+		class := class superclass.
+		class notNil.
+	] whileTrue.
+	^ false.
+!
 inheritsFrom: aClass
 	| class |
 	class := self.
