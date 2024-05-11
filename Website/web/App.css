@@ -1,4 +1,6 @@
 body {
+	padding: 0px;
+	margin: 0px;
 	font-family: system-ui;
 	font-size: medium;
 	background-color: #F0F0F0;
@@ -8,18 +10,18 @@ body {
 	background-color: white;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
-	border-width: 2px;
 	border-spacing: 16px;
 	border-radius: 10px;
 	border-color: grey;
 	width: 100%;
-	box-shadow: 10px 10px 5px grey;
 }
 
 @media (min-width: 800px) {
 	#formTable {
 		width: 800px;
+		border: solid;
+		border-width: 2px;
+		box-shadow: 10px 10px 5px grey;
 	}
 }
 

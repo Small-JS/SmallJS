@@ -1,4 +1,6 @@
 ﻿body {
+    padding: 0px;
+	margin: 0px;
     font-family: system-ui;
     font-size: medium;
     background-color: #F0F0F0;
@@ -11,22 +13,24 @@ h1 {
 	margin-bottom: 18px;
 }
 
-textarea {
-	width: 100%;
-}
-
 #formTable {
 	background-color: white;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
-	border-width: 2px;
 	border-spacing: 16px;
 	border-radius: 10px;
 	border-color: grey;
 	text-align: center;
-	width: 320px;
-	box-shadow: 10px 10px 5px grey;
+	width: 100%;
+}
+
+@media (min-width: 500px) {
+	#formTable {
+		width: 500px;
+		border: solid;
+		border-width: 2px;
+		box-shadow: 10px 10px 5px grey;
+	}
 }
 
 .title {
@@ -34,7 +38,7 @@ textarea {
 	font-weight: bold;
 	text-align: center;
 	color: black;
-	background-color: #B4E5EA;
+	background-color: #C5ECF9;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
@@ -54,11 +58,19 @@ textarea {
     font-family: monospace;
 }
 
+#expressionTextArea {
+	width: 100%;
+}
+
 #evaluateButton {
 	background-color: lightgreen;
 	border-radius: 10px;
 	font-weight: bold;
 	font-size: large;
+}
+
+#resultTextArea {
+	width: 100%;
 }
 
 .vertical-center
