@@ -1,4 +1,4 @@
-CLASS Animation EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
+CLASS Animation EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS abstract class: Animation."
 
 METHODS

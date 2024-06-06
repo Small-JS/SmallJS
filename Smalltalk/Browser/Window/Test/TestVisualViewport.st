@@ -1,4 +1,4 @@
-CLASS TestVisualViewport EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestVisualViewport EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 

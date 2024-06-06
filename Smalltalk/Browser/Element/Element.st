@@ -1,4 +1,4 @@
-CLASS Element EXTENDS Node MODULE DOM CLASSVARS '' VARS ''
+CLASS Element EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
@@ -86,6 +86,9 @@ classList
 !
 className
 	^ String fromJs: INLINE 'this.js.className'.
+!
+className: className
+	INLINE 'this.js.className = className.js'.
 !
 clientHeight
 	^ Integer fromJs: INLINE 'this.js.clientHeight'.

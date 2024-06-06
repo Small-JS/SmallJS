@@ -1,70 +1,48 @@
-CLASS TestHtmlImageElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlImageElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| image |
+	| image exptectedNaturalSize |
+	image := Document default createElement: 'img'.
+	self assert: [ image class = HtmlImageElement ].
 
-	image := Document getElementById: 'resultImage' class: HtmlImageElement.
-
-	image complete
-		ifTrue: [ self onComplete: image ]
-		ifFalse: [ image addEventListener: 'load' then: [ self onComplete: image ] ].
-!
-onComplete: image
-	| exptectedNaturalSize |
-
-	self assert: [ image alt = 'SmallJS logo' ].
+	self assert: [ image alt = '' ].
 	image alt: 'New alt text'.
 	self assert: [ image alt = 'New alt text' ].
-	image alt: 'SmallJS logo'.
 
-	self assert: [ image currentSrc includes: 'SmallJS' ].
+	self assert: [ image currentSrc = '' ].
 
-	self assert: [ image crossOrigin = nil ].
+	self assert: [ image crossOrigin isNil ].
 	image crossOrigin: 'anonymous'.
 	self assert: [ image crossOrigin = 'anonymous' ].
-	image crossOrigin: nil.
-
 
 	self assert: [ image decoding = 'auto' ].
 	image decoding: 'sync'.
 	self assert: [ image decoding = 'sync' ].
-	image decoding: 'auto'.
 
-	self assert: [ image size = ( 50 @ 50 ) ].
+	self assert: [ image size = ( 0 @ 0 ) ].
 	image size: ( 100 @ 75 ).
 	self assert: [ image size = ( 100 @ 75 ) ].
-	image size: ( 50 @ 50 ).
 
-	"Chromium browsers return zero natural witdth and height for some reason."
-	exptectedNaturalSize := Window isChromium ifTrue: [ ( 0 @ 0 ) ] ifFalse: [ ( 800 @ 800 ) ].
-	self assert: [ image naturalSize = exptectedNaturalSize ].
+	self assert: [ image naturalSize = ( 0 @ 0 ) ].
 
 	self assert: [ image isMap not ].
 	image isMap: true.
 	self assert: [ image isMap ].
-	image isMap: false.
 
-	"Note: Chromium browsers set this property to 'auto' by default."
-	self assert: [ image loading = 'eager' ].
+	"Firefox defaults to 'eager'"
+	self assert: [ #( 'auto' 'eager' ) includes: image loading ].
 	image loading: 'lazy'.
 	self assert: [ image loading = 'lazy' ].
-	image loading: 'eager'.
 
 	self assert: [ image sizes = '' ].
 
-	self assert: [ image src endsWith: 'SmallJS.png' ].
+	self assert: [ image src = '' ].
 	image src: 'Missing.jpg'.
 	self assert: [ image src endsWith: 'Missing.jpg' ].
-	image src: 'SmallJS.png'.
 
 	self assert: [ image srcSet = '' ].
 	image srcSet: 'SmallJS2.png 4x'.
 	self assert: [ image srcSet = 'SmallJS2.png 4x' ].
-	image srcSet: ''.
 
 	self assert: [ image useMap = '' ].
-
-	image decodeThen: [ self assert: [ true ] ]
-		catch: [ :error | self error: 'Image decode failed' ].
-
 !

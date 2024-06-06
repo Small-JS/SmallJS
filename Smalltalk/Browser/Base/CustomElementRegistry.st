@@ -1,4 +1,4 @@
-CLASS CustomElementRegistry EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS CustomElementRegistry EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: CustomElementRegistry."
 
 CLASSMETHODS

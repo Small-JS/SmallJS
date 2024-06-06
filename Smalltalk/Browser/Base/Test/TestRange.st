@@ -1,4 +1,4 @@
-CLASS TestRange EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestRange EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 "This class also tests AbstractRange."
 

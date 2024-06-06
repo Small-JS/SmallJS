@@ -1,4 +1,4 @@
-CLASS HtmlAnchorElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlAnchorElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class HTMLinkElement,
 	 of which variable js contains an instance."
 

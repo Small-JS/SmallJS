@@ -5,8 +5,8 @@ CLASSMETHODS
 "Creation"
 
 new: resolveRejectBlock
-	^ Promise fromJs: INLINE '
-		this.js = new Promise( ( resolve, reject ) => resolveRejectBlock.$value$value$(
+	^ Promise fromJs: INLINE
+		'this.js = new Promise( ( resolve, reject ) => resolveRejectBlock.$value$value$(
 			new StBlock().$js$( resolve ), new StBlock().$js$( reject ) ) )'.
 !
 resolve: object

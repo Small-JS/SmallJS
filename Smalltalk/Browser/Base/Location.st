@@ -1,4 +1,4 @@
-CLASS Location EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Location EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS Location class."
 
 METHODS

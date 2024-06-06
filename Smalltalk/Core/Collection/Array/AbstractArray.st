@@ -48,6 +48,9 @@ entries
 length
 	^ Integer fromJs: INLINE 'this.js.length'.
 !
+isEmpty
+	^ self length = 0.
+!
 first
 	^ self at: 0.
 !

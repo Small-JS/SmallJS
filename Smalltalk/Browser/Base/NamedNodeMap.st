@@ -1,4 +1,4 @@
-CLASS NamedNodeMap EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS NamedNodeMap EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS NamedNodeMap class."
 
 CLASSMETHODS

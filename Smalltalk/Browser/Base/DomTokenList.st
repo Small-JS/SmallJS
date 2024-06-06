@@ -1,4 +1,4 @@
-CLASS DomTokenList EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS DomTokenList EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: NamedNodeMap.
 	 Note: Item indexes and keys in this class are zero based."
 

@@ -1,0 +1,18 @@
+<tr>
+	<th scope="row">
+		<p class="field">Input - List</p>
+	</th>
+	<td>
+		<input id="listInput" list="dataList" placeholder="Select option"
+			onfocus="this.value=''" onchange="this.blur();">
+		<!-- Calling blur() makes sure the options remain selectable on second selection -->
+
+		<datalist id="dataList">
+			<option value="First">
+			<option value="Second">
+		</datalist>
+	</td>
+	<td>
+		<label id="listInputOutputLabel">[Output]</label>
+	</td>
+</tr>

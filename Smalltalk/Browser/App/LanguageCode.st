@@ -1,4 +1,4 @@
-CLASS LanguageCode EXTENDS Object MODULE DOM CLASSVARS '' VARS 'language country'
+CLASS LanguageCode EXTENDS Object MODULE Browser CLASSVARS '' VARS 'language country'
 	"THis class encapsulates an ISO language codes in format '<language>[-<country>], e.g.: 'en-US'.
 	 It has functionality for (partial) matching with other language codes."
 

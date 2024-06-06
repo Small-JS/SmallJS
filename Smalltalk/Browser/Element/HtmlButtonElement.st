@@ -1,4 +1,4 @@
-CLASS HtmlButtonElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlButtonElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 METHODS
 

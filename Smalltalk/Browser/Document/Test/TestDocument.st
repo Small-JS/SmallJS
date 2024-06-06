@@ -1,25 +1,22 @@
-CLASS TestDocument EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestDocument EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testProperties
-	| document element |
-	document := Document default.
-
+	| document element paragraph |
+	document := Document new.
 	self assert: [ document class = Document ].
-	self assert: [ document hasFocus class = Boolean ].
-	self assert: [ document activeElement isKindOf: HtmlElement ].
+
+	self assert: [ document hasFocus not ].
+	self assert: [ document activeElement class = HtmlBodyElement ].
 
 	self assert: [ document head class = HtmlHeadElement ].
 	self assert: [ document body class = HtmlBodyElement ].
 	document body: document body.
 
-	element := ( document getElementById: 'input' class: HtmlInputElement ) focus.
-	self assert: [ document activeElement = element ].
-
 	self assert: [ document characterSet = 'UTF-8' ].
 	self assert: [ document doctype class = DocumentType ].
 	self assert: [ document documentElement class = HtmlHtmlElement ].
 	self assert: [ document contentType = 'text/html' ].
-	self assert: [ document documentUri startsWith: 'http' ].
+	self assert: [ document documentUri = 'about:blank' ].
 
 	self assert: [ document childElementCount = 1 ].
 	self assert: [ document children length = 1 ].
@@ -32,28 +29,28 @@ testProperties
 	self assert: [ document fullscreenElement = nil ].
 	self assert: [ document pointerLockElement = nil ].
 
-	self assert: [ document embeds length = 1 ].
-	self assert: [ document forms length = 1 ].
-	self assert: [ document images first class = HtmlImageElement ].
-	self assert: [ document links first class = HtmlLinkElement ].
-	self assert: [ document plugins length = 1 ].
-	self assert: [ document scripts first class = HtmlScriptElement ].
-	self assert: [ document styleSheets first class = CssStyleSheet ].
+	self assert: [ document embeds length = 0 ].
+	self assert: [ document forms length = 0 ].
+	self assert: [ document images length = 0 ].
+	self assert: [ document links length = 0 ].
+	self assert: [ document plugins length = 0 ].
+	self assert: [ document scripts length = 0 ].
+	self assert: [ document styleSheets length = 0 ].
 !
 testHtmlProperties
-	| document title |
-	document := Document default.
+	| document |
+	document := Document new.
 
-	"This test starting failing with Chrome 124 when Chrome is started from build.sh"
-	Window isChromium ifFalse: [
-		document cookie: 'name=chocolateChip'.
-		self assert: [ document cookie = 'name=chocolateChip' ] ].
+	"This fails for locally created document:
+	document cookie: 'name=chocolateChip'.
+	self assert: [ document cookie = 'name=chocolateChip' ]."
 
-	self assert: [ document defaultView class = Window ].
+	self assert: [ document defaultView isNil ].
 
 	self assert: [ document designMode = 'off' ].
-	document designMode: 'on'.
-	self assert: [ document designMode = 'on' ].
+	Window isFirefox ifFalse: [
+		document designMode: 'on'.
+		self assert: [ document designMode = 'on' ] ].
 	document designMode: 'off'.
 
 	"JS Document.dir is initially an empty string iso one of the allowed values."
@@ -63,21 +60,20 @@ testHtmlProperties
 	self assert: [ document dir = 'ltr' ].
 
 	self assert: [ document lastModified length > 8 ].
-	self assert: [ document location class = Location ].
+	self assert: [ document location isNil ].
 	self assert: [ #( 'loading' 'interactive' 'complete' ) includes: document readyState ].
 	self assert: [ document referrer = '' or: [ document referrer startsWith: 'http' ] ].
 
-	title := document title.
-	self assert: [ title startsWith: 'SmallJS' ].
-	document title: title, '!'.
-	self assert: [ document title endsWith: '!' ].
-	document title: title.
+	self assert: [ document title = '' ].
+	document title: 'Document title'.
+	self assert: [ document title = 'Document title' ].
+	document title: ''.
 
-	self assert: [ document url startsWith: 'http' ].
+	self assert: [ document url = 'about:blank' ].
 !
 testMethods
-	| document |
-	document := Document default.
+	| document paragraph |
+	document := Document new.
 
 	self assert: [ ( document createAttribute: 'myAttr' ) class = Attr ].
 	self assert: [ ( document createComment: 'myComment' ) class = Comment ].
@@ -86,23 +82,21 @@ testMethods
 	self assert: [ ( document createElement: 'p' ) class = HtmlParagraphElement ].
 	self assert: [ document createRange class = Range ].
 	self assert: [ ( document createTextNode: 'myText' ) class = Text ].
-	"These won't work if the window is in a scrolled state:
-	self assert: [ ( document elementFromPoint: 0 @ 0 ) class = HtmlHtmlElement ].
-	self assert: [ ( document elementsFromPoint: 0 @ 0 ) first class = HtmlHtmlElement ]."
 
-	self assert: [ ( document getElementById: 'element' class: HtmlParagraphElement ) id = 'element' ].
-	document getElementById: 'documentInfoLabel' class: HtmlLabelElement.	"Assert built-in."
-	self assert: [ ( Document getElementById: 'element' class: HtmlParagraphElement ) id = 'element' ].
-	Document getElementById: 'documentInfoLabel' class: HtmlLabelElement.	"Assert built-in."
+	paragraph := ( document createElement: 'p' )
+		id: 'paragraphId';
+		className: 'paragraphClass'.
+	document body appendChild: paragraph.
 
-	self assert: [ ( document getElementsByName: 'elementName' ) first name = 'elementName' ].
-	self assert: [ ( document getElementsByClassName: 'field' ) first className = 'field' ].
-	self assert: [ ( document getElementsByTagName: 'IMG' ) first class = HtmlImageElement ].
-	self assert: [ document getSelection class = Selection ].
+	self assert: [ ( document getElementById: 'paragraphId' class: HtmlParagraphElement ) id = 'paragraphId' ].
+	self assert: [ ( document getElementsByName: 'paragraphName' ) length = 0 ].
+	self assert: [ ( document getElementsByClassName: 'paragraphClass' ) first className = 'paragraphClass' ].
+	self assert: [ ( document getElementsByTagName: 'p' ) first class = HtmlParagraphElement ].
+	self assert: [ document getSelection isNil ].
 !
 testNodeMethods
-	| document newDocument newNode adoptedNode parentNode importedNode |
-	document := Document default.
+	| document newDocument newNode adoptedNode importedNode |
+	document := Document new.
 
 	newDocument := Document new.
 	newNode := ( newDocument createElement: 'p' ) textContent: 'Adopted paragraph.'.
@@ -116,30 +110,31 @@ testNodeMethods
 	newNode := ( newDocument createElement: 'p' ) textContent: 'Imported paragraph.'.
 	importedNode := document importNode: newNode deep: true.
 	self assert: [ importedNode class = HtmlParagraphElement ].
+!
+testQuery
+	| document |
+	document := Document new.
 
-	self assert: [ ( document querySelector: '#documentInfoLabel' ) class = HtmlLabelElement ].
-	self assert: [ ( document querySelectorAll: '#documentInfoLabel' ) length = 1 ].
+	document body appendChild: ( document createElement: 'p' ).
+	self assert: [ ( document querySelector: 'p' ) class = HtmlParagraphElement ].
+	self assert: [ ( document querySelectorAll: 'p' ) length = 1 ].
 !
 testWriting
-	| newDocument |
+	| document |
+	document := Document new.
 
-	newDocument := Document new.
+	document open.
+	document writeln: '<p>Hello world!</p>'.
+	document write: '<p>The number is 42.</p>'.
+	document close.
 
-	newDocument open.
-	newDocument writeln: '<p>Hello world!</p>'.
-	newDocument write: '<p>The number is 42.</p>'.
-	newDocument close.
-
-	self assert: [ ( newDocument querySelectorAll: 'p' ) length = 2 ].
+	self assert: [ ( document querySelectorAll: 'p' ) length = 2 ].
 !
 testPage
 	| document |
-	document := Document default.
+	document := Document new.
 
-	self assert: [ document documentUri startsWith: 'http' ].
+	self assert: [ document documentUri = 'about:blank' ].
 	self assert: [ document contentType = 'text/html' ].
 	self assert: [ document characterSet = 'UTF-8' ].
-
-	( document getElementById: 'documentInfoLabel' class: HtmlLabelElement ) textContent:
-		document documentUri, ' ', document contentType, ' ', document characterSet.
 !

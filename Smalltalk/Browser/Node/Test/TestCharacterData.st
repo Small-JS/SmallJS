@@ -1,4 +1,4 @@
-CLASS TestCharacterData EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestCharacterData EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 	"Note: CharacterData is an abstract class.
 		We will test using instances of the Text subsclass."
 

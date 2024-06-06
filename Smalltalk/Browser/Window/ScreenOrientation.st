@@ -1,4 +1,4 @@
-CLASS ScreenOrientation EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
+CLASS ScreenOrientation EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: Screen."
 
 METHODS

@@ -1,4 +1,4 @@
-CLASS Storage EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Storage EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: Console."
 
 CLASSMETHODS

@@ -1,4 +1,4 @@
-CLASS Window EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
+CLASS Window EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS 'window' class."
 
 CLASSMETHODS
@@ -58,6 +58,9 @@ innerHeight
 !
 innerWidth
 	^ Integer fromJs: INLINE 'this.js.innerWidth'.
+!
+innerSize
+	^ self innerWidth @ self innerHeight.
 !
 length
 	^ Integer fromJs: INLINE 'this.js.length'.

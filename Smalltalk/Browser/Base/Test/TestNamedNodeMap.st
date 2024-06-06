@@ -1,4 +1,4 @@
-CLASS TestNamedNodeMap EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestNamedNodeMap EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| namedNodeMap attr |

@@ -1,4 +1,4 @@
-CLASS TestHtmlAnchorElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlAnchorElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| anchor host hostname href port protocol |

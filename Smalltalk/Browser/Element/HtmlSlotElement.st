@@ -1,4 +1,4 @@
-CLASS HtmlSlotElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlSlotElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 METHODS
 

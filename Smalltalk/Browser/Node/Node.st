@@ -1,4 +1,4 @@
-CLASS Node EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
+CLASS Node EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS 'Node' class."
 
 
@@ -120,16 +120,16 @@ isSameNode: node
 normalize
 	INLINE 'this.js.normalize()'.
 !
-removeChild: node
-	INLINE 'this.js.removeChild( node.js )'.
-!
 remove
 	self parentNode removeChild: self.
 !
-replaceChild: node with: newNode
-	INLINE 'this.js.replaceChild( newNode.js, node.js )'.
+removeChild: node
+	INLINE 'this.js.removeChild( node.js )'.
 !
 removeChildren
 	self childNodes do: [ :childNode |
 		self removeChild: childNode ].
+!
+replaceChild: node with: newNode
+	INLINE 'this.js.replaceChild( newNode.js, node.js )'.
 !

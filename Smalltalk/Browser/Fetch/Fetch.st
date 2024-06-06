@@ -1,4 +1,4 @@
-CLASS Fetch EXTENDS Object MODULE DOM CLASSVARS '' VARS ''
+CLASS Fetch EXTENDS Object MODULE Browser CLASSVARS '' VARS ''
 	"Implements JS fetch() API for browsers."
 
 CLASSMETHODS

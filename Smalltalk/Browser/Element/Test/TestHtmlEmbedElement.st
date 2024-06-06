@@ -1,11 +1,13 @@
-CLASS TestHtmlEmbedElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlEmbedElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testProperties
-	| embed |
+	| body embed |
 
-	embed := Document getElementById: 'embed' class: HtmlEmbedElement.
+	body := Document new body
+		innerHtml: '<embed id="embed" type="text/html" src="Missing.html" width="300" height="40">'.
+	embed := body children first.
 
 	self assert: [ embed size = ( 300 @ 40 ) ].
-	self assert: [ embed src endsWith: '/Test/Embed.html' ].
+	self assert: [ embed src = 'Missing.html' ].
 	self assert: [ embed type = 'text/html' ].
 !

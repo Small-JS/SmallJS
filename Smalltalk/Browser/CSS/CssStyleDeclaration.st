@@ -1,4 +1,4 @@
-CLASS CssStyleDeclaration EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS CssStyleDeclaration EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS classes CSSStyleDeclaration."
 
 METHODS

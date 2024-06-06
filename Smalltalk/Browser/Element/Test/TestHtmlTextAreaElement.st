@@ -1,4 +1,4 @@
-CLASS TestHtmlTextAreaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlTextAreaElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| textArea defaultValue |

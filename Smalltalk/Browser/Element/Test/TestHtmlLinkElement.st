@@ -1,4 +1,4 @@
-CLASS TestHtmlLinkElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlLinkElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| link |

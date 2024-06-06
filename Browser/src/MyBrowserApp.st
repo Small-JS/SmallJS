@@ -1,26 +1,44 @@
-CLASS MyBrowserApp EXTENDS BrowserApp MODULE Browser CLASSVARS '' VARS ''
+CLASS MyBrowserApp EXTENDS BrowserApp MODULE BrowserApp CLASSVARS 'default' VARS 'components'
 
 CLASSMETHODS
+
+default
+	^ default.
+!
 
 METHODS
 
 start
-	"Always run tests, its the main goal of this app."
-	self runTests.
+	default := self.
+
+	self bindElements.
 
 	self testMode ifTrue: [
-		Timer timeout: 4000 then: [
-			self stop ] ].
+		TestMyBrowserApp new test: self ].
 !
-runTests
-	Object myTest.
+bindElements
+	"Load components and add them to the components var."
 
-	"These test class references are needed to force importing of their modules."
-	TestObject.
-	TestDocument.
+	components := Array new.
+	#( ClipboardComponent CssComponent DialogsComponent EmbedComponent
+		FieldSetComponent FormComponent IframeComponent ImageComponent
+		InputComponent ListInputComponent RadioInputComponent CheckboxInputComponent
+		ImageInputComponent FileInputComponent DateInputComponent )
+			do: [ :componentClass |
+				components add: (
+					componentClass new appendToElement: 'elementTesterTableBody' then: [] ) ].
+!
 
-	Test all.
+"Accessing"
 
-	"Check test repeatability."
-	"Test all."
+components
+	^ components.
+!
+findComponent: componentClass
+	"Find instance of componentClass in my components.
+	 Raise error if not found."
+	| result |
+	result := components find: [ :component | component class = componentClass ].
+	result isNil ifTrue: [ Error throw: 'Component class not found: ', componentClass className ].
+	^ result.
 !

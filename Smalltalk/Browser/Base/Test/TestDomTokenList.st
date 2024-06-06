@@ -1,4 +1,4 @@
-CLASS TestDomTokenList EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestDomTokenList EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| paragraph domTokenList |

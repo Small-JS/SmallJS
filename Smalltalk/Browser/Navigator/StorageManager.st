@@ -1,4 +1,4 @@
-CLASS StorageManager EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS StorageManager EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "Todo: Implement properties and methods."
 

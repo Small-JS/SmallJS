@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="stylesheet" rel="stylesheet" href="FormTarget.css" type="text/css"/>
+</head>
+
+<body>
+	<br>
+	<table>
+		<tr>
+			<th>
+				<label id="fromDataHeaderLabel">Submitted form data</label>
+			</th>
+			<td>
+				<label id="fromDataLabel">[form data]</label>
+			</td>
+		</tr>
+	</table>
+</body>
+
+<script>
+	let label = document.getElementById( "fromDataLabel" );
+	label.textContent = window.location.search;
+</script>
+
+</html>

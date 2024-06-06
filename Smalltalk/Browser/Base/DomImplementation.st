@@ -1,4 +1,4 @@
-CLASS DomImplementation EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS DomImplementation EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class DomImplementation."
 
 METHODS

@@ -1,28 +1,17 @@
-CLASS TestCssStyleSheet EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestCssStyleSheet EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| cssStyleSheet index ruleText |
+	| cssStyleSheet ruleText index |
 
-	cssStyleSheet := Document default styleSheets first.
+	cssStyleSheet := CssStyleSheet new.
 	self assert: [ cssStyleSheet class = CssStyleSheet ].
-	self assert: [ cssStyleSheet ownerRule = nil ].
-
-	index := cssStyleSheet findStyleRuleIndex: '.italicBold'.
-	self assert: [ index >= 0 ].
-	cssStyleSheet deleteRule: index.
+	self assert: [ cssStyleSheet ownerRule isNil ].
 
 	ruleText := '.italicBold { font-style: italic; font-weight: bold; }'.
 	cssStyleSheet insertRule: ruleText index: index.
-!
-testApplyRemove
-	| document  |
-	document := Document default.
-	( document getElementById: 'cssApplyButton' class: HtmlButtonElement ) onClick: [ :event | self onApply ].
-	( document getElementById: 'cssRemoveButton' class: HtmlButtonElement ) onClick: [ :event | self onRemove ].
-!
-onApply
-	( Document getElementById: 'cssResultLabel' class: HtmlLabelElement ) classList add: 'italicBold'.
-!
-onRemove
-	( Document getElementById: 'cssResultLabel' class: HtmlLabelElement ) classList remove: 'italicBold'.
+	index := cssStyleSheet findStyleRuleIndex: '.italicBold'.
+	self assert: [ index >= 0 ].
+
+	cssStyleSheet deleteRule: index.
+	self assert: [ cssStyleSheet cssRules length = 0 ].
 !

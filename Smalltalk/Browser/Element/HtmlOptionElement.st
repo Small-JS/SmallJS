@@ -1,4 +1,4 @@
-CLASS HtmlOptionElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlOptionElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 value
 	^ String fromJs: INLINE 'this.js.value'.

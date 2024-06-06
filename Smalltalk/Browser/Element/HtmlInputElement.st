@@ -1,4 +1,4 @@
-CLASS HtmlInputElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlInputElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 METHODS
 
@@ -145,6 +145,12 @@ imageSize
 imageSize: imageSize
 	self width: imageSize x.
 	self height: imageSize y.
+!
+src
+	^ String fromJs: INLINE 'this.js.src'.
+!
+src: src
+	INLINE 'this.js.src  = src.js'.
 !
 
 "File input."

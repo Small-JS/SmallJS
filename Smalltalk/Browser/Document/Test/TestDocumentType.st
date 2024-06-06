@@ -1,4 +1,4 @@
-CLASS TestDocumentType EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestDocumentType EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testDocumentTypeProperties
 	| documentType |

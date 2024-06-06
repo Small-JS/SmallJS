@@ -1,4 +1,4 @@
-CLASS Screen EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Screen EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: Screen."
 
 METHODS

@@ -1,4 +1,4 @@
-CLASS Text EXTENDS CharacterData MODULE DOM CLASSVARS '' VARS ''
+CLASS Text EXTENDS CharacterData MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class Text."
 
 CLASSMETHODS

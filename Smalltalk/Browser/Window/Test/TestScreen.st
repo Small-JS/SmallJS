@@ -1,4 +1,4 @@
-CLASS TestScreen EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestScreen EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 

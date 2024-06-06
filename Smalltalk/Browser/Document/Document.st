@@ -1,4 +1,4 @@
-CLASS Document EXTENDS Node MODULE DOM CLASSVARS '' VARS ''
+CLASS Document EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates JS HTML 'document' and HTML5 'HTMLDocument' classes."
 
 CLASSMETHODS

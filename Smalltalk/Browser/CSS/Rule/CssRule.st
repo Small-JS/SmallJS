@@ -1,4 +1,4 @@
-CLASS CssRule EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS CssRule EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: CSSRule,
 	 of which variable value contains an instance."
 

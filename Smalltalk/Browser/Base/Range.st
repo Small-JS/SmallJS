@@ -1,4 +1,4 @@
-CLASS Range EXTENDS AbstractRange MODULE DOM CLASSVARS '' VARS ''
+CLASS Range EXTENDS AbstractRange MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class Range."
 
 CLASSMETHODS

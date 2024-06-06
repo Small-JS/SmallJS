@@ -1,4 +1,4 @@
-CLASS HtmlDataListElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlDataListElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 options
 	^ Array fromJs: INLINE 'this.js.options' elementClass: HtmlOptionElement.

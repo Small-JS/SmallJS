@@ -1,4 +1,4 @@
-CLASS MediaSession EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS MediaSession EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "Todo: Implement properties and methods."
 

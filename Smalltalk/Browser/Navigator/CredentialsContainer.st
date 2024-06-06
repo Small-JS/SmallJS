@@ -1,4 +1,4 @@
-CLASS CredentialsContainer EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS CredentialsContainer EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "Todo: Implement properties and methods."
 

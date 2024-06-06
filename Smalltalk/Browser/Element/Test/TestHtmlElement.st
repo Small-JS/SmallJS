@@ -1,4 +1,4 @@
-CLASS TestHtmlElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testProperties
 	| element |

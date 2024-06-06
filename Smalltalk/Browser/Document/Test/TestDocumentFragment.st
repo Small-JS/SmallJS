@@ -1,4 +1,4 @@
-CLASS TestDocumentFragment EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestDocumentFragment EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| documentFragment elementArray |

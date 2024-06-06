@@ -1,4 +1,4 @@
-CLASS Clipboard EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Clipboard EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "TODO: Implement other methods"
 

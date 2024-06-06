@@ -1,4 +1,4 @@
-CLASS HtmlScriptElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlScriptElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class HTMLScriptElement,
 	 of which variable js contains an instance."
 

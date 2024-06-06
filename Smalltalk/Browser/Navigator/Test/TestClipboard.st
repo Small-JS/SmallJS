@@ -1,32 +1,12 @@
-CLASS TestClipboard EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestClipboard EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+
+"Note reading and writing the clipboard may require user authorisation,
+ so there are not automated unit tests possible for them.
+ Functionality is tested in MyBrowserApp."
 
 test
-	| clipboard clipboardReadButton clipboardWriteButton |
+	| clipboard |
 
 	clipboard := Window default navigator clipboard.
 	self assert: [ clipboard class = Clipboard ].
-
-	clipboardReadButton := Document getElementById: 'clipboardReadButton' class: HtmlButtonElement.
-	clipboardReadButton onClick: [ self onClipboardReadButton ].
-
-	clipboardWriteButton := Document getElementById: 'clipboardWriteButton' class: HtmlButtonElement.
-	clipboardWriteButton onClick: [ self onClipboardWriteButton ].
-
-!
-onClipboardReadButton
-	| clipboardResultLabel |
-
-	clipboardResultLabel := Document getElementById: 'clipboardResultLabel' class: HtmlLabelElement.
-
-	Window default navigator clipboard readTextThen:
-		[ :text | clipboardResultLabel textContent: text ].
-!
-onClipboardWriteButton
-	| clipboardInput clipboardResultLabel |
-
-	clipboardInput := Document getElementById: 'clipboardInput' class: HtmlInputElement.
-	clipboardResultLabel := Document getElementById: 'clipboardResultLabel' class: HtmlLabelElement.
-
-	Window default navigator clipboard writeText: clipboardInput value then:
-		[ :text | clipboardResultLabel textContent: '[written]' ].
 !

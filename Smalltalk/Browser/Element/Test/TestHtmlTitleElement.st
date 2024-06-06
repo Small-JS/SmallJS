@@ -1,4 +1,4 @@
-CLASS TestHtmlTitleElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlTitleElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| title titleSpan titleText |

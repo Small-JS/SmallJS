@@ -1,4 +1,4 @@
-CLASS CharacterData EXTENDS Node MODULE DOM CLASSVARS '' VARS ''
+CLASS CharacterData EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS abstract class CharacterData."
 
 METHODS

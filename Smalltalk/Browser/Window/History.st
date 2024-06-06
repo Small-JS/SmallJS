@@ -1,4 +1,4 @@
-CLASS History EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS History EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: Console."
 
 CLASSMETHODS

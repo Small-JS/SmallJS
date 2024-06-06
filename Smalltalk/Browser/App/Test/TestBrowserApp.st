@@ -1,4 +1,4 @@
-CLASS TestBrowserApp EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestBrowserApp EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| app |
@@ -10,5 +10,6 @@ test
 
 	"These methods are to destructive to test here:
 		navigateTo: url
-		stop"
+		stop
+	 They are tested in the examples."
 !

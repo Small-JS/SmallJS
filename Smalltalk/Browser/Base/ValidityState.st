@@ -1,4 +1,4 @@
-CLASS ValidityState EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS ValidityState EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: ValidityState."
 
 CLASSMETHODS

@@ -35,6 +35,9 @@ toFloat
 length
 	^ Integer fromJs: INLINE 'this.js.length'.
 !
+isEmpty
+	^ self length = 0.
+!
 at: index
 	( index < 0 ) | ( index >= self length ) ifTrue: [
 		self error: 'String index out of bounds.' ].

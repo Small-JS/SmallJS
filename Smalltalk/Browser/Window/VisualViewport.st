@@ -1,4 +1,4 @@
-CLASS VisualViewport EXTENDS EventTarget MODULE DOM CLASSVARS '' VARS ''
+CLASS VisualViewport EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: VisualViewport."
 
 METHODS

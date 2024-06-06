@@ -13,6 +13,7 @@ all
 	self allThen: [].
 !
 allThen: block
+	| aClass |
 	"Invokes all test* methods on new instances of all Test* subclasses loaded.
 	 Returns the number of test passed.
 	 Throws an error if any test fails.

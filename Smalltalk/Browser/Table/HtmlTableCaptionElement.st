@@ -1,4 +1,4 @@
-CLASS HtmlTableCaptionElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlTableCaptionElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

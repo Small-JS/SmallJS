@@ -1,4 +1,4 @@
-CLASS HtmlBodyElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlBodyElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 "Does not implement new methods.
  Existing fields are deprecated.

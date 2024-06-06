@@ -1,4 +1,4 @@
-CLASS Selection EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS Selection EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class Range."
 
 CLASSMETHODS

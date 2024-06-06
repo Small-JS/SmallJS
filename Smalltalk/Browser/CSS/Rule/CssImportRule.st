@@ -1,4 +1,4 @@
-CLASS CssImportRule EXTENDS CssRule MODULE DOM CLASSVARS '' VARS ''
+CLASS CssImportRule EXTENDS CssRule MODULE Browser CLASSVARS '' VARS ''
 
 href
 	^ String fromJs: INLINE 'this.js.href'.

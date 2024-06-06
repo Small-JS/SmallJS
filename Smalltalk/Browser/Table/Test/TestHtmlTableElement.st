@@ -1,4 +1,4 @@
-CLASS TestHtmlTableElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlTableElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 "This class tests TestHtmlTableElement and all elements contained within it."
 

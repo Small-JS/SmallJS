@@ -1,4 +1,4 @@
-CLASS BrowserApp EXTENDS Object MODULE DOM CLASSVARS '' VARS ''
+CLASS BrowserApp EXTENDS Object MODULE Browser CLASSVARS '' VARS ''
 	"Base class for client (browser) applications.
 	 Use of this class is optional."
 

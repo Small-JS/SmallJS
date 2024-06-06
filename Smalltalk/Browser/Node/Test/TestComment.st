@@ -1,4 +1,4 @@
-CLASS TestComment EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestComment EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 

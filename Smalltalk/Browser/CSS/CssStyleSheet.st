@@ -1,4 +1,10 @@
-CLASS CssStyleSheet EXTENDS StyleSheet MODULE DOM CLASSVARS '' VARS ''
+CLASS CssStyleSheet EXTENDS StyleSheet MODULE Browser CLASSVARS '' VARS ''
+
+CLASSMETHODS
+
+new
+	^ self fromJs: INLINE 'new CSSStyleSheet()'.
+!
 
 METHODS
 

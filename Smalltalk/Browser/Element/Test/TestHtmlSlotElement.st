@@ -1,4 +1,4 @@
-CLASS TestHtmlSlotElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlSlotElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| slot paragraph |

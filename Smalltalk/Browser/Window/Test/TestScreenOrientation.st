@@ -1,4 +1,4 @@
-CLASS TestScreenOrientation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestScreenOrientation EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 

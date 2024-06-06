@@ -31,3 +31,6 @@ removeEventListener: type then: block
 			INLINE 'this.js.removeEventListener( eventId.type.js, eventId.jsBlock.js )'.
 			eventIds removeAt: index. ] ].
 !
+dispatchEvent: event
+	^ Boolean fromJs: INLINE 'this.dispatchEvent( event.js )'.
+!

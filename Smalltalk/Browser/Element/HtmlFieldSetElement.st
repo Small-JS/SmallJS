@@ -1,4 +1,4 @@
-CLASS HtmlFieldSetElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlFieldSetElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 METHODS
 
@@ -16,6 +16,9 @@ elements
 !
 name
 	^ String fromJs: INLINE 'this.js.name'.
+!
+name: name
+	INLINE 'this.js.name = name.js'.
 !
 type
 	^ String fromJs: INLINE 'this.js.type'.

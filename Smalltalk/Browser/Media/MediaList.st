@@ -1,4 +1,4 @@
-CLASS MediaList EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS MediaList EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class: MediaQueryList."
 
 CLASSMETHODS

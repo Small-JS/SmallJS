@@ -1,4 +1,4 @@
-CLASS TestNode EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestNode EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| document node node2 text |

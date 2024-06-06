@@ -198,4 +198,3 @@ perform: methodName with: argument1 with: argument2
 perform: methodName with: argument1 with: argument2 with: argument3
 	^ INLINE 'this[ Naming.methodStToJs( methodName.js ) ]( argument1, argument2, argument3 )'.
 !
-

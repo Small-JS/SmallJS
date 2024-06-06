@@ -1,4 +1,4 @@
-CLASS TestHtmlMetaElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestHtmlMetaElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| meta |

@@ -1,4 +1,4 @@
-CLASS TestSelection EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestSelection EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 

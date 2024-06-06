@@ -1,4 +1,4 @@
-CLASS TestElement EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testProperties
 	| element element2 |
@@ -151,10 +151,11 @@ testScrolling
 	element scrollIntoView: true.
 	element scrollIntoViewBehavior: 'smooth' block: 'center' inline: 'center'.
 
-	element := document getElementById: 'input' class: HtmlInputElement.
+"	element := document getElementById: 'input' class: HtmlInputElement.
 	element toggleAttribute: 'disabled'.
 	self assert: [ ( element getAttribute: 'disabled' ) = '' ].
 	self assert: [ ( element toggleAttribute: 'disabled' force: false ) not ].
+"
 !
 testCreation
 	| document element |

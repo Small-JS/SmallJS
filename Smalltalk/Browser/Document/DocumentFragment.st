@@ -1,4 +1,4 @@
-CLASS DocumentFragment EXTENDS Node MODULE DOM CLASSVARS '' VARS ''
+CLASS DocumentFragment EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS abstract class: DocumentFragment.
 	 Note: Most member functions expect HTML element objects to be put in this class."
 

@@ -1,4 +1,4 @@
-CLASS StyleSheet EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS StyleSheet EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class StyleSheet,
 	 of which variable value contains an instance."
 
@@ -22,7 +22,9 @@ ownerNode
 	^ Node fromJsSubNode: INLINE 'this.js.ownerNode'.
 !
 title
-	^ String fromJs: INLINE 'this.js.title'.
+	"Firefox returns null on missing title.
+	 Convert it to emtpy string to match Chrome and Edge."
+	^ String fromJs: INLINE 'this.js.title != null ? this.js.title : ""'.
 !
 type
 	^ String fromJs: INLINE 'this.js.type'.

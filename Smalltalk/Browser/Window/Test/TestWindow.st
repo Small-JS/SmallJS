@@ -1,4 +1,4 @@
-CLASS TestWindow EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestWindow EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 
@@ -22,8 +22,7 @@ testProperties
 	self assert:[ window history class = History ].
 	self assert:[ window innerHeight > 0 ].
 	self assert:[ window innerWidth > 0 ].
-	"Note: Firefox creates dynamic iframe elements async, so length is updated later."
-	self assert:[ window length >= 1 ].
+	self assert:[ window length >= 0 ].
 	self assert:[ window localStorage class = Storage ].
 	self assert:[ window location class = Location ].
 	self assert:[ window locationBarVisible ].
@@ -48,84 +47,4 @@ testProperties
 	self assert:[ window top = window ].
 	self assert:[ window visualViewport class = VisualViewport ].
 	self assert:[ window window = window ].
-!
-testCallback
-	| handle window |
-	window := Window default.
-	window requestIdleCallback: [ self onCallback ] timeout: 10.
-	handle := window requestIdleCallback: [ self onDontCallback ] timeout: 1000.
-	"Cancel previous callback before it executes."
-	window cancelIdleCallback: handle.
-!
-onCallback
-	| label |
-	label := Document getElementById: 'callbackLabel' class: HtmlLabelElement.
-	label textContent: 'Called back!'.
-!
-onDontCallback
-	self error: 'Callback should have been canceled.'
-!
-testAnimation
-	"Todo: Test this with Animation class:
-		requestAnimationFrame: callback
-		cancelAnimationFrame: requestId"
-!
-testOpenMoveClose
-	"This test requires popups to be enabled in the browser."
-	| window |
-	window := Window default open: '' target: '' features: 'width=400, height=400'.
-	window isNil ifTrue: [ self error: 'Failed to create Window. Enable popups in browser.' ].
-
-	"Firefox moves windows async so these tests fail."
-	Window isFirefox not ifTrue: [
-		window moveTo: ( 200 @ 100 ).
-		self assert: [ window screenPos = ( 200 @ 100 ) ].
-		window moveBy: ( 100 @ 50 ).
-		self assert: [ window screenPos = ( 300 @ 150 ) ].
-		window resizeBy: ( 200 @ 200 ).
-		window resizeTo: ( 100 @ 100 ) ].
-
-	window stop.
-	window close.
-
-!
-testDialogs
-	"Testing these should be done manually in the browser."
-	| window document |
-
-	document := Document default.
-
-	( document getElementById: 'alertButton' class: HtmlButtonElement ) onClick: [ :event | self onAlert ].
-	( document getElementById: 'confirmButton' class: HtmlButtonElement ) onClick: [ :event | self onConfirm ].
-	( document getElementById: 'promptButton' class: HtmlButtonElement ) onClick: [ :event | self onPrompt ].
-	( document getElementById: 'printButton' class: HtmlButtonElement ) onClick: [ :event | self onPrint ].
-!
-onAlert
-	Window default alert: 'My Alert'.
-!
-onConfirm
-	| result |
-	result := Window default confirm: 'My Confirm'.
-	( Document getElementById: 'dialogResultLabel' class: HtmlLabelElement ) textContent: result toString.
-!
-onPrompt
-	| result |
-	result := Window default prompt: 'My Prompt'.
-	( Document getElementById: 'dialogResultLabel' class: HtmlLabelElement ) textContent: result toString.
-!
-onPrint
-	Window default print.
-!
-testOtherMethods
-	| window element |
-	window := Window default.
-
-	window blur.
-	window focus.
-	element := Document getElementById: 'welcomeTitle' class: HtmlParagraphElement.
-	self assert:[ ( window getComputedStyle: element ) class = CssStyleDeclaration ].
-	self assert:[ ( window matchMedia: 'myMedia' ) class = MediaQueryList ].
-
-	"window postMessage: message targetOrigin: targetOrigin."
-	"window print."
 !

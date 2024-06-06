@@ -1,3 +1,3 @@
-CLASS HtmlHtmlElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlHtmlElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 
 "Does not implement new properties or methods."

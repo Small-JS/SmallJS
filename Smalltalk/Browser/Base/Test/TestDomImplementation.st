@@ -1,4 +1,4 @@
-CLASS TestDomImplementation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestDomImplementation EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testCreateDocumentType
 	| documentType |

@@ -1,9 +1,9 @@
-CLASS TestStyleSheet EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestStyleSheet EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| styleSheet |
-	styleSheet := Document default styleSheets first.
 
+	styleSheet := CssStyleSheet new.
 	"Note: The StyleSheet class is never used by itself, only CssStyleSheet."
 	self assert: [ styleSheet class = CssStyleSheet ].
 
@@ -12,9 +12,9 @@ test
 	self assert: [ styleSheet disabled ].
 	styleSheet disabled: false.
 
-	self assert: [ styleSheet href endsWith: 'App.css' ].
+	self assert: [ styleSheet href isNil ].
 	self assert: [ styleSheet media class = MediaList ].
-	self assert: [ styleSheet ownerNode class = HtmlLinkElement ].
-	self assert: [ styleSheet title = 'App CSS title' ].
+	self assert: [ styleSheet ownerNode isNil ].
+	self assert: [ styleSheet title = '' ].
 	self assert: [ styleSheet type = 'text/css' ].
 !

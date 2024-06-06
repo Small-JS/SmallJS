@@ -1,4 +1,4 @@
-CLASS HtmlImageElement EXTENDS HtmlElement MODULE DOM CLASSVARS '' VARS ''
+CLASS HtmlImageElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 	"This class encasulates the JS class HTMLImageElement,
 	 of which variable js contains an instance."
 

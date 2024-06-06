@@ -1,4 +1,4 @@
-CLASS LockManager EXTENDS JsObject MODULE DOM CLASSVARS '' VARS ''
+CLASS LockManager EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "Todo: Implement properties and methods."
 

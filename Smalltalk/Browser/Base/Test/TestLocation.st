@@ -1,4 +1,4 @@
-CLASS TestLocation EXTENDS Test MODULE TestDom CLASSVARS '' VARS ''
+CLASS TestLocation EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 testProperties
 	| location |
