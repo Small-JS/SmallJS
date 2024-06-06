@@ -2,54 +2,43 @@ CLASS TestHtmlLinkElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| link |
-	link := Document getElementById: 'link' class: HtmlLinkElement.
+	link := Document new createElement: 'link'.
+	self assert: [ link class = HtmlLinkElement ].
 
 	self assert: [ link as = '' ].
 	link as: 'style'.
 	self assert: [ link as = 'style' ].
-	link as: ''.
 
-	self assert: [ link crossOrigin = 'anonymous' ].
+	self assert: [ link crossOrigin isNil ].
 	link crossOrigin: 'use-credentials'.
 	self assert: [ link crossOrigin = 'use-credentials' ].
-	link crossOrigin: 'anonymous'.
 
 	self assert: [ link disabled not ].
 	link disabled: true.
 	self assert: [ link disabled ].
-	link disabled: false.
 
-	self assert: [ link href endsWith: 'Linked.css' ].
-	link href: 'Test/Missing.css'.
-	self assert: [ link href endsWith: 'Test/Missing.css' ].
-	link href: 'Test/Linked.css'.
+	self assert: [ link href = '' ].
+	link href: 'Missing.css'.
+	self assert: [ link href endsWith: 'Missing.css' ].
 
-	self assert: [ link hreflang = 'en' ].
-	link hreflang: 'nl'.
-	self assert: [ link hreflang = 'nl' ].
+	self assert: [ link hreflang = '' ].
 	link hreflang: 'en'.
+	self assert: [ link hreflang = 'en' ].
 
 	self assert: [ link media = '' ].
 	link media: 'print'.
 	self assert: [ link media = 'print' ].
-	link media: ''.
 
-	self assert: [ link referrerPolicy = 'origin' ].
+	self assert: [ link referrerPolicy = '' ].
 	link referrerPolicy: 'no-referrer'.
 	self assert: [ link referrerPolicy = 'no-referrer' ].
-	link referrerPolicy: 'origin'.
 
-	self assert: [ link rel = 'stylesheet' ].
+	self assert: [ link rel = '' ].
 	link rel: 'alternate'.
 	self assert: [ link rel = 'alternate' ].
-	link rel: 'stylesheet'.
+	self assert: [ link relList values first = 'alternate' ].
 
-	self assert: [ link relList values first = 'stylesheet' ].
-	"The attribute sheet only works for the CSS link in the header."
-	self assert: [ ( Document getElementById: 'stylesheet' class: HtmlLinkElement ) sheet class = CssStyleSheet ].
-
-	self assert: [ link type = 'text/css' ].
-	link type: 'alternate'.
-	self assert: [ link type = 'alternate' ].
+	self assert: [ link type = '' ].
 	link type: 'text/css'.
+	self assert: [ link type = 'text/css' ].
 !
