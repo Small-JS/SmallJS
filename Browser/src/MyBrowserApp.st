@@ -20,10 +20,10 @@ bindElements
 	"Load components and add them to the components var."
 
 	components := Array new.
-	#( ClipboardComponent CssComponent DialogsComponent EmbedComponent
+	#( AnchorComponent ClipboardComponent CssComponent DialogsComponent EmbedComponent
 		FieldSetComponent FormComponent IframeComponent ImageComponent
 		InputComponent ListInputComponent RadioInputComponent CheckboxInputComponent
-		ImageInputComponent FileInputComponent DateInputComponent )
+		ImageInputComponent FileInputComponent DateInputComponent  )
 			do: [ :componentClass |
 				components add: (
 					componentClass new appendToElement: 'elementTesterTableBody' then: [] ) ].
