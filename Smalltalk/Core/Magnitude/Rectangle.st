@@ -17,13 +17,13 @@ fromJs: jsDomRect
 
 METHODS
 
-"Conversion."
+"Converting"
 
 toString
 	^ 'Rectangle( ', origin toString, ' , ', extent toString, ' )'.
 !
 
-"Accessing."
+"Accessing"
 
 origin: anOrigin extent: anExtent
 	origin := anOrigin.
@@ -34,4 +34,10 @@ origin
 !
 extent
 	^ extent.
+!
+
+"Comparing"
+
+= rectangle
+	^ origin = rectangle origin & ( extent = rectangle extent )
 !

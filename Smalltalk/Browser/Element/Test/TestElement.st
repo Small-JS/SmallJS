@@ -1,116 +1,151 @@
 CLASS TestElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
+"Test Element class though div and paragraph subclass instances."
+
 testProperties
-	| element element2 |
+	| document div p1 p2 |
+	document := Document new.
 
-	element := Document getElementById: 'element' class: HtmlParagraphElement.
-	self assert: [ element id = 'element' ].
-	self assert: [ element assignedSlot = nil ].
-	self assert: [ ( element attributes getNamedItem: 'id' ) value = 'element' ].
+	div := document createElement: 'div'.
+	self assert: [ div class = HtmlDivElement ].
+	document body appendChild: div.
+	self assert: [ div isConnected ].
 
-	self assert: [ element parentNode childElementCount = 2 ].
-	self assert: [ element parentNode children first = element ].
+	p1 := document createElement: 'p'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p1.
 
-	self assert: [ element classList length = 1  ].
-	self assert: [ element classList contains: 'elementClass' ].
-	self assert: [ element className = 'elementClass' ].
+	p2 := document createElement: 'p'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p2.
 
-	self assert: [ element clientTop = 0 ].
-	self assert: [ element clientLeft = 0 ].
-	self assert: [ element clientHeight > 10 ].
-	self assert: [ element clientWidth > 100 ].
+	self assert: [ div id = '' ].
+	div id: 'div'.
+	self assert: [ div id = 'div' ].
 
-	self assert: [ element parentNode firstElementChild = element ].
-	self assert: [ element parentNode lastElementChild id = 'element2' ].
-	self assert: [ element id = 'element' ].
-	self assert: [ element innerHtml = 'Element' ].
-	self assert: [ element localName = 'p' ].
-	self assert: [ element namespaceUri startsWith: 'http' ].
-	self assert: [ element outerHtml startsWith: '<p ' ].
-	self assert: [ ( element part item: 0 ) = 'elementPart' ].
-	self assert: [ element prefix = nil ].
+	self assert: [ ( div attributes getNamedItem: 'id' ) value = 'div' ].
 
-	element2 := element nextElementSibling.
-	self assert: [ element2 id = 'element2' ].
-	self assert: [ element2 previousElementSibling = element ].
+	self assert: [ div childElementCount = 2 ].
+	self assert: [ div children first = p1 ].
 
-	self assert: [ element scrollTop >= 0 ].
-	self assert: [ element scrollLeft >= 0 ].
-	self assert: [ element scrollHeight >= 0 ].
-	self assert: [ element scrollWidth >= 0 ].
+	self assert: [ div className = '' ].
+	div className: 'divClass'.
+	self assert: [ div className = 'divClass' ].
 
-	self assert: [ element shadowRoot = nil ].
-	self assert: [ element slot = '' ].
-	self assert: [ element tagName = 'P' ].
+	self assert: [ div classList length = 1 ].
+	self assert: [ div classList contains: 'divClass' ].
+
+	self assert: [ div clientTop = 0 ].
+	self assert: [ div clientLeft = 0 ].
+	self assert: [ div clientHeight = 0 ].
+	self assert: [ div clientWidth = 0 ].
+
+	self assert: [ div firstElementChild = p1 ].
+	self assert: [ div lastElementChild = p2 ].
+	self assert: [ div innerHtml = '<p></p><p></p>' ].
+	self assert: [ div localName = 'div' ].
+	self assert: [ div namespaceUri startsWith: 'http' ].
+	self assert: [ div outerHtml startsWith: '<div ' ].
+	self assert: [ div part length = 0 ].
+	self assert: [ div prefix isNil ].
+
+	self assert: [ p1 nextElementSibling = p2 ].
+	self assert: [ p2 previousElementSibling = p1 ].
+
+	self assert: [ div scrollTop = 0 ].
+	self assert: [ div scrollLeft = 0 ].
+	self assert: [ div scrollHeight = 0 ].
+	self assert: [ div scrollWidth = 0 ].
+
+	self assert: [ div assignedSlot isNil ].
+	self assert: [ div shadowRoot isNil ].
+	self assert: [ div slot = '' ].
+	self assert: [ div tagName = 'DIV' ].
 !
 testMethods
-	| document element element2 element3 |
-
 	"Method attachShadow: is tested in TestShadowRoot."
 	"Todo: Test dispatchEvent: in class Event class"
 	"Todo: Test these in class PointerEvents:
 		hasPointerCapture, releasePointerCapture, setPointerCapture, requestPointerLock "
 	"Todo: Test requestFullscreen:... in interactive mode."
 
-	document := Document default.
+	| document div p1 p2 rect0 |
+	document := Document new.
 
-	element := document getElementById: 'element' class: HtmlParagraphElement.
-	self assert: [ element id = 'element' ].
+	div := ( document createElement: 'div' ) id: 'div'.
+	self assert: [ div class = HtmlDivElement ].
+	document body appendChild: div.
+	self assert: [ div isConnected ].
 
-	element2 := document getElementById: 'element2' class: HtmlParagraphElement.
-	self assert: [ element2 id = 'element2' ].
+	p1 := ( document createElement: 'p' ) id: 'p1'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p1.
 
-	element3 := ( document createElement: 'p' ) id: 'element3'; textContent: 'Element 3'.
-	element2 after: element3.
-	self assert: [ element2 nextElementSibling = element3 ].
+	p2 := ( document createElement: 'p' ) id: 'p2'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p2.
 
-	element2 before: element3.
-	self assert: [ element2 previousElementSibling = element3 ].
+	p2 after: p1.
+	self assert: [ p2 nextElementSibling = p1 ].
 
-	element2 insertAdjacentElement: element3 position: 'afterend'.
-	self assert: [ element2 parentNode lastElementChild = element3 ].
-	element3 remove.
+	p2 before: p1.
+	self assert: [ p2 previousElementSibling = p1 ].
 
-	element2 insertAdjacentHtml: '<p id="element4">Inserted as HTML.</p>' position: 'afterend'.
-	self assert: [ element2 parentNode lastElementChild id = 'element4' ].
-	element2 parentNode lastElementChild remove.
+	p2 insertAdjacentElement: p1 position: 'afterend'.
+	self assert: [ div lastElementChild = p1 ].
+	p2 insertAdjacentElement: p1 position: 'beforebegin'.
+	self assert: [ div firstElementChild = p1 ].
 
-	element2 insertAdjacentText: 'Inserted Text node' position: 'afterend'.
-	self assert: [ element2 nextSibling textContent = 'Inserted Text node' ].
-	element2 nextSibling remove.
+	p2 insertAdjacentHtml: '<p id="p3"></p>' position: 'afterend'.
+	self assert: [ div lastElementChild id = 'p3' ].
+	div lastElementChild remove.
 
-	self assert: [ ( element closest: '#elementTesterTable' ) class = HtmlTableElement ].
-	self assert: [ ( element getAttribute: 'id' ) = 'element' ].
-	self assert: [ element getAttributeNames first = 'id' ].
-	self assert: [ ( element getAttributeNode: 'id' ) value = 'element' ].
-	self assert: [ element hasAttribute: 'id' ].
-	self assert: [ element hasAttributes ].
-	self assert: [ element matches: '#element' ].
+	p2 insertAdjacentText: 'Inserted Text node' position: 'afterend'.
+	self assert: [ p2 nextSibling textContent = 'Inserted Text node' ].
+	p2 nextSibling remove.
 
-	self assert: [ element getBoundingClientRect class = Rectangle ].
-	self assert: [ element getClientRects first class = Rectangle ].
+	self assert: [ ( p1 closest: 'div' ) id = 'div' ].
+	self assert: [ ( p1 getAttribute: 'id' ) = 'p1' ].
+	self assert: [ p1 getAttributeNames first = 'id' ].
+	self assert: [ ( p1 getAttributeNode: 'id' ) value = 'p1' ].
+	self assert: [ p1 hasAttribute: 'id' ].
+	self assert: [ p1 hasAttributes ].
+	self assert: [ p1 matches: '#p1' ].
 
-	self assert: [ ( element parentNode getElementsByClassName: 'elementClass' ) first = element ].
-	self assert: [ ( element parentNode getElementsByTagName: 'p' ) first = element ].
+	rect0 := Rectangle origin: ( 0 @ 0 ) extent: ( 0 @ 0 ).
+	self assert: [ p1 getBoundingClientRect = rect0 ].
+	self assert: [ div getClientRects isEmpty ].
+
+	p1 className: 'pClass'.
+	self assert: [ ( document getElementsByClassName: 'pClass' ) first = p1 ].
+	self assert: [ ( document getElementsByTagName: 'p' ) first = p1 ].
 !
 testMethods2
-	| document element paragraph text div elements attr |
+	| document div p1 p2 p3 p4 attr element paragraph text elements  |
+	document := Document new.
 
-	document := Document default.
-	element := document getElementById: 'element' class: HtmlParagraphElement.
+	div := ( document createElement: 'div' ) id: 'div'.
+	self assert: [ div class = HtmlDivElement ].
+	document body appendChild: div.
+	self assert: [ div isConnected ].
 
-	div := document createElement: 'div'.
-	paragraph := ( document createElement: 'p' ) textContent: 'Prepend paragraph'.
-	div prepend: paragraph.
-	self assert: [ div children first textContent = 'Prepend paragraph' ].
+	p1 := ( document createElement: 'p' ) id: 'p1'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p1.
 
-	element := document body querySelector: '#element'.
-	self assert: [ element id = 'element' ].
+	p2 := ( document createElement: 'p' ) id: 'p2'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p2.
 
-	elements := document body querySelectorAll: '#element'.
-	self assert: [ elements first id = 'element' ].
+	div prepend: p2.
+	self assert: [ div children first = p2 ].
+	div prepend: p1.
+	self assert: [ div children first = p1 ].
 
-	"Attribute names must be lower case."
+	self assert: [ ( div querySelector: '#p1' ) id = 'p1' ].
+	self assert: [ ( div querySelectorAll: '#p1' ) first id = 'p1' ].
+
+	"Note: Attribute names must be lower case."
 	div setAttribute: 'my-attr' value: 'my-value'.
 	self assert: [ ( div getAttribute: 'my-attr' ) = 'my-value' ].
 	div removeAttribute: 'my-attr'.
@@ -122,44 +157,17 @@ testMethods2
 	div removeAttributeNode: attr.
 	self assert: [ ( div getAttribute: 'my-attr2' ) = nil ].
 
-	paragraph := ( document createElement: 'p' ) textContent: 'Paragraph appended'.
-	div append: paragraph.
-	self assert: [ div children length >= 1 ].
-	div replaceChildren: Array new.
-	self assert: [ div children length = 0 ].
+	p3 := ( document createElement: 'p' ) id: 'p3'.
+	div replaceChildren: p3.
+	self assert: [ div children length = 1 ].
 
-	paragraph := ( document createElement: 'p' ) textContent: 'Paragraph replacing'.
-	div append: paragraph.
-	element := document createElement: 'span'.
-	div children first replaceWith: element.
-	self assert: [ div children first class = HtmlSpanElement ].
-!
-testScrolling
-	| document element |
-
-	document := Document default.
-	element := document getElementById: 'element' class: HtmlParagraphElement.
-	self assert: [ element id = 'element' ].
-
-	"These 4 calls don't have any effect because is nothing to scroll:"
-	element scrollTo: 0 @ 0.
-	element scrollTo: 200 @ 400 behavior: 'smooth'.
-	element scrollBy: 0 @ 200.
-	element scrollBy: 200 @ 400 behavior: 'smooth'.
-
-	"To see this you have to make the browser smaller and step in debug mode:"
-	element scrollIntoView: true.
-	element scrollIntoViewBehavior: 'smooth' block: 'center' inline: 'center'.
-
-"	element := document getElementById: 'input' class: HtmlInputElement.
-	element toggleAttribute: 'disabled'.
-	self assert: [ ( element getAttribute: 'disabled' ) = '' ].
-	self assert: [ ( element toggleAttribute: 'disabled' force: false ) not ].
-"
+	p4 := ( document createElement: 'p' ) id: 'p4'.
+	p3 replaceWith: p4.
+	self assert: [ div children first id = 'p4' ].
 !
 testCreation
 	| document element |
-	document := Document default.
+	document := Document new.
 
 	#( 'body' 'br' 'button' 'div' 'embed' 'field' 'form' 'head' 'html' 'image' 'input'
 	   'label' 'link' 'meta' 'p' 'script' 'slot' 'span' 'textarea' 'title' 'unknown' )
