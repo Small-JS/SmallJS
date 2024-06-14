@@ -1,86 +1,72 @@
 CLASS TestHtmlElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
+"Test HtmlElement through instances of subclasses."
+
 testProperties
-	| element |
+	| paragraph  |
+	paragraph := Document new createElement: 'p'.
+	self assert: [ paragraph class = HtmlParagraphElement ].
 
-	element := Document getElementById: 'htmlElement' class: HtmlParagraphElement.
-	self assert: [ element class = HtmlParagraphElement ].
+	self assert: [ paragraph accessKey = '' ].
+	paragraph accessKey: 'q'.
+	self assert: [ paragraph accessKey = 'q' ].
 
-	self assert: [ element accessKey = 'p' ].
-	element accessKey: 'q'.
-	self assert: [ element accessKey = 'q' ].
-	element accessKey: 'p'.
+	self assert: [ paragraph dir = '' ].
+	paragraph dir: 'ltr'.
+	self assert: [ paragraph dir = 'ltr' ].
 
-	self assert: [ element dir = 'ltr' ].
-	element dir: 'rtl'.
-	self assert: [ element dir = 'rtl' ].
-	element dir: 'ltr'.
+	self assert: [ paragraph enterKeyHint = '' ].
+	paragraph enterKeyHint: 'done'.
+	self assert: [ paragraph enterKeyHint = 'done' ].
 
-	self assert: [ element enterKeyHint = 'done' ].
-	element enterKeyHint: 'next'.
-	self assert: [ element enterKeyHint = 'next' ].
-	element enterKeyHint: 'done'.
+	self assert: [ paragraph hidden not ].
+	paragraph hidden: true.
+	self assert: [ paragraph hidden ].
 
-	self assert: [ element hidden not ].
-	element hidden: true.
-	self assert: [ element hidden ].
-	element hidden: false.
+	self assert: [ paragraph inert not ].
+	paragraph inert: true.
+	self assert: [ paragraph inert ].
 
-	self assert: [ element inert not ].
-	element inert: true.
-	self assert: [ element inert ].
-	element inert: false.
+	self assert: [ paragraph innerText = '' ].
+	paragraph innerText: 'Text'.
+	self assert: [ paragraph innerText = 'Text' ].
 
-	self assert: [ element innerText = 'HTML element' ].
-	element innerText: 'Changed HTML element'.
-	self assert: [ element innerText = 'Changed HTML element' ].
-	element innerText: 'HTML element'.
+	self assert: [ paragraph outerText = paragraph innerText ].
 
-	self assert: [ element outerText = element innerText ].
+	self assert: [ paragraph isContentEditable not ].
 
-	self assert: [ element isContentEditable not ].
+	self assert: [ paragraph lang = '' ].
+	paragraph lang: 'en'.
+	self assert: [ paragraph lang = 'en' ].
 
-	self assert: [ element lang = 'en' ].
-	element lang: 'nl'.
-	self assert: [ element lang = 'nl' ].
-	element lang: 'en'.
+	self assert: [ paragraph nonce = '' ].
+	paragraph nonce: 'whatever'.
+	self assert: [ paragraph nonce = 'whatever' ].
+	paragraph nonce: ''.
 
-	self assert: [ element nonce = '' ].
-	element nonce: 'whatever'.
-	self assert: [ element nonce = 'whatever' ].
-	element nonce: ''.
+	self assert: [ paragraph offsetTop = 0 ].
+	self assert: [ paragraph offsetLeft = 0 ].
+	self assert: [ paragraph offsetHeight = 0 ].
+	self assert: [ paragraph offsetWidth = 0 ].
 
-	self assert: [ element offsetTop >= 0 ].
-	self assert: [ element offsetLeft >= 0 ].
-	self assert: [ element offsetHeight >= 0 ].
-	self assert: [ element offsetWidth >= 0 ].
+	self assert: [ paragraph style class = CssStyleDeclaration ].
 
-	self assert: [ element style class = CssStyleDeclaration ].
+	self assert: [ paragraph tabIndex = -1 ].
+	paragraph tabIndex: 0.
+	self assert: [ paragraph tabIndex = 0 ].
+	paragraph tabIndex: -1.
 
-	self assert: [ element tabIndex = -1 ].
-	element tabIndex: 0.
-	self assert: [ element tabIndex = 0 ].
-	element tabIndex: -1.
-
-	self assert: [ element title = 'HTML element title' ].
-	element title: 'Changed HTML element title'.
-	self assert: [ element title = 'Changed HTML element title' ].
-	element title: 'HTML element title'.
-
-	self assert: [ element title = 'HTML element title' ].
+	self assert: [ paragraph title = '' ].
+	paragraph title: 'Title'.
+	self assert: [ paragraph title = 'Title' ].
 !
 testMethods
-	| document  element |
+	| document paragraph  |
+	document := Document new.
 
-	document := Document default.
-	element := document getElementById: 'htmlElement' class: HtmlParagraphElement.
-
-	element forceFocus.
-	self assert: [ document activeElement textContent = 'HTML element' ].
-	element tabIndex: -1.  "Restore tabIndex state."
-
-	element blur.
-	self assert: [ document activeElement class = HtmlBodyElement ].
+	"These can only be tested in visible documents:
+		paragraph forceFocus.
+		paragraph blur."
 
 	"Method click is tested in TestEventTarget."
 !
