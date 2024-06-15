@@ -16,7 +16,7 @@ testProperties
 	div appendChild: p1.
 
 	p2 := document createElement: 'p'.
-	self assert: [ p1 class = HtmlParagraphElement ].
+	self assert: [ p2 class = HtmlParagraphElement ].
 	div appendChild: p2.
 
 	self assert: [ div id = '' ].

@@ -5,41 +5,51 @@ CLASS TestRange EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 METHODS
 
 test
-	| document range range2 node1 node2 node3 node4 parent documentFragment element element2 div |
+	| document div p1 p2 p3 p4 range range2 documentFragment div2 |
 
-	document := Document default.
+	document := Document new.
+
+	div := document createElement: 'div'.
+	self assert: [ div class = HtmlDivElement ].
+	document body appendChild: div.
+
+	p1 := ( document createElement: 'p' ) id: 'p1'.
+	self assert: [ p1 class = HtmlParagraphElement ].
+	div appendChild: p1.
+
+	p2 := ( document createElement: 'p' ) id: 'p2'.
+	self assert: [ p2 class = HtmlParagraphElement ].
+	div appendChild: p2.
+
+	p3 := ( document createElement: 'p' ) id: 'p3'.
+	self assert: [ p3 class = HtmlParagraphElement ].
+	div appendChild: p3.
+
 	range := document createRange.
 
-	node1 := document getElementById: 'rangeSelect1' class: HtmlParagraphElement.
-	self assert: [ node1 textContent = 'Select 1'  ].
-	node2 := document getElementById: 'rangeSelect2' class: HtmlParagraphElement.
-	self assert: [ node2 textContent = 'Select 2'  ].
-	node3 := document getElementById: 'rangeSelect3' class: HtmlParagraphElement.
-	self assert: [ node3 textContent = 'Select 3'  ].
-
-	self assert: [ range commonAncestorContainer class = Document ].
+	self assert: [ range commonAncestorContainer = document ].
 	self assert: [ range collapsed = true ].
-	self assert: [ range endContainer class = Document ].
+	self assert: [ range endContainer = document ].
 	self assert: [ range endOffset = 0 ].
-	self assert: [ range startContainer class = Document ].
+	self assert: [ range startContainer = document ].
 	self assert: [ range startOffset = 0 ].
 
-	range setStart: node1 offset: 0.
-	self assert: [ range startContainer textContent = 'Select 1' ].
-	range setEnd: node3 offset: 0.
-	self assert: [ range endContainer textContent = 'Select 3' ].
+	range setStart: p1 offset: 0.
+	self assert: [ range startContainer id = 'p1' ].
+	range setEnd: p3 offset: 0.
+	self assert: [ range endContainer id = 'p3' ].
 
-	self assert: [ range commonAncestorContainer class = HtmlTableCellElement ].
+	self assert: [ range commonAncestorContainer class = HtmlDivElement ].
 	self assert: [ range collapsed = false ].
 	range collapse.
 	self assert: [ range collapsed = true ].
 	range collapseToStart.
 	self assert: [ range collapsed = true ].
 
-	range setStart: node1 offset: 0.
-	range setEnd: node3 offset: 0.
-	self assert: [ ( range comparePoint: node2 offset: 0 ) = 0 ].
-	range2 := Range new selectNode: node2.
+	range setStart: p1 offset: 0.
+	range setEnd: p3 offset: 0.
+	self assert: [ ( range comparePoint: p2 offset: 0 ) = 0 ].
+	range2 := Range new selectNode: p2.
 	self assert: [ ( range compareBoundaryPoints: 0 with: range2 ) = -1 ].
 
 	documentFragment := range cloneContents.
@@ -52,49 +62,50 @@ test
 	documentFragment := range createContextualFragment: '<div>I am a div node</div>'.
 	self assert: [ documentFragment firstElementChild class = HtmlDivElement ].
 
-	parent := node1 parentNode.
-
-	node4 := ( document createElement: 'p' ) textContent: 'To be deleted through Range'.
-	parent appendChild: node4.
-	self assert: [ parent childElementCount = 4 ].
-	range2 := Range new selectNode: parent lastElementChild.
+	"Test deleteContents"
+	p4 := ( document createElement: 'p' ) id: 'p4'.
+	div appendChild: p4.
+	self assert: [ div childElementCount = 4 ].
+	range2 := Range new selectNode: div lastElementChild.
 	range2 deleteContents.
-	self assert: [ parent childElementCount = 3 ].
+	self assert: [ div childElementCount = 3 ].
 
-	node4 := ( document createElement: 'p' ) textContent: 'To be extracted through Range'.
-	parent appendChild: node4.
-	self assert: [ parent childElementCount = 4 ].
-	range2 := Range new selectNode: parent lastElementChild.
+	"Test extractContents"
+	p4 := ( document createElement: 'p' ) id: 'p4'.
+	div appendChild: p4.
+	self assert: [ div childElementCount = 4 ].
+	range2 := Range new selectNode: div lastElementChild.
 	documentFragment := range2 extractContents.
-	self assert: [ documentFragment firstElementChild textContent = 'To be extracted through Range' ].
-	self assert: [ parent childElementCount = 3 ].
+	self assert: [ documentFragment firstElementChild id = 'p4' ].
+	self assert: [ div childElementCount = 3 ].
 
-	range := Range new selectNode: node1.
-	self assert: [ range getBoundingClientRect extent >= ( 1 @ 1 ) ].
-	self assert: [ range getClientRects first class = Rectangle ].
-	self assert: [ range isPointInRange: node1 offset: 0 ].
+	"Test client rectangles"
+	range := Range new selectNode: p1.
+	self assert: [ range getBoundingClientRect extent = ( 0 @ 0 ) ].
+	self assert: [ range getClientRects isEmpty ].
+	self assert: [ range isPointInRange: p1 offset: 0 ].
 
-	range := Range new selectNode: node1.
-	node4 := ( document createElement: 'p' ) textContent: 'To be inserted in Range'.
-	range insertNode: node4.
-	self assert: [ parent childElementCount = 4 ].
-	node4 remove.
-	self assert: [ parent childElementCount = 3 ].
+	"Test insertNode"
+	range := Range new selectNode: p1.
+	p4 := ( document createElement: 'p' ) id: 'p4'.
+	range insertNode: p4.
+	self assert: [ div childElementCount = 4 ].
+	p4 remove.
+	self assert: [ div childElementCount = 3 ].
 
-	self assert: [ range intersectsNode: node1 ].
-	self assert: [ range startContainer = parent ].
-	self assert: [ range endContainer = parent ].
+	self assert: [ range intersectsNode: p1 ].
 
-	node4 := ( document createElement: 'p' ) textContent: 'To be extracted through surroundContents'.
-	parent appendChild: node4.
-	self assert: [ parent childElementCount = 4 ].
-	div := document createElement: 'div'.
+	"Test surroundContents"
+	p4 := ( document createElement: 'p' ) id: 'p4'.
+	div appendChild: p4.
+	self assert: [ div childElementCount = 4 ].
+	div2 := document createElement: 'div'.
 	self assert: [ div class = HtmlDivElement ].
-	parent appendChild: div.
-	self assert: [ parent childElementCount = 5 ].
-	range := Range new selectNode: node4.
-	range surroundContents: div.
-	self assert: [ parent childElementCount = 4 ].
-	self assert: [ parent lastElementChild textContent = 'To be extracted through surroundContents' ].
-	parent lastElementChild remove.
+	div appendChild: div2.
+	self assert: [ div childElementCount = 5 ].
+	range := Range new selectNode: p4.
+	range surroundContents: div2.
+	self assert: [ div childElementCount = 4 ].
+	self assert: [ div2 children first id = 'p4' ].
+	div lastElementChild remove.
 !
