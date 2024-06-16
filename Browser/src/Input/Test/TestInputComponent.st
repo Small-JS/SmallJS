@@ -38,3 +38,4 @@ testGui
 	Timer timeout: 500 then: [
 			self assert: [ inputComponent outputLabel textContent = 'My input' ]  ].
 !
+

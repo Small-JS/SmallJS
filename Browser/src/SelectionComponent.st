@@ -13,6 +13,7 @@ bindElements
 	outputLabel := Document getElementById: 'selectionOutputLabel' class: HtmlLabelElement.
 
 	outputButton onClick: [
+		self log: 'Selection:', Selection new toString; ':'.
 		outputLabel textContent: Selection new toString ].
 !
 

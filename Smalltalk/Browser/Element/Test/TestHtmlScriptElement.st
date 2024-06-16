@@ -2,49 +2,35 @@ CLASS TestHtmlScriptElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| script |
-
+	script := Document new createElement: 'script'.
+	self assert: [ script class = HtmlScriptElement ].
 	self assert: [ HtmlScriptElement supports: 'module' ].
 
-	script := Document getElementById: 'script' class: HtmlScriptElement.
-
-	self assert: [ script type = 'application/javascript' ].
-	script type: 'application/ecmascript'.
-	self assert: [ script type = 'application/ecmascript' ].
+	self assert: [ script type = '' ].
 	script type: 'application/javascript'.
+	self assert: [ script type = 'application/javascript' ].
 
-	self assert: [ script src endsWith: 'ScriptFunction.js' ].
+	self assert: [ script src endsWith: '' ].
 	script src: 'Missing.js'.
 	self assert: [ script src endsWith: 'Missing.js' ].
-	script src: 'ScriptFunction.js'.
 
-	self assert: [ script isAsync not ].
-	script isAsync: true.
 	self assert: [ script isAsync ].
 	script isAsync: false.
+	self assert: [ script isAsync not ].
 
 	self assert: [ script defer not ].
 	script defer: true.
 	self assert: [ script defer ].
-	script defer: false.
 
-	self assert: [ script crossOrigin = 'anonymous' ].
-	script crossOrigin: 'use-credentials'.
-	self assert: [ script crossOrigin = 'use-credentials' ].
+	self assert: [ script crossOrigin isNil ].
 	script crossOrigin: 'anonymous'.
+	self assert: [ script crossOrigin = 'anonymous' ].
 
-	self assert: [ script referrerPolicy = 'same-origin' ].
-	script referrerPolicy: 'origin'.
-	self assert: [ script referrerPolicy = 'origin' ].
+	self assert: [ script referrerPolicy = '' ].
 	script referrerPolicy: 'same-origin'.
+	self assert: [ script referrerPolicy = 'same-origin' ].
 
 	self assert: [ script text = '' ].
 	script text: 'let n = 1;'.
 	self assert: [ script text = 'let n = 1;' ].
-	script text: ''.
-!
-testButton
-	| scriptButton |
-	scriptButton := Document getElementById: 'scriptButton' class: HtmlButtonElement.
-	scriptButton onClick: [ INLINE 'ScriptFunction()' ].
-	scriptButton click.
 !

@@ -23,7 +23,8 @@ bindElements
 	#( AnchorComponent ClipboardComponent CssComponent DialogsComponent EmbedComponent
 		FieldSetComponent FormComponent IframeComponent ImageComponent
 		InputComponent ListInputComponent RadioInputComponent CheckboxInputComponent
-		ImageInputComponent FileInputComponent DateInputComponent SelectionComponent )
+		ImageInputComponent FileInputComponent DateInputComponent SelectionComponent
+		ScriptComponent )
 			do: [ :componentClass |
 				components add: (
 					componentClass new appendToElement: 'elementTesterTableBody' then: [] ) ].
