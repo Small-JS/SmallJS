@@ -4,6 +4,11 @@ CLASS Selection EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 CLASSMETHODS
 
 new
+	"2024-06-16: FireFox fails to get selected text through the global document.getSelection() call.
+	 This is the official bug report: https://bugzilla.mozilla.org/show_bug.cgi?id=85686
+	 The workaround is to extract the selection through selectionStart and selectionEnd
+	 of a specific input field."
+
 	^ Document default getSelection.
 !
 
