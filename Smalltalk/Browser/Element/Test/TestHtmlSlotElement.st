@@ -1,15 +1,16 @@
 CLASS TestHtmlSlotElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| slot paragraph |
-	slot := Document getElementById: 'slot' class: HtmlSlotElement.
+	| document slot paragraph |
+	document := Document new.
+	slot := document createElement: 'slot'.
+	self assert: [ slot class = HtmlSlotElement ].
 
-	self assert: [ slot name = 'slot-name' ].
-	slot name: 'slot-new-name'.
-	self assert: [ slot name = 'slot-new-name' ].
+	self assert: [ slot name = '' ].
 	slot name: 'slot-name'.
+	self assert: [ slot name = 'slot-name' ].
 
-	paragraph := ( Document default createElement: 'p' ) textContent: 'Replaced slot text'.
+	paragraph := ( document createElement: 'p' ) textContent: 'Slot text'.
 	"This wont work, need to create shadow DOM."
 	slot assign: paragraph.
 

@@ -1,11 +1,16 @@
 CLASS TestHtmlTemplateElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| template templateSpan |
-	template := Document getElementById: 'template' class: HtmlTemplateElement.
-	templateSpan := Document getElementById: 'templateSpan' class: HtmlSpanElement.
+	| document template span |
+	document := Document new.
 
-	templateSpan removeChildren.
-	templateSpan appendChild: ( template content cloneNode: true ).
-	self assert: [ templateSpan firstChild class = Text ].
+	template := document createElement: 'template'.
+	self assert: [ template class = HtmlTemplateElement ].
+	template content appendChild: ( document createTextNode: 'Template text' ).
+
+	span := document createElement: 'span'.
+	self assert: [ span class = HtmlSpanElement ].
+
+	span appendChild: ( template content cloneNode: true ).
+	self assert: [ span firstChild textContent = 'Template text' ].
 !
