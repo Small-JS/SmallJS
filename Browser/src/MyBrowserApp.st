@@ -21,10 +21,10 @@ bindElements
 
 	components := Array new.
 	#( AnchorComponent ClipboardComponent CssComponent DialogsComponent EmbedComponent
-		FieldSetComponent FormComponent IframeComponent ImageComponent
+		FieldSetComponent FormComponent
 		InputComponent ListInputComponent RadioInputComponent CheckboxInputComponent
 		ImageInputComponent FileInputComponent DateInputComponent SelectionComponent
-		ScriptComponent )
+		ScriptComponent TextAreaComponent )
 			do: [ :componentClass |
 				components add: (
 					componentClass new appendToElement: 'elementTesterTableBody' then: [] ) ].

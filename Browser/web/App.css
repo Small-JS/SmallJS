@@ -24,7 +24,7 @@ fieldset legend {
 }
 
 table {
-	border: 2px solid gray;
+	border: 2px solid grey;
 	border-collapse: collapse;
 	margin-left: auto;
 	margin-right: auto;
@@ -38,35 +38,32 @@ caption {
   }
 
 .tableHeader {
-	border-color: grey;
 	border-bottom: 2px solid grey;
 	background-color: darkred; color: white;
 }
 
-table th + th {
-	border-left: 2px solid grey;
-}
-
-table td + td {
-	border-left: 2px solid grey;
-}
-
-table th + td {
-	border-left: 2px solid grey;
-}
-
 th, td {
+	border-left: 2px solid grey;
 	text-align: left;
+	vertical-align: middle;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	padding-left: 10px;
 	padding-right: 10px;
-}
-
-td {
-	border: 0px solid black;
 	text-align: left;
 	vertical-align: middle;
+}
+
+.layoutTable {
+	margin-left: 0;
+	border: 0px;
+	padding: 0px;
+}
+
+.layoutTable td {
+	border: 0px;
+	padding: 0px;
+	padding-right: 4px;
 }
 
 .field {
