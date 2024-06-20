@@ -1,4 +1,4 @@
-CLASS TestFetch EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
+CLASS TestFetch EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	Fetch text: 'Test/MyObject.json'

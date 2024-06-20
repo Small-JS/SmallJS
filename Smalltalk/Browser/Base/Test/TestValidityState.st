@@ -1,17 +1,8 @@
 CLASS TestValidityState EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
-"This class tests classes Range and AbstractRange together."
-
-METHODS
-
 test
-	| document fieldSet validityState |
-
-	document := Document default.
-^ true.
-	fieldSet := document getElementById: 'fieldSet' class: HtmlFieldSetElement.
-
-	validityState := fieldSet validity.
+	| validityState |
+	validityState := ( Document new createElement: 'fieldSet' ) validity.
 	self assert: [ validityState class = ValidityState ].
 
 	self assert: [ validityState badInput not ].

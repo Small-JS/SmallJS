@@ -1,12 +1,14 @@
 CLASS TestHtmlTitleElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| title titleSpan titleText |
-	title := Document getElementById: 'title' class: HtmlTitleElement.
+	| document title |
+	document := Document new.
+	document title: 'My title'.
 
-	titleText := title text.
-	self assert: [ titleText startsWith: 'SmallJS' ].
-	title text: 'New document title'.
-	self assert: [ title text = 'New document title' ].
-	title text: titleText.
+	title := document querySelector: 'title'.
+	self assert: [ title class = HtmlTitleElement ].
+	self assert: [ title text = 'My title' ].
+	title text: 'New title'.
+	self assert: [ title text = 'New title' ].
+	self assert: [ document title = 'New title' ].
 !

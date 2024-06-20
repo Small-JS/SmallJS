@@ -4,14 +4,11 @@ METHODS
 
 test
 	| attr |
+	"Attributes names should be lower case."
+	attr := Document new createAttribute: 'my-name'.
+	self assert: [ attr class = Attr ].
+	self assert: [ attr name = 'my-name' ].
 
-	attr := ( Document getElementById: 'smallJsLogo' class: HtmlImageElement ) attributes item: 1.
-	self assert: [ attr localName = 'id' ].
-	self assert: [ attr name = 'id' ].
-	self assert: [ attr value = 'smallJsLogo' ].
-
-	attr := Document default createAttribute: 'myname'.		"Should be lower case."
 	attr value: 'myValue'.
-	self assert: [ attr name = 'myname' ].
 	self assert: [ attr value = 'myValue' ].
 !
