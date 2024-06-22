@@ -1,10 +1,9 @@
-CLASS TestRequest EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
-	"Also tests Response, Headers."
+CLASS TestRequest EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
 
 testRequest
 	| request |
 
-	request := Request url: 'Test/MyObject.json'.
+	request := Request url: 'MyObject.json'.
 
 	self assert: [ request class = Request ].
 	self assert: [ request bodyUsed not ].

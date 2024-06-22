@@ -1,11 +1,11 @@
 CLASS TestFetch EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	Fetch text: 'Test/MyObject.json'
+	Fetch text: 'MyObject.json'
 		then: [ :string | self onFetchFile: string ]
 		catch: [ :error | error throw ].
 
-	Fetch object: 'Test/MyObject.json'
+	Fetch object: 'MyObject.json'
 		then: [ :object | self onFetchObject: object ]
 		catch: [ :error | error throw ].
 

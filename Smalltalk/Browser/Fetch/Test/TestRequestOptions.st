@@ -1,4 +1,4 @@
-CLASS TestRequestOptions EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
+CLASS TestRequestOptions EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| options request |
@@ -45,8 +45,8 @@ test
 	options priority: 'high'.
 	self assert: [ options priority = 'high' ].
 
-	request := Request url: 'Test/MyObject.json' options: options.
-	self assert: [ request url includes: 'Test/MyObject.json' ].
+	request := Request url: 'Missing.json' options: options.
+	self assert: [ request url includes: 'Missing.json' ].
 
 	self assert: [ request bodyUsed not ].
 	self assert: [ request cache = options cache ].
