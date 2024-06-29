@@ -33,8 +33,11 @@ test
 	self assert: [ ball radius = 16 ].
 	self assert: [ ball position x >= 0 ].
 	self assert: [ ball position y >= 0 ].
-	self assert: [ ball speed x >= 2 ].
-	self assert: [ ball speed y >= 2 ].
+	self assert: [ self checkSpeedCoordinate: ball speed x ].
+	self assert: [ self checkSpeedCoordinate: ball speed y ].
 	self assert: [ #( 'red' 'blue' 'green' ) includes: ball color ].
 !
-
+checkSpeedCoordinate: speed
+	^ ( speed >= -10 ) & ( speed <= -2 ) |
+	  ( speed >= 2 ) & ( speed <= 10 ).
+!
