@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "tsc: watch - tsconfig.json",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"runOptions": {	"runOn": "folderOpen" }
+		},
+		{
+			"label": "Compile Smalltalk",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/App.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Compile Smalltalk minimized",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/App.js", "-m", "CounterApp", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "web/Smalltalk" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		}
+	]
+}

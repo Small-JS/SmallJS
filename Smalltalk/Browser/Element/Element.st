@@ -57,6 +57,8 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLDataListElement' ifTrue: [ ^ HtmlDataListElement fromJs: jsElement ].
 	jsClassName = 'HTMLOptionElement' ifTrue: [ ^ HtmlOptionElement fromJs: jsElement ].
 
+	jsClassName = 'HTMLCanvasElement' ifTrue: [ ^ HtmlCanvasElement fromJs: jsElement ].
+
 	^ self error: 'Element.fromJsSubElement: Unknown JS element class: ', jsClassName.
 !
 fromJsSubElements: jsArray

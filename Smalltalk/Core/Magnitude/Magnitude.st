@@ -23,3 +23,9 @@ compare: magnitude
 				ifTrue: [ 1 ]
 				ifFalse: [ 0 ] ].
 !
+min: magnitude
+	^ self <= magnitude ifTrue: [ self ] ifFalse: [ magnitude ].
+!
+max: magnitude
+	^ self >= magnitude ifTrue: [ self ] ifFalse: [ magnitude ].
+!

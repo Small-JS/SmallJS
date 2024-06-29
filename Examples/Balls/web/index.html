@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ball</title>
+	<link rel="stylesheet" href="App.css" type="text/css" />
+	<script src="App.js"></script>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td class="title">
+				<div class="vertical-center">
+					<img id="todoImage" src="Ball.png" height="40"></img>
+					<span id="titleMessage">&nbsp;&nbsp;Balls</span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<canvas id="canvas" width="300" height="200"></canvas>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="ballsInput">Balls: </label>
+				<input id="ballsInput" type="number" min="1" max="100" size="10" value="10">
+				<span>&nbsp;&nbsp;</span>
+				<button id="startButton">Start</button>
+				<span>&nbsp;&nbsp;</span>
+				<button id="stopButton">Stop</button>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

@@ -8,6 +8,8 @@
 **/out
 /Browser/web/App.js
 /Browser/web/Smalltalk
+/Examples/Balls/web/App.js
+/Examples/Balls/web/Smalltalk
 /Examples/Benchmark/web/App.js
 /Examples/Benchmark/web/Smalltalk
 /Examples/Benchmark/web/Script
@@ -29,6 +31,7 @@
 todo.txt
 /Website/web/App.js
 /Website/web/Smalltalk
+/Website/web/Examples/Balls
 /Website/web/Examples/Benchmark
 /Website/web/Examples/Counter
 /Website/web/Examples/Todo

@@ -3,6 +3,7 @@ CLASS TestInteger EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 testCreation
 	self assert: [ 42 class = Integer ].
 	self assert: [ ( Integer fromJs: 7 ) class = Integer ].
+	self assert: [ #( 2 3 4 ) includes: ( Integer randomFrom: 2 to: 4 ) ].
 !
 testConversion
 	self assert: [ 123 toString = '123' ].

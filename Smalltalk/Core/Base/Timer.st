@@ -28,3 +28,9 @@ interval: interval then: block
 clearInterval
 	INLINE 'clearInterval( this.id.js )'.
 !
+
+"Accessing"
+
+id
+	^ id.
+!

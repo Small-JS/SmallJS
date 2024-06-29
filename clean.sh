@@ -27,6 +27,9 @@ rm -r ./Node/out
 rm ./Browser/web/App.js*
 rm -r ./Browser/web/Smalltalk
 
+rm ./Examples/Balls/web/App.js*
+rm -r ./Examples/Balls/web/Smalltalk
+
 rm ./Examples/Benchmark/web/App.js*
 rm -r ./Examples/Benchmark/web/Smalltalk
 

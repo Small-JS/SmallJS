@@ -1,0 +1,41 @@
+﻿body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 320px;
+	color: grey;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+	background-color: lightblue;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#canvas {
+    border: 1px solid grey;
+}
+
+.vertical-center
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+

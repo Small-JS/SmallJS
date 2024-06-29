@@ -7,6 +7,9 @@ fromJs: jsNumber
 	INLINE 'if( jsNumber == null ) return stNil'.
 	^ self basicNew js: INLINE 'Number( Math.floor( jsNumber ) )'.
 !
+randomFrom: min to: max
+	^ ( Float random * ( max - min + 1 ) + min ) toInteger.
+!
 
 METHODS
 

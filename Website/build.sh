@@ -25,6 +25,9 @@ echo "Copying example web apps"
 rm -rf web/Examples/Benchmark
 cp -r ../Examples/Benchmark/web web/Examples/Benchmark
 
+rm -rf web/Examples/Balls
+cp -r ../Examples/Balls/web web/Examples/Balls
+
 rm -rf web/Examples/Counter
 cp -r ../Examples/Counter/web web/Examples/Counter
 

@@ -11,6 +11,7 @@ cd "$(dirname "$0")"
 ./Browser/build.sh
 ./Examples/Counter/build.sh
 ./Examples/Todo/build.sh
+./Examples/Balls/build.sh
 ./Examples/Benchmark/build.sh
 ./Examples/Shop/Server/build.sh
 ./Examples/Shop/Client/build.sh
