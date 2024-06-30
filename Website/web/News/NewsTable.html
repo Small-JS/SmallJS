@@ -1,0 +1,73 @@
+<!-- HTML fragment for news table
+     This is included in the News page.  -->
+
+<table id="newsTable">
+	<tr>
+		<td>
+			<p class="newsTitle">SmallJS release 1.2
+				<span class="newsDate">1-Feb-2024</span>
+			</p>
+
+			<p><b>Compiler:</b><br>
+				Implemented minimize to prevent generation library code not used by your app.<br>
+				Stricter language syntax parsing.<br>
+				Improved compile error handling.<br>
+				Allow newlines in VARS and CLASSVARS declarations</p>
+
+			<p><b>Build:</b><br>
+				Expanded detection of prerequisites.<br>
+				Build scripts now exit on startup errors.<br>
+				Added MacOS browser testing options.</p>
+
+			<p><b>Browser:</b><br>
+				Consolidated Fetch and Streams classes form modules Node and Browser to Core.<br>
+				Fetch: ST implementation of full fetch API. Consolidated browser and Node.js functionality.<br>
+				Added Linux default browser locations to .env.example files.</p>
+
+			<p><b>Examples:</b><br>
+				Shop Server: Implemented session management.<br>
+				Todo: Made it working on Firefox on MacOS.<br>
+				Todo: Added language selection option with 2 languages.<br>
+				Shop Client SPA: Created new shop client app as a Single Page Application (SPA).</p>
+		</td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p class="newsTitle">SmallJS release 1.1
+				<span class="newsDate">25-Nov-2023</span>
+			</p>
+
+			<p><b>Examples:</b><br>
+			Added Counter example app. Can be used as a template for new apps.<br>
+			Added Todo example app, with functionality for editing, adding, removing and sorting tasks.<br>
+			Added Benchmark example app, comparing SmallJS performance to JavaScript.<br>
+			Implemented full unit, API and GUI tests on all example apps on all supported browser.</p>
+
+			<p><b>Build:</b><br>
+			Various fixes and improvements for first time use, especially on MacOS.<br>
+			Added build scripts to check dependencies and build the complete environment.<br>
+			Made language extenion an official *.vsix package for deployment.</p>
+
+			<p><b>Compiler:</b><br>
+			Added -t and +t options to skip compiling unit tests on selected libraries.</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p class="newsTitle">SmallJS release 1.0
+				<span class="newsDate">30-Aug-2023</span>
+			</p>
+
+			<p>Initial commit of SmallJS on GitHub supporting Smalltalk to JavaScript compilation for browsers and
+				Node.js.</p>
+
+			<p>For development in browsers, a workable part of the DOM is encapsulated in Smalltalk.<br>
+				For Node.js, the Express server is embedded plus support for 3 databases: PostgreSQL, MariaDB and
+				MySQL.</p>
+
+			<p>It should run on Linux, Mac and Windows.<br>
+				It's configured for using the Visual Studio Code IDE by default.</p>
+		</td>
+	</tr>
+</table>

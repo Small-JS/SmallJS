@@ -17,7 +17,7 @@ tsc
 # This assumes the selected examples have been built beforehand.
 # Just copy the generated web apps for use in iframes.
 
-echo "Copying example web apps"
+echo "Copying example apps"
 
 # Must remove destination folders first,
 # otherwise "cp -r" will behave differently.

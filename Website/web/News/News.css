@@ -1,0 +1,34 @@
+﻿@import "../App.css";
+
+#newsTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	border-width: 2px;
+	border-spacing: 8px;
+	border-radius: 10px;
+	border-color: grey;
+	text-align: left;
+}
+
+#newsTable p {
+	line-height: 1.2;
+	margin: 8px;
+	padding: 0;
+}
+
+.newsTitle {
+	font-size: larger;
+	font-weight: bold;
+	text-align: left;
+	background-color: #C5ECF9;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.newsDate {
+	font-weight: normal;
+	font-size: smaller;
+	float: right;
+}
