@@ -1,6 +1,6 @@
 # Ball example application
 
-This project implements bouncing balls on a HTML canvas.
+This project implements colored bouncing balls on a HTML canvas.
 
 ## Running
 

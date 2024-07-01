@@ -19,9 +19,15 @@ This is a somewhat more complex browser app using more types of HTML elements.
 ## Shop
 
 The skeleton of a webshop app with users, products and orders.\
-Consists of a client (browser) and a server (NodeJS) part.\
+Consists of a client (browser) and a server (NodeJS) part.
 
 >[./Shop/Shop.md](./Shop/Shop.md)
+
+## Balls
+
+Bouncing colored balls on a HTML canvas.
+
+>[./Balls/Balls.md](./Balls/Balls.md)
 
 ## Benchmark
 

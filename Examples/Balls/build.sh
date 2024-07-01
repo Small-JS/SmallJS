@@ -6,11 +6,11 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Ball"
+echo "==== Balls"
 
 # Compile TypeScript
 
-echo "tsc Ball"
+echo "tsc Balls"
 tsc
 
 # Compile Smalltalk

@@ -6,7 +6,7 @@
 		"express-session": "^1.18.0",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.3.1",
-		"mysql2": "^3.10.1",
+		"mysql2": "^3.10.2",
 		"node-fetch": "^3.3.2",
 		"pg": "^8.12.0"
 	}
