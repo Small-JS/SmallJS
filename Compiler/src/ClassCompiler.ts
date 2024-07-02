@@ -521,7 +521,8 @@ export class ClassCompiler
 		let jsName: string = '';
 		if( this.method.checkVariableReference( compiledVariable ) )
 			jsName = compiledVariable.jsName();
-		else if( this.class.checkVariableReference( compiledVariable ) )
+		else if( ! this.compilingClassMethods &&
+			this.class.checkVariableReference( compiledVariable ) )
 			jsName = "this." + compiledVariable.jsName();
 		else if( this.class.checkClassVariableReference( compiledVariable ) ) {
 			let classAccess = this.compilingClassMethods ? "" : "$class().";

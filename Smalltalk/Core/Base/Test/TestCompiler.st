@@ -4,6 +4,14 @@ CLASS TestCompiler EXTENDS Test MODULE TestCore CLASSVARS 'c1'
 
 	"This class tests some compiler parsing features"
 
+CLASSMETHODS
+
+testClass
+	self assert: [ c1 isNil ].
+!
+
+METHODS
+
 test
 	self assert: [ c1 = v1 ].
 	self assert: [ v1 = v2 ].
