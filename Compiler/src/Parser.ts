@@ -88,18 +88,18 @@ export class Parser
 		return char;
 	}
 
-	// Parse a string and then remove the quotes
+	// Parse a string after keyword INLINE, allowing newlines.
 
-	parseStringValue(): string
+	parseInline(): string
 	{
-		let str: string = this.parseString();
+		let str: string = this.parseString( true );
 		return str.substring( 1, str.length - 1 );
 	}
 
 	// Parse string; i.e. text enclosed in argument delimiters, that should be the first char
 	// single or double quotes.
 
-	parseString(): string
+	parseString( allowControlChars : boolean = false ): string
 	{
 		this.skipSpace();
 
@@ -119,6 +119,10 @@ export class Parser
 
 				char += this.nextChar();
 			}
+
+			let charCode = char.charCodeAt( 0 );
+			if( ! allowControlChars && charCode < 32 )
+				this.error( "Illegal character in string with code: " + charCode );
 
 			str += char;
 		} while( char != delimiter );

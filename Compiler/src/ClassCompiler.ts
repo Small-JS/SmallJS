@@ -110,7 +110,7 @@ export class ClassCompiler
 		if( !this.class.classInline )
 			this.class.classInline = this.sourceNode( "", "classInline" );
 
-		let source = this.parser.parseStringValue() + "\n";
+		let source = this.parser.parseInline() + "\n";
 		this.class.classInline.add( source );
 	}
 
@@ -302,7 +302,7 @@ export class ClassCompiler
 
 	private compileInline(): SourceNode
 	{
-		return this.sourceNode( this.parser.parseStringValue(), "inline" );
+		return this.sourceNode( this.parser.parseInline(), "inline" );
 	}
 
 	private compileAwait(): SourceNode
