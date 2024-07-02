@@ -197,6 +197,9 @@ export class ClassCompiler
 			this.error( "Local variable name is reserved word: " + variableName );
 
 		let compiledVariable = new CompiledVariable( variableName );
+		if( compiledVariable.includedIn( this.method.vars ) )
+			this.error( "Duplicate local variable: " + variableName);
+
 		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil;\n";
 		compiledVariable.node = this.sourceNode( source, "variable" );
 
