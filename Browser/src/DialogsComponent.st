@@ -33,15 +33,7 @@ onPopup
 	popup := Window default open: '' target: '' features: 'width=400, height=400'.
 	popup isNil ifTrue: [ self error: 'Failed to create Window. Enable popups in browser.' ].
 
-	popup document write: '<!DOCTYPE html>\
-		<html>\
-			<head>\
-				<title>SmallJS popop</title>\
-			</head>\
-			<body>\
-				<h1>Hello from SmallJS!</h1>\
-			</body>\
-		</html>'.
+	popup document write: '<!DOCTYPE html>\n<html>\n<head>\n<title>SmallJS popop</title>\n</head>\n<body>\n<h1>Hello from SmallJS!</h1>\n</body>\n</html>'.
 
 	popup moveTo: ( 200 @ 100 ).
 	popup resizeTo: ( 400 @ 150 ).
