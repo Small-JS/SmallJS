@@ -6,8 +6,8 @@ import { CompiledClass } from "./Compiler/CompiledClass.js";
 import { CompiledClassJson } from "./Compiler/CompiledClassJson.js";
 import { CompiledModule } from "./Compiler/CompiledModule.js";
 
-type EvaluateResult = ( result : any ) => void;
-type EvaluateError = ( error : any ) => void;
+type EvaluateResult = ( result: any ) => void;
+type EvaluateError = ( error: any ) => void;
 
 class EvaluateCallback
 {
@@ -24,13 +24,21 @@ export let globalCallbacks: EvaluateCallback[] = [];
 
 export class Evaluator
 {
+	static compiledClassesJson: CompiledClassJson[];
+
 	evaluate( stExpression: string, result: EvaluateResult, error: EvaluateError )
 	{
-		// Put module filename in variable first to prevent compiler checks in VSCode.
-		let moduleFileName: string = "./Smalltalk/CompiledClassesJson.js";
-		import( moduleFileName ).then( _module => {
-			this.evaluate2( stExpression, new EvaluateCallback( result, error ), _module.compiledClassesJson )
-		} );
+		if( Evaluator.compiledClassesJson )
+			this.evaluate2( stExpression, new EvaluateCallback( result, error ), Evaluator.compiledClassesJson );
+		else {
+			// Put module filename in variable first to prevent compiler checks in VSCode.
+			let moduleFileName: string = "./Smalltalk/CompiledClassesJson.js";
+			import( moduleFileName ).then( _module =>
+			{
+				Evaluator.compiledClassesJson = _module.compiledClassesJson;
+				this.evaluate2( stExpression, new EvaluateCallback( result, error ), Evaluator.compiledClassesJson );
+			} );
+		}
 	}
 
 	private evaluate2( stExpression: string, callback: EvaluateCallback, compiledClassesJson: CompiledClassJson[] )
