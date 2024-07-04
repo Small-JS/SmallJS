@@ -1,5 +1,5 @@
 CLASS TextAreaComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'textArea outputButton outputSpan'
+	VARS 'textArea outputButton outputParagraph'
 
 htmlPath
 	^ 'Components/TextAreaComponent.html'.
@@ -10,14 +10,14 @@ start
 bindElements
 	textArea := Document getElementById: 'textArea' class: HtmlTextAreaElement.
 	outputButton := Document getElementById: 'textAreaOutputButton' class: HtmlButtonElement.
-	outputSpan := Document getElementById: 'textAreaOutputSpan' class: HtmlSpanElement.
+	outputParagraph := Document getElementById: 'textAreaOutputParagraph' class: HtmlParagraphElement.
 
 	outputButton onClick: [ self onOutputButtonClicked ].
 !
 onOutputButtonClicked
 	| textAreaString |
 
-	outputSpan textContent: textArea value.
+	outputParagraph textContent: textArea value.
 !
 
 "Accessing"
@@ -28,7 +28,7 @@ textArea
 outputButton
 	^ outputButton.
 !
-outputSpan
-	^ outputSpan.
+outputParagraph
+	^ outputParagraph.
 !
 

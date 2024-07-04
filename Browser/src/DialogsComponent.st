@@ -1,5 +1,5 @@
 CLASS DialogsComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'alertButton confirmButton promptButton printButton dialogResultLabel'
+	VARS 'alertButton confirmButton promptButton printButton dialogResultParagraph'
 
 "Note: Testing these dialogs can only be done be done manually in the browser."
 
@@ -25,7 +25,7 @@ bindElements
 	printButton := Document getElementById: 'printButton' class: HtmlButtonElement.
 	printButton onClick: [ self onPrint ].
 
-	dialogResultLabel := Document getElementById: 'dialogResultLabel' class: HtmlLabelElement.
+	dialogResultParagraph := Document getElementById: 'dialogResultParagraph' class: HtmlParagraphElement.
 !
 onPopup
 	"This requires popups to be enabled in the browser."
@@ -40,17 +40,17 @@ onPopup
 !
 onAlert
 	Window default alert: 'My Alert'.
-	dialogResultLabel textContent: 'Alerted'.
+	dialogResultParagraph textContent: 'Alerted'.
 !
 onConfirm
 	| result |
 	result := Window default confirm: 'My Confirm'.
-	dialogResultLabel textContent: result toString.
+	dialogResultParagraph textContent: result toString.
 !
 onPrompt
 	| result |
 	result := Window default prompt: 'My Prompt'.
-	dialogResultLabel textContent: result toString.
+	dialogResultParagraph textContent: result toString.
 !
 onPrint
 	Window default print.

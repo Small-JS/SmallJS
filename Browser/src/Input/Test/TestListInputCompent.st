@@ -18,5 +18,5 @@ testGui
 	listInputComponent listInput value: listInputComponent dataList options last value.
 	listInputComponent listInput dispatchEvent: ( Event type: 'input' ).
 	Timer timeout: 500 then: [
-		self assert: [ listInputComponent outputLabel textContent = 'Second' ] ]."
+		self assert: [ listInputComponent outputParagraph textContent = 'Second' ] ]."
 !

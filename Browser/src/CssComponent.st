@@ -1,5 +1,5 @@
 CLASS CssComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'applyButton removeButton resultLabel'
+	VARS 'applyButton removeButton resultParagraph'
 
 htmlPath
 	^ 'Components/CssComponent.html'.
@@ -16,7 +16,7 @@ bindElements
 	removeButton := Document getElementById: 'cssRemoveButton' class: HtmlButtonElement.
 	removeButton onClick: [ self onRemove ].
 
-	resultLabel := Document getElementById: 'cssResultLabel' class: HtmlLabelElement.
+	resultParagraph := Document getElementById: 'cssResultParagraph' class: HtmlParagraphElement.
 
 	"Check for existence of italicBold style class."
 	cssStyleSheet := Document default styleSheets first.
@@ -25,10 +25,10 @@ bindElements
 	self assert: [ index >= 0 ].
 !
 onApply
-	resultLabel classList add: 'italicBold'.
+	resultParagraph classList add: 'italicBold'.
 !
 onRemove
-	resultLabel classList remove: 'italicBold'.
+	resultParagraph classList remove: 'italicBold'.
 !
 
 "Accessing"
@@ -39,6 +39,6 @@ applyButton
 removeButton
 	^ removeButton.
 !
-resultLabel
-	^ resultLabel.
+resultParagraph
+	^ resultParagraph.
 !

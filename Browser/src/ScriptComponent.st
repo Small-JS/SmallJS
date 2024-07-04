@@ -1,5 +1,5 @@
 CLASS ScriptComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'script runButton countLabel'
+	VARS 'script runButton countSpan'
 
 htmlPath
 	^ 'Components/ScriptComponent.html'.
@@ -11,7 +11,7 @@ start
 bindElements
 	script := Document getElementById: 'script' class: HtmlScriptElement.
 	runButton := Document getElementById: 'scriptRunButton' class: HtmlButtonElement.
-	countLabel := Document getElementById: 'scriptCountLabel' class: HtmlLabelElement.
+	countSpan := Document getElementById: 'scriptCountSpan' class: HtmlSpanElement.
 
 	runButton onClick: [ INLINE 'ScriptFunction()' ].
 !
@@ -39,6 +39,6 @@ script
 runButton
 	^ runButton.
 !
-countLabel
-	^ countLabel.
+countSpan
+	^ countSpan.
 !

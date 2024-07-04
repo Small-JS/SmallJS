@@ -36,6 +36,6 @@ testGui
 
 	inputComponent outputButton click.
 	Timer timeout: 500 then: [
-			self assert: [ inputComponent outputLabel textContent = 'My input' ]  ].
+			self assert: [ inputComponent outputParagraph textContent = 'My input' ]  ].
 !
 

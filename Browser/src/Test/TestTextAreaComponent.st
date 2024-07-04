@@ -20,5 +20,5 @@ testGui
 	textAreaComponent textArea value: 'cc\ndd'.
 	textAreaComponent outputButton click.
 	Timer timeout: 500 then: [
-		self assert: [ textAreaComponent outputSpan textContent = 'cc\ndd' ] ].
+		self assert: [ textAreaComponent outputParagraph textContent = 'cc\ndd' ] ].
 !

@@ -14,5 +14,5 @@ testGui
 
 	checkboxInputComponent checkboxInput click.
 	Timer timeout: 500 then: [
-			self assert: [ checkboxInputComponent outputLabel textContent = 'Checked' ] ]."
+			self assert: [ checkboxInputComponent outputParagraph textContent = 'Checked' ] ]."
 !

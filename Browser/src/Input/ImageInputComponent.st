@@ -1,5 +1,5 @@
 CLASS ImageInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'imageInput outputLabel'
+	VARS 'imageInput outputParagraph'
 
 htmlPath
 	^ 'Components/Input/ImageInputComponent.html'.
@@ -9,9 +9,9 @@ start
 !
 bindElements
 	imageInput := Document getElementById: 'imageInput' class: HtmlInputElement.
-	outputLabel := Document getElementById: 'imageInputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'imageInputOutputParagraph' class: HtmlParagraphElement.
 
-	imageInput onClick: [ outputLabel textContent: 'Image clicked' ].
+	imageInput onClick: [ outputParagraph textContent: 'Image clicked' ].
 !
 
 "Accessing"
@@ -19,6 +19,6 @@ bindElements
 imageInput
 	^ imageInput.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

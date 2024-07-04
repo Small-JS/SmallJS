@@ -22,5 +22,5 @@ testGui
 
 	radioInputComponent radioInput2 click.
 	Timer timeout: 500 then: [
-			self assert: [ radioInputComponent outputLabel textContent = 'Radio 2' ] ]."
+			self assert: [ radioInputComponent outputParagraph textContent = 'Radio 2' ] ]."
 !

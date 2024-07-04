@@ -1,5 +1,5 @@
 CLASS FileInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'fileInput outputLabel'
+	VARS 'fileInput outputParagraph'
 
 htmlPath
 	^ 'Components/Input/FileInputComponent.html'.
@@ -9,14 +9,14 @@ start
 !
 bindElements
 	fileInput := Document getElementById: 'fileInput' class: HtmlInputElement.
-	outputLabel := Document getElementById: 'fileInputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'fileInputOutputParagraph' class: HtmlParagraphElement.
 
 	fileInput addEventListener: 'change' then: [ self onFileSelected ].
 !
 onFileSelected
 	| file |
 
-	outputLabel textContent: fileInput value.
+	outputParagraph textContent: fileInput value.
 
 	fileInput files length > 0 ifTrue: [
 		file := fileInput files first.
@@ -29,6 +29,6 @@ onFileSelected
 fileInput
 	^ fileInput.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

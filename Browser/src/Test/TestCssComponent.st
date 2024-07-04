@@ -7,8 +7,8 @@ testGui
 
 	cssComponent applyButton click.
 	Timer timeout: 500 then: [
-		self assert: [ cssComponent resultLabel className = 'italicBold' ].
+		self assert: [ cssComponent resultParagraph className = 'italicBold' ].
 		cssComponent removeButton click.
 		Timer timeout: 500 then: [
-			self assert: [ cssComponent resultLabel className = '' ] ] ].
+			self assert: [ cssComponent resultParagraph className = '' ] ] ].
 !

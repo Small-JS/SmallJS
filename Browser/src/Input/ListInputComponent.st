@@ -1,5 +1,5 @@
 CLASS ListInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'listInput dataList outputLabel'
+	VARS 'listInput dataList outputParagraph'
 
 htmlPath
 	^ 'Components/Input/ListInputComponent.html'.
@@ -10,10 +10,10 @@ start
 bindElements
 	listInput := Document getElementById: 'listInput' class: HtmlInputElement.
 	dataList := Document getElementById: 'dataList' class: HtmlDataListElement.
-	outputLabel := Document getElementById: 'listInputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'listInputOutputParagraph' class: HtmlParagraphElement.
 
 	listInput addEventListener: 'input' then: [
-		outputLabel textContent: listInput value ].
+		outputParagraph textContent: listInput value ].
 !
 
 "Accessing"
@@ -24,6 +24,6 @@ listInput
 dataList
 	^ dataList.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

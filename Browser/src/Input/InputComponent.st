@@ -1,5 +1,5 @@
 CLASS InputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'input outputButton outputLabel'
+	VARS 'input outputButton outputParagraph'
 
 htmlPath
 	^ 'Components/Input/InputComponent.html'.
@@ -10,9 +10,9 @@ start
 bindElements
 	input := Document getElementById: 'input' class: HtmlInputElement.
 	outputButton := Document getElementById: 'inputOutputButton' class: HtmlButtonElement.
-	outputLabel := Document getElementById: 'inputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'inputOutputParagraph' class: HtmlParagraphElement.
 
-	outputButton onClick: [ outputLabel textContent: input value ].
+	outputButton onClick: [ outputParagraph textContent: input value ].
 !
 
 "Accessing"
@@ -23,6 +23,6 @@ input
 outputButton
 	^ outputButton.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

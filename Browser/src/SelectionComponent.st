@@ -1,5 +1,5 @@
 CLASS SelectionComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'input outputButton outputLabel'
+	VARS 'input outputButton outputParagraph'
 
 htmlPath
 	^ 'Components/SelectionComponent.html'.
@@ -10,7 +10,7 @@ start
 bindElements
 	input := Document getElementById: 'selectionInput' class: HtmlInputElement.
 	outputButton := Document getElementById: 'selectionOutputButton' class: HtmlButtonElement.
-	outputLabel := Document getElementById: 'selectionOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'selectionOutputParagraph' class: HtmlParagraphElement.
 
 	outputButton onClick: [ self onOutputButtonClicked ].
 !
@@ -26,7 +26,7 @@ onOutputButtonClicked
 		ifTrue: [ input value substring: input selectionStart to: input selectionEnd ]
 		ifFalse: [ Selection new toString ].
 
-	outputLabel textContent: selectionString.
+	outputParagraph textContent: selectionString.
 !
 
 "Accessing"
@@ -37,7 +37,7 @@ input
 outputButton
 	^ outputButton.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !
 

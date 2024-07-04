@@ -16,5 +16,5 @@ testGui
 
 	imageInputComponent imageInput click.
 	Timer timeout: 500 then: [
-			self assert: [ imageInputComponent outputLabel textContent = 'Image clicked' ] ]."
+			self assert: [ imageInputComponent outputParagraph textContent = 'Image clicked' ] ]."
 !

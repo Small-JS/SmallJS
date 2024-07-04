@@ -1,5 +1,5 @@
 CLASS DateInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'dateInput outputLabel'
+	VARS 'dateInput outputParagraph'
 
 htmlPath
 	^ 'Components/Input/DateInputComponent.html'.
@@ -9,12 +9,12 @@ start
 !
 bindElements
 	dateInput := Document getElementById: 'dateInput' class: HtmlInputElement.
-	outputLabel := Document getElementById: 'dateInputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'dateInputOutputParagraph' class: HtmlParagraphElement.
 
 	dateInput addEventListener: 'change' then: [ self onDateSelected ].
 !
 onDateSelected
-	outputLabel textContent: dateInput value.
+	outputParagraph textContent: dateInput value.
 !
 
 "Accessing"
@@ -22,6 +22,6 @@ onDateSelected
 dateInput
 	^ dateInput.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

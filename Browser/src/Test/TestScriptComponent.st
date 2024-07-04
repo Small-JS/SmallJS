@@ -12,8 +12,8 @@ testGui
 	| scriptComponent  |
 	scriptComponent := MyBrowserApp default findComponent: ScriptComponent.
 
-	scriptComponent countLabel textContent: '0'.
+	scriptComponent countSpan textContent: '0'.
 	scriptComponent runButton click.
 	Timer timeout: 500 then: [
-			self assert: [ scriptComponent countLabel textContent = '1' ]  ].
+			self assert: [ scriptComponent countSpan textContent = '1' ]  ].
 !

@@ -13,18 +13,18 @@
 	<table>
 		<tr>
 			<th>
-				<label id="fromDataHeaderLabel">Submitted form data</label>
+				<p id="fromDataHeaderParagraph">Submitted form data</p>
 			</th>
 			<td>
-				<label id="fromDataLabel">[form data]</label>
+				<p id="fromDataParagraph">[form data]</p>
 			</td>
 		</tr>
 	</table>
 </body>
 
 <script>
-	let label = document.getElementById( "fromDataLabel" );
-	label.textContent = window.location.search;
+	let paragraph = document.getElementById( "fromDataParagraph" );
+	paragraph.textContent = window.location.search;
 </script>
 
 </html>

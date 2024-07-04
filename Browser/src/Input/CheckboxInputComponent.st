@@ -1,5 +1,5 @@
 CLASS CheckboxInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
-	VARS 'checkboxInput outputLabel'
+	VARS 'checkboxInput outputParagraph'
 
 htmlPath
 	^ 'Components/Input/CheckboxInputComponent.html'.
@@ -9,12 +9,12 @@ start
 !
 bindElements
 	checkboxInput := Document getElementById: 'checkboxInput' class: HtmlInputElement.
-	outputLabel := Document getElementById: 'checkboxInputOutputLabel' class: HtmlLabelElement.
+	outputParagraph := Document getElementById: 'checkboxInputOutputParagraph' class: HtmlParagraphElement.
 
 	checkboxInput onClick: [ self onCheckboxInputClicked ].
 !
 onCheckboxInputClicked
-	outputLabel textContent: (
+	outputParagraph textContent: (
 		checkboxInput checked ifTrue: [ 'Checked' ] ifFalse: [ 'Unchecked' ] ).
 !
 
@@ -23,6 +23,6 @@ onCheckboxInputClicked
 checkboxInput
 	^ checkboxInput.
 !
-outputLabel
-	^ outputLabel.
+outputParagraph
+	^ outputParagraph.
 !

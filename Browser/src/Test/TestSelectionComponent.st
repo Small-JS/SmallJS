@@ -55,7 +55,7 @@ test
 	selection selectAllChildren: document body.
 	selection
 		setBase: ( document getElementById: 'selectionInput' class: HtmlInputElement )
-		extent: ( document getElementById: 'selectionOutputLabel' class: HtmlLabelElement ).
+		extent: ( document getElementById: 'selectionOutputParagraph' class: HtmlParagraphElement ).
 !
 testGui
 	| selectionComponent |
@@ -65,5 +65,5 @@ testGui
 	selectionComponent input focus setSelectionRange: 7 to: 11.
 	selectionComponent outputButton click.
 	Timer timeout: 500 then: [
-		self assert: [ selectionComponent outputLabel textContent = 'text' ] ].
+		self assert: [ selectionComponent outputParagraph textContent = 'text' ] ].
 !
