@@ -27,8 +27,8 @@ testProductFields
 	self assert: [ ( cells at: 1 ) textContent = '1.00' ].
 !
 navigateToOrders
-	| ordersLabel |
+	| ordersSpan |
 
-	ordersLabel := Document getElementById: 'navBarOrdersLabel' class: HtmlLabelElement.
-	ordersLabel click.
+	ordersSpan := Document getElementById: 'navBarOrdersSpan' class: HtmlSpanElement.
+	ordersSpan click.
 !

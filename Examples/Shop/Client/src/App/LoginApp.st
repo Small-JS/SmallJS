@@ -1,5 +1,5 @@
 CLASS LoginApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
-	VARS 'userNameInput passwordInput loginButton loginErrorLabel'
+	VARS 'userNameInput passwordInput loginButton loginErrorSpan'
 
 METHODS
 
@@ -27,7 +27,7 @@ bindElements
 	loginButton := Document getElementById: 'loginButton' class: HtmlButtonElement.
 	loginButton onClick: [ :event | self onLogin ].
 
-	loginErrorLabel := Document getElementById: 'loginErrorLabel' class: HtmlLabelElement.
+	loginErrorSpan := Document getElementById: 'loginErrorSpan' class: HtmlSpanElement.
 !
 onLogin
 	| userName password loginApi |
@@ -50,10 +50,10 @@ onLoginResponse: object
 
 	success
 		ifTrue: [ self navigateTo: '../Product/Product.html' ]
-		ifFalse: [ loginErrorLabel textContent: message ].
+		ifFalse: [ loginErrorSpan textContent: message ].
 !
 onLoginError: error
-	loginErrorLabel textContent: error message.
+	loginErrorSpan textContent: error message.
 !
 
 "Accessing (used by tests)"

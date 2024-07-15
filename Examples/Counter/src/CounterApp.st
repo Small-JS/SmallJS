@@ -1,5 +1,5 @@
 CLASS CounterApp EXTENDS BrowserApp MODULE CounterApp CLASSVARS ''
-	VARS 'counter counterLabel incrementButton resetButton'
+	VARS 'counter counterSpan incrementButton resetButton'
 
 start
 	counter := Counter new.
@@ -12,7 +12,7 @@ start
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
 
-	counterLabel := Document getElementById: 'counterLabel' class: HtmlLabelElement.
+	counterSpan := Document getElementById: 'counterSpan' class: HtmlSpanElement.
 
 	incrementButton := Document getElementById: 'incrementButton' class: HtmlButtonElement.
 	incrementButton onClick: [ self increment ].
@@ -23,7 +23,7 @@ bindElements
 update
 	"Update counter in HTML page."
 
-	counterLabel textContent: counter value toString.
+	counterSpan textContent: counter value toString.
 !
 increment
 	"Increase the counter and update the view."
@@ -40,8 +40,8 @@ reset
 
 "Accessing (used by tests)"
 
-counterLabel
-	^ counterLabel.
+counterSpan
+	^ counterSpan.
 !
 incrementButton
 	^ incrementButton.

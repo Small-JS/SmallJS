@@ -27,6 +27,6 @@ testButton: button result: result then: block
 	"Press argument button and check result in counter label."
 	button click.
 	Timer timeout: 500 then: [
-		self assert: [ counterApp counterLabel textContent = result ].
+		self assert: [ counterApp counterSpan textContent = result ].
 		block value ].
 !
