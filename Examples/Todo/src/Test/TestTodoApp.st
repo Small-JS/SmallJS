@@ -79,7 +79,7 @@ testSortTasksThen: block
 testLanguageThen: block
 	"Select second language (Spanish) and check of GUI changed to it."
 
-	| languageName inputEvent titleLabel |
+	| languageName inputEvent titleSpan |
 
 	languageName := ( todoApp languageDataList children at: 1 ) value.
 	todoApp languageInput value: languageName.
@@ -87,8 +87,8 @@ testLanguageThen: block
 	todoApp languageInput dispatchEvent: inputEvent.
 
 	Timer timeout: 1000 then: [
-		titleLabel := Document getElementById: 'titleLabel' class: HtmlLabelElement.
-		self assert: [ titleLabel textContent = 'Hacer' ].
+		titleSpan := Document getElementById: 'titleSpan' class: HtmlSpanElement.
+		self assert: [ titleSpan textContent = 'Hacer' ].
 		block value ].
 !
 stop

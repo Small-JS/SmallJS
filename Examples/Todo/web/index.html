@@ -16,14 +16,14 @@
 			<td class="title">
 				<div class="vertical-center">
 					<img id="todoImage" src="Todo.png" height="40"></img>
-					<label>&nbsp;</label>
-					<label id="titleLabel">Todo</label>
+					<span>&nbsp;</span>
+					<span id="titleSpan">Todo</span>
 				</div>
 			</td>
 		</tr>
 		<tr>	<!-- ============== Language -->
 			<td>
-				<label id="languageLabel">Language </label>
+				<label id="languageLabel" for="languageInput">Language </label>
 				<input id="languageInput" value="" list="languageDataList" onmouseover="this.focus();" onfocus="this.value=''" oninput="this.blur();"/>
 				<datalist id="languageDataList">
 					<option value="English">
@@ -37,7 +37,7 @@
 					<thead>
 						<tr>
 							<th colspan="2" scope="col" style="text-align: center" class="title">
-								<label id="newTaskLabel">New task</label>
+								<span id="newTaskSpan">New task</span>
 							</th>
 						</tr>
 					</thead>
@@ -72,21 +72,21 @@
 					<thead>
 						<tr>
 							<th colspan="4" scope="col" style="text-align: center" class="title">
-								<label id="tasksLabel">Tasks</label>
+								<span id="tasksSpan">Tasks</span>
 							</th>
 						</tr>
 						<tr>
 							<th scope="col">
-								<label id="taskTitleLabel" class="taskTableHeader">Title</label><label> &#8597;</label>
+								<span id="taskTitleSpan" class="taskTableHeader">Title</span><span> &#8597;</span>
 							</th>
 							<th scope="col">
-								<label id="taskDueLabel" class="taskTableHeader">Due</label><label> &#8597;</label>
+								<span id="taskDueSpan" class="taskTableHeader">Due</span><span> &#8597;</span>
 							</th>
 							<th scope="col">
-								<label id="taskDoneLabel" class="taskTableHeader">Done</label><label> &#8597;</label>
+								<span id="taskDoneSpan" class="taskTableHeader">Done</span><span> &#8597;</span>
 							</th>
 							<th scope="col">
-								<label id="taskDeleteLabel" class="taskTableHeader">&#10005</label>
+								<span id="taskDeleteSpan" class="taskTableHeader">&#10005</span>
 							</th>
 						</tr>
 					</thead>

@@ -1,13 +1,13 @@
 {
 	"todoImage": "Todo logo",
-	"titleLabel": "Todo",
+	"titleSpan": "Todo",
 	"languageLabel": "Language",
-	"newTaskLabel": "New task",
+	"newTaskSpan": "New task",
 	"newTaskTitleLabel": "Title",
 	"newTaskDueLabel": "Due",
 	"newTaskAddButton": "Add",
-	"tasksLabel": "Tasks",
-	"taskTitleLabel": "Title",
-	"taskDueLabel": "Due",
-	"taskDoneLabel": "Done"
+	"tasksSpan": "Tasks",
+	"taskTitleSpan": "Title",
+	"taskDueSpan": "Due",
+	"taskDoneSpan": "Done"
 }

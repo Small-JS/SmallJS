@@ -1,13 +1,13 @@
 {
 	"todoImage": "Etiqueta de hacer",
-	"titleLabel": "Hacer",
+	"titleSpan": "Hacer",
 	"languageLabel": "Idioma",
-	"newTaskLabel": "Nueva tarea",
+	"newTaskSpan": "Nueva tarea",
 	"newTaskTitleLabel": "Título",
 	"newTaskDueLabel": "Pendiente",
 	"newTaskAddButton": "Agregar",
-	"tasksLabel": "Tareas",
-	"taskTitleLabel": "Título",
-	"taskDueLabel": "Pendiente",
-	"taskDoneLabel": "Hecho"
+	"tasksSpan": "Tareas",
+	"taskTitleSpan": "Título",
+	"taskDueSpan": "Pendiente",
+	"taskDoneSpan": "Hecho"
 }

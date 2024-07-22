@@ -63,7 +63,7 @@ body {
 	padding: 4px;
 }
 
-.newTaskLabel {
+.newTaskSpan {
 	color: black;
 	font-weight: bold;
 }

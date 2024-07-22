@@ -1,5 +1,5 @@
 CLASS NavBarComponent EXTENDS Component MODULE ShopClient CLASSVARS ''
-	VARS 'productsLabel ordersLabel'
+	VARS 'productsSpan ordersSpan'
 
 htmlPath
 	^ 'NavBar/NavBar.html'.
@@ -8,9 +8,9 @@ start
 	self bindElements.
 !
 bindElements
-	productsLabel := Document getElementById: 'navBarProductsLabel' class: HtmlLabelElement.
-	productsLabel onClick: [ :event | self app loadComponent: ProductComponent ].
+	productsSpan := Document getElementById: 'navBarProductsSpan' class: HtmlSpanElement.
+	productsSpan onClick: [ :event | self app loadComponent: ProductComponent ].
 
-	ordersLabel := Document getElementById: 'navBarOrdersLabel' class: HtmlLabelElement.
-	ordersLabel onClick: [ :event | self app loadComponent: OrderComponent ].
+	ordersSpan := Document getElementById: 'navBarOrdersSpan' class: HtmlSpanElement.
+	ordersSpan onClick: [ :event | self app loadComponent: OrderComponent ].
 !
