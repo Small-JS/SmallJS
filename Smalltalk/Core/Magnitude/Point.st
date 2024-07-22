@@ -12,8 +12,13 @@ fromJsx: x  y: y
 
 METHODS
 
+"Converting"
+
 toString
 	^ '( ', x toString, ' @ ', y toString, ' )'.
+!
+@ z
+	^ Point3d x: x y: y z: z.
 !
 
 "Accessing."

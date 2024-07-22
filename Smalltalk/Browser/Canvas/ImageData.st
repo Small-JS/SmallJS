@@ -12,6 +12,6 @@ height
 width
 	^ Integer fromJs: INLINE 'this.js.width'.
 !
-dimensions
+extent
 	^ self width @ self height.
 !

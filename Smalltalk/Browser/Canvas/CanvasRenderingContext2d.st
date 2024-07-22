@@ -65,13 +65,13 @@ imageSmoothingEnabled
 	^ Boolean fromJs: INLINE 'this.js.imageSmoothingEnabled '.
 !
 imageSmoothingEnabled: imageSmoothingEnabled
-	INLINE 'this.js.imageSmoothingEnabled  = imageSmoothingEnabled.js'.
+	INLINE 'this.js.imageSmoothingEnabled = imageSmoothingEnabled.js'.
 !
 imageSmoothingQuality
-	^ Float fromJs: INLINE 'this.js.imageSmoothingQuality  '.
+	^ String fromJs: INLINE 'this.js.imageSmoothingQuality'.
 !
 imageSmoothingQuality: imageSmoothingQuality
-	INLINE 'this.js.imageSmoothingEnabled  = imageSmoothingQuality.js'.
+	INLINE 'this.js.imageSmoothingQuality = imageSmoothingQuality.js'.
 !
 letterSpacing
 	^ String fromJs: INLINE 'this.js.letterSpacing'.
@@ -89,7 +89,7 @@ lineDashOffset
 	^ Integer fromJs: INLINE 'this.js.lineDashOffset'.
 !
 lineDashOffset: lineDashOffset
-	INLINE 'this.js.lineDashOffset  = lineDashOffset.js'.
+	INLINE 'this.js.lineDashOffset = lineDashOffset.js'.
 !
 lineJoin
 	^ String fromJs: INLINE 'this.js.lineJoin'.
@@ -116,7 +116,7 @@ shadowBlur: shadowBlur
 	INLINE 'this.js.shadowBlur = shadowBlur.js'.
 !
 shadowColor
-	^ Float fromJs: INLINE 'this.js.shadowColor'.
+	^ String fromJs: INLINE 'this.js.shadowColor'.
 !
 shadowColor: shadowColor
 	INLINE 'this.js.shadowColor = shadowColor.js'.
@@ -129,7 +129,7 @@ shadowOffset: shadowOffset
 	INLINE 'this.js.shadowOffsetY = shadowOffset.y.js'.
 !
 strokeStyle
-	^ Float fromJs: INLINE 'this.js.strokeStyle'.
+	^ String fromJs: INLINE 'this.js.strokeStyle'.
 !
 strokeStyle: strokeStyle
 	INLINE 'this.js.strokeStyle = strokeStyle.js'.
@@ -183,7 +183,7 @@ closePath
 	INLINE 'this.js.closePath()'.
 !
 createImageData: dimensions	"Point"
-	ImageData fromJs: INLINE 'this.js.createImageData( dimensions.x,js, dimensions.y.js )'.
+	^ ImageData fromJs: INLINE 'this.js.createImageData( dimensions.x.js, dimensions.y.js )'.
 !
 createPattern: image repetition: repetition
 	^ CanvasPattern fromJs: INLINE 'this.js.createPattern( image.js, repetition.js )'.
@@ -191,8 +191,8 @@ createPattern: image repetition: repetition
 createLinearGradientFrom: from to: to
 	^ CanvasGradient fromJs: INLINE 'this.js.createLinearGradient( from.x.js, from.y.js, to.x.js, to.y.js )'.
 !
-createRadialGradientFrom: from to: to radius: radius
-	^ CanvasGradient fromJs: INLINE 'this.js.createRadialGradientFrom( from.x.js, from.y.js, to.x.js, to.y.js, radius.js )'.
+createRadialGradientFrom: from radius: fromRadius to: to radius: toRadius
+	^ CanvasGradient fromJs: INLINE 'this.js.createRadialGradient( from.x.js, from.y.js, fromRadius.js, to.x.js, to.y.js, toRadius.js )'.
 !
 drawFocusIfNeeded: element
 	INLINE 'this.js.drawFocusIfNeeded( element.js )'.
@@ -233,13 +233,10 @@ fillText: text at: point maxWidth: maxWidth
 	INLINE 'this.js.fillText( text.js, point.x.js, point.y.js, maxWidth.js )'.
 !
 getContextAttributes
-	ContextAttributes formJs: INLINE 'this.js.getContextAttributes()'.
+	^ ContextAttributes fromJs: INLINE 'this.js.getContextAttributes()'.
 !
 getImageData: rect
-	ImageData formJs: INLINE 'this.js.getImageData( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
-!
-getImageData: rect colorSpace: colorSpace
-	ImageData formJs: INLINE 'this.js.getImageData( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, { colorSpace: colorSpace.js } )'.
+	^ ImageData fromJs: INLINE 'this.js.getImageData( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
 !
 getLineDash
 	^ Array fromJs: INLINE 'this.js.getLineDash()' elementClass: Integer.

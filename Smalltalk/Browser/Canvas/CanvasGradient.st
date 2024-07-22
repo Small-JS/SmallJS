@@ -6,5 +6,5 @@ CLASS CanvasGradient EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
  createLinearGradient(), createConicGradient() or createRadialGradient()"
 
 addColorStop: offset color: color
-	INLINE 'addColorStop( offset.js, color.js )'.
+	INLINE 'this.js.addColorStop( offset.js, color.js )'.
 !
