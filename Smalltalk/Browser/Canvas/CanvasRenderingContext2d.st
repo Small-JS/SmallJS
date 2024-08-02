@@ -67,12 +67,6 @@ imageSmoothingEnabled
 imageSmoothingEnabled: imageSmoothingEnabled
 	INLINE 'this.js.imageSmoothingEnabled = imageSmoothingEnabled.js'.
 !
-imageSmoothingQuality
-	^ String fromJs: INLINE 'this.js.imageSmoothingQuality'.
-!
-imageSmoothingQuality: imageSmoothingQuality
-	INLINE 'this.js.imageSmoothingQuality = imageSmoothingQuality.js'.
-!
 letterSpacing
 	^ String fromJs: INLINE 'this.js.letterSpacing'.
 !
@@ -122,7 +116,7 @@ shadowColor: shadowColor
 	INLINE 'this.js.shadowColor = shadowColor.js'.
 !
 shadowOffset
-	^ Point fromJsx: INLINE 'this.js.shadowOffsetX' y: INLINE 'this.js.shadowOffsetY'.
+	^ Point jsX: INLINE 'this.js.shadowOffsetX' jsY: INLINE 'this.js.shadowOffsetY'.
 !
 shadowOffset: shadowOffset
 	INLINE 'this.js.shadowOffsetX = shadowOffset.x.js'.

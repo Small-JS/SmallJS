@@ -1,4 +1,5 @@
 CLASS Point EXTENDS Object MODULE Core CLASSVARS '' VARS 'x y'
+
 	"Holds 2 ST numbers x and y. Arithmatic can be done the point as a whole this."
 
 CLASSMETHODS
@@ -6,8 +7,8 @@ CLASSMETHODS
 x: x  y: y
 	^ self new x: x  y: y.
 !
-fromJsx: x  y: y
-	^ self x: ( Integer fromJs: x ) y: ( Integer fromJs: y ).
+jsX: jsX jsY: jsY
+	^ self x: ( Integer fromJs: jsX ) y: ( Integer fromJs: jsY ).
 !
 
 METHODS
@@ -38,6 +39,10 @@ y: aY
 x: aX y: aY
 	x := aX.
 	y := aY.
+!
+z
+	"Assume 2d poin is at z = 0 in 3D plane."
+	^ 0.
 !
 
 "Comparisons with point arguments."

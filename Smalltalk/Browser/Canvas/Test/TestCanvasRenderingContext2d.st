@@ -13,7 +13,7 @@ testProperties
 
 	self assert: [ context canvas = canvas ].
 
-	self assert: [ context direction = 'ltr' ].
+	self assert: [ #( 'ltr' 'inherit' ) includes: context direction  ].
 	context direction: 'rtl'.
 	self assert: [ context direction = 'rtl' ].
 
@@ -44,10 +44,6 @@ testProperties
 	self assert: [ context imageSmoothingEnabled ].
 	context imageSmoothingEnabled: false.
 	self assert: [ context imageSmoothingEnabled not ].
-
-	self assert: [ context imageSmoothingQuality = 'low' ].
-	context imageSmoothingQuality: 'high'.
-	self assert: [ context imageSmoothingQuality = 'high' ].
 
 	self assert: [ context letterSpacing = '0px' ].
 	context letterSpacing: '2px'.

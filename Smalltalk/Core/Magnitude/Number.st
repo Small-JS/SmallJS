@@ -11,7 +11,7 @@ METHODS
 	^ Point new x: self y: number.
 !
 
-"Basic arithmatic with point arguments."
+"Basic arithmatic with Point arguments."
 
 addToPoint: point
 	^ Point x: point x + self  y: point y + self.
@@ -30,6 +30,27 @@ integerDivideIntoPoint: point
 !
 moduloFromPoint: point
 	^ Point x: point x % self  y: point y % self.
+!
+
+"Basic arithmatic with Point3d arguments."
+
+addToPoint3d: point3d
+	^ Point3d x: point3d x + self  y: point3d y + self  z: point3d z + self.
+!
+subtractFromPoint3d: point3d
+	^ Point3d x: point3d x - self  y: point3d y - self  z: point3d z - self.
+!
+multiplyByPoint3d: point3d
+	^ Point3d x: point3d x * self  y: point3d y * self  z: point3d z * self.
+!
+divideIntoPoint3d: point3d
+	^ Point3d x: point3d x / self  y: point3d y / self  z: point3d z / self.
+!
+integerDivideIntoPoint3d: point3d
+	^ Point3d x: point3d x // self  y: point3d y // self  z: point3d z // self.
+!
+moduloFromPoint3d: point3d
+	^ Point3d x: point3d x % self  y: point3d y % self  z: point3d z % self.
 !
 
 "Other arithmatic."

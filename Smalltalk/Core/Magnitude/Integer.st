@@ -38,7 +38,7 @@ toFloat
 	^ number argIsSmallerOrEqualToInteger: self.
 !
 
-"Comparisons with integer arguments."
+"Comparisons with Integer arguments."
 
 argIsEqualToInteger: integer
 	^ Boolean fromJs: INLINE 'integer.js == this.js'.
@@ -50,7 +50,7 @@ argIsSmallerOrEqualToInteger: integer
 	^ Boolean fromJs: INLINE 'integer.js <= this.js'.
 !
 
-"Comparisons with large integer arguments."
+"Comparisons with BigInt arguments."
 
 argIsEqualToBigInt: bigInt
 	^ Boolean fromJs: INLINE 'bigInt.js == BigInt( this.js )'.
@@ -99,7 +99,7 @@ argIsSmallerOrEqualToFloat: float
 	^ number moduloFromInteger: self.
 !
 
-"Basic arithmatic with integer arguments."
+"Basic arithmatic with Integer arguments."
 
 addToInteger: integer
 	INLINE '
@@ -144,7 +144,7 @@ moduloFromInteger: integer
 	self divisionByZeroError.
 !
 
-"Basic arithmatic with large integer arguments."
+"Basic arithmatic with BigInt arguments."
 
 addToBigInt: bigInt
 	^ BigInt fromJs: INLINE 'bigInt.js + BigInt( this.js )'.
@@ -172,7 +172,7 @@ moduloFromBigInt: bigInt
 "Basic arithmatic with fractions
  is implementend in superclass AbstractInteger."
 
-"Basic arithmatic with float arguments."
+"Basic arithmatic with Float arguments."
 
 addToFloat: float
 	^ Float fromJs: INLINE 'float.js + this.js'.

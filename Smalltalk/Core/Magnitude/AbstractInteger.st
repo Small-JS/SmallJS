@@ -21,7 +21,7 @@ argIsSmallerOrEqualToFraction: fraction
 	^ fraction numerator <= ( self * fraction denominator ).
 !
 
-"Basic arithmatic with fractions."
+"Basic arithmatic with Fraction arguments."
 
 addToFraction: fraction
 	^ Fraction numerator: fraction numerator + ( self * fraction denominator )
