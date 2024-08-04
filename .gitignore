@@ -7,7 +7,7 @@
 **/node_modules
 **/out
 /Browser/web/App.js
-/Browser/web/Smalltalk
+/Browser/web/Script
 /Examples/Balls/web/App.js
 /Examples/Balls/web/Smalltalk
 /Examples/Benchmark/web/App.js

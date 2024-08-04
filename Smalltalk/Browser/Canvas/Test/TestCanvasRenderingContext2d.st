@@ -102,13 +102,16 @@ testMethods
 	 Only methods that return a result are tested here.
 	 Methods that draw on the canvas are tested visually in CanvasComponent."
 
-	| canvas context imageData pattern gradient attributes lineDash matrix |
+	| canvas context imageData pattern gradient attributes lineDash matrix textMetrics contextAttributes |
 
 	canvas := Document default createElement: 'canvas'.
 	self assert: [ canvas class = HtmlCanvasElement ].
 
 	context := canvas getContext: '2d'.
 	self assert: [ context class = CanvasRenderingContext2d ].
+
+	imageData := context getImageData: ( Rectangle origin: ( 20 @ 10 ) extent: ( 40 @ 30 ) ).
+	self assert: [ imageData class = ImageData ].
 
 	imageData := context createImageData: ( 20 @ 10 ).
 	self assert: [ imageData class = ImageData ].
@@ -129,16 +132,19 @@ testMethods
 	attributes := context getContextAttributes.
 	self assert: [ attributes class = ContextAttributes ].
 
-	imageData := context getImageData: ( Rectangle origin: ( 20 @ 10 ) extent: ( 40 @ 30 ) ).
-	self assert: [ imageData class = ImageData ].
-
 	lineDash := context getLineDash.
 	self assert: [ lineDash = #( ) ].
 
 	matrix := context getTransform.
-	self assert: [ matrix class = DomMatrix ].
+	self assert: [ matrix isIdentity ].
 
 	self assert: [ context isContextLost not ].
 	self assert: [ ( context isPointInPath: ( 10 @ 0 ) ) not ].
 	self assert: [ ( context isPointInStroke: ( 10 @ 0 ) ) not ].
+
+	textMetrics := context measureText: 'Hello world'.
+	self assert: [ textMetrics class = TextMetrics ].
+
+	contextAttributes := context getContextAttributes.
+	self assert: [ contextAttributes class = ContextAttributes ].
 !

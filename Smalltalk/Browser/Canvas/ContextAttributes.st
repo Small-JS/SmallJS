@@ -10,5 +10,6 @@ desynchronized
 	^ Boolean fromJs: INLINE 'this.js.desynchronized'.
 !
 willReadFrequently
-	^ Boolean fromJs: INLINE 'this.js.willReadFrequently'.
+	"Chromium browser put a string in this field?"
+	^ Boolean fromJs: INLINE 'this.js.willReadFrequently == true'.
 !

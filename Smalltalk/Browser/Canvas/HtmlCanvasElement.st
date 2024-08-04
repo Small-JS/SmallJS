@@ -33,6 +33,9 @@ getContext: type
 
 	self error: [ 'Unsupported or invalid canvas context', context jsClassName ].
 !
+getContext2d
+	^ CanvasRenderingContext2d fromJs: INLINE 'this.js.getContext( "2d" )'.
+!
 toBlobType: type quality: quality then: block
 	Blob.	"Force import"
 	INLINE 'this.js.toBlob( ( blob ) => block.$value$( stBlob$class.$fromJs$( blob ) ), type.js, quality.js )'.

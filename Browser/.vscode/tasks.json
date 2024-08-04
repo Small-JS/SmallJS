@@ -19,8 +19,8 @@
 			"label": "Compile Smalltalk",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../Compiler/out/App.js", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Smalltalk" ],
-			// "args": [  "../Compiler/out/App.js", "-s", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Smalltalk" ],
+			"args": [  "../Compiler/out/App.js", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Script" ],
+			// "args": [  "../Compiler/out/App.js", "-s", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Script" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},

@@ -43,16 +43,17 @@
 			"reAttach": true,
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile Smalltalk"
-			// In FireFox, enable this to let the debugger find mappped *.st files.
-			// But then the *.js files will not open correctly anymore.
-			// A workaround is to copy (merge) the entire Smalltalk source folder to web/Smalltalk
-			// "pathMappings": [
-			// 	{
-			// 		"url": "http://localhost:3000/Smalltalk",
-			// 		"path": "${workspaceFolder}../Smalltalk"
-			// 	}
-			// ]
+			"preLaunchTask": "Compile Smalltalk",
+			"pathMappings": [
+				{
+					"url": "http://localhost:3000/src",
+					"path": "${workspaceFolder}/src"
+				},
+				{
+					"url": "http://localhost:3000/Smalltalk",
+					"path": "${workspaceFolder}/../Smalltalk"
+				}
+			]
 		},
 		{
 			"name": "Launch Firefox test",
@@ -61,7 +62,17 @@
 			"reAttach": true,
 			"url": "http://localhost:3000/?test",
 			"webRoot": "${workspaceFolder}/web",
-			"preLaunchTask": "Compile Smalltalk"
+			"preLaunchTask": "Compile Smalltalk",
+			"pathMappings": [
+				{
+					"url": "http://localhost:3000/src",
+					"path": "${workspaceFolder}/src"
+				},
+				{
+					"url": "http://localhost:3000/Smalltalk",
+					"path": "${workspaceFolder}/../Smalltalk"
+				}
+			]
 		}
 	]
 }

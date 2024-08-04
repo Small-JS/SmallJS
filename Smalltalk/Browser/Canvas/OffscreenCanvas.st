@@ -1,3 +1,4 @@
 CLASS OffscreenCanvas EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
-"Todo: Implement properties and methods."
+"TODO: Implement properties and methods.
+ Implementation is only useful if the worker API is also implemented first."

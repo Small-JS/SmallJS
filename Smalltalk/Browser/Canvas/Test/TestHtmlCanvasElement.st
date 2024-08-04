@@ -19,6 +19,8 @@ test
 
 	context := canvas getContext: '2d'.
 	self assert: [ context class = CanvasRenderingContext2d ].
+	context := canvas getContext2d.
+	self assert: [ context class = CanvasRenderingContext2d ].
 
 	canvas toBlobType: 'image/png' quality: 1.0
 		then: [ :blob | self onToBlob: blob ].
