@@ -21,9 +21,9 @@ initializeBenchmarks: configs
 benchmarkConfigs
 	"Array of benchmark configurations, each containing benchmark class and size to run."
 	^ #(
-		#( PrimesBenchmark 50000 )
+		#( PrimesBenchmark 20000 )
 		#( FibonacciBenchmark 100000 )
-		#( PiBenchmark 10000 )
+		#( PiBenchmark 4000 )
 	)
 !
 bindElements

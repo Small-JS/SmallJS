@@ -36,8 +36,8 @@
 			"skipFiles": [ "<node_internals>/**" ],
 			"cwd": "${workspaceFolder}/../Examples/Counter",
 			"program": "${workspaceFolder}/out/App.js",
-			"args": [ "-m", "CounterApp", "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Smalltalk" ],
-			// "args": [ "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Smalltalk" ],
+			"args": [ "-m", "CounterApp", "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
+			// "args": [ "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
 			"envFile": "${workspaceFolder}/../Examples/Counter/.env"
 		}
 

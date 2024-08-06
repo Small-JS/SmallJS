@@ -32,7 +32,7 @@ export class Evaluator
 			this.evaluate2( stExpression, new EvaluateCallback( result, error ), Evaluator.compiledClassesJson );
 		else {
 			// Put module filename in variable first to prevent compiler checks in VSCode.
-			let moduleFileName: string = "./Smalltalk/CompiledClassesJson.js";
+			let moduleFileName: string = "./Script/CompiledClassesJson.js";
 			import( moduleFileName ).then( _module =>
 			{
 				Evaluator.compiledClassesJson = _module.compiledClassesJson;

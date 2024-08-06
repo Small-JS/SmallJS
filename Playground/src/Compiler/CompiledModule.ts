@@ -117,11 +117,11 @@ export class CompiledModule
 	}
 
 	// Playground evaluator always runs in the web root
-	// so we hardcode the location of the compiled Smalltalk folder.
+	// so we hardcode the location of the Script folder with compiled ST files.
 
 	importBaseFolder(): string
 	{
-		return this.name == "Evaluator" ? "./Smalltalk/" : "./";
+		return this.name == "Evaluator" ? "./Script/" : "./";
 	}
 
 	generateDefaultImports(): SourceNode

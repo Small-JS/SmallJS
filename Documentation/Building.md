@@ -11,15 +11,21 @@ To enable GUI testing of web browser based projects,\
 you first need to copy the file `.env.example` to `.env`\
 and then uncomment the browsers you want to test with on your OS.\
 
-### NOTE 1: Enable browser popups for localhost
-
-The browser tests in the `Browser` project need pop-ups to be enabled to succeed.
-Enable pop-ups for host localhost:3000 and re-run the tests.
-
-### NOTE 2: Browser testing on MacOS
+### NOTE 1: Browser testing on MacOS
 
 MacOS will not quit a newly started browser process\
 after tests have completed successfully, causing `build.sh` scripts to hang.\
 A workaround is to open the browser(s) you want to test with,\
 before running `build.sh`.\
 Then the script will test in newly opened tabs and close them after success.
+
+### NOTE 2: Debugging with Firefox
+
+To be able to debug in VSCode with Firefox,
+you have to install the VSCode extension "Debugger for Firefox".
+When starting Firefox from VSCode it may not stop on breakpoints the first time.
+This is a known issue that is noted in the Troubleshooting section
+on the GitHub page of the debugger extension.
+Reload the the page in Firefox to hit the breakpoint in a second try.
+Als the Firefox debugger sometimes erroneously jumps to JS source instead of staying in the ST source.
+It's recommended to first test/debug your app in Chrome or Edge and then test on Firefox for any incompatibilities.
