@@ -239,6 +239,8 @@ getTransform
 	^ DomMatrix fromJs: INLINE 'this.js.getTransform()'.
 !
 isContextLost
+	"2024-08-07: Ubuntu Firefox 123.0 does not have this method"
+	Window isLinux ifTrue: [ ^ false ].
 	^ Boolean fromJs: INLINE 'this.js.isContextLost()'.
 !
 isPointInPath: point

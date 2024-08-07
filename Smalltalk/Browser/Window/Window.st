@@ -21,6 +21,10 @@ isMac
 	"Shortcut method to test for MacOs platform."
 	^ self default navigator platform startsWith: 'Mac'.
 !
+isLinux
+	"Shortcut method to test for Linux platform."
+	^ self default navigator platform startsWith: 'Linux'.
+!
 
 METHODS
 
