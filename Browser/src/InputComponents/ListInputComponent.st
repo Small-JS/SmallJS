@@ -2,7 +2,7 @@ CLASS ListInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'listInput dataList outputParagraph'
 
 htmlPath
-	^ 'Components/Input/ListInputComponent.html'.
+	^ 'InputComponents/ListInputComponent.html'.
 !
 start
 	self bindElements.

@@ -2,7 +2,7 @@ CLASS ImageInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'imageInput outputParagraph'
 
 htmlPath
-	^ 'Components/Input/ImageInputComponent.html'.
+	^ 'InputComponents/ImageInputComponent.html'.
 !
 start
 	self bindElements.

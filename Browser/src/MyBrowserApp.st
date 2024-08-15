@@ -20,7 +20,7 @@ bindElements
 	"Load components and add them to the components var."
 
 	components := Array new.
-	#( AnchorComponent ClipboardComponent CssComponent DialogsComponent EmbedComponent
+	#( AnchorComponent CanvasComponent ClipboardComponent CssComponent DialogsComponent EmbedComponent
 		FieldSetComponent FormComponent
 		InputComponent ListInputComponent RadioInputComponent CheckboxInputComponent
 		ImageInputComponent FileInputComponent DateInputComponent SelectionComponent

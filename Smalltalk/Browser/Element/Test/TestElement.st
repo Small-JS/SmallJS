@@ -112,7 +112,7 @@ testMethods
 	self assert: [ p1 hasAttributes ].
 	self assert: [ p1 matches: '#p1' ].
 
-	rect0 := Rectangle origin: ( 0 @ 0 ) extent: ( 0 @ 0 ).
+	rect0 := Rect origin: ( 0 @ 0 ) extent: ( 0 @ 0 ).
 	self assert: [ p1 getBoundingClientRect = rect0 ].
 	self assert: [ div getClientRects isEmpty ].
 

@@ -2,7 +2,7 @@ CLASS InputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'input outputButton outputParagraph'
 
 htmlPath
-	^ 'Components/Input/InputComponent.html'.
+	^ 'InputComponents/InputComponent.html'.
 !
 start
 	self bindElements.

@@ -2,7 +2,7 @@ CLASS CheckboxInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'checkboxInput outputParagraph'
 
 htmlPath
-	^ 'Components/Input/CheckboxInputComponent.html'.
+	^ 'InputComponents/CheckboxInputComponent.html'.
 !
 start
 	self bindElements.

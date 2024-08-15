@@ -2,7 +2,7 @@ CLASS RadioInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'radioInput1 radioInput2 outputParagraph'
 
 htmlPath
-	^ 'Components/Input/RadioInputComponent.html'.
+	^ 'InputComponents/RadioInputComponent.html'.
 !
 start
 	self bindElements.

@@ -199,10 +199,10 @@ getAttributeNode: name
 	^ Attr fromJs: INLINE 'this.js.getAttributeNode( name.js )'.
 !
 getBoundingClientRect
-	^ Rectangle fromJs: INLINE 'this.js.getBoundingClientRect()'.
+	^ Rect fromJs: INLINE 'this.js.getBoundingClientRect()'.
 !
 getClientRects
-	^ Array fromJs: INLINE 'this.js.getClientRects()' elementClass: Rectangle.
+	^ Array fromJs: INLINE 'this.js.getClientRects()' elementClass: Rect.
 !
 getElementsByClassName: name
 	^ Array fromJs: INLINE 'this.js.getElementsByClassName( name.js )' elementConverter:

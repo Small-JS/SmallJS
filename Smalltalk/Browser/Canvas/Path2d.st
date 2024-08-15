@@ -3,7 +3,7 @@ CLASS Path2d EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 CLASSMETHODS
 
 new
-	^ self basicNew fromJs: INLINE 'new Path2D()'.
+	^ self fromJs: INLINE 'new Path2D()'.
 !
 
 METHODS

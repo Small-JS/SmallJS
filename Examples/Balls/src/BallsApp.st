@@ -43,7 +43,7 @@ move
 	"Move balls and redraw canvas"
 	stopRequested ifTrue: [ ^ self ].
 
-	context clearRect: ( Rectangle origin: 0 @ 0 extent: canvas size ).
+	context clearRect: ( Rect origin: 0 @ 0 extent: canvas size ).
 
 	balls do: [ :ball |
 		ball moveIn: canvas size.

@@ -1,7 +1,7 @@
 CLASS CanvasRenderingContext2d EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 	"This class encapsulates the JS class: CanvasRenderingContext2D"
 
-"Properties"
+"==== Properties"
 
 canvas
 	^ HtmlCanvasElement fromJs: INLINE 'this.js.canvas'.
@@ -12,8 +12,8 @@ direction
 direction: direction
 	INLINE 'this.js.direction = direction.js'.
 !
-"Note: fillStyle currently only supports CSS color strings."
 fillStyle
+	"Note: fillStyle currently only supports CSS color strings."
 	^ String fromJs: INLINE 'this.js.fillStyle'.
 !
 fillStyle: fillStyle
@@ -153,144 +153,18 @@ wordSpacing: wordSpacing
 	INLINE 'this.js.wordSpacing = wordSpacing.js'.
 !
 
-"Methods"
+"==== Methods"
 
-arc: center radius: radius startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
-	INLINE 'this.js.arc( center.x.js, center.y.js, radius.js, startAngle.js, endAngle.js, counterclockwise.js )'.
-!
-arcFrom: from to: to radius: radius
-	INLINE 'this.js.arcTo( from.x.js, from.y.js, to.x.js, to.y.js, radius.js )'.
-!
+"Path"
+
 beginPath
 	INLINE 'this.js.beginPath()'.
-!
-bezierCurveBetween: between1 and: between2 to: to
-	INLINE 'this.js.bezierCurveTo( between1.x.js, between1.y.js, between2.x.js, between2.y.js, to.x.js, to.y.js )'.
-!
-clearRect: rect
-	INLINE 'this.js.clearRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
-!
-clip
-	INLINE 'this.js.clip()'.
 !
 closePath
 	INLINE 'this.js.closePath()'.
 !
-createImageData: dimensions	"Point"
-	^ ImageData fromJs: INLINE 'this.js.createImageData( dimensions.x.js, dimensions.y.js )'.
-!
-createPattern: image repetition: repetition
-	^ CanvasPattern fromJs: INLINE 'this.js.createPattern( image.js, repetition.js )'.
-!
-createLinearGradientFrom: from to: to
-	^ CanvasGradient fromJs: INLINE 'this.js.createLinearGradient( from.x.js, from.y.js, to.x.js, to.y.js )'.
-!
-createRadialGradientFrom: from radius: fromRadius to: to radius: toRadius
-	^ CanvasGradient fromJs: INLINE 'this.js.createRadialGradient( from.x.js, from.y.js, fromRadius.js, to.x.js, to.y.js, toRadius.js )'.
-!
-drawFocusIfNeeded: element
-	INLINE 'this.js.drawFocusIfNeeded( element.js )'.
-!
-drawFocusIfNeeded: element path: path
-	INLINE 'this.js.drawFocusIfNeeded( element.js, path.js )'.
-!
-drawImage: image
-	INLINE 'this.js.drawImage( image.js )'.
-!
-drawImage: image destRect: destRect
-	INLINE 'this.js.drawImage( image.js, destRect.x.js, destRect.y.js, destRect.width.js, destRect.height.js )'.
-!
-drawImage: image sourceRect: sourceRect destRect: destRect
-	INLINE 'this.js.drawImage( image.js,
-		sourceRect.x.js, sourceRect.y.js, sourceRect.width.js, sourceRect.height.js,
-		destRect.x.js, destRect.y.js, destRect.width.js, destRect.height.js )'.
-!
-ellipse: center radii: radii rotation: rotation startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
-	INLINE 'this.js.ellipse( center.x.js, center.y.js , radii.x.js, radii.y.js, rotation.js, startAngle.js, endAngle.js, counterclockwise.js )'.
-!
-fill
-	INLINE 'this.js.fill()'.
-!
-fillRule: fillRule
-	INLINE 'this.js.fill( fillRule.js )'.
-!
-fillPath: path
-	INLINE 'this.js.fill( path.js )'.
-!
-fillRect: rect
-	INLINE 'this.js.fillRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
-!
-fillText: text at: point
-	INLINE 'this.js.fillText( text.js, point.x.js, point.y.js )'.
-!
-fillText: text at: point maxWidth: maxWidth
-	INLINE 'this.js.fillText( text.js, point.x.js, point.y.js, maxWidth.js )'.
-!
-getContextAttributes
-	^ ContextAttributes fromJs: INLINE 'this.js.getContextAttributes()'.
-!
-getImageData: rect
-	^ ImageData fromJs: INLINE 'this.js.getImageData( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
-!
-getLineDash
-	^ Array fromJs: INLINE 'this.js.getLineDash()' elementClass: Integer.
-!
-getTransform
-	^ DomMatrix fromJs: INLINE 'this.js.getTransform()'.
-!
-isContextLost
-	^ Boolean fromJs: INLINE 'this.js.isContextLost()'.
-!
-isPointInPath: point
-	^ Boolean fromJs: INLINE 'this.js.isPointInPath( point.x.js, point.y.js )'.
-!
-isPointInStroke: point
-	^ Boolean fromJs: INLINE 'this.js.isPointInStroke( point.x.js, point.y.js )'.
-!
-lineTo: point
-	INLINE 'this.js.lineTo( point.x.js, point.y.js )'.
-!
-measureText: text
-	^ TextMetrics fromJs: INLINE 'this.js.measureText( text.js )'.
-!
 moveTo: point
 	INLINE 'this.js.moveTo( point.x.js, point.y.js )'.
-!
-getImageData: imageData at: point
-	INLINE 'this.js.getImageData( imageData.js, point.x.js, point.y.js )'.
-!
-quadraticCurveBetween: between to: to
-	INLINE 'this.js.quadraticCurveTo( between.x.js, between.y.js, to.x.js, to.y.js )'.
-!
-rect: rect
-	INLINE 'this.js.rect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
-!
-reset
-	INLINE 'this.js.reset()'.
-!
-resetTransform
-	INLINE 'this.js.resetTransform()'.
-!
-restore
-	INLINE 'this.js.restore()'.
-!
-rotate: angle
-	INLINE 'this.js.rotate( angle.js )'.
-!
-roundRect: rect radii: radii
-	INLINE 'this.js.roundRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, radii.js )'.
-!
-save
-	INLINE 'this.js.save()'.
-!
-scale: point
-	INLINE 'this.js.scale( point.x.js, point.y.js )'.
-!
-setLineDash: segments
-	INLINE 'this.js.setLineDash( segments.$toJs() )'.
-!
-setTransform: matrix
-	INLINE 'this.js.setTransform( matrix.js )'.
 !
 stroke
 	INLINE 'this.js.stroke()'.
@@ -298,15 +172,186 @@ stroke
 strokePath: path
 	INLINE 'this.js.stroke( path.js )'.
 !
+fill
+	INLINE 'this.js.fill()'.
+!
+fillRule: rule
+	INLINE 'this.js.fill( rule.js )'.
+!
+fillPath: path
+	INLINE 'this.js.fill( path.js )'.
+!
+fillPath: path rule: rule
+	INLINE 'this.js.fill( path.js, rule.js )'.
+!
+
+"Curves"
+
+arc: center radius: radius startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
+	INLINE 'this.js.arc( center.x.js, center.y.js, radius.js, startAngle.js, endAngle.js, counterclockwise.js )'.
+!
+arcTo: to1 to: to2 radius: radius
+	INLINE 'this.js.arcTo( to1.x.js, to1.y.js, to2.x.js, to2.y.js, radius.js )'.
+!
+bezierCurveTo: to1 to: to2 end: end
+	INLINE 'this.js.bezierCurveTo( to1.x.js, to1.y.js, to2.x.js, to2.y.js, end.x.js, end.y.js )'.
+!
+ellipse: center radii: radii rotation: rotation startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
+	INLINE 'this.js.ellipse( center.x.js, center.y.js , radii.x.js, radii.y.js, rotation.js, startAngle.js, endAngle.js, counterclockwise.js )'.
+!
+quadraticCurveTo: to end: end
+	INLINE 'this.js.quadraticCurveTo( to.x.js, to.y.js, end.x.js, end.y.js )'.
+!
+
+"Rectangles"
+
+rect: rect
+	INLINE 'this.js.rect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
+!
+fillRect: rect
+	INLINE 'this.js.fillRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
+!
+clearRect: rect
+	INLINE 'this.js.clearRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
+!
+roundRect: rect radius: radius
+	INLINE 'this.js.roundRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, radius.js )'.
+!
+roundRect: rect radii: radii
+	INLINE 'this.js.roundRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, radii.$toJs() )'.
+!
 strokeRect: rect
 	INLINE 'this.js.strokeRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
+!
+
+"Clipping"
+
+clip
+	INLINE 'this.js.clip()'.
+!
+
+"Images"
+
+drawImage: image dest: dest
+	INLINE 'this.js.drawImage( image.js, dest.x.js, dest.y.js )'.
+!
+drawImage: image destRect: destRect
+	INLINE 'this.js.drawImage( image.js, destRect.origin.x.js, destRect.origin.y.js, destRect.extent.x.js, destRect.extent.y.js )'.
+!
+drawImage: image sourceRect: sourceRect destRect: destRect
+	INLINE 'this.js.drawImage( image.js,
+		sourceRect.origin.x.js, sourceRect.origin.y.js, sourceRect.extent.x.js, sourceRect.extent.y.js,
+		destRect.origin.x.js, destRect.origin.y.js, destRect.extent.x.js, destRect.extent.y.js )'.
+!
+createPattern: image repetition: repetition
+	^ CanvasPattern fromJs: INLINE 'this.js.createPattern( image.js, repetition.js )'.
+!
+
+"ImageData"
+
+createImageData: size	"Point"
+	^ ImageData fromJs: INLINE 'this.js.createImageData( size.x.js, size.y.js )'.
+!
+getImageData: rect
+	^ ImageData fromJs: INLINE 'this.js.getImageData( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js )'.
+!
+putImageData: imageData dest: dest
+	INLINE 'this.js.putImageData( imageData.js, dest.x.js, dest.y.js )'.
+!
+putImageData: imageData dest: dest sourceRect: sourceRect
+	INLINE 'this.js.putImageData( imageData.js, dest.x.js, dest.y.js, sourceRect.origin.x.js, sourceRect.origin.y.js, sourceRect.extent.x.js, sourceRect.extent.y.js )'.
+!
+
+"Gradients"
+
+createLinearGradientFrom: from to: to
+	^ CanvasGradient fromJs: INLINE 'this.js.createLinearGradient( from.x.js, from.y.js, to.x.js, to.y.js )'.
+!
+createRadialGradientFrom: from radius: fromRadius to: to radius: toRadius
+	^ CanvasGradient fromJs: INLINE 'this.js.createRadialGradient( from.x.js, from.y.js, fromRadius.js, to.x.js, to.y.js, toRadius.js )'.
+!
+
+"Text"
+
+fillText: text at: point
+	INLINE 'this.js.fillText( text.js, point.x.js, point.y.js )'.
+!
+fillText: text at: point maxWidth: maxWidth
+	INLINE 'this.js.fillText( text.js, point.x.js, point.y.js, maxWidth.js )'.
+!
+measureText: text
+	^ TextMetrics fromJs: INLINE 'this.js.measureText( text.js )'.
+!
+strokeText: text at: point
+	INLINE 'this.js.strokeText( text.js, point.x.js, point.y.js )'.
 !
 strokeText: text at: point maxWidth: maxWidth
 	INLINE 'this.js.strokeText( text.js, point.x.js, point.y.js, maxWidth.js )'.
 !
-transformA: a  b: b  c: c  d: d  e: e  f: f
-	INLINE 'this.js.transform( a.js, b.js, c.js, d.js, e.js, f.js )'.
+
+"Attributes"
+
+getContextAttributes
+	^ ContextAttributes fromJs: INLINE 'this.js.getContextAttributes()'.
+!
+isContextLost
+	^ Boolean fromJs: INLINE 'this.js.isContextLost()'.
+!
+
+"Lines"
+
+lineTo: point
+	INLINE 'this.js.lineTo( point.x.js, point.y.js )'.
+!
+setLineDash: segments
+	INLINE 'this.js.setLineDash( segments.$toJs() )'.
+!
+getLineDash
+	^ Array fromJs: INLINE 'this.js.getLineDash()' elementClass: Integer.
+!
+
+"Collisions"
+
+isPointInPath: point
+	^ Boolean fromJs: INLINE 'this.js.isPointInPath( point.x.js, point.y.js )'.
+!
+isPointInStroke: point
+	^ Boolean fromJs: INLINE 'this.js.isPointInStroke( point.x.js, point.y.js )'.
+!
+
+"State management"
+
+reset
+	INLINE 'this.js.reset()'.
+!
+save
+	INLINE 'this.js.save()'.
+!
+restore
+	INLINE 'this.js.restore()'.
+!
+
+"Transform"
+
+getTransform
+	^ DomMatrix fromJs: INLINE 'this.js.getTransform()'.
+!
+setTransform: matrix
+	INLINE 'this.js.setTransform( matrix.js )'.
+!
+transform: matrix
+	INLINE 'this.js.transform( matrix.js.a, matrix.js.b, matrix.js.c, matrix.js.d, matrix.js.e, matrix.js.f )'.
+!
+rotate: angle
+	INLINE 'this.js.rotate( angle.js )'.
+!
+scale: point
+	INLINE 'this.js.scale( point.x.js, point.y.js )'.
 !
 translate: point
 	INLINE 'this.js.translate( point.x.js, point.y.js )'.
 !
+resetTransform
+	INLINE 'this.js.resetTransform()'.
+!
+

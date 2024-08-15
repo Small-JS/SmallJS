@@ -8,7 +8,7 @@ testProperties
 	canvas := Document default createElement: 'canvas'.
 	self assert: [ canvas class = HtmlCanvasElement ].
 
-	context := canvas getContext: '2d'.
+	context := canvas getContext2d.
 	self assert: [ context class = CanvasRenderingContext2d ].
 
 	self assert: [ context canvas = canvas ].
@@ -107,10 +107,10 @@ testMethods
 	canvas := Document default createElement: 'canvas'.
 	self assert: [ canvas class = HtmlCanvasElement ].
 
-	context := canvas getContext: '2d'.
+	context := canvas getContext2d.
 	self assert: [ context class = CanvasRenderingContext2d ].
 
-	imageData := context getImageData: ( Rectangle origin: ( 20 @ 10 ) extent: ( 40 @ 30 ) ).
+	imageData := context getImageData: ( Rect origin: ( 20 @ 10 ) extent: ( 40 @ 30 ) ).
 	self assert: [ imageData class = ImageData ].
 
 	imageData := context createImageData: ( 20 @ 10 ).

@@ -48,10 +48,10 @@ extractContents
 	^ DocumentFragment fromJs: INLINE 'this.js.extractContents()'.
 !
 getBoundingClientRect
-	^ Rectangle fromJs: INLINE 'this.js.getBoundingClientRect()'.
+	^ Rect fromJs: INLINE 'this.js.getBoundingClientRect()'.
 !
 getClientRects
-	^ Array fromJs: INLINE 'this.js.getClientRects()' elementClass: Rectangle.
+	^ Array fromJs: INLINE 'this.js.getClientRects()' elementClass: Rect.
 !
 isPointInRange: node offset: offset
 	^ Boolean fromJs: INLINE 'this.js.isPointInRange( node.js, offset.js )'.

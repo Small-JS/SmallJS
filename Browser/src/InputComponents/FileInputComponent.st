@@ -2,7 +2,7 @@ CLASS FileInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'fileInput outputParagraph'
 
 htmlPath
-	^ 'Components/Input/FileInputComponent.html'.
+	^ 'InputComponents/FileInputComponent.html'.
 !
 start
 	self bindElements.

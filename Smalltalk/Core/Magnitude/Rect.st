@@ -1,6 +1,6 @@
-CLASS Rectangle EXTENDS Object MODULE Core CLASSVARS '' VARS 'origin extent'
+CLASS Rect EXTENDS Object MODULE Core CLASSVARS '' VARS 'origin extent'
 	"Implements a rectangle at point origin and with and hight in point extent.
-	 Note coordinate system assumes origin at screen top-left with x positive to the right and u positive downwards."
+	 Note coordinate system assumes origin at screen top-left with x positive to the right and y positive downwards."
 
 CLASSMETHODS
 
@@ -20,7 +20,7 @@ METHODS
 "Converting"
 
 toString
-	^ 'Rectangle( ', origin toString, ' , ', extent toString, ' )'.
+	^ 'Rect( ', origin toString, ' , ', extent toString, ' )'.
 !
 
 "Accessing"

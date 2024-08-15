@@ -2,7 +2,7 @@ CLASS DateInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'dateInput outputParagraph'
 
 htmlPath
-	^ 'Components/Input/DateInputComponent.html'.
+	^ 'InputComponents/DateInputComponent.html'.
 !
 start
 	self bindElements.
