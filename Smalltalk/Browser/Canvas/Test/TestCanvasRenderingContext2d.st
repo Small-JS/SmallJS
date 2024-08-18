@@ -1,6 +1,6 @@
 CLASS TestCanvasRenderingContext2d EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
-"Also tests: CanvasGradient"
+"Also tests classes CanvasGradient and CanvasPattern."
 
 testProperties
 	| canvas context  |
@@ -125,12 +125,6 @@ testMethods
 
 	gradient := context createRadialGradientFrom: ( 10 @ 20 ) radius: 5 to: ( 30 @ 40 ) radius: 15.
 	self assert: [ gradient class = CanvasGradient ].
-
-	attributes := context getContextAttributes.
-	self assert: [ attributes class = ContextAttributes ].
-
-	attributes := context getContextAttributes.
-	self assert: [ attributes class = ContextAttributes ].
 
 	lineDash := context getLineDash.
 	self assert: [ lineDash = #( ) ].

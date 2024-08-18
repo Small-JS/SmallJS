@@ -13,6 +13,9 @@ x: x y: y z: z
 x: x y: y z: z w: w
 	^ self fromJs: INLINE 'new DOMPoint( x.js, y.js, z.js, w.js )'.
 !
+fromPoint: point
+	^ self x: point x y: point y.
+!
 fromPoint3d: point3d
 	^ self x: point3d x y: point3d y z: point3d z.
 !
@@ -29,6 +32,12 @@ toJson
 !
 copy
 	^ DomPoint fromDomPoint: self.
+!
+toPoint
+	^ Point x: self x y: self y.
+!
+toPoint3d
+	^ Point3d x: self x y: self y z: self z.
 !
 
 "Accessing"

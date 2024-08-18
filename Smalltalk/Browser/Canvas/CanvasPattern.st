@@ -6,5 +6,5 @@ CLASS CanvasPattern EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
  created by the CanvasRenderingContext2D.createPattern() method."
 
 setTransform: domMatrix
-	INLINE 'setTransform( domMatrix )'
+	INLINE 'setTransform( domMatrix.js )'
 !

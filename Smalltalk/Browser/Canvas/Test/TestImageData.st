@@ -17,5 +17,8 @@ test
 	self assert: [ imageData width = 20 ].
 	self assert: [ imageData height = 10 ].
 	self assert: [ imageData extent = ( 20 @ 10 ) ].
+	self assert: [ imageData pixelLength = 200 ].
 
+	imageData atPixel: 0 @ 0 put: #( 3 4 5 6 ).
+	self assert: [ ( imageData atPixel: 0 @ 0 ) = #( 3 4 5 6 ) ].
 !

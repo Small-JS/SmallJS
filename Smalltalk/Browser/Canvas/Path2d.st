@@ -20,32 +20,39 @@ closePath
 	INLINE 'this.js.closePath()'.
 !
 
-"Drawing"
+"Lines"
 
-arc: center radius: radius startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
-	INLINE 'this.js.arc( center.x.js, center.y.js, radius.js, startAngle.js, endAngle.js, counterclockwise.js )'.
-!
-arcFrom: from to: to radius: radius
-	INLINE 'this.js.arcTo( from.x.js, from.y.js, to.x.js, to.y.js, radius.js )'.
-!
-ellipse: center radii: radii rotation: rotation startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
-	INLINE 'this.js.ellipse( center.x.js, center.y.js , radii.x.js, radii.y.js, rotation.js, startAngle.js, endAngle.js, counterclockwise.js )'.
-!
 moveTo: point
 	INLINE 'this.js.moveTo( point.x.js, point.y.js )'.
 !
 lineTo: point
 	INLINE 'this.js.lineTo( point.x.js, point.y.js )'.
 !
-bezierCurveBetween: between1 and: between2 to: to
-	INLINE 'this.js.bezierCurveTo( between1.x.js, between1.y.js, between2.x.js, between2.y.js, to.x.js, to.y.js )'.
+
+"Rectangles"
+
+roundRect: rect radius: radius
+	INLINE 'this.js.roundRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, radius.js )'.
 !
-quadraticCurveBetween: between to: to
-	INLINE 'this.js.quadraticCurveTo( between.x.js, between.y.js, to.x.js, to.y.js )'.
+roundRect: rect radii: radii
+	INLINE 'this.js.roundRect( rect.origin.x.js, rect.origin.y.js, rect.extent.x.js, rect.extent.y.js, radii.$toJs() )'.
 !
-rect: rectangle
-	INLINE 'this.js.rect( rectangle.js )'.
+
+"Curves"
+
+arc: center radius: radius startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
+	INLINE 'this.js.arc( center.x.js, center.y.js, radius.js, startAngle.js, endAngle.js, counterclockwise.js )'.
 !
-roundRect: rectangle radii: radii
-	INLINE 'this.js.roundRect( rectangle.x.js, rectangle.y.js, rectangle.width.js, rectangle.height.js, radii.js )'.
+arcTo: to1 to: to2 radius: radius
+	INLINE 'this.js.arcTo( to1.x.js, to1.y.js, to2.x.js, to2.y.js, radius.js )'.
 !
+bezierCurveTo: to1 to: to2 end: end
+	INLINE 'this.js.bezierCurveTo( to1.x.js, to1.y.js, to2.x.js, to2.y.js, end.x.js, end.y.js )'.
+!
+ellipse: center radii: radii rotation: rotation startAngle: startAngle endAngle: endAngle counterclockwise: counterclockwise
+	INLINE 'this.js.ellipse( center.x.js, center.y.js , radii.x.js, radii.y.js, rotation.js, startAngle.js, endAngle.js, counterclockwise.js )'.
+!
+quadraticCurveTo: to end: end
+	INLINE 'this.js.quadraticCurveTo( to.x.js, to.y.js, end.x.js, end.y.js )'.
+!
+

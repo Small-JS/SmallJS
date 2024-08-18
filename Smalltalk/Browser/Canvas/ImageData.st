@@ -7,13 +7,25 @@ CLASS ImageData EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 data
 	^ Uint8Array fromJs: INLINE 'this.js.data'.
 !
-atPixel: index put: rgba
-	| byteIndex |
+atPixel: point
+	"Return rgba value at point as a 4 byte array"
+	| data index rgba  |
+	data := self data.
+	rgba := Array new: 4.
+	index := point y * self width + point x * 4.
+	rgba at: 0 put: ( data at: index ).
+	rgba at: 1 put: ( data at: index + 1 ).
+	rgba at: 2 put: ( data at: index + 2 ).
+	rgba at: 3 put: ( data at: index + 3 ).
+	^ rgba.
+!
+atPixel: point put: rgba
 	"rgba should by an array with RGBA byte values."
+	| index |
 	self assert: [ rgba length = 4 ].
-	byteIndex := index * 4.
+	index := point y * self width + point x * 4.
 	rgba do: [ :color |
-		INLINE 'this.js.data[ byteIndex.js++ ] = color.js' ].
+		INLINE 'this.js.data[ index.js++ ] = color.js' ].
 !
 pixelLength
 	^ self data length // 4.

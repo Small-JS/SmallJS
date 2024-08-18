@@ -1,8 +1,8 @@
 CLASS DomMatrix EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "This class also implements DomMatrixReadOnly.
- It uses the Point and Point3d classes for point and vector operations,
- so not the DomPoint class."
+ It uses the classes Point and Point3d for point and vector operations,
+ so not the class DomPoint."
 
 CLASSMETHODS
 
@@ -10,7 +10,7 @@ new
 	^ self fromJs: INLINE 'new DOMMatrix()'.
 !
 init: array
-	"Array should be either 6 or float values 16 values,
+	"Array should be either 6 or 16 float values,
 	 to intialize the matrix for 2D or 3D operations respectively."
 	^ self fromJs: INLINE 'new DOMMatrix( array.$toJs() )'.
 !
@@ -20,7 +20,7 @@ fromMatrix: matrix
 
 METHODS
 
-"Accessing 2D"
+"Accessing - 2D"
 
 a
 	^ Float fromJs: INLINE 'this.js.a'.
@@ -41,7 +41,7 @@ f
 	^ Float fromJs: INLINE 'this.js.f'.
 !
 
-"Accessing 3D"
+"Accessing - 3D"
 
 m11
 	^ Float fromJs: INLINE 'this.js.m11'.
@@ -180,10 +180,15 @@ scale: scale3d
 scale: scale3d origin: origin3d
 	^ DomMatrix fromJs: INLINE 'this.js.rotate( scale3d.x.js, scale3d.y.js, scale3d.z.js, origin3d.x.js, origin3d.y.js, origin3d.z.js  )'.
 !
-transformPoint: domPoint
-	^ DomPoint fromJs: INLINE 'this.js.transformPoint( domPoint.js )'.
+transformPoint: point3d
+	| domPoint result |
+	domPoint := DomPoint fromPoint3d: point3d.
+	result := DomPoint fromJs: INLINE 'this.js.transformPoint( domPoint.js )'.
+	^ result toPoint3d.
 !
-translate: domPoint
+translate: point3d
+	| domPoint |
+	domPoint := DomPoint fromPoint3d: point3d.
 	^ DomMatrix fromJs: INLINE 'this.js.translate( domPoint.js.x, domPoint.js.y, domPoint.js.z )'.
 !
 

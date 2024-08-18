@@ -1,6 +1,8 @@
 CLASS CanvasComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 	VARS 'canvas'
 
+"Initialization"
+
 htmlPath
 	^ 'Components/CanvasComponent.html'.
 !
@@ -11,6 +13,15 @@ start
 bindElements
 	canvas := Document getElementById: 'canvas' class: HtmlCanvasElement.
 !
+
+"Accessing"
+
+canvas
+	^ canvas.
+!
+
+"Drawing"
+
 draw
 	| context gradient imageData colorBlue colorWhite color imageBitmap path matrix |
 	context := canvas getContext2d.
@@ -22,7 +33,7 @@ draw
 	context fillStyle: 'blue'.
 	context lineWidth: 2.
 
-	"Bezier curve, op of head."
+	"Bezier curve, top of head."
 	context beginPath.
 	context moveTo: 20 @ 20.
 	context bezierCurveTo: 30 @ 10 to: 50 @ 10 end: 60 @ 20.
@@ -69,8 +80,9 @@ draw
 	"ImageData: Create small blue rectangle top-middle"
 	imageData := context createImageData: 20 @ 10.
 	colorBlue := #( 0 0 255 255 ).
-	0 to: imageData pixelLength - 1 do: [ :pixelIndex |
-		imageData atPixel: pixelIndex put: colorBlue ].
+	0 to: imageData width - 1 do: [ :x |
+		0 to: imageData height - 1 do: [ :y |
+			imageData atPixel: x @ y put: colorBlue ] ].
 	context putImageData: imageData dest: 80 @ 10.
 
 	"Transparent rectangle below-top-middle"
@@ -87,19 +99,16 @@ draw
 	context stroke.
 	context restore.	"Undo clipping."
 
-	"ImageData Create small orange square middle-lower"
+	"ImageData Create small blue square middle-lower"
 	colorBlue := #( 0 0 255 255 ).
 	colorWhite := #( 255 255 255 255 ).
 	imageData := context createImageData: 10 @ 10.
-	0 to: imageData pixelLength - 1 do: [ :pixelIndex |
-		"Paint edges of square blue, rest white."
-		color :=
-			( pixelIndex < 10 ) | ( pixelIndex >= 90 ) |
-			( pixelIndex % 10 = 0 ) | ( pixelIndex % 10 = 9 )
+	0 to: imageData width - 1 do: [ :x |
+		0 to: imageData height - 1 do: [ :y |
+			"Paint edges of square blue, rest white."
+			color := ( x = 0 ) | ( x = 9 ) | ( y = 0 ) | ( y = 9 )
 				ifTrue: [ colorBlue ] ifFalse: [ colorWhite ].
-		imageData atPixel: pixelIndex put: color ].
-	ImageBitmap create: imageData then: [ :imageBitmap |
-		self drawImageBitmap: imageBitmap on: context ].
+			imageData atPixel: x @ y put: color ] ].
 
 	"Ellipse in top next column"
 	context beginPath.
@@ -189,6 +198,12 @@ draw
 	context lineWidth: 2.
 	context strokeRect: ( Rect origin: 170 @ 70 extent: 20 @ 10 ).
 	context lineWidth: 1.
+
+	"ImageBitmap is created async, alas."
+	ImageBitmap create: imageData then: [ :imageBitmap |
+		self drawImageBitmap: imageBitmap on: context ].
+
+	self drawPaths.
 !
 
 drawImageBitmap: imageBitmap on: context
@@ -204,10 +219,91 @@ drawImageBitmap: imageBitmap on: context
 	pattern := context createPattern: imageBitmap repetition: 'repeat'.
 	context fillStyle: pattern.
 	context fillRect: ( Rect origin: 110 @ 50 extent: 20 @ 20 ).
+
+	imageBitmap close.
 !
+drawPaths
+	| context path path2 matrix
+		imageData pattern gradient attributes lineDash  textMetrics contextAttributes |
 
-"Accessing"
+	context := canvas getContext2d.
+	self assert: [ context class = CanvasRenderingContext2d ].
+	context strokeStyle: 'blue'.
 
-canvas
-	^ canvas.
+	"Draw horizontal and vertical line
+	 that is the addition of 2 paths."
+	path := Path2d new.
+	path moveTo: 200 @ 10.
+	path lineTo: 220 @ 10.
+
+	path2 := Path2d new.
+	path2 moveTo: 220 @ 10.
+	path2 lineTo: 220 @ 20.
+
+	path addPath: path2.
+	context strokePath: path.
+
+	"Draw horizontal and vertical line
+	 that is a transposed and transformed square with y * 2.
+	 This expands the previous shape to a recangle"
+
+	path := Path2d new.
+	path moveTo: 220 @ 20.
+	path lineTo: 200 @ 20.
+
+	path2 := Path2d new.
+	path2 moveTo: 200 @ 10.
+	path2 lineTo: 200 @ 5.
+
+	matrix := DomMatrix init: #( 1 0 0 2 0 0 ).
+	path addPath: path2 transform: matrix.
+	context strokePath: path.
+
+	"Pointed down triangle below rectangle using closePath."
+	path := Path2d new.
+	path moveTo: 200 @ 30.
+	path lineTo: 220 @ 30.
+	path lineTo: 210 @ 40.
+	path closePath.
+	context strokePath: path.
+
+	"Rectangle with rounded corners below previous."
+	path := Path2d new.
+	path roundRect: ( Rect origin: 200 @ 50 extent: 20 @ 10 ) radius: 5.
+	context strokePath: path.
+
+	"Rectangle with differently rounded corners below previous."
+	path := Path2d new.
+	path roundRect: ( Rect origin: 200 @ 70 extent: 20 @ 10 ) radii: #( 12 4 8 0 ).
+	context strokePath: path.
+
+	"Circle half counterclockwise, top of next column."
+	path := Path2d new.
+	path arc: 240 @ 20 radius: 10 startAngle: 0 endAngle: Float pi counterclockwise: true.
+	context strokePath: path.
+
+	"Rounded hook, below previous."
+	path := Path2d new.
+	path moveTo: 230 @ 30.
+	path arcTo: 250 @ 30 to: 250 @ 50 radius: 10.
+	context strokePath: path.
+
+	"Bezier curve, below previous."
+	path := Path2d new.
+	path moveTo: 230 @ 50.
+	path bezierCurveTo: 240 @ 60 to: 245 @ 60 end: 250 @ 50.
+	context strokePath: path.
+
+	"Ellipse halved and rotated, below previous."
+	path := Path2d new.
+	self log: Float pi * 1.5.
+	path ellipse: 240 @ 70 radii: 10 @ 5  rotation: Float pi / 4 * 3 startAngle: Float pi * 0.5 endAngle: Float pi * 1.5 counterclockwise: true.
+	context strokePath: path.
+
+	"Quadratic curve "
+	path := Path2d new.
+	path moveTo: 230 @ 90.
+	path quadraticCurveTo: 235 @ 80 end: 250 @ 90.
+	context strokePath: path.
+
 !

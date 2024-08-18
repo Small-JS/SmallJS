@@ -52,10 +52,10 @@ test2dReadOnly
 	matrix2 := matrix scale: ( 2 @ 2 @ 2 ).
 	self assert: [ ( matrix2 a * 10 ) toInteger = 11 ].
 
-	point := matrix transformPoint: ( DomPoint x: 1 y: 2 z: 3 ).
-	self assert: [ point = ( DomPoint x: 12 y: 16 z: 3 w: 1 ) ].
+	point := matrix transformPoint: 1 @ 2 @ 3.
+	self assert: [ ( matrix transformPoint: 1 @ 2 @ 3 ) = ( 12 @ 16 @ 3 ) ].
 
-	matrix2 := matrix translate: ( DomPoint x: 1 y: 2 z: 3 ).
+	matrix2 := matrix translate: ( 1 @ 2 @ 3 ).
 	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 1 2 0 0 3 4 0 0 0 0 1 0 12 16 3 1 ) ) precision: 0.001 ].
 !
 test2dMutating

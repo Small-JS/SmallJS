@@ -1,5 +1,14 @@
 CLASS TestDomPoint EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
+testConversion
+	| domPoint domPoint2 jsObject |
+
+	domPoint := DomPoint fromPoint: 1 @ 2.
+	self assert: [ domPoint toPoint = ( 1 @ 2 ) ].
+
+	domPoint := DomPoint fromPoint3d: 1 @ 2 @ 3.
+	self assert: [ domPoint toPoint = ( 1 @ 2 @ 3 ) ].
+!
 testReadonly
 	| domPoint domPoint2 jsObject |
 
@@ -30,7 +39,6 @@ testReadonly
 	self assert: [ domPoint2 z = 8 ].
 	self assert: [ domPoint2 w = 9 ].
 !
-
 testMutable
 	| domPoint domPoint2 |
 
