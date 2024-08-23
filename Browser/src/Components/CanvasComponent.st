@@ -296,7 +296,6 @@ drawPaths
 
 	"Ellipse halved and rotated, below previous."
 	path := Path2d new.
-	self log: Float pi * 1.5.
 	path ellipse: 240 @ 70 radii: 10 @ 5  rotation: Float pi / 4 * 3 startAngle: Float pi * 0.5 endAngle: Float pi * 1.5 counterclockwise: true.
 	context strokePath: path.
 
