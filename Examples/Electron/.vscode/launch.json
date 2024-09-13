@@ -1,0 +1,83 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Electron: Main",
+			"type": "node", // Use the node debugger that comes with VS Code
+			"request": "launch",
+			"cwd": "${workspaceFolder}/out",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+			"args": [
+				"--remote-debugging-port=9223", // Open debugging port for renderer process
+				"main.js"
+			],
+			"outputCapture": "std",
+			"sourceMaps": true,
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**", // Use source maps for files in workspace folder
+				"!**/node_modules/**" // Ignore everything in the node_modules folder
+			],
+			"preLaunchTask": "Prelaunch"
+		},
+		{
+			"name": "Electron: Main test",
+			"type": "node", // Use the node debugger that comes with VS Code
+			"request": "launch",
+			"cwd": "${workspaceFolder}/out",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+			"args": [
+				"--remote-debugging-port=9223", // Open debugging port for renderer process
+				"main.js",
+				"-test"
+			],
+			"outputCapture": "std",
+			"sourceMaps": true,
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**", // Use source maps for files in workspace folder
+				"!**/node_modules/**" // Ignore everything in the node_modules folder
+			],
+			"preLaunchTask": "Prelaunch"
+		},
+		{
+			"name": "Electron: Renderer",
+			"type": "chrome",
+			"request": "launch",
+			"cwd": "${workspaceFolder}/out",
+			"sourceMaps": true,
+			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+			"windows": {
+				"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+			},
+			"runtimeArgs": [
+				"--remote-debugging-port=9222",
+				"main.js"
+			],
+			"webRoot": "${workspaceRoot}/out",
+			"preLaunchTask": "Prelaunch"
+		},
+		{
+			"name": "Electron: Renderer test",
+			"type": "chrome",
+			"request": "launch",
+			"cwd": "${workspaceFolder}/out",
+			"sourceMaps": true,
+			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+			"windows": {
+				"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+			},
+			"runtimeArgs": [
+				"--remote-debugging-port=9222",
+				"main.js",
+				// This argument is alas not passed to the Electon main app
+				// So this configuration will not start test mode.
+				// Hardcode method 'testMode' in MyElectronApp to use it.
+				"-test"
+			],
+			"webRoot": "${workspaceRoot}/out",
+			"preLaunchTask": "Prelaunch"
+		}
+	]
+}

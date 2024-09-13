@@ -1,10 +1,11 @@
-CLASS Fetch EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
+CLASS NodeFetch EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
 
 "2024.01.11, Node.js v21.5:
  The built-in version of fetch() of Nose.js is not used (yet) because of this issue:
  https://github.com/nodejs/undici/issues/2540
  This class is now based on npm package 'node-fetch' that does not have the issue.
- When the error is fixed, the separate Fetch class for in Browser and Node can be merged to Core."
+ When the error is fixed, the separate NodeFetch will no longer be necessary
+ and fetch functionaliteit merged to Core."
 
 INLINE 'import fetch from "node-fetch";'
 

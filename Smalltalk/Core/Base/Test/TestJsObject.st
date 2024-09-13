@@ -3,9 +3,13 @@ CLASS TestJsObject EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 test
 	| jsObject |
 
+	self assert: [ JsObject new isUndefined ].
 	self assert: [ JsObject newEmpty isEmpty ].
 	self assert: [ ( JsObject fromJs: INLINE 'null' ) isNull ].
 	self assert: [ ( JsObject fromJs: INLINE 'undefined' ) isNull ].
+
+	self assert: [ JsObject newEmpty toString = 'a JsObject( [object Object] )' ].
+	self assert: [ ( JsObject new js: INLINE '123' ) toString = 'a JsObject( 123 )' ].
 
 	jsObject := JsObject fromJs: INLINE '{
 		name: "John Doe", age: 50, pi: 3.14, itIs: true, empty: null,
@@ -28,4 +32,3 @@ testJson
 	self assert: [ ( ( object atProperty: 'b' ) atProperty: 'b1' ) = 21 ].
 	self assert: [ ( object atProperty: 'c' ) = #( 31 32 ) ].
 !
-

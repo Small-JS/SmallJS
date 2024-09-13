@@ -32,6 +32,11 @@ cd $cwd/Node
 ncu -u
 npm install
 
+echo "==== Examples: Electron"
+cd $cwd/Examples/Electron
+ncu -u
+npm install
+
 echo "==== Examples: Shop Server"
 cd $cwd/Examples/Shop/Server
 ncu -u

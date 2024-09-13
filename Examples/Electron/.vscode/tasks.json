@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "tsc: watch - tsconfig.json",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"runOptions": {	"runOn": "folderOpen" }
+		},
+		{
+			"label": "Prelaunch",
+			"type": "shell",
+			"windows": { "command": "preLaunch.sh" },
+			"linux": { "command": "./preLaunch.sh" },
+			"osx": { "command": "./preLaunch.sh" },
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [],
+			"dependsOn": "Compile Smalltalk"
+		},
+		{
+			"label": "Compile Smalltalk",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/App.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Node",  "../../Smalltalk/Browser", "+t", "../../Smalltalk/Electron", "src", "out" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+	]
+}

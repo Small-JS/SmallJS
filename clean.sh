@@ -35,6 +35,8 @@ rm -f ./Examples/Counter/web/App.js*
 rm -fr ./Examples/Counter/web/Script
 rm -fr ./Examples/Counter/web/Smalltalk
 
+rm -fr ./Examples/Electron/out
+
 rm -fr ./Examples/Shop/Server/out
 
 rm -f ./Examples/Shop/Client/web/App.js*

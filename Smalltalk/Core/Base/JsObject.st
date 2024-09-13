@@ -34,7 +34,9 @@ js: aJs
 	js := aJs.
 !
 jsClassName
-	^ String fromJs: INLINE 'this.js.constructor.name'.
+	^ self isUndefined
+		ifTrue: [ 'undefined' ]
+		ifFalse: [ String fromJs: INLINE 'this.js.constructor.name' ].
 !
 ownJsPropertyNames
 	^ Array fromJs: INLINE 'Object.getOwnPropertyNames( this.js )' elementClass: String.
@@ -78,4 +80,11 @@ toJs
 	 Array overloads this to convert array elements to JS also, recursively."
 
 	^ js.
+!
+toString
+	| jsType |
+	jsType := self isUndefined
+		ifTrue: [ 'undefined' ]
+		ifFalse: [ String fromJs: INLINE 'this.js.toString()' ]
+	^ 'a ', self class name, '( ', jsType, ' )'.
 !

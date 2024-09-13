@@ -35,3 +35,9 @@ Some benchmarks comparing SmallJS performance to native JS implementations.
 
 >[./Benchmark/Benchmark.md](./Benchmark/Benchmark.md)
 
+## Electron
+
+Electron example app in SmallJS.
+
+>[./Electron/Electron.md](./Electron/Electron.md)
+

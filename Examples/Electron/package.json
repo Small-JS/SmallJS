@@ -2,6 +2,7 @@
 	"type": "module",
 	"dependencies": {
 		"@types/node": "^22.5.4",
-		"source-map": "^0.7.4"
+		"electron": "^32.1.0",
+		"node-fetch": "^3.3.2"
 	}
 }

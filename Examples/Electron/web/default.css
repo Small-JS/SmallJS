@@ -1,0 +1,42 @@
+body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#formTable {
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	color: black;
+	border: solid grey;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 320px;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	background-color: lightblue;
+}
+
+#actionTable {
+	border: solid grey;
+	border-width: 1px;
+	border-spacing: 16px;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.vertical-center
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+

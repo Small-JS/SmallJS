@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+	<link rel="stylesheet" href="default.css" type="text/css" />
+	<title>Electron</title>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td class="title">
+				<div class="vertical-center">
+					<img id="electronImage" src="Electron.png" height="40"></img>
+					<span id="titleMessage">&nbsp;&nbsp;Electron</span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="actionTable">
+					<colgroup>
+						<col span="1" style="width: 40%;">
+					</colgroup>
+					<tr>
+						<th>
+							<span>Action</button>
+						</th>
+						<th>
+							<span>Result</button>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<button id="colorTextButton">Color Text</button>
+						</td>
+						<td>
+							<span id="colorTextResultSpan"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="modifyTitleButton">Modify Title</button>
+						</td>
+						<td>
+							<span id="modifyTitleResultSpan"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="pingButton">Send Ping</button>
+						</td>
+						<td>
+							<span id="pingResultSpan"></span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<script src="renderer.js" type="module"></script>
+</body>
+
+</html>
