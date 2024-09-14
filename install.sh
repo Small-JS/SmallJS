@@ -39,6 +39,7 @@ echo "==== Installing NPM dependencies"
 
 ./Compiler/install.sh
 ./Node/install.sh
+./Examples/Electron/install.sh
 ./Examples/Shop/Server/install.sh
 
 echo "==== All installs successful"

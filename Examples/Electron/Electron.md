@@ -23,3 +23,10 @@ To debug the browser (renderer) app part, start the VSCode configuration "Electr
 Note: \
 Only the functionality needed for this example is currently implemented in the Electron base classes.\
 They are by no means complete yet. If you want to contribute, feel free :).
+
+## Linux
+
+Ubuntu 24.04 restricts the use of sandboxes, preventing Electron startup.
+To lift this restrictions that execute:
+
+`sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`

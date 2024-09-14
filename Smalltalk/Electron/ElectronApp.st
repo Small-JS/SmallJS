@@ -23,5 +23,5 @@ handle: channel then: block
 "Testing"
 
 testMode
-	^ Process argv length >= 4 and: [ ( Process argv at: 3 ) = '-test' ].
+	^ Process argv includes: '-test'.
 !

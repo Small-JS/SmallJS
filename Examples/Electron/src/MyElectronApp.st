@@ -3,11 +3,12 @@ CLASS MyElectronApp EXTENDS ElectronApp MODULE MyElectronMain CLASSVARS ''
 
 "Uncomment this method to force test mode for the VSCode renderer configuration."
 
-testMode
+"testMode
 	^ true.
-!
+!"
 
 start
+self log: 'Testmode: ', self testMode toString.
 	self whenReady: [ self start2 ].
 !
 start2
