@@ -1,12 +1,6 @@
 CLASS MyElectronApp EXTENDS ElectronApp MODULE MyElectronMain CLASSVARS ''
 	VARS 'browserWindow'
 
-"Uncomment this method to force test mode for the VSCode renderer configuration."
-
-"testMode
-	^ true.
-!"
-
 start
 self log: 'Testmode: ', self testMode toString.
 	self whenReady: [ self start2 ].
@@ -104,9 +98,5 @@ loadOptions
 
 openDevTools
 	browserWindow openDevTools.
-!
-importTests
-	"Force including unit tests. Does not need to be called."
-	TestBrowserWindowOptions.
 !
 

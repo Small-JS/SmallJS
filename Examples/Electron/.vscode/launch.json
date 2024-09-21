@@ -71,9 +71,6 @@
 			"runtimeArgs": [
 				"--remote-debugging-port=9222",
 				"main.js",
-				// This argument is alas not passed to the Electon main app
-				// So this configuration will not start test mode.
-				// Hardcode method 'testMode' in MyElectronApp to use it.
 				"-test"
 			],
 			"webRoot": "${workspaceRoot}/out",

@@ -1,6 +1,7 @@
 *.map
 *.env
 *.lnk
+*.log
 *.cmd
 *.vsix
 .DS_Store

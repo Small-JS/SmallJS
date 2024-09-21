@@ -41,3 +41,9 @@ Electron example app in SmallJS.
 
 >[./Electron/Electron.md](./Electron/Electron.md)
 
+## Pharo Smalltalk app server with SmallJS client
+
+Small Pharo Smalltalk web app server communicating with a SmallJS client\
+through a web API using Pharo Zinc framework.
+
+>[./Pharo/Pharo.md](./Pharo/Pharo.md)
