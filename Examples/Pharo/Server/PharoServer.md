@@ -6,28 +6,38 @@
 # Pharo server example
 
 This will help you:
-- Download and install Pharo
-- Setup Pharo windows for development and monitoring
+- Download and install Pharo.
+- Setup Pharo windows for development and monitoring.
 - Startup the SmallJS Pharo example server.
 
-## Downloading & installing Pharo
-
 Note: If you already have Pharo running, \
-you can skip the installation steps and go the step "Importing code"
+you can skip the installation steps and go the paragraph:\
+`Installing the SmallJS example app`
+
+## Downloading & installing Pharo (MacOS)
+
+2024-09-23: 
+Pharo currently crashes on the latest standalone VM and image on my (older) Intel MacOS Monterey.\
+Alternatively, you install Pharo  with the Pharo Launcher.\
+But then the app and image will be stored outside the repo folder.\
+Be sure to set the correct paths in the file: `/Examples/Pharo/Server/.env`
+
+And if you change the Pharo package `Smalljs-Server`,\
+after `fileOut`, remember to copy it back to the source folder.
+
+## Downloading & installing Pharo (Windows and Linux)
 
 "Pharo standalone" can be downloaded at the bottom of this page:
 > [https://pharo.org/download](https://pharo.org/download)
 
-### Installing the image
+### Installing the images
 
 First download the zipped standalone version of the Pharo image.\
 It will have a name like: `latest-64.zip`\
 Extract it to the SmallJS repo folder:
 > `Examples/Pharo/Server`
 
-### Installing the VM
-
-Then download the zipped standalone version of the Pharo VM.\
+Download the zipped standalone version of the Pharo VM.\
 It will have a name like: `pharo-vm-Windows-x86_64-stable.zip`\
 Extract it to the SmallJS repo folder:
 > `Examples/Pharo/Server/vm`
@@ -52,10 +62,16 @@ with the menu selection `Pharo | Save As...`
 
 ![Pharo Save Image](doc/PharoSaveImage.png)
 
-Using this VM and image setup, Pharo can now be conveniently started on the image with:
-> `Examples/Pharo/startPharo.sh`
+Now look at the file `/Examples/Pharo/Server/.env`
+Uncomment and possibly edit the lines for setting the environment variables:
+`pharoVm`, `pharoImage`, `pharoWeb`.
+On Windows and Linux, the values will be oke for the standalone setup.\
+On MacOS, you will have to change the variable paths.
 
-## Installing the SmallJS example app in Pharo
+Pharo can now be conveniently started on the image with the script:
+> `Examples/Pharo/Server/start.sh`
+
+## Installing the SmallJS example app
 
 Open the Pharo file browser with menu: `System | File Browser`\
 Navigate to the Smalltalk source file: `Examples/Pharo/Pharo/SmalljsServer.st`\

@@ -33,15 +33,40 @@ source .env
 cd ../Server
 
 if
-	! test -f Pharo.image
+	! test -f .env
 then
-	echo "Warning: File missing: 'Pharo.image', skipping tests."
+	echo "Warning: File missing: '.env' file on Pharo server, skipping tests."
 	exit 0
 fi
 
-pharoServer="vm/Pharo Pharo.image"
-echo "Starting web server: "$pharoServer
-$pharoServer &
+set -o allexport
+source .env
+set +o allexport
+
+# Check all required variables are set
+
+if [ -z "$pharoVm" ]
+then echo "Error: Variable 'pharoVm not set"; exit 1;
+fi
+
+if [ -z "$pharoImage" ]
+then echo "Error: Variable 'pharoImage not set"; exit 1;
+fi
+
+if [ -z "$pharoWeb" ]
+then echo "Error: Variable 'pharoWeb not set"; exit 1;
+fi
+
+# Start Pharo with config options
+
+if
+	[[ $OSTYPE == "darwin"* ]]
+then
+	open -n $pharoVm --args $pharoImage
+else
+	$pharoVm $pharoImage &
+fi
+
 pharoServerPid=$!
 sleep 4
 
@@ -84,6 +109,17 @@ fi
 
 # Stop web server
 
-echo "Terminating Pharo server PID: "$pharoServerPid
-kill $pharoServerPid
+
+if
+	[[ $OSTYPE == "darwin"* ]]
+then
+	echo "MacOS: Close Pharo manually."
+	# TODO:
+	# This does not wort on MacOS since the open command does not give you the PID.
+	# You do some kludge with 'ps' and 'grep', but I'm a bit tired of MacOS right now..
+else
+	echo "Terminating Pharo server PID: "$pharoServerPid
+	kill $pharoServerPid
+fi
+
 sleep 2

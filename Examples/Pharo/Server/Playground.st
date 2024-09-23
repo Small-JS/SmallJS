@@ -1,4 +1,5 @@
-SmalljsServer new start .
+SmalljsServer new start.
 
-ZnServer default stop.
+SmalljsServer new stop.
+
 
