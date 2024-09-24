@@ -9,3 +9,4 @@ cd "$(dirname "$0")"
 # Start Pharo server
 
 ../Server/start.sh
+

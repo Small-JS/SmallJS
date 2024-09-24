@@ -4,5 +4,6 @@
 *.changes
 *.image
 *.sources
+*.version
 stderr
 stdout

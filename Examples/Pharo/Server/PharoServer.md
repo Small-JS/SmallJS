@@ -16,7 +16,7 @@ you can skip the installation steps and go the paragraph:\
 
 ## Downloading & installing Pharo (MacOS)
 
-2024-09-23: 
+2024-09-23:
 Pharo currently crashes on the latest standalone VM and image on my (older) Intel MacOS Monterey.\
 Alternatively, you install Pharo  with the Pharo Launcher.\
 But then the app and image will be stored outside the repo folder.\
@@ -45,11 +45,17 @@ Extract it to the SmallJS repo folder:
 ## Setting up Pharo
 
 Now Pharo can be started from the VM folder: `Examples/Pharo/Pharo/vm`\
-On Windows, the executable it is named: `Pharo.exe`
 
+On Windows:\
+The executable it is named: `Pharo.exe`\
 Now the dialog `Select Pharo image to open` appears.\
 Select the Pharo image previously extracted to the parent folder.\
 It will have a name like: `Pharo13.0-SNAPSHOT-64bit-252ed3bd95.image`
+
+On Linux:\
+Linux does not show a file open dialog for the image.
+You will have to open a terminal and start `./vm/pharo` 
+with the exact Pharo image filename, see example above.
 
 Now the Pharo Welcome screen should be displayed:
 
