@@ -13,7 +13,7 @@ SmallJS is source file based (not 'image based')
 - The ST to JS compiler is written in TypeScript, not ST. So there are no 'bootstrapping' issues, even when ST is modified at a low level.
 
 Here's a small PowerPoint presentation with the points above and more,\
-if you want to learn more or tell others: [Why_SmallJS.pptx](Why_SmallJS.pptx)
+if you want to learn more or tell others: [Why_SmallJS.pdf](Why_SmallJS.pdf)
 
 ## [Design details](DesignDetails.md)
 
