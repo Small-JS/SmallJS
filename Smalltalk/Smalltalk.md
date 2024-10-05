@@ -2,10 +2,12 @@
 
 The main Smalltalk source code of the system, for both the Node.js and browser environments and classes shared by both.
 
-There are 3 subfolders in this folder:
+Subfolders in this folder:
 - Core - Common ST classes for the Node and Browser environments
 - Browser - Browser specific classes, mainly the DOM.
 - Node - Node.js specific classes for, creating server apps.
+- Electron - Classes for creating Electron apps.
+- NodeGui - Classes for creating NodeGui apps.
 
 Every class is implemented in a separate *.st file.
 Further subfolders are used to group classes logically,

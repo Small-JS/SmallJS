@@ -6,5 +6,5 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "Installing NPM packages for the Electron example"
+echo "Installing NPM packages for example Electron"
 npm install --silent

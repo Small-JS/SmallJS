@@ -32,17 +32,22 @@ cd $cwd/Node
 ncu -u
 npm install
 
+echo "==== Examples: Shop Server"
+cd $cwd/Examples/Shop/Server
+ncu -u
+npm install
+
 echo "==== Examples: Electron"
 cd $cwd/Examples/Electron
 ncu -u
 npm install
 
-echo "==== Examples: Shop Server"
-cd $cwd/Examples/Shop/Server
+echo "==== Examples: NodeGui"
+cd $cwd/Examples/NodeGui
 ncu -u
 npm install
 
 # Ending messages
 
 echo "==== Updates successful"
-echo "To update all global npm dependencies type: npm update -g"
+echo "To update all global npm dependencies type: npm -g update"

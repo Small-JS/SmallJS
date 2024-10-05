@@ -17,6 +17,7 @@ cd "$(dirname "$0")"
 ./Examples/Shop/Client/build.sh
 ./Examples/Shop/ClientSpa/build.sh
 ./Examples/Electron/build.sh
+./Examples/NodeGui/build.sh
 ./Examples/Pharo/Client/build.sh
 ./Playground/build.sh
 ./Website/build.sh
