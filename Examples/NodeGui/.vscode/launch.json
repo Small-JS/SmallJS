@@ -1,0 +1,36 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Qode",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode",
+			"windows": {
+				"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode.cmd"
+			},
+			"args": [
+				"out/App.js"
+			],
+			"outputCapture": "std",
+			"preLaunchTask": "Compile Smalltalk"
+		},
+		{
+			"name": "Qode test",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode",
+			"windows": {
+				"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode.cmd"
+			},
+			"args": [
+				"out/App.js",
+				"-test"
+			],
+			"outputCapture": "std",
+			"preLaunchTask": "Compile Smalltalk"
+		}
+	]
+}

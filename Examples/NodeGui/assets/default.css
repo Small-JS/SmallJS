@@ -1,0 +1,18 @@
+#root {
+	background-color: #B4E5EA;
+	height: '100%';
+	align-items: 'center';
+	justify-content: 'center';
+}
+
+#greetLabel {
+	font-size: 20px;
+	font-weight: bold;
+	padding: 4px;
+}
+
+#changeStyleButton {
+	font-size: 15px;
+	padding: 4px;
+}
+
