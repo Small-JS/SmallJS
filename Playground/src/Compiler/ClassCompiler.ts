@@ -203,15 +203,21 @@ export class ClassCompiler
 		this.method.vars.push( compiledVariable );
 	}
 
+	// Playground: Generates code to return the value of the last statement iso self.
+
 	compileStatements()
 	{
+		let lastNode: SourceNode | undefined;
 		while( !this.parser.atMethodEnd() ) {
-			let node = this.compileStatement();
-			this.method.body.add( node );
+			lastNode = this.compileStatement();
+			this.method.body.add( lastNode );
 		}
 
-		if( !this.method.hasReturn && !this.method.isConstructor() )
-			this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
+		if( lastNode && !this.method.hasReturn )
+			lastNode.prepend( "return " );
+
+		// if( !this.method.hasReturn && !this.method.isConstructor() )
+		// 	this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
 	}
 
 	// A statement consists of an expression,

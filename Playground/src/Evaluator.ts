@@ -83,7 +83,8 @@ export class Evaluator
 	{
 		let stClass: string =
 			"CLASS Evaluator EXTENDS Object MODULE Evaluator CLASSVARS '' VARS ''\n" +
-			"METHODS\nevaluate\n\t^ " + stExpression + ".\n!\n";
+			// "METHODS\nevaluate\n\t^ " + stExpression + ".\n!\n";
+			"METHODS\nevaluate\n\t" + stExpression + "\n!\n";
 
 		let classCompiler = new ClassCompiler();
 		classCompiler.allClasses = this.loadCompiledClasses( compiledClassesJson );
