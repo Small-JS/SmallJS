@@ -8,17 +8,6 @@ cd "$(dirname "$0")"
 
 echo "==== Node"
 
-# Check and run .env file
-if
-	! test -f .env
-then
-	echo "Warning: '.env' file missing. See '.env.example'."
-else
-	set -o allexport
-	source .env
-	set +o allexport
-fi
-
 # Compile TypeScript
 echo "tsc Node"
 tsc
@@ -26,5 +15,17 @@ tsc
 # Compile Smalltalk
 node ../Compiler/out/App.js ../Smalltalk/Core ../Smalltalk/Node src out
 
-# Run unit tests
-./start.sh
+# Check and run .env file
+if
+	! test -f .env
+then
+	echo "Warning: '.env' file missing. See '.env.example'."
+	echo "Skipping browser tests."
+	exit 0
+fi
+
+set -o allexport
+source .env
+set +o allexport
+
+node out/App.js
