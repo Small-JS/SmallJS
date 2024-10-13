@@ -23,6 +23,8 @@ echo "Pre-launch script"
 ./preLaunch.sh
 
 # Run tests
+# If this fails on Ubuntu, you maybe need to run this:
+#     sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
 cd out
 ../node_modules/.bin/electron main.js -test
