@@ -7,4 +7,4 @@ set -e
 cd "$(dirname "$0")"
 
 echo "Installing NPM packages for example Shop Server"
-npm install --silent
+npm install

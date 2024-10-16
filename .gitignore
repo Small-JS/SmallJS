@@ -8,9 +8,6 @@
 .DS_Store
 **/node_modules
 **/out
-/Browser/web/App.js
-/Browser/web/Script
-/Browser/web/Smalltalk
 /Examples/Balls/web/App.js
 /Examples/Balls/web/Smalltalk
 /Examples/Balls/web/Script

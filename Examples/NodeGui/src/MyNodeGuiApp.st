@@ -1,26 +1,30 @@
 CLASS MyNodeGuiApp EXTENDS QApplication MODULE MyNodeGuiApp CLASSVARS ''
-	VARS 'window greetLabel changeStyleButton colors colorIndex'
+	VARS 'greetLabel changeStyleButton colors colorIndex'
 
 start
+	| window |
+
 	colors := #( 'black' 'red' 'green' 'blue' ).
 	colorIndex := 0.
 
-	self showWindow.
+	window := self createWindow.
+	window show.
 
 	self testMode ifTrue: [
 		TestMyNodeGuiApp new test: self ].
 !
-showWindow
+createWindow
 	| window |
-
 	window := QMainWindow new.
 	window setWindowTitle: 'Hello NodeGui'.
-	window setWindowIcon: ( QIcon new: 'assets/logo.ico' ).
+	window setWindowIcon: self createIcon.
 	window setStyleSheet: self createStyleSheet.
 	window setMenuBar: self createMenuBar.
 	window setCentralWidget: self createCentralWidget.
-
-	window show.
+	^ window.
+!
+createIcon
+	^ QIcon new: 'assets/logo.ico'.
 !
 createStyleSheet
 	^ Fs readFileSync: 'assets/default.css'.
