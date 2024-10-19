@@ -13,11 +13,10 @@ cd "$(dirname "$0")"
 
 echo "Removing modules..."
 
-rm ./Extension/smalljs-*.vsix
-
-rm -r ./Compiler/node_modules
-rm -r ./Node/node_modules
-rm -r ./Examples/Electron/node_modules
-rm -r ./Examples/Shop/Server/node_modules
+rm -fr ./Compiler/node_modules
+rm -fr ./Node/node_modules
+rm -fr ./Examples/Electron/node_modules
+rm -fr ./Examples/NodeGui/node_modules
+rm -fr ./Examples/Shop/Server/node_modules
 
 echo "To reinstall modules run: ./install.sh"
