@@ -67,8 +67,8 @@ else
 	$pharoVm $pharoImage &
 fi
 
+sleep 5
 pharoServerPid=$!
-sleep 4
 
 # Test in enabled browsers.
 # Browsers will close automatically if all tests succeed.
@@ -80,7 +80,6 @@ if
 	[ ! -z "$browserChrome" ]
 then
 	echo "Starting browser Chrome: "$browserChrome
-	sleep 2
 	"$browserChrome" http://localhost:3000/index.html?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
@@ -90,7 +89,6 @@ if
 	[ ! -z "$browserEdge" ]
 then
 	echo "Starting browser Edge: "$browserEdge
-	sleep 2
 	"$browserEdge" http://localhost:3000/index.html?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
@@ -100,7 +98,6 @@ if
 	[ ! -z "$browserFirefox" ]
 then
 	echo "Starting browser Firefox: "$browserFirefox
-	sleep 2
 	"$browserFirefox" http://localhost:3000/index.html?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
@@ -116,7 +113,7 @@ then
 	echo "MacOS: Close Pharo manually."
 	# TODO:
 	# This does not wort on MacOS since the open command does not give you the PID.
-	# You do some kludge with 'ps' and 'grep', but I'm a bit tired of MacOS right now..
+	# You can do some kludge with 'ps' and 'grep', but I'm a bit tired of MacOS right now..
 else
 	echo "Terminating Pharo server PID: "$pharoServerPid
 	kill $pharoServerPid

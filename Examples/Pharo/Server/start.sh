@@ -35,7 +35,7 @@ fi
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
-	open -n $pharoVm --args $pharoImage
+	open -n $pharoVm --args $pharoImage st StartServer.st
 else
-	$pharoVm $pharoImage &
+	$pharoVm $pharoImage st StartServer.st &
 fi
