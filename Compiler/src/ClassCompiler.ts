@@ -563,6 +563,9 @@ export class ClassCompiler
 		if( ! this.parser.tryParseTerm( ";" ) )
 			return;
 
+		if( receiver.children.length <= 1 )
+			this.error( "Message expected before cascade" );
+
 		let lastMessage = <SourceNode> receiver.children.pop();
 		receiver.prepend( "( () => { let $object$ = " ).add( ";\n" );
 		receiver.add( '\t\t\t$object$' ).add( lastMessage ).add( ";\n" );

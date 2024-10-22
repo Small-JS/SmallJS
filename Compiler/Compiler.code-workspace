@@ -4,6 +4,9 @@
 			"path": "."
 		},
 		{
+			"path": "../Node/out"
+		},
+		{
 			"path": "../Smalltalk"
 		},
 		{
