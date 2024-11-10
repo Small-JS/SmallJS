@@ -6,7 +6,8 @@ cd "$(dirname "$0")"
 
 echo "Cleaning: Website"
 
-rm -f ./web/App.js*
+rm -fr ./web/Script
+rm -fr ./web/Playgound/Playground
 rm -fr ./web/Examples/Counter
 rm -fr ./web/Examples/Todo
 rm -fr ./web/Examples/Balls

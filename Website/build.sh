@@ -17,6 +17,11 @@ tsc
 # This assumes the selected examples have been built beforehand.
 # Just copy the generated web apps for use in iframes.
 
+echo "Copying playground"
+
+rm -rf web/Playground/Playground
+cp -r ../Playground/web web/Playground/Playground
+
 echo "Copying example apps"
 
 # Must remove destination folders first,
@@ -36,9 +41,4 @@ cp -r ../Examples/Benchmark/web web/Examples/Benchmark
 
 rm -rf web/Examples/WebWorkers
 cp -r ../Examples/WebWorkers/web web/Examples/WebWorkers
-
-echo "Copying playground"
-
-rm -rf web/Playground/Playground
-cp -r ../Playground/web web/Playground/Playground
 

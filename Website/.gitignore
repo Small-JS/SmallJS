@@ -1,10 +1,8 @@
-web/App.js
-web/Smalltalk
 web/Script
+web/Smalltalk
 web/Examples/Balls
 web/Examples/Benchmark
 web/Examples/Counter
 web/Examples/Todo
 web/Examples/WebWorkers
 web/Playground/Playground
-web/Tools

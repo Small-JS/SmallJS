@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esNext",
 	"module": "esNext",
-	"outDir": "web",
+	"outDir": "web/Script",
 	"strict": true,
 	"sourceMap": true
   }
