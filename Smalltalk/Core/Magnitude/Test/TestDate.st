@@ -1,7 +1,10 @@
 CLASS TestDate EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
-	| date1 date1Utc date2 now |
+	| msec date1 date1Utc date2 now |
+
+	msec := Date now.
+	self assert: [ Date now > 1730754619592 ].
 
 	date1 := Date year: 2000 month: 2 day: 28 hours: 23 minutes: 58 seconds: 59.
 	self assert: [ ( date1 year = 2000 ) & ( date1 month = 2 ) & ( date1 day = 28 ) ].

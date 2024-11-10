@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 # Ask confirmation
 
 echo "This script will update all dependencies of Node.js projects to the latest versions"
-read -p "To you want to contiue? (y/N) " confirm
+read -p "To you want to continue? (y/N) " confirm
 if
 	[[ ! $confirm == [yY] ]]
 then

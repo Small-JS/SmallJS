@@ -10,18 +10,17 @@
 	text-align: left;
 }
 
-#productTable td, th {
+#productTable th,
+#productTable td {
 	padding: 4px;
 	border: 2px solid grey;
 	color: black;
 }
 
-#productTable td:nth-child( 2 )
-{
+#productTable td:nth-child(2) {
 	text-align: right;
 }
 
 .productTableHeader {
 	font-weight: bold;
 }
-

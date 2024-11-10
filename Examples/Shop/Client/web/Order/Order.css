@@ -10,7 +10,8 @@
 	text-align: left;
 }
 
-#orderTable td, th {
+#orderTable th,
+#orderTable td {
 	padding: 4px;
 	border: 2px solid grey;
 	color: black;
@@ -20,12 +21,10 @@
 	font-weight: bold;
 }
 
-#orderTable td:nth-child( 2 )
-{
+#orderTable td:nth-child(2) {
 	text-align: right;
 }
 
-#orderTable td:nth-child( 3 )
-{
+#orderTable td:nth-child(3) {
 	text-align: right;
 }

@@ -22,17 +22,20 @@ echo "Copying example apps"
 # Must remove destination folders first,
 # otherwise "cp -r" will behave differently.
 
-rm -rf web/Examples/Benchmark
-cp -r ../Examples/Benchmark/web web/Examples/Benchmark
-
-rm -rf web/Examples/Balls
-cp -r ../Examples/Balls/web web/Examples/Balls
-
 rm -rf web/Examples/Counter
 cp -r ../Examples/Counter/web web/Examples/Counter
 
 rm -rf web/Examples/Todo
 cp -r ../Examples/Todo/web web/Examples/Todo
+
+rm -rf web/Examples/Balls
+cp -r ../Examples/Balls/web web/Examples/Balls
+
+rm -rf web/Examples/Benchmark
+cp -r ../Examples/Benchmark/web web/Examples/Benchmark
+
+rm -rf web/Examples/WebWorkers
+cp -r ../Examples/WebWorkers/web web/Examples/WebWorkers
 
 echo "Copying playground"
 

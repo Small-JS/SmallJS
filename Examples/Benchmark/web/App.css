@@ -1,8 +1,7 @@
-﻿
-body {
-    font-family: system-ui;
-    font-size: medium;
-    background-color: #F0F0F0;
+﻿body {
+	font-family: system-ui;
+	font-size: medium;
+	background-color: #F0F0F0;
 }
 
 #titleMessage {
@@ -11,7 +10,6 @@ body {
 	text-align: center;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	color: black;
 	background-color: lightblue;
 }
 
@@ -19,48 +17,36 @@ body {
 	background-color: white;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
+	border: solid gray;
 	border-width: 2px;
 	border-spacing: 16px;
 	border-radius: 10px;
 	text-align: center;
 	width: 320px;
-	color: grey;
-	box-shadow: 10px 10px 5px grey;
+	box-shadow: 10px 10px 5px gray;
 }
 
 #resultsTable {
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
+	border: solid gray;
 	border-collapse: collapse;
 	border-width: 2px;
 	border-spacing: 0px;
 	text-align: left;
 }
 
-#resultsTable td, th {
+#resultsTable th,
+#resultsTable td {
 	padding: 4px;
-	border: 1px solid grey;
+	border: 1px solid gray;
 	text-align: right;
 }
 
-#resultsTable th:nth-child( 1 )
-{
-	text-align: left;
-}
-
-#resultsTable td:nth-child( 1 )
-{
+#resultsTable th:nth-child(1) {
 	text-align: left;
 }
 
 .tableHeader {
-	color: black;
 	font-weight: bold;
 }
-
-.tableBody {
-	color: black;
-}
-

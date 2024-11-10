@@ -35,6 +35,12 @@ Some benchmarks comparing SmallJS performance to native JS implementations.
 
 >[./Benchmark/Benchmark.md](./Benchmark/Benchmark.md)
 
+## Web Workers
+
+Run multiple SmallJS worker threads in the browser.
+
+>[./WebWorkers/WebWorkers.md](./WebWorkers/WebWorkers.md)
+
 ## Electron
 
 Electron example app in SmallJS.

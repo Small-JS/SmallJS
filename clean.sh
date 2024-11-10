@@ -29,6 +29,7 @@ echo "Removing compiled code..."
 ./Examples/Shop/ClientSpa/clean.sh
 ./Examples/Shop/Server/clean.sh
 ./Examples/Todo/clean.sh
+./Examples/WebWorkers/clean.sh
 ./Playground/clean.sh
 ./Website/clean.sh
 

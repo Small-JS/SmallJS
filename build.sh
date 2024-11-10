@@ -13,6 +13,7 @@ cd "$(dirname "$0")"
 ./Examples/Todo/build.sh
 ./Examples/Balls/build.sh
 ./Examples/Benchmark/build.sh
+./Examples/WebWorkers/build.sh
 ./Examples/Shop/Server/build.sh
 ./Examples/Shop/Client/build.sh
 ./Examples/Shop/ClientSpa/build.sh

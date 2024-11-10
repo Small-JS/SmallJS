@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SmallJS benchmarks</title>
+	<link rel="stylesheet" href="default.css" type="text/css" />
+	<script type="module" src="Script/main.js"></script>
+	</script>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<p id="titleMessage">Web Workers</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="settingsTable">
+					<tr>
+						<th>
+							<label for="workSizeInput">Work size:</label>
+						</th>
+						<td>
+							<input id="workSizeInput" type="number" value="1000" min="1" max="64000"
+							class="settingsNumber">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label for="workersInput">Workers:</label>
+						</th>
+						<td>
+							<input id="workersInput" type="number" value="4" min="1" max="16"
+								class="settingsNumber">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+				<button id="startButton">Start</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="resultsTable">
+					<thead>
+						<tr class="tableHeader">
+							<th scope="col">
+								Worker#
+							</th>
+							<th scope="col">
+								Time
+							</th>
+						</tr>
+					</thead>
+					<tbody class="tableBody">
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

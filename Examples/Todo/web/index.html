@@ -3,16 +3,18 @@
 <html lang="en-GB">
 
 <head>
-    <meta charset="utf-8" />
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Todo App</title>
-    <link rel="stylesheet" href="App.css" type="text/css" />
+	<link rel="stylesheet" href="App.css" type="text/css" />
 	<script src="App.js"></script>
 </head>
 
 <body>
-	<table id="formTable" >
-		<tr>	<!-- ============== Title -->
+	<table id="formTable">
+
+		<!-- ============== Title -->
+		<tr>
 			<td class="title">
 				<div class="vertical-center">
 					<img id="todoImage" src="Todo.png" height="40"></img>
@@ -21,17 +23,22 @@
 				</div>
 			</td>
 		</tr>
-		<tr>	<!-- ============== Language -->
+
+		<!-- ============== Language -->
+		<tr>
 			<td>
 				<label id="languageLabel" for="languageInput">Language </label>
-				<input id="languageInput" value="" list="languageDataList" onmouseover="this.focus();" onfocus="this.value=''" oninput="this.blur();"/>
+				<input id="languageInput" value="" list="languageDataList" onmouseover="this.focus();"
+					onfocus="this.value=''" oninput="this.blur();" />
 				<datalist id="languageDataList">
 					<option value="English">
 					<option value="Española">
 				</datalist>
 			</td>
 		</tr>
-		<tr>	<!-- ============== New Task -->
+
+		<!-- ============== New Task -->
+		<tr>
 			<td>
 				<table id="newTaskTable">
 					<thead>
@@ -44,14 +51,16 @@
 					<tbody>
 						<tr>
 							<td>
-								<label id="newTaskTitleLabel" class="newTaskLabel" for="newTaskTitleInput"><b>Title</b></label>
+								<label id="newTaskTitleLabel" class="newTaskLabel"
+									for="newTaskTitleInput"><b>Title</b></label>
 							<td>
 								<input id="newTaskTitleInput"></input>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label id="newTaskDueLabel" class="newTaskLabel" for="newTaskDueInput"><b>Due</b></label>
+								<label id="newTaskDueLabel" class="newTaskLabel"
+									for="newTaskDueInput"><b>Due</b></label>
 							</td>
 							<td>
 								<input id="newTaskDueInput" type="date"></input>
@@ -66,7 +75,9 @@
 				</table>
 			</td>
 		</tr>
-		<tr>	<!-- ============== Tasks -->
+
+		<!-- ============== Tasks -->
+		<tr>
 			<td>
 				<table id="taskTable" class="taskTableClass">
 					<thead>
@@ -98,4 +109,5 @@
 	</table>
 
 </body>
+
 </html>

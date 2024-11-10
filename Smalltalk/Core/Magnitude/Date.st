@@ -6,6 +6,9 @@ CLASSMETHODS
 new
 	^ self fromJs: INLINE 'new Date()'.
 !
+now
+	^ Integer fromJs: INLINE 'Date.now()'.
+!
 fromMilliseconds: milliseconds
 	^ self fromJs: milliseconds js.
 !

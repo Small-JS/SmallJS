@@ -1,0 +1,81 @@
+﻿body {
+	font-family: system-ui;
+	font-size: medium;
+	background-color: #F0F0F0;
+}
+
+#titleMessage {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background-color: lightblue;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 320px;
+	border: solid gray;
+	box-shadow: 10px 10px 5px gray;
+}
+
+#formTable th,
+#formTable td {
+	text-align: center;
+}
+
+#settingsTable {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	border-width: 0px;
+	text-align: left;
+}
+
+#settingsTable th,
+td {
+	width: 50%;
+	padding: 4px;
+	border: 0px;
+	text-align: right;
+}
+
+#settingsTable th {
+	text-align: right;
+}
+
+#settingsTable td {
+	text-align: left;
+}
+
+.settingsNumber {
+	width: 80px;
+}
+
+#startButton {
+	font-weight: bold;
+}
+
+#resultsTable {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	text-align: left;
+	border: solid gray;
+}
+
+#resultsTable th,
+#resultsTable td {
+	padding: 4px;
+	border: 1px solid grey;
+	text-align: right;
+}

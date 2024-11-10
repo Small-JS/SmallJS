@@ -1,47 +1,41 @@
-﻿
-body {
-    font-family: system-ui;
-    font-size: medium;
-    background-color: #F0F0F0;
+﻿body {
+	font-family: system-ui;
+	font-size: medium;
+	background-color: #F0F0F0;
 }
 
 #formTable {
 	background-color: white;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
+	border: solid gray;
 	border-width: 2px;
 	border-spacing: 16px;
 	border-radius: 10px;
 	text-align: center;
 	width: 320px;
-	color: grey;
-	box-shadow: 10px 10px 5px grey;
+	box-shadow: 10px 10px 5px gray;
 }
 
 .title {
 	font-size: X-Large;
 	font-weight: bold;
 	text-align: center;
-	color: black;
 	background-color: lightblue;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
 
 #languageLabel {
-	color: black;
 	font-weight: bold;
 }
 
 #languageInput {
-	border: 1px solid;
-	border-color: grey;
+	border: 1px solid gray;
 	width: 100px;
 }
 
-.vertical-center
-{
+.vertical-center {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -50,47 +44,35 @@ body {
 #newTaskTable {
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
-	border-color: grey;
+	border: solid gray;
 	border-collapse: collapse;
 	border-width: 2px;
 	border-spacing: 0px;
 	text-align: left;
 }
 
-#newTaskTable th, td {
-	color: black;
+#newTaskTable th,
+#newTaskTable td {
 	padding: 4px;
-}
-
-.newTaskSpan {
-	color: black;
-	font-weight: bold;
 }
 
 #taskTable {
 	margin-left: auto;
 	margin-right: auto;
-	border: solid;
+	border: solid gray;
 	border-width: 2px;
-	border-color: grey;
 	border-collapse: collapse;
 	border-spacing: 0px;
 	text-align: left;
 }
 
-#taskTable td, th {
+#taskTable th,
+#taskTable td {
 	padding: 4px;
-	border: 1px solid black;
+	border: 1px solid gray;
 }
 
-#taskTable td:nth-child( 3 )
-{
+#taskTable td:nth-child(3),
+#taskTable td:nth-child(4) {
 	text-align: center;
 }
-#taskTable td:nth-child( 4 )
-{
-	text-align: center;
-}
-
-
