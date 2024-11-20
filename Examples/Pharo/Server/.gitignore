@@ -5,5 +5,5 @@
 *.image
 *.sources
 *.version
-stderr
-stdout
+stderr*
+stdout*
