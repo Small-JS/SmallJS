@@ -2,7 +2,7 @@ CLASS FibonacciBenchmark EXTENDS Benchmark MODULE Benchmark CLASSVARS '' VARS ''
 
 "Implements JS and ST benchmark for calculating Fibonacci numbers."
 
-INLINE 'import { Fibonacci } from "../Script/Fibonacci.js";'
+INLINE 'import { Fibonacci } from "./JavaScript/Fibonacci.js";'
 
 constructor
 	"Number of Fibonacci numbers to find."

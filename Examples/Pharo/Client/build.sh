@@ -15,7 +15,7 @@ tsc
 
 # Compile Smalltalk
 
-node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Script
+../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Script
 
 # Check for and run .env file for locations of enabled browsers to test.
 

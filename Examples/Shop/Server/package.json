@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@types/node": "^22.9.0",
+		"@types/node": "^22.9.3",
 		"express": "^4.21.1",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",

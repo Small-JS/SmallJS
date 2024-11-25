@@ -2,7 +2,7 @@ CLASS PrimesBenchmark EXTENDS Benchmark MODULE Benchmark CLASSVARS '' VARS ''
 
 "Implements JS and ST benchmark for calculating primes."
 
-INLINE 'import { Primes } from "../Script/Primes.js";'
+INLINE 'import { Primes } from "./JavaScript/Primes.js";'
 
 constructor
 	"Number upto which to find all primes."

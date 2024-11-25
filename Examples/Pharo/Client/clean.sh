@@ -6,5 +6,4 @@ cd "$(dirname "$0")"
 
 echo "Cleaning: Example Pharo Client"
 
-rm -f ./web/App.js*
 rm -fr ./web/Script

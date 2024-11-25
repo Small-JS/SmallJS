@@ -1,9 +1,12 @@
 {
-  "compilerOptions": {
-    "target": "esNext",
-	"module": "NodeNext",
-	"outDir": "out",
-	"strict": true,
-	"sourceMap": true
-  }
+	"compilerOptions": {
+		"target": "esNext",
+		"module": "NodeNext",
+		"lib": [
+			"esNext"
+		],
+		"outDir": "out",
+		"strict": true,
+		"sourceMap": true
+	}
 }

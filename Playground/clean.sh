@@ -6,7 +6,5 @@ cd "$(dirname "$0")"
 
 echo "Cleaning: Playground"
 
-rm -f ./web/App.js*
-rm -f ./web/Evaluator.js*
 rm -fr ./web/Compiler
 rm -fr ./web/Script

@@ -1,6 +1,6 @@
 CLASS Playground EXTENDS Object MODULE Browser CLASSVARS '' VARS 'resultBlock errorBlock'
 
-INLINE 'import { Evaluator } from "../Evaluator.js";'
+INLINE 'import { Evaluator } from "./Evaluator.js";'
 
 evaluate: expression onResult: aResultBlock onError: anErrorBlock
 	resultBlock := aResultBlock.

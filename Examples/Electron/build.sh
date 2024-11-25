@@ -15,7 +15,7 @@ tsc
 
 # Compile Smalltalk
 
-node ../../Compiler/out/App.js -t ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/Browser +t ../../Smalltalk/Electron src out
+../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/Browser +t ../../Smalltalk/Electron src out
 
 # Pre-launch script
 

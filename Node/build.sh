@@ -13,7 +13,7 @@ echo "tsc Node"
 tsc
 
 # Compile Smalltalk
-node ../Compiler/out/App.js ../Smalltalk/Core ../Smalltalk/Node src out
+../Compiler/start.sh ../Smalltalk/Core ../Smalltalk/Node src out
 
 # Check and run .env file
 if
@@ -28,4 +28,4 @@ set -o allexport
 source .env
 set +o allexport
 
-node out/App.js
+node out/main.js

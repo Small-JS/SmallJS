@@ -28,7 +28,11 @@ export class Compiler
 		// Parse compiler opions
 
 		while( args.length > 0 ) {
-			if( args[ 0 ] == '-s' ) {
+			if( args[ 0 ] == '-v' ) {
+				this.version();
+				exit(0);
+			}
+			else if( args[ 0 ] == '-s' ) {
 				this.sourceMaps = false;
 				args.shift();
 			}
@@ -55,13 +59,19 @@ export class Compiler
 	usage()
 	{
 		console.log(
-			"node <compiler folder>/out/App.js [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
+			"Usage: <compiler folder>/start.sh [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
 			"	-s : Don't generate source map files and remove existing ones.\n" +
 			"	-m : Minimize generated classes from specified starting class.\n" +
 			"	-t : Don't compile ./Test subfolders in following folders.\n" +
-			"	+t : Resume compiling ./Test subfolders in following folders.\n" );
+			"	+t : Resume compiling ./Test subfolders in following folders.\n" +
+			"	-v : Show SmallJS version number and exit.\n" );
 
 		exit( 1 );
+	}
+
+	version()
+	{
+		console.log( "SmallJS version: " + "1.4.0" );
 	}
 
 	compile( inputFolders: string[], outputFolder: string )

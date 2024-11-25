@@ -15,10 +15,10 @@ tsc
 
 # Compile Smalltalk
 
-node ../../Compiler/out/App.js ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/NodeGui src out
+../../Compiler/start.sh ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/NodeGui src out
 
 # Run tests
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
-node_modules/.bin/qode out/App.js -test
+node_modules/.bin/qode out/main.js -test

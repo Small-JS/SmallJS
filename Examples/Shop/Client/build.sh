@@ -15,7 +15,7 @@ tsc
 
 # Compile Smalltalk
 
-node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Script
+../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Script
 
 # Check for and run .env file for locations of enabled browsers to test.
 
@@ -44,7 +44,7 @@ set -o allexport
 source ../Server/.env
 SHOP_CLIENT="../Client/web"
 set +o allexport
-node out/App.js &
+node out/main.js &
 serverPid=$!
 popd > /dev/null
 sleep 2

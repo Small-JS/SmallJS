@@ -32,7 +32,7 @@ export class Evaluator
 			this.evaluate2( stExpression, new EvaluateCallback( result, error ), Evaluator.compiledClassesJson );
 		else {
 			// Put module filename in variable first to prevent compiler checks in VSCode.
-			let moduleFileName: string = "./Script/CompiledClassesJson.js";
+			let moduleFileName: string = "./CompiledClassesJson.js";
 			import( moduleFileName ).then( _module =>
 			{
 				Evaluator.compiledClassesJson = _module.compiledClassesJson;
@@ -64,7 +64,7 @@ export class Evaluator
 		globalCallbacks.push( callback );
 
 		let wrappedScript: string = script +
-			"import { globalCallbacks } from './Evaluator.js';\n" +
+			"import { globalCallbacks } from './Script/Evaluator.js';\n" +
 			"try { let result = new StEvaluator().$evaluate();\n" +
 			"\tglobalCallbacks.shift().result( result ); } \n" +
 			"catch( error ) { globalCallbacks.shift().error( error ); };\n";

@@ -2,7 +2,7 @@ CLASS PiBenchmark EXTENDS Benchmark MODULE Benchmark CLASSVARS '' VARS ''
 
 "Implements JS and ST benchmark for calculating digits of PI."
 
-INLINE 'import { Pi } from "../Script/Pi.js";'
+INLINE 'import { Pi } from "./JavaScript/Pi.js";'
 
 constructor
 	"Number of digits to find."

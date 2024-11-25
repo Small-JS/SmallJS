@@ -13,7 +13,7 @@
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
 			"cwd": "${workspaceFolder}/../Node",
-			"program": "${workspaceFolder}/out/App.js",
+			"program": "${workspaceFolder}/out/main.js",
 			"args": [ "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
 			"envFile": "${workspaceFolder}/../Node/.env",
 			"postDebugTask": "Run Node tests"
@@ -24,7 +24,7 @@
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
 			"cwd": "${workspaceFolder}/../Node",
-			"program": "${workspaceFolder}/out/App.js",
+			"program": "${workspaceFolder}/out/main.js",
 			"args": [ "-m", "NodeApp", "../Smalltalk/Core", "../Smalltalk/Node", "src", "out" ],
 			"envFile": "${workspaceFolder}/../Node/.env",
 			"postDebugTask": "Run Node tests"
@@ -35,7 +35,7 @@
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
 			"cwd": "${workspaceFolder}/../Examples/Counter",
-			"program": "${workspaceFolder}/out/App.js",
+			"program": "${workspaceFolder}/out/main.js",
 			"args": [ "-m", "CounterApp", "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
 			// "args": [ "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
 			"envFile": "${workspaceFolder}/../Examples/Counter/.env"

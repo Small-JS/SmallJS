@@ -15,7 +15,7 @@ tsc
 
 # Compile Smalltalk
 
-node ../../../Compiler/out/App.js -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
+../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
 
 # Check and run .env file
 
@@ -32,4 +32,4 @@ set +o allexport
 
 # Run tests
 
-node out/App.js -test
+node out/main.js -test

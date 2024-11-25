@@ -6,5 +6,4 @@ cd "$(dirname "$0")"
 
 echo "Cleaning: Example Todo"
 
-rm -f ./web/App.js*
 rm -fr ./web/Script

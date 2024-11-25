@@ -6,5 +6,4 @@ cd "$(dirname "$0")"
 
 echo "Cleaning: Example Shop Client"
 
-rm -f ./web/App.js*
 rm -fr ./web/Script

@@ -17,7 +17,7 @@ tsc
 # This assumes the selected examples have been built beforehand.
 # Just copy the generated web apps for use in iframes.
 
-echo "Copying playground"
+echo "Copying Playground"
 
 rm -rf web/Playground/Playground
 cp -r ../Playground/web web/Playground/Playground
