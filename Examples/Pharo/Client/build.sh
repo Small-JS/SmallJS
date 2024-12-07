@@ -62,7 +62,8 @@ fi
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
-	open -n $pharoVm --args $pharoImage st StartServer.st
+	startFile=`pwd`"/StartServer.st"
+	open -n $pharoVm --args $pharoImage st $startFile
 else
 	$pharoVm $pharoImage st StartServer.st &
 fi
@@ -110,13 +111,9 @@ fi
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
-	echo "MacOS: Close Pharo manually."
-	# TODO:
-	# This does not wort on MacOS since the open command does not give you the PID.
-	# You can do some kludge with 'ps' and 'grep', but I'm a bit tired of MacOS right now..
-else
-	echo "Terminating Pharo server PID: "$pharoServerPid
-	kill $pharoServerPid
+	# The MacOS "open" command does not set de PID of the opened process.
+	# So we terminate the Pharo server finding its PID with in "ps" output.
+	kill "$( ps aux | grep -v grep | grep -i Pharo.app | awk '{print $2;}' )"
 fi
 
 sleep 2

@@ -35,7 +35,8 @@ fi
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
-	open -n $pharoVm --args $pharoImage st StartServer.st
+	startFile=`pwd`"/StartServer.st"
+	open -n $pharoVm --args $pharoImage st $startFile
 else
 	$pharoVm $pharoImage st StartServer.st &
 fi
