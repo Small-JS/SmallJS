@@ -19,6 +19,8 @@ allThen: block
 	 Throws an error if any test fails.
 	 Evaluates block after async tests have run."
 
+	self log: 'Running unit tests...'.
+
 	Test resetAssertCount.
 	Test resetDisabledModuleCount.
 
@@ -59,15 +61,15 @@ constructor
 	methodAssertCount := 0.
 !
 
-enabled
+disabled
 	"Override this to conditionally disable tests."
-	^ true.
+	^ false.
 !
 all
-	"Call all methods named 'test*' on self for enabled tests."
-	self enabled
-		ifFalse: [ Test disabledModuleCount increment ]
-		ifTrue: [
+	"Call all methods named 'test*' on self for tests not disabled."
+	self disabled
+		ifTrue: [ Test disabledModuleCount increment ]
+		ifFalse: [
 			self class methodNames do: [ :methodName |
 				 ( self isTestMethod: methodName ) ifTrue: [
 					currentMethodName := methodName.

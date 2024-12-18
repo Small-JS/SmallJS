@@ -4,9 +4,9 @@ CLASSMETHODS
 
 METHODS
 
-enabled
+disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_POSTGRES' ) notNil.
+	^ ( Process envAt: 'SMALLJS_POSTGRES' ) isNil.
 !
 test
 	"Test with async database operations."
@@ -102,7 +102,12 @@ tableQueryId: product
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
 
-	self tableInsert.
+	self tableDeleteTest.
+!
+tableDeleteTest
+	"Delete persons named Test*, that might have been left after an interrupted test."
+	database query: 'DELETE FROM "Person" WHERE "name" LIKE \'Test%\''
+		then: [ self tableInsert ].
 !
 tableInsert
 	| person |
@@ -141,6 +146,5 @@ onTableDelete: person
 	self end.
 !
 end
-	"self log: 'TestPostgresDatabase tests completed.'."
 	database end.
 !

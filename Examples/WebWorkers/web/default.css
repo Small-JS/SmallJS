@@ -4,12 +4,13 @@
 	background-color: #F0F0F0;
 }
 
-#titleMessage {
+.title {
+	margin-top: 0px;
+	margin-bottom: 0px;
 	font-size: X-Large;
 	font-weight: bold;
 	text-align: center;
-	margin-top: 0px;
-	margin-bottom: 0px;
+	color: black;
 	background-color: lightblue;
 }
 
@@ -41,14 +42,10 @@
 }
 
 #settingsTable th,
-td {
+#settingsTable td {
 	width: 50%;
 	padding: 4px;
 	border: 0px;
-	text-align: right;
-}
-
-#settingsTable th {
 	text-align: right;
 }
 
@@ -78,4 +75,11 @@ td {
 	padding: 4px;
 	border: 1px solid grey;
 	text-align: right;
+}
+
+.vertical-center
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

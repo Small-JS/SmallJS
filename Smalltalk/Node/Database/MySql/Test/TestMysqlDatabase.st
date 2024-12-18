@@ -2,9 +2,9 @@ CLASS TestMysqlDatabase EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'data
 
 METHODS
 
-enabled
+disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_MYSQL' ) notNil.
+	^ ( Process envAt: 'SMALLJS_MYSQL' ) isNil.
 !
 test
 	| connectionString |
@@ -97,7 +97,12 @@ tableQueryId: product
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
 
-	self tableInsert.
+	self tableDeleteTest.
+!
+tableDeleteTest
+	"Delete person named Test*, that might have been left after an interrupted test."
+	database query: 'DELETE FROM `person` WHERE `name` LIKE "Test%"'
+		then: [ self tableInsert ].
 !
 tableInsert
 	| person |

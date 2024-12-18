@@ -68,7 +68,7 @@ else
 	$pharoVm $pharoImage st StartServer.st &
 fi
 
-sleep 8
+sleep 10
 pharoServerPid=$!
 
 # Test in enabled browsers.

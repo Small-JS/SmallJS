@@ -4,9 +4,9 @@ CLASSMETHODS
 
 METHODS
 
-enabled
+disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_MARIADB' ) notNil.
+	^ ( Process envAt: 'SMALLJS_MARIADB' ) isNil.
 !
 test
 	| connectionString |
@@ -99,12 +99,12 @@ tableQueryId: product
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
 
-	self deleteMyPerson.
+	self tableDeleteTest.
 !
-deleteMyPerson
-	"Delete person named 'Test' in case it was left behind by by a previous error after inserting."
-	database query: 'DELETE FROM Person WHERE `name` = "Test"'
-	then: [ self tableInsert ].
+tableDeleteTest
+	"Delete person named Test*, that might have been left after an interrupted test."
+	database query: 'DELETE FROM `person` WHERE `name` LIKE "Test%"'
+		then: [ self tableInsert ].
 !
 tableInsert
 	| person |

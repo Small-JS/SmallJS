@@ -60,7 +60,8 @@ to: limit by: by do: block
 	by = 0 ifTrue: [ self error: 'to:by:do: By is 0.'].
 
 	index := self.
-	[ ( ( by > 0 ) & ( index <= limit ) ) | ( ( by < 0 ) & ( index >= limit ) ) ] whileTrue: [
+	[ ( ( by > 0 ) & ( index <= limit ) ) |
+		( ( by < 0 ) & ( index >= limit ) ) ] whileTrue: [
 		block value: index.
 		index := index + by ].
 !

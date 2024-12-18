@@ -7,7 +7,7 @@ METHODS
 "Quoting and parameters"
 
 quote
-	"Return character used for quoting table and column names as a strings."
+	"Return character used for quoting table and column names."
 	^ '`'.
 !
 parameter: index

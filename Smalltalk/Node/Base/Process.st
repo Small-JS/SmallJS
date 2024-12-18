@@ -28,3 +28,9 @@ envDeleteAt: name
 cwd
 	^ String fromJs: INLINE 'process.cwd()'.
 !
+
+"Process"
+
+exit: code
+	INLINE 'process.exit( code.js )'.
+!

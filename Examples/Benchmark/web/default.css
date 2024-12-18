@@ -4,26 +4,25 @@
 	background-color: #F0F0F0;
 }
 
-#titleMessage {
+.title {
 	font-size: X-Large;
 	font-weight: bold;
-	text-align: center;
+	background-color: lightblue;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	background-color: lightblue;
 }
 
 #formTable {
-	background-color: white;
+	width: 320px;
 	margin-left: auto;
 	margin-right: auto;
 	border: solid gray;
 	border-width: 2px;
 	border-spacing: 16px;
 	border-radius: 10px;
-	text-align: center;
-	width: 320px;
 	box-shadow: 10px 10px 5px gray;
+	background-color: white;
+	text-align: center;
 }
 
 #resultsTable {
@@ -45,6 +44,12 @@
 
 #resultsTable th:nth-child(1) {
 	text-align: left;
+}
+
+.vertical-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .tableHeader {
