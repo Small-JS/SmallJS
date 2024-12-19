@@ -74,7 +74,10 @@ toJs
 !
 toJson
 	"Return a JSON string representing self."
-	^ String fromJs: INLINE 'JSON.stringify( this.$toJs() )'.
+	| jsObject |
+	"Separate step to prevent minimizing of method: toJs."
+	jsObject := self toJs.
+	^ String fromJs: INLINE 'JSON.stringify( jsObject )'.
 !
 toJsObject
 	"Calls toJs and wraps result in a JsObject."
