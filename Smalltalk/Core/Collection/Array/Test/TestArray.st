@@ -22,6 +22,12 @@ testCore
 	self assert: [ #( 1 2 ) , #( 3 4 ) = #( 1 2 3 4 ) ].
 	self assert: [ array2 pop = 8 ].
 	self assertError: [ Array new pop ].
+
+	array1 := #( 1 2 ).
+	array2 := array1 copy.
+	self assert: [ array1 = array2 ].
+	array2 add: 3.
+	self assert: [ array1 ~= array2 ].
 !
 testCreation
 	| array jsArray |

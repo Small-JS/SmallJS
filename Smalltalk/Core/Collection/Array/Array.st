@@ -3,6 +3,8 @@ CLASS Array EXTENDS AbstractArray MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+"Creating"
+
 new
 	^ self basicNew js: INLINE '[]'.
 !
@@ -31,7 +33,7 @@ fromJsStrings: jsArray
 
 METHODS
 
-"Conversion."
+"Conversion"
 
 toJs
 	"Return JS array with JS representation of elements, that should be JsObject (sub)instances."
@@ -40,6 +42,9 @@ toJs
 		for( let element of this.js )
 			array.push( element.$toJs() );
 		return array'.
+!
+copy
+	^ self class fromJs: INLINE '[... this.js]'.
 !
 
 "Comparing."
