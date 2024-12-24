@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               11.0.2-MariaDB - mariadb.org binary distribution
+-- Server version:               11.7.1-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.5.0.6677
+-- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,10 +16,12 @@
 
 
 -- Dumping database structure for smalljs
+DROP DATABASE IF EXISTS `smalljs`;
 CREATE DATABASE IF NOT EXISTS `smalljs` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `smalljs`;
 
 -- Dumping structure for table smalljs.order
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE IF NOT EXISTS `order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `person` int(11) NOT NULL,
@@ -39,6 +41,7 @@ INSERT INTO `order` (`id`, `person`, `product`, `amount`) VALUES
 	(3, 2, 3, 2);
 
 -- Dumping structure for table smalljs.person
+DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -46,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `salt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=508 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table smalljs.person: ~3 rows (approximately)
 INSERT INTO `person` (`id`, `name`, `password`, `salt`) VALUES
@@ -55,6 +58,7 @@ INSERT INTO `person` (`id`, `name`, `password`, `salt`) VALUES
 	(3, 'Robert', '35e2b3530c3b7b2c7c0ae6670a1a6eb60a2e9e57c3c393f4a0ceaf11e71351ff', 484813);
 
 -- Dumping structure for table smalljs.product
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
