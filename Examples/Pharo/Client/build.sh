@@ -107,6 +107,7 @@ fi
 
 # Stop web server
 
+echo "Stopping Pharo Server"
 
 if
 	[[ $OSTYPE == "darwin"* ]]
@@ -114,6 +115,8 @@ then
 	# The MacOS "open" command does not set de PID of the opened process.
 	# So we terminate the Pharo server finding its PID with in "ps" output.
 	kill "$( ps aux | grep -v grep | grep -i Pharo.app | awk '{print $2;}' )"
+else
+	kill $pharoServerPid
 fi
 
 sleep 2
