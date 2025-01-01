@@ -1,8 +1,8 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@types/node": "^22.9.3",
-		"electron": "^33.2.0",
+		"@types/node": "^22.10.3",
+		"electron": "^33.2.1",
 		"node-fetch": "^3.3.2"
 	}
 }

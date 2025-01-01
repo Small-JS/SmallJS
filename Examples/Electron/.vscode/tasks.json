@@ -25,17 +25,30 @@
 				"cwd": "${workspaceFolder}"
 			},
 			"problemMatcher": [],
-			"dependsOn": "Compile Smalltalk"
+			"dependsOn": "Compile Smalltalk Node"
 		},
+		// Must compile Node and Browser file separately
+		// because of same class names with different implementations.
 		{
-			"label": "Compile Smalltalk",
+			"label": "Compile Smalltalk Node",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../../Compiler/out/main.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Node",  "../../Smalltalk/Browser", "+t", "../../Smalltalk/Electron", "src", "out" ],
+			"args": [  "../../Compiler/out/main.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Node",  "+t", "../../Smalltalk/Electron/Node", "src/Node", "out" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [],
+			"dependsOn": "Compile Smalltalk Browser"
+		},
+		{
+			"label": "Compile Smalltalk Browser",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/main.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "../../Smalltalk/Electron/Browser", "src/Browser", "out" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
 			"problemMatcher": []
-		},
+		}
 	]
 }

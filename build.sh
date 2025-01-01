@@ -9,6 +9,7 @@ cd "$(dirname "$0")"
 ./Compiler/build.sh
 ./Node/build.sh
 ./Browser/build.sh
+./Playground/build.sh
 ./Examples/Counter/build.sh
 ./Examples/Todo/build.sh
 ./Examples/Balls/build.sh
@@ -20,7 +21,6 @@ cd "$(dirname "$0")"
 ./Examples/Electron/build.sh
 ./Examples/NodeGui/build.sh
 ./Examples/Pharo/Client/build.sh
-./Playground/build.sh
 ./Website/build.sh
 
 echo "==== All builds successful"
