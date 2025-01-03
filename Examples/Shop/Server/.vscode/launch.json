@@ -8,37 +8,47 @@
 			"name": "Launch Server",
 			"type": "node",
 			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
+			"runtimeArgs": [
+				"--experimental-sqlite"
 			],
 			"program": "${workspaceFolder}/out/main.js",
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
 			"preLaunchTask": "Compile server"
 		},
 		{
 			"name": "Launch Server test",
 			"type": "node",
 			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
+			"runtimeArgs": [
+				"--experimental-sqlite"
 			],
 			"program": "${workspaceFolder}/out/main.js",
 			"args": "-test",
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
 			"preLaunchTask": "Compile server"
 		},
 		{
 			"name": "Launch Server minimized",
 			"type": "node",
 			"request": "launch",
+			"runtimeArgs": [
+				"--experimental-sqlite"
+			],
+			"program": "${workspaceFolder}/out/main.js",
+			"args": "-test",
+			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
-			"program": "${workspaceFolder}/out/main.js",
-			"cwd": "${workspaceFolder}",
-			"envFile": "${workspaceFolder}/.env",
 			"preLaunchTask": "Compile server minimized"
 		}
 	]

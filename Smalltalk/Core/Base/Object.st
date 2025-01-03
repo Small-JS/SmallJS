@@ -21,35 +21,35 @@ new
 fromJs: js
 	"Return new ST object containing values of argument JS object, recursively."
 
-	| jsClassName float object jsObject |
+	| jsType float object jsObject |
 
 	INLINE 'if( js == null ) return stNil'.
 
-	jsClassName := String fromJs: INLINE 'js.constructor.name'.
+	jsType := String fromJs: INLINE 'typeof js'.
 
-	jsClassName = 'String' ifTrue: [
+	jsType = 'string' ifTrue: [
 		^ String fromJs: js ].
 
-	jsClassName = 'Number' ifTrue: [
+	jsType = 'number' ifTrue: [
 		"Convert to integer if possible, otherwise float."
 		float := Float fromJs: js.
 		^ float isSafeInteger ifTrue: [ float toInteger ] ifFalse: [ float ] ].
 
-	jsClassName = 'Boolean' ifTrue: [
+	jsType = 'boolean' ifTrue: [
 		^ Boolean fromJs: js ].
 
-	jsClassName = 'Array' ifTrue: [
+	( Array isJsArray: js ) ifTrue: [
 		^ Array fromJs: js
 			elementConverter: [ :element | Object fromJs: element ] ].
 
-	jsClassName = 'Object' ifTrue: [
+	jsType = 'object' ifTrue: [
 		object := Object new.
 		jsObject := JsObject fromJs: js.
 		jsObject ownJsPropertyNames do: [ :name |
 			object atProperty: name put: ( jsObject atJsProperty: name ) ].
 		^ object ].
 
-	self error: 'Unknown JS classname: ', jsClassName.
+	self error: 'Unknown JS type: ', jsType.
 !
 parse: json
 	^ Object fromJs: INLINE 'JSON.parse( json.js )'.

@@ -32,4 +32,4 @@ set +o allexport
 
 # Run tests
 
-node out/main.js -test
+node  --experimental-sqlite out/main.js -test

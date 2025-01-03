@@ -1,13 +1,12 @@
 # SmallJS database support
 
-SmallJS currently supports these databases: Postgres, MariaDB and MySQL.
-Note that while Postgres and MariaDB are completely free and open source,
-using MySQL in commercial software requires a payed license.
+SmallJS currently supports these databases: Postgres, MariaDB, MySQL and SQLite.
+Note that using MySQL in commercial software requires a payed license.
 
 # Resources
 
 The JS "driver" (client library) for each database is already installed
-in the `./Node` and `./Shop/Server` projects.
+in the projects `./Node` and `./Shop/Server`.
 
 Here are the download locations for the database server and administration software:
 The these can be installed with their default settings.
@@ -26,6 +25,12 @@ The these can be installed with their default settings.
 
 - Server:	https://dev.mysql.com/downloads/mysql/
 - Admin:	https://dev.mysql.com/downloads/workbench/
+
+## SQLite
+
+- Server:	Is built into Nodes.js starting v 22.5.0,
+			Currently (v23.5) requiring startup flag to enable it: "--experimental-sqlite".
+- Admin:	https://sqlitebrowser.org/dl/
 
 # Create the SmallJS database
 

@@ -31,6 +31,12 @@ fromJsStrings: jsArray
 	^ Array fromJs: jsArray elementClass: String.
 !
 
+"Testing"
+
+isJsArray: jsArray
+	^ Boolean fromJs: INLINE 'Array.isArray( jsArray )'.
+!
+
 METHODS
 
 "Conversion"
