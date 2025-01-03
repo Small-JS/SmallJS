@@ -19,8 +19,8 @@ connectDatabase
 	connectionString isNil ifTrue: [
 			self error: 'Environment variable "SHOP_DATABASE" not set.' ].
 
-	self log: 'Connecting to database.'.
 	database := SqlDatabase newFor: connectionString.
+	self log: 'Connecting to database type: ', database class name.
 	database connect: connectionString then: [ self connectTables ].
 !
 connectTables

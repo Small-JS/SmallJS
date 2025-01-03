@@ -99,7 +99,6 @@ delete: sqlObject then: block
 	query := 'DELETE FROM ', self quotedName, ' WHERE `id` = ?'.
 	database query: query with: #( ( sqlObject id ) )
 		then: [ :result | self onDelete: sqlObject result: result then: block ].
-
 !
 onDelete: sqlObject result: result then: block
 	result affectedRows = 1 ifFalse: [

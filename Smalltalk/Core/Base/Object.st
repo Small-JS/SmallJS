@@ -180,6 +180,12 @@ isMemberOf: aClass
 respondsTo: methodName
 	^ self class canUnderstand: methodName.
 !
+ifNil: block
+	^ false.
+!
+ifNotNil: block
+	^ true.
+!
 
 "Methods"
 

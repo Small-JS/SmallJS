@@ -17,3 +17,9 @@ toString
 isNil
 	^ true.
 !
+ifNil: block
+	^ true.
+!
+ifNotNil: block
+	^ false.
+!

@@ -25,8 +25,16 @@ queryAll
 	rows := statement all: #().
 	^ rowClass fromRows: rows.
 !
+queryAllThen: block
+	"Async compatibility method that is executed sync."
+	block value: self queryAll.
+!
 query: condition
 	^ self query: condition with: #().
+!
+query: condition then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self query: condition ).
 !
 query: condition with: parameters
 	| sql statement rows |
@@ -36,10 +44,18 @@ query: condition with: parameters
 	rows := statement all: parameters.
 	^ rowClass fromRows: rows.
 !
+query: condition with: parameters then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self query: condition with: parameters ).
+!
 queryId: id
 	| rows |
 	rows := self query: '"id" = ?' with: #( id ).
 	^ rows length = 0 ifTrue: [ nil ] ifFalse: [ rows first ].
+!
+queryId: id then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self queryId: id ).
 !
 run: sql with: parameters
 	| statement rows |
@@ -68,6 +84,10 @@ insert: sqlObject
 
 	sqlObject id: id.
 !
+insert: sqlObject then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self insert: sqlObject ).
+!
 
 "Updating"
 
@@ -83,6 +103,10 @@ update: sqlObject
 	result changes = 1 ifFalse: [
 		self error: 'UPDATE by id did not effect exactly 1 row' ].
 !
+update: sqlObject then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self update: sqlObject ).
+!
 
 "Deleting"
 
@@ -97,4 +121,8 @@ delete: sqlObject
 
 	result changes = 1 ifFalse: [
 		self error: 'DELETE by id did not effect exactly 1 row' ].
+!
+delete: sqlObject then: block
+	"Async compatibility method that is executed sync."
+	block value: ( self delete: sqlObject ).
 !
