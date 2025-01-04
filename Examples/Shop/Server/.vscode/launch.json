@@ -8,9 +8,6 @@
 			"name": "Launch Server",
 			"type": "node",
 			"request": "launch",
-			"runtimeArgs": [
-				"--experimental-sqlite"
-			],
 			"program": "${workspaceFolder}/out/main.js",
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
@@ -23,9 +20,6 @@
 			"name": "Launch Server test",
 			"type": "node",
 			"request": "launch",
-			"runtimeArgs": [
-				"--experimental-sqlite"
-			],
 			"program": "${workspaceFolder}/out/main.js",
 			"args": "-test",
 			"cwd": "${workspaceFolder}",
@@ -39,9 +33,6 @@
 			"name": "Launch Server minimized",
 			"type": "node",
 			"request": "launch",
-			"runtimeArgs": [
-				"--experimental-sqlite"
-			],
 			"program": "${workspaceFolder}/out/main.js",
 			"args": "-test",
 			"cwd": "${workspaceFolder}",

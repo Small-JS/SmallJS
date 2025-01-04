@@ -10,4 +10,4 @@ set -o allexport
 source .env
 set +o allexport
 
-node --experimental-sqlite out/main.js
+node out/main.js

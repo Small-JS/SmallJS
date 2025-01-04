@@ -14,8 +14,10 @@ echo "tsc Electron example"
 tsc
 
 # Compile Smalltalk
+# Compile Node and Browser parts separately to prevent class name clashes.
 
-../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/Browser +t ../../Smalltalk/Electron src out
+../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Node +t ../../Smalltalk/Electron/Node src/Node out
+../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Browser +t ../../Smalltalk/Electron/Browser src/Browser out
 
 # Pre-launch script
 
