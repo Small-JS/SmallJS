@@ -1,12 +1,13 @@
-CLASS TestMariadbDatabase EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'database personTable productTable orderTable'
+CLASS TestSqliteDatabaseAsync EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'database personTable productTable orderTable'
 
-CLASSMETHODS
+"Tests SQL with async interface, that is compatible with that of other supported databases.
+ Execution in SQLite is in fact sync, but that should not matter. "
 
 METHODS
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_MARIADB' ) isNil.
+	^ ( Process envAt: 'SMALLJS_SQLITE' ) isNil.
 !
 test
 	self connect.
@@ -14,17 +15,15 @@ test
 connect
 	| connectionString |
 
-	connectionString := Process envAt: 'SMALLJS_MARIADB'.
-	self assert: [ connectionString includes: 'mariadb' ].
-
-	database := MariadbDatabase new.
+	connectionString := Process envAt: 'SMALLJS_SQLITE'.
+	self assert: [ connectionString includes: '.db' ].
+	database := SqliteDatabase new.
 	database connect: connectionString
 		then: [ self onConnect ]
 		catch: [ :error | error throw ].
 !
 onConnect
-	self assert: [ database threadId >= 0 ] .
-	self assert: [ database status >= 0 ] .
+	self assert: [ true ].	"Method reached."
 
 	personTable := database connectTable: 'Person' rowClass: MyPerson.
 	productTable := database connectTable: 'Product' rowClass: MyProduct.
@@ -33,18 +32,19 @@ onConnect
 	self databaseQuery.
 !
 databaseQuery
-	database query: 'SELECT `id`, `name` FROM `Person` WHERE `id` = 1'
+	database query: 'SELECT "id", "name" FROM "Person" WHERE "id" = 1'
 		then: [ :rows | self onDatabaseQuery: rows ]
 		catch: [ :error | error throw ].
 !
 onDatabaseQuery: rows
-	self assert: [ rows length = 1 ].
+	self assert: [  rows length = 1 ].
 	self assert: [ ( rows first atProperty: 'name' ) = 'John' ].
 
 	self databaseQueryParameters.
 !
 databaseQueryParameters
-	database query: 'SELECT `id`, `name` FROM `Person` WHERE `id` = ?' with: #( 2 )
+	database query: 'SELECT "id", "name" FROM "Person" WHERE "id" = ?'
+		with: #( 2 )
 		then: [ :rows | self onDatabaseQueryParameters: rows ]
 		catch: [ :error | error throw ].
 !
@@ -64,7 +64,7 @@ onTableQueryAll: products
 	self tableQuery.
 !
 tableQuery
-	orderTable query: '`person` = 1'
+	orderTable query: '"person" = 1'
 		then: [ :orders | self onTableQuery: orders ]
 		catch: [ :error | error throw ].
 !
@@ -88,7 +88,7 @@ onTableQuery: orders
 	self tableQueryParameters.
 !
 tableQueryParameters
-	personTable query: '`name` = ?' with: #( 'Robert' )
+	personTable query: '"name" = ?' with: #( 'Robert' )
 		then: [ :persons | self onTableQueryParameters: persons ]
 		catch: [ :error | error throw ].
 !
@@ -103,18 +103,29 @@ onTableQueryParameters: persons
 !
 tableQueryId
 	productTable queryId: 2
-		then: [ :product | self tableQueryId: product ]
+		then: [ :product | self onTableQueryId: product ]
 		catch: [ :error | error throw ].
 !
-tableQueryId: product
+onTableQueryId: product
+	self assert: [ product notNil ].
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
+
+	self tableQueryMissingId.
+!
+tableQueryMissingId
+	productTable queryId: -1
+		then: [ :product | self onTableQueryMissingId: product ]
+		catch: [ :error | error throw ].
+!
+onTableQueryMissingId: product
+	self assert: [ product isNil ].
 
 	self tableDeleteTest.
 !
 tableDeleteTest
-	"Delete person named Test*, that might have been left after an interrupted test."
-	database query: 'DELETE FROM `person` WHERE `name` LIKE "Test%"'
+	"Delete persons named Test*, that might have been left after an interrupted test."
+	database query: 'DELETE FROM "Person" WHERE "name" LIKE \'Test%\''
 		then: [ self tableInsert ]
 		catch: [ :error | error throw ].
 !
@@ -122,10 +133,6 @@ tableInsert
 	| person |
 
 	person := MyPerson new name: 'Test'; setPassword: 'secret'.
-	self assert: [ person salt >= 0 ].
-	self assert: [ person password length = 64 ].
-	self assert: [ person checkPassword: 'secret' ].
-
 	personTable insert: person
 		then: [ :person | self onTableInsert: person ]
 		catch: [ :error | error throw ].

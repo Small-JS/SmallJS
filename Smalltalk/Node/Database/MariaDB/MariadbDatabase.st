@@ -9,10 +9,11 @@ INLINE 'import * as Mariadb from "mariadb";'
 
 "Connecting"
 
-connect: connectionString then: block
+connect: connectionString then: block catch: errorBlock
 	INLINE 'let savedThis = this;
 		Mariadb.createConnection( connectionString.js )
-			.then( function ( connection ) { savedThis.js = connection ; block.$value() } )'.
+			.then( function ( connection ) { savedThis.js = connection ; block.$value() } )
+			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 threadId
 	self isUndefined ifTrue: [ ^ nil ].
@@ -32,13 +33,15 @@ connectTable: name rowClass: rowClass
 
 "Querying"
 
-query: query then: block
+query: query then: block catch: errorBlock
 	INLINE 'this.js.query( query.js )
-		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )'.
+		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )
+		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
-query: query with: parameters then: block
+query: query with: parameters then: block catch: errorBlock
 	INLINE 'this.js.query( query.js, parameters.$toJs() )
-		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )'.
+		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )
+		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 onQuery: result then: block
 	"Result is a JsObject containing one of:

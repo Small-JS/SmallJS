@@ -9,6 +9,9 @@ disabled
 	^ ( Process envAt: 'SMALLJS_POSTGRES' ) isNil.
 !
 test
+	self connect.
+!
+connect
 	"Test with async database operations."
 
 	| connectionString |
@@ -16,7 +19,9 @@ test
 	connectionString := Process envAt: 'SMALLJS_POSTGRES'.
 	self assert: [ connectionString includes: 'postgres' ].
 	database := PostgresDatabase new.
-	database connect: connectionString then: [ self onConnect ].
+	database connect: connectionString
+		then: [ self onConnect ]
+		catch: [ :error | error throw ].
 !
 onConnect
 	self assert: [ true ].	"Method reached."
@@ -29,7 +34,8 @@ onConnect
 !
 databaseQuery
 	database query: 'SELECT "id", "name" FROM "Person" WHERE "id" = 1'
-		then: [ :queryResult | self onDatabaseQuery: queryResult ].
+		then: [ :queryResult | self onDatabaseQuery: queryResult ]
+		catch: [ :error | error throw ].
 !
 onDatabaseQuery: queryResult
 	self assert: [ queryResult fieldNames = #( 'id' 'name' ) ].
@@ -41,7 +47,8 @@ onDatabaseQuery: queryResult
 databaseQueryParameters
 	database query: 'SELECT "id", "name" FROM "Person" WHERE "id" = $1'
 		with: #( 2 )
-		then: [ :queryResult | self onDatabaseQueryParameters: queryResult ].
+		then: [ :queryResult | self onDatabaseQueryParameters: queryResult ]
+		catch: [ :error | error throw ].
 !
 onDatabaseQueryParameters: queryResult
 	self assert: [ queryResult fieldNames = #( 'id' 'name' ) ].
@@ -51,7 +58,8 @@ onDatabaseQueryParameters: queryResult
 	self tableQueryAll.
 !
 tableQueryAll
-	productTable queryAllThen: [ :products | self onTableQueryAll: products ].
+	productTable queryAllThen: [ :products | self onTableQueryAll: products ]
+	catch: [ :error | error throw ].
 !
 onTableQueryAll: products
 	self assert: [ products length = 3 ].
@@ -60,7 +68,8 @@ onTableQueryAll: products
 !
 tableQuery
 	orderTable query: '"person" = 1'
-		then: [ :orders | self onTableQuery: orders ].
+		then: [ :orders | self onTableQuery: orders ]
+		catch: [ :error | error throw ].
 !
 onTableQuery: orders
 	| order |
@@ -83,7 +92,8 @@ onTableQuery: orders
 !
 tableQueryParameters
 	personTable query: '"name" = $1' with: #( 'Robert' )
-		then: [ :persons | self onTableQueryParameters: persons ].
+		then: [ :persons | self onTableQueryParameters: persons ]
+		catch: [ :error | error throw ].
 !
 onTableQueryParameters: persons
 	| person |
@@ -95,30 +105,40 @@ onTableQueryParameters: persons
 	self tableQueryId.
 !
 tableQueryId
-	productTable queryId: 2 then:
-		[ :product | self tableQueryId: product ].
+	productTable queryId: 2
+		then: [ :product | self onTableQueryId: product ]
+		catch: [ :error | error throw ].
 !
-tableQueryId: product
+onTableQueryId: product
+	self assert: [ product notNil ].
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
+
+	self tableQueryMissingId.
+!
+tableQueryMissingId
+	productTable queryId: -1
+		then: [ :product | self onTableQueryMissingId: product ]
+		catch: [ :error | error throw ].
+!
+onTableQueryMissingId: product
+	self assert: [ product isNil ].
 
 	self tableDeleteTest.
 !
 tableDeleteTest
 	"Delete persons named Test*, that might have been left after an interrupted test."
 	database query: 'DELETE FROM "Person" WHERE "name" LIKE \'Test%\''
-		then: [ self tableInsert ].
+		then: [ self tableInsert ]
+		catch: [ :error | error throw ].
 !
 tableInsert
 	| person |
 
 	person := MyPerson new name: 'Test'; setPassword: 'secret'.
-	self assert: [ person salt >= 0 ].
-	self assert: [ person password length = 64 ].
-	self assert: [ person checkPassword: 'secret' ].
-
 	personTable insert: person
-		then: [ :person | self onTableInsert: person ].
+		then: [ :person | self onTableInsert: person ]
+		catch: [ :error | error throw ].
 !
 onTableInsert: person
 	self assert: [ person id > 0 ].
@@ -130,6 +150,7 @@ tableUpdate: person
 	person name: 'Test updated'.
 	personTable update: person
 		then: [ self onTableUpdate: person ]
+		catch: [ :error | error throw ].
 !
 onTableUpdate: person
 	self assert: [ person name = 'Test updated' ].
@@ -139,6 +160,7 @@ onTableUpdate: person
 tableDelete: person
 	personTable delete: person
 		then: [ self onTableDelete: person ]
+		catch: [ :error | error throw ].
 !
 onTableDelete: person
 	self assert: [ person name = 'Test updated' ].

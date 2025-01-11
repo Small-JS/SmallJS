@@ -8,7 +8,7 @@ test
 	self assert: [ [ true ] and: [ true ] ].
 	self assert: [ [ false ] or: [ true ] ].
 	self assert: [ ( [ :x | x + 1 ] script ) includes: 'x.$$plus' ].
-	self assert: [ ( [ Object thisMethodDoesNotExist ] valueOnError: [ :error | 'caught'] ) = 'caught' ].
+	self assert: [ ( [ Object thisMethodDoesNotExist ] tryCatch: [ :error | 'caught'] ) = 'caught' ].
 
 	milliseconds := Date new.
 	[ Date new <= milliseconds ] whileTrue.

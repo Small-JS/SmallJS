@@ -13,59 +13,68 @@ parameter: index
 
 "Querying"
 
-queryAllThen: block
+queryAllThen: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY `id`'.
 	database query: query
-		then: [ :rows | block value: ( rowClass fromRows: rows ) ].
+		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
+		catch: errorBlock.
 !
-query: condition then: block
+query: condition then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
 	database query: query
-		then: [ :rows | block value: ( rowClass fromRows: rows ) ].
+		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
+		catch: errorBlock.
 !
-query: condition with: parameters then: block
+query: condition with: parameters then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
 	database query: query with: parameters
-		then: [ :rows | block value: ( rowClass fromRows: rows ) ].
+		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
+		catch: errorBlock.
 !
-queryId: id then: block
+queryId: id then: block catch: errorBlock
 	"Return a new rowClass instance with values from the row with the argument id in the argument SQL table."
 
-	self query: '`id` = ?' with: #( id )
-		then: [ :sqlObjects | self onQueryId: id sqlObjects: sqlObjects then: block ].
+	self query: '`id` = ?'
+		with: #( id )
+		then: [ :sqlObjects | self onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock ]
+		catch: errorBlock.
 !
-onQueryId: id sqlObjects: sqlObjects then: block
-	sqlObjects length = 1 ifFalse: [
-		self error: 'Query by id did not return exactly 1 row. Id: ', id toString ].
+onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock
+	| sqlObject |
 
-	^ block value: sqlObjects first.
+	sqlObjects length > 1 ifTrue: [
+		^ errorBlock value: ( Error new: 'Query of id returned more than one row for table: ', name, ', id: ', id toString ) ].
+
+	sqlObject := sqlObjects length = 1 ifTrue: [ sqlObjects first ] ifFalse: [ nil ].
+	^ block value: sqlObject.
 !
 
 "Inserting"
 
-insert: sqlObject then: block
+insert: sqlObject then: block catch: errorBlock
 	"Insert sqlObject as a new row in self.
 	 The id variable will be set to a new serial value after the insert."
 
 	| query |
 
+	sqlObject id: nil.
 	query := 'INSERT INTO ', self quotedName, ' ( ', self columnList, ' ) VALUES ( ', self insertValuesParameters, ' )'.
-
 	database query: query with: sqlObject columnValues
-		then: [ :result | self onInsert: sqlObject result: result then: block ].
+		then: [ :result | self onInsert: sqlObject result: result then: block catch: errorBlock ]
+		catch: errorBlock.
 !
-onInsert: sqlObject result: result then: block
+onInsert: sqlObject result: result then: block catch: errorBlock
 	result affectedRows = 1 ifFalse: [
-		self error: 'INSERT did not effect exactly 1 row' ].
+		^ errorBlock value: ( Error message: 'INSERT did not effect exactly 1 row for id: ', sqlObject id toString ) ].
 
 	result insertId > 0 ifFalse: [
-		self error: 'INSERT did not result a valid id: ', result insertId toString ].
+		^ errorBlock value: ( Error new: 'INSERT did not return a valid id: ', result insertId toString ) ].
 
 	sqlObject id: result insertId.
 	block value: sqlObject.
@@ -73,36 +82,40 @@ onInsert: sqlObject result: result then: block
 
 "Updating"
 
-update: sqlObject then: block
+update: sqlObject then: block catch: errorBlock
 	"Update sqlObject in table using id."
 
 	| query |
 
 	query := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE `id` = ?'.
-	database query: query with: ( sqlObject columnValues add: sqlObject id )
-		then: [ :result | self onUpdate: sqlObject result: result then: block ].
+	database query: query
+		with: ( sqlObject columnValues add: sqlObject id )
+		then: [ :result | self onUpdate: sqlObject result: result then: block catch: errorBlock ]
+		catch: errorBlock.
 !
-onUpdate: sqlObject result: result then: block
+onUpdate: sqlObject result: result then: block catch: errorBlock
 	result affectedRows = 1 ifFalse: [
-		self error: 'UPDATE by id did not effect exactly 1 row' ].
+		^ errorBlock value: ( Error new: 'UPDATE by id did not effect exactly 1 row' ) ].
 
 	block value: sqlObject.
 !
 
 "Deleting"
 
-delete: sqlObject then: block
+delete: sqlObject then: block catch: errorBlock
 	"Delete sqlObject in table using id."
 
 	| query |
 
 	query := 'DELETE FROM ', self quotedName, ' WHERE `id` = ?'.
-	database query: query with: #( ( sqlObject id ) )
-		then: [ :result | self onDelete: sqlObject result: result then: block ].
+	database query: query
+		with: #( ( sqlObject id ) )
+		then: [ :result | self onDelete: sqlObject result: result then: block catch: errorBlock ]
+		catch: errorBlock.
 !
-onDelete: sqlObject result: result then: block
+onDelete: sqlObject result: result then: block catch: errorBlock
 	result affectedRows = 1 ifFalse: [
-		self error: 'Delete by id did not effect exactly 1 row' ].
+		^ errorBlock value: ( Error new: 'DELETE by id did not effect exactly 1 row' ) ].
 
 	block value: sqlObject.
 !

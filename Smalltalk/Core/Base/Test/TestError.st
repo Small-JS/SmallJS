@@ -4,7 +4,7 @@ test
 	| error |
 
 	self assertError: [ Error throw: 'My error' ].
-	[ Error throw: 'My error' ] valueOnError: [ :error | self onError: error ].
+	[ Error throw: 'My error' ] tryCatch: [ :error | self onError: error ].
 
 	error := Error new.
 	self assert: [ error message = '' ].

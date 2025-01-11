@@ -17,14 +17,15 @@ references
 
 "Connecting"
 
-async connect: connectionString then: block
+connect: connectionString then: block catch: errorBlock
 	INLINE '
 		this.js = MySql.createConnection( connectionString.js );
-		this.js.connect( ( queryError ) => this.$onConnect$then$( stMysqlQueryError$class.$fromJs$( queryError ), block ) )'.
+		this.js.connect( ( queryError ) => this.$onConnect$then$catch$(
+			stMysqlQueryError$class.$fromJs$( queryError ), block, errorBlock ) )'.
 !
-onConnect: queryError then: block
+onConnect: queryError then: block catch: errorBlock
 	queryError notNil ifTrue: [
-		self error: 'Database connection failed: ', queryError message ].
+		^ errorBlock value: queryError ].
 
 	block value.
 !
@@ -38,21 +39,21 @@ connectTable: name rowClass: rowClass
 
 "Querying"
 
-query: query then: block
-	INLINE 'this.js.query( query.js, ( error, result ) => this.$onQuery$result$then$(
-		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block ) )'.
+query: query then: block catch: errorBlock
+	INLINE 'this.js.query( query.js, ( error, result ) => this.$onQuery$result$then$catch$(
+		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block, errorBlock ) )'.
 !
-query: query with: parameters then: block
-	INLINE 'this.js.query( query.js, parameters.$toJs(), ( error, result ) => this.$onQuery$result$then$(
-		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block ) )'.
+query: query with: parameters then: block catch: errorBlock
+	INLINE 'this.js.query( query.js, parameters.$toJs(), ( error, result ) => this.$onQuery$result$then$catch$(
+		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block, errorBlock ) )'.
 !
-onQuery: error result: result then: block
+onQuery: error result: result then: block catch: errorBlock
 	"Result is a ST JsObject containing either:
 		For INSERT, UPDATE: a JS ResultSetHeader
 		For SELECT: a JS array with result rows."
 
 	error notNil ifTrue: [
-		self error: 'Query failed: ', error message ].
+		^ errorBlock value: error ].
 
 	result jsClassName = 'ResultSetHeader'
 		ifTrue: [ result := MysqlResultSetHeader fromJs: result js ]

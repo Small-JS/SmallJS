@@ -1,6 +1,9 @@
 CLASS SqliteTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
-	"This class implements an abstract SQL Table.
-	 Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
+
+"This class implements an abstract SQL Table.
+ Variable rowClass should refer to a subsclass of SqlObject,
+ of which instances map to rows in this table,
+ using an obigatory autonumber id column."
 
 METHODS
 
@@ -25,14 +28,15 @@ queryAll
 	rows := statement all: #().
 	^ rowClass fromRows: rows.
 !
-queryAllThen: block
+queryAllThen: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: self queryAll.
+	[ block value: self queryAll ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
 query: condition
 	^ self query: condition with: #().
 !
-query: condition then: block
+query: condition then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
 	block value: ( self query: condition ).
 !
@@ -44,18 +48,20 @@ query: condition with: parameters
 	rows := statement all: parameters.
 	^ rowClass fromRows: rows.
 !
-query: condition with: parameters then: block
+query: condition with: parameters then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: ( self query: condition with: parameters ).
+	[ block value: ( self query: condition with: parameters ) ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
 queryId: id
 	| rows |
 	rows := self query: '"id" = ?' with: #( id ).
 	^ rows length = 0 ifTrue: [ nil ] ifFalse: [ rows first ].
 !
-queryId: id then: block
+queryId: id then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: ( self queryId: id ).
+	[ block value: ( self queryId: id ) ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
 run: sql with: parameters
 	| statement rows |
@@ -84,9 +90,10 @@ insert: sqlObject
 
 	sqlObject id: id.
 !
-insert: sqlObject then: block
+insert: sqlObject then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: ( self insert: sqlObject ).
+	[ self insert: sqlObject. block value: sqlObject ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
 
 "Updating"
@@ -103,9 +110,10 @@ update: sqlObject
 	result changes = 1 ifFalse: [
 		self error: 'UPDATE by id did not effect exactly 1 row' ].
 !
-update: sqlObject then: block
+update: sqlObject then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: ( self update: sqlObject ).
+	[ self update: sqlObject. block value: sqlObject ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
 
 "Deleting"
@@ -122,7 +130,8 @@ delete: sqlObject
 	result changes = 1 ifFalse: [
 		self error: 'DELETE by id did not effect exactly 1 row' ].
 !
-delete: sqlObject then: block
+delete: sqlObject then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	block value: ( self delete: sqlObject ).
+	[ self delete: sqlObject. block value: sqlObject ]
+		tryCatch: [ :error | errorBlock value: error ].
 !

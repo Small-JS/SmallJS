@@ -1,9 +1,6 @@
 CLASS MysqlResultSetHeader EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
 	"This class implements MySQL ResultSetHeader."
 
-METHODS
-
-
 affectedRows
 	^ Integer fromJs: INLINE 'this.js.affectedRows'.
 !

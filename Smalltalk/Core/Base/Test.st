@@ -91,5 +91,5 @@ assert: block
 !
 assertError: block
 	"Evalute block expecting an error. If *no* error occurs, then raise an error."
-	self assert: [ ( block valueOnError: [ :error | error ] ) class = Error ].
+	self assert: [ ( block tryCatch: [ :error | error ] ) class = Error ].
 !

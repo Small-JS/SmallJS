@@ -1,8 +1,6 @@
 CLASS MysqlQueryError EXTENDS Error MODULE Database CLASSVARS '' VARS ''
 	"This class implements MySQL QueryError."
 
-METHODS
-
 code
 	^ String fromJs: INLINE 'this.js.code'.
 !

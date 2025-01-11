@@ -21,7 +21,9 @@ connectDatabase
 
 	database := SqlDatabase newFor: connectionString.
 	self log: 'Connecting to database type: ', database class name.
-	database connect: connectionString then: [ self connectTables ].
+	database connect: connectionString
+		then: [ self connectTables ]
+		catch: [ :error | error throw ].
 !
 connectTables
 	personTable := database connectTable: 'Person' rowClass: Person.
@@ -87,17 +89,19 @@ login: request response: response
 				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
 				ifFalse: [
 					query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-					personTable query: query  with: #( userName ) then: [ :persons |
-						"Note: Block returns are not allowed in pg callbacks."
-						persons length < 1
-							ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
-							ifFalse: [
-								person := persons first.
-								( person checkPassword: password ) not
-									ifTrue: [ response send: ( result message: 'Password check failed' ) ]
-									ifFalse: [
-										request session set: 'user' to: person.
-										response send: ( result success: true; message: 'Login succeeded' ) ] ] ] ] ].
+					personTable query: query  with: #( userName )
+						then: [ :persons |
+							"Note: Block returns are not allowed in pg callbacks."
+							persons length < 1
+								ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
+								ifFalse: [
+									person := persons first.
+									( person checkPassword: password ) not
+										ifTrue: [ response send: ( result message: 'Password check failed' ) ]
+										ifFalse: [
+											request session set: 'user' to: person.
+											response send: ( result success: true; message: 'Login succeeded' ) ] ] ]
+						catch: [ :error | error throw ] ] ].
 !
 getRequestUser: request response: response
 	"Returns the logged-in user (Person) from the request or nil if it does not exist.
@@ -127,8 +131,9 @@ returns:
 products: request response: response
 	( self checkRequestUser: request response: response ) ifFalse: [ ^ nil ].
 
-	productTable queryAllThen:
-		[ :products | response send: products toJsObject ].
+	productTable
+		queryAllThen: [ :products | response send: products toJsObject ]
+		catch: [ :error | error throw ].
 !
 
 "Example orders request:
@@ -145,15 +150,20 @@ orders: request response: response
 
 	query := ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ).
 	userId := user id.
-	orderTable query: query with: #( userId ) then: [ :orders |
-		query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
-			' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
-		productTable query: query with: #( userId )
-			then: [ :products |
-				result := Object new
-					atProperty: 'orders' put: orders;
-					atProperty: 'products' put: products.
-				response send: result toJsObject ] ].
+	orderTable query: query
+		with: #( userId )
+		then: [ :orders |
+			query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
+				' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
+			productTable query: query
+				with: #( userId )
+				then: [ :products |
+					result := Object new
+						atProperty: 'orders' put: orders;
+						atProperty: 'products' put: products.
+					response send: result toJsObject ]
+				catch: [ :error | error throw ] ]
+		catch: [ :error | error throw ].
 !
 stop
 	server terminate.

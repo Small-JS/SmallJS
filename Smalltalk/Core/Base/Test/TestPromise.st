@@ -14,7 +14,7 @@ test
 
 	"2024-05-15 - Test disabled because of this VSCode bug
 	 https://stackoverflow.com/questions/45282653/why-does-vs-code-break-on-handled-exception-from-reject-in-promise"
-	"promise := [ Promise reject: 'fail' ] valueOnError: [].
+	"promise := [ Promise reject: 'fail' ] tryCatch: [].
 	promise catch: [ :reason | self assert: [ reason = 'fail' ] ]."
 !
 testCollections

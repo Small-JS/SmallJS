@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "esNext",
-		"module": "NodeNext",
+		"module": "nodeNext",
 		"lib": [
 			"esNext"
 		],

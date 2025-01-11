@@ -9,12 +9,6 @@ INLINE 'import pg from "pg";'
 
 METHODS
 
-references
-	"Force import of classes that are referenced in INLINE statements."
-
-	PostgresQueryResult.
-!
-
 "Connecting"
 
 connectTable: name rowClass: rowClass
@@ -24,21 +18,25 @@ connectTable: name rowClass: rowClass
 
 "Operations"
 
-connect: connectionString then: block
+connect: connectionString then: block catch: errorBlock
 	INLINE 'this.js = new pg.Client( connectionString.js )'.
-	INLINE 'this.js.connect().then( () => block.$value() )'.
+	INLINE 'this.js.connect()
+		.then( () => block.$value() )
+		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
-query: query then: block
+query: query then: block catch: errorBlock
 	"Force reference to prevent minimizing."
 	PostgresQueryResult.
-	INLINE 'this.js.query( query.js ).
-		then( ( result ) => block.$value$( stPostgresQueryResult$class.$fromJs$( result ) ) )'.
+	INLINE 'this.js.query( query.js )
+		.then( ( queryResult ) => block.$value$( stPostgresQueryResult$class.$fromJs$( queryResult ) ) )
+		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
-query: query with: parameters then: block
+query: query with: parameters then: block catch: errorBlock
 	"Force reference to prevent minimizing."
 	PostgresQueryResult.
-	INLINE 'this.js.query( query.js, parameters.$toJs() ).
-		then( ( result ) => block.$value$( stPostgresQueryResult$class.$fromJs$( result ) ) )'.
+	INLINE 'this.js.query( query.js, parameters.$toJs() )
+		.then( ( queryResult ) => block.$value$( stPostgresQueryResult$class.$fromJs$( queryResult ) ) )
+		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 end
 	INLINE 'this.js.end()'.

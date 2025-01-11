@@ -82,7 +82,7 @@ For different databases please PostgresDatabase with MariadbDatabase or MysqlDat
 
 Then connect to a table with code ST like:
 
-	productTable := database table: 'public."Product"' rowClass: Product.
+	productTable := database table: 'public."Product"' rowClass: MyProduct.
 
 Note: Tables should exist already, the ORM does not support creating them.
 	A "database first" approach is taken, to keep the SQL clean and reusable elsewhere.
@@ -95,7 +95,7 @@ The following code examples implement CRUD operations:
 
 Insert new product, setting its id:
 
-	product := Product new name: 'Test'.
+	product := MyProduct new name: 'Test'.
 	productTable insert: product then: [ :product | ... ].
 
 ### Read (select query)
@@ -107,6 +107,8 @@ Read multiple products by price:
 Read single product by Id:
 
 	productTable queryId: 1 then: [ :product | ... ].
+
+If the id does not exist, nil passed to the then block.
 
 ### Update
 

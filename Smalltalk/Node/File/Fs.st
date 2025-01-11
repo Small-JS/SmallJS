@@ -9,3 +9,6 @@ CLASSMETHODS
 readFileSync: path
 	^ String fromJs: INLINE 'fs$.readFileSync( path.js ).toString()'.
 !
+existsSync: path
+	^ Boolean fromJs: INLINE 'fs$.existsSync( path.js )'.
+!

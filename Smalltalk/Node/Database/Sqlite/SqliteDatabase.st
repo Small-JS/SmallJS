@@ -5,9 +5,7 @@ CLASS SqliteDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
 
  Database operations are synchronous.
  There optional wrapper functions with async 'then:' interfaces,
- to be compatible with the other databases from a single code base.
-
- 2025-01-02: To enable SQLite support in node.js, it be started with '--experimental-sqlite'."
+ to be compatible with the other databases from a single code base."
 
 INLINE 'import { DatabaseSync } from "node:sqlite";'
 
@@ -19,6 +17,11 @@ new: path
 new: path options: options
 	^ self fromJs: INLINE 'new DatabaseSync( path.js, options.js )'.
 !
+checkExists: path
+	"Check database at path exists, otherwise throw error."
+	( Fs existsSync: path ) ifFalse: [
+		Error throw: 'SQLite database file does not exist: ', path ].
+!
 
 METHODS
 
@@ -28,14 +31,26 @@ open
 	INLINE 'this.js.open()'.
 !
 connect: path
-	"Alias for open, for compatibility with other databases.
-	 The database should already already been created with 'new:' and the path."
-	self open.
+	self connect: path options: SqliteDatabaseOptions new.
 !
-connect: path then: block
+connect: path options: options
+	"This should be called when the class was created with 'new', wothout a path.
+	 The database file must exist and be a valid SQLite database."
+	self isNull ifFalse: [
+		self error: 'SQLite database already connected.' ].
+
+	SqliteDatabase checkExists: path.
+	self js: INLINE 'new DatabaseSync( path.js, options.js )'.
+	self checkValid.
+!
+connect: path then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	self connect: path.
-	block value.
+	[ self connect: path. block value ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+checkValid
+	"Check if the file opened is a valid SQLite database, otherwise throw an error."
+	self exec: 'PRAGMA quick_check'.
 !
 close
 	INLINE 'this.js.close()'.
@@ -53,19 +68,20 @@ exec: sql
 prepare: sql
 	^ SqliteStatement fromJs: INLINE 'this.js.prepare( sql.js )'.
 !
-query: query then: block
+query: query then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
 
-	self query: query with: #() then: block.
+	self query: query with: #() then: block catch: errorBlock.
 !
-query: query with: parameters then: block
+query: query with: parameters then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
 
-	| statement results |
+	| statement |
 	statement := self prepare: query.
-	results := statement all.
-	block value: results.
+	[ block value: ( statement all: parameters ) ]
+		tryCatch: [ :error | errorBlock value: error ].
 !
+
 "Table"
 
 connectTable: name rowClass: rowClass

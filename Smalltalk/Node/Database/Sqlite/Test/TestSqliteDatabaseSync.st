@@ -1,4 +1,4 @@
-CLASS TestSqliteDatabase EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'database personTable productTable orderTable'
+CLASS TestSqliteDatabaseSync EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'database personTable productTable orderTable'
 
 METHODS
 
@@ -22,7 +22,9 @@ test
 open
 	| path |
 	path := Process envAt: 'SMALLJS_SQLITE'.
+	SqliteDatabase checkExists: path.
 	database := SqliteDatabase new: path.
+	database checkValid.
 
 	personTable := database connectTable: 'Person' rowClass: MyPerson.
 	productTable := database connectTable: 'Product' rowClass: MyProduct.
@@ -89,7 +91,7 @@ tableInsert
 
 	self tableDeleteTest.
 
-	person := MyPerson new name: 'Test'.
+	person := MyPerson new name: 'Test'; setPassword: 'secret'.
 	personTable insert: person.
 	self assert: [ person id > 0 ].
 

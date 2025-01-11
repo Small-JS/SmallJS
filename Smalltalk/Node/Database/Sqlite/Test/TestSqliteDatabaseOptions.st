@@ -1,8 +1,5 @@
 CLASS TestSqliteDatabaseOptions EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS ''
 
-
-METHODS
-
 test
 	| options |
 
