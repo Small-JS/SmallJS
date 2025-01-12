@@ -82,26 +82,34 @@ login: request response: response
 
 	userName := request query atJsProperty: 'user'.
 	userName isNil
-		ifTrue: [ response send: ( result message: 'Login parameter "user" missing' ) ]
+		ifTrue: [ result message: 'Login parameter "user" missing' ]
 		ifFalse: [
 			password := request query atJsProperty: 'password'.
 			password isNil
-				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
-				ifFalse: [
-					query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-					personTable query: query  with: #( userName )
-						then: [ :persons |
-							"Note: Block returns are not allowed in pg callbacks."
-							persons length < 1
-								ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
-								ifFalse: [
-									person := persons first.
-									( person checkPassword: password ) not
-										ifTrue: [ response send: ( result message: 'Password check failed' ) ]
-										ifFalse: [
-											request session set: 'user' to: person.
-											response send: ( result success: true; message: 'Login succeeded' ) ] ] ]
-						catch: [ :error | error throw ] ] ].
+				ifTrue: [ result message: 'Login parameter "password" missing' ]
+				ifFalse: [ self login: request userName: userName password: password result: result ] ].
+
+	response send: result.
+!
+login: request userName: userName password: password result: result
+	| query |
+
+	"Note: Return from block is not allowed in Postgres callbacks."
+	query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
+	personTable query: query
+		with: #( userName )
+		then: [ :persons |
+			persons length < 1
+				ifTrue: [ result message: 'User not found: ', userName ]
+				ifFalse: [ self login: request person: persons first password: password result: result ] ]
+		catch: [ :error | error throw ].
+!
+login: request person: person password: password result: result
+	( person checkPassword: password ) not
+		ifTrue: [ result message: 'Password check failed' ]
+		ifFalse: [
+			request session set: 'user' to: person.
+			result success: true; message: 'Login succeeded' ].
 !
 getRequestUser: request response: response
 	"Returns the logged-in user (Person) from the request or nil if it does not exist.
