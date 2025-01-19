@@ -8,6 +8,9 @@
 			"name": "Launch Server",
 			"type": "node",
 			"request": "launch",
+			"runtimeArgs": [
+				"--experimental-sqlite"
+			],
 			"program": "${workspaceFolder}/out/main.js",
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
