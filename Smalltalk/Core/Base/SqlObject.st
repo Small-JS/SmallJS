@@ -25,12 +25,21 @@ fromRows: rows
 fromRow: row
 	"Return instance of self (subclass) with data from row."
 
-	| sqlObject |
+	| sqlObject columnName value targetValueClass |
 
 	sqlObject := self new.
 	sqlObject id: ( row atProperty: 'id' ).
 	self columns do: [ :column |
-		sqlObject atProperty: column put: ( row atProperty: column ) ].
+		columnName := column first.
+		value := row atProperty: columnName.
+		targetValueClass := column last.
+		"Integer to Boolean conversion for SQLite."
+		( value class = Integer ) & ( targetValueClass = Boolean ) ifTrue: [
+			value := value = 1 ].
+		"String to Date conversion for SQLite, Postgres."
+		( value class = String ) & ( targetValueClass = Date ) ifTrue: [
+			value := Date fromString: value ].    "String to Date"
+		sqlObject atProperty: columnName put: value ].
 
 	^ sqlObject.
 !
@@ -38,10 +47,13 @@ fromRow: row
 "Columns"
 
 columns
-	self error: 'Overload this method to return an array of column names (strings) that are also equal to instvars names to store.'.
+	self error: 'Overload this method to return an array of column names and types.'.
+	"E.g.: ^ #( #( 'name' String ) #( 'amount' Integer ) )"
 !
 
 METHODS
+
+"Accessing"
 
 id
 	^ id.
@@ -49,13 +61,12 @@ id
 id: aId
 	id := aId.
 !
+
+"Columns"
+
 columnValues
 	"Return array with values of columns variables, excluding the id column."
 
-	| result |
-
-	result := Array new.
-	self class columns do: [ :column |
-		result add: ( self atProperty: column )  ].
-	^ result.
+	^ self class columns map: [ :column |
+		self atProperty: column first ].
 !

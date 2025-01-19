@@ -2,7 +2,7 @@ CLASS SqliteStatement EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
 
 INLINE 'import { StatementSync } from "node:sqlite";'
 
-METHODS
+"================================== Sync operations"
 
 "Executing"
 
@@ -20,4 +20,17 @@ expandedSql
 !
 sourceSql
 	^ String fromJs: INLINE 'this.js.sourceSQL()'.
+!
+
+"================================== Async operations"
+
+"Executing"
+
+all: parameters then: block catch: errorBlock
+	[ block value: ( self all: parameters )  ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+run: parameters then: block catch: errorBlock
+	[ block value: ( self run: parameters )  ]
+		tryCatch: [ :error | errorBlock value: error ].
 !

@@ -3,7 +3,7 @@ CLASS TestOrder EXTENDS Test MODULE TestShopServer CLASSVARS '' VARS ''
 test
 	| order |
 
-	self assert:[ Order columns = #( 'person' 'product' 'amount' ) ].
+	self assert:[ Order columns first = #( 'person' Integer ) ].
 
 	order := Order new.
 

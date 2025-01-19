@@ -18,9 +18,21 @@ parameter: index
 	^ '?'.
 !
 
-"Querying"
+columnValues: sqlObject
+	"Return array with values of columns variables, excluding the id column.
+	 with conversions needed for SQLite: Date, Boolean."
 
-queryAll
+	^ sqlObject columnValues map: [ :value |
+		value class = Date ifTrue: [ value := value toIsoString ].
+		value class = Boolean ifTrue: [ value := value ifTrue: [ 1 ] ifFalse: [ 0 ] ].
+		value ].
+!
+
+"=============================== Sync operations"
+
+"Selecting"
+
+selectAll
 	| sql statement rows |
 
 	sql := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY "id"'.
@@ -28,19 +40,10 @@ queryAll
 	rows := statement all: #().
 	^ rowClass fromRows: rows.
 !
-queryAllThen: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ block value: self queryAll ]
-		tryCatch: [ :error | errorBlock value: error ].
+select: condition
+	^ self select: condition with: #().
 !
-query: condition
-	^ self query: condition with: #().
-!
-query: condition then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	block value: ( self query: condition ).
-!
-query: condition with: parameters
+select: condition with: parameters
 	| sql statement rows |
 
 	sql := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
@@ -48,20 +51,11 @@ query: condition with: parameters
 	rows := statement all: parameters.
 	^ rowClass fromRows: rows.
 !
-query: condition with: parameters then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ block value: ( self query: condition with: parameters ) ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-queryId: id
-	| rows |
-	rows := self query: '"id" = ?' with: #( id ).
-	^ rows length = 0 ifTrue: [ nil ] ifFalse: [ rows first ].
-!
-queryId: id then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ block value: ( self queryId: id ) ]
-		tryCatch: [ :error | errorBlock value: error ].
+selectId: id
+	"Return single SqlObject from row with argument id, otherwise nil."
+	| sqlObjects |
+	sqlObjects := self select: '"id" = ?' with: #( id ).
+	^ sqlObjects length = 0 ifTrue: [ nil ] ifFalse: [ sqlObjects first ].
 !
 run: sql with: parameters
 	| statement rows |
@@ -79,7 +73,7 @@ insert: sqlObject
 	| sql statement result id |
 	sql := 'INSERT INTO ', self quotedName, ' ( ', self columnList, ' ) VALUES ( ', self insertValuesParameters, ' )'.
 	statement := database prepare: sql.
-	result := statement run: sqlObject columnValues.
+	result := statement run: ( self columnValues: sqlObject ).
 
 	result changes = 1 ifFalse: [
 		self error: 'INSERT did not effect exactly 1 row' ].
@@ -89,11 +83,6 @@ insert: sqlObject
 		self error: 'INSERT did not result a valid id: ', result id toString ].
 
 	sqlObject id: id.
-!
-insert: sqlObject then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ self insert: sqlObject. block value: sqlObject ]
-		tryCatch: [ :error | errorBlock value: error ].
 !
 
 "Updating"
@@ -105,15 +94,10 @@ update: sqlObject
 
 	sql := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE "id" = ?'.
 	statement := database prepare: sql.
-	result := statement run: ( sqlObject columnValues add: sqlObject id ).
+	result := statement run: ( ( self columnValues: sqlObject ) add: sqlObject id ).
 
 	result changes = 1 ifFalse: [
 		self error: 'UPDATE by id did not effect exactly 1 row' ].
-!
-update: sqlObject then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ self update: sqlObject. block value: sqlObject ]
-		tryCatch: [ :error | errorBlock value: error ].
 !
 
 "Deleting"
@@ -130,8 +114,52 @@ delete: sqlObject
 	result changes = 1 ifFalse: [
 		self error: 'DELETE by id did not effect exactly 1 row' ].
 !
-delete: sqlObject then: block catch: errorBlock
+deleteAll
+	database exec: 'DELETE FROM ', self quotedName.
+!
+
+"=============================== Async operations"
+
+"Selecting"
+
+selectAllThen: block catch: errorBlock
+	[ block value: self selectAll ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+select: condition then: block catch: errorBlock
+	block value: ( self select: condition ).
+!
+select: condition with: parameters then: block catch: errorBlock
+	[ block value: ( self select: condition with: parameters ) ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+selectId: id then: block catch: errorBlock
+	[ block value: ( self selectId: id ) ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+
+"Inserting"
+
+insert: sqlObject then: block catch: errorBlock
+	[ self insert: sqlObject. block value ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+
+"Updating"
+
+update: sqlObject then: block catch: errorBlock
 	"Async compatibility method that is executed sync."
-	[ self delete: sqlObject. block value: sqlObject ]
+	[ self update: sqlObject. block value ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+
+"Deleting"
+
+deleteAllThen: block catch: errorBlock
+	[ self deleteAll. block value ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+delete: sqlObject then: block catch: errorBlock
+	[ self delete: sqlObject. block value ]
 		tryCatch: [ :error | errorBlock value: error ].
 !

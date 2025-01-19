@@ -1,6 +1,8 @@
 CLASS MysqlTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
-	"This class implements an abstract SQL Table.
-	 Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
+
+"This class implements an abstract SQL Table.
+Variable rowClass should refer to a subsclass of SqlObject,
+of which instances map to rows in this table."
 
 METHODS
 
@@ -17,7 +19,7 @@ parameter: index
 
 "Querying"
 
-queryAllThen: block catch: errorBlock
+selectAllThen: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY `id`'.
@@ -25,7 +27,7 @@ queryAllThen: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-query: condition then: block catch: errorBlock
+select: condition then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
@@ -33,7 +35,7 @@ query: condition then: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-query: condition with: parameters then: block catch: errorBlock
+select: condition with: parameters then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
@@ -42,19 +44,22 @@ query: condition with: parameters then: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-queryId: id then: block catch: errorBlock
+selectId: id then: block catch: errorBlock
 	"Return a new rowClass instance with values from the row with the argument id in the argument SQL table."
 
-	self query: '`id` = ?'
+	self select: '`id` = ?'
 		with: #( id )
-		then: [ :sqlObjects | self onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock ]
+		then: [ :sqlObjects | self selectId: id sqlObjects: sqlObjects then: block catch: errorBlock ]
 		catch: errorBlock.
 !
-onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock
-	sqlObjects length = 1 ifFalse: [
-		^ errorBlock value: ( Error message: 'Query by id did not return exactly 1 row. Id: ', id toString ) ].
+selectId: id sqlObjects: sqlObjects then: block catch: errorBlock
+	| sqlObject |
 
-	^ block value: sqlObjects first.
+	sqlObjects length > 1 ifTrue: [
+		^ errorBlock value: ( Error new: 'Query of id returned more than one row for table: ', name, ', id: ', id toString ) ].
+
+	sqlObject := sqlObjects length = 1 ifTrue: [ sqlObjects first ] ifFalse: [ nil ].
+	^ block value: sqlObject.
 !
 
 "Inserting"
@@ -74,10 +79,10 @@ insert: sqlObject then: block catch: errorBlock
 !
 onInsert: sqlObject result: result then: block catch: errorBlock
 	result affectedRows = 1 ifFalse: [
-		^ errorBlock value: ( Error message: 'INSERT did not effect exactly 1 row' ) ].
+		^ errorBlock value: ( Error new: 'INSERT did not effect exactly 1 row' ) ].
 
 	result insertId > 0 ifFalse: [
-		^ errorBlock value: ( Error message: 'INSERT did not result a valid id: ', result insertId toString ) ].
+		^ errorBlock value: ( Error new: 'INSERT did not result a valid id: ', result insertId toString ) ].
 
 	sqlObject id: result insertId.
 	block value: sqlObject.
@@ -105,6 +110,16 @@ onUpdate: sqlObject result: result then: block catch: errorBlock
 
 "Deleting"
 
+deleteAllThen: block catch: errorBlock
+	"Delete all rows from table."
+
+	| query |
+
+	query := 'DELETE FROM ', self quotedName.
+	database query: query
+		then: [ block value ]
+		catch: errorBlock.
+!
 delete: sqlObject then: block catch: errorBlock
 	"Delete sqlObject in table using id."
 

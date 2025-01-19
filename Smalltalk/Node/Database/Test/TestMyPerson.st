@@ -4,7 +4,7 @@ test
 	| person |
 	person := MyPerson new.
 
-	self assert: [ MyPerson columns = #( 'name' 'salt' 'password' ) ].
+	self assert: [ MyPerson columns first = #( 'name' String ) ].
 
 	person name: 'Test'.
 	self assert: [ person name = 'Test' ].

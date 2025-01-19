@@ -22,6 +22,10 @@ test
 	self assert: [ ( jsObject atJsProperty: 'empty' ) = nil ].
 	self assert: [ ( ( jsObject atJsProperty: 'things' ) at: 1 ) = 'b' ].
 	self assert: [ ( ( jsObject atJsProperty: 'nested' ) atProperty: 'inHere' ) = 'I am in here' ].
+
+	self assert: [ Date new jsClassName = 'Date' ].
+	self assert: [ true jsType = 'boolean' ].
+
 !
 testJson
 	| object |

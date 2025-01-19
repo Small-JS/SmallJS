@@ -8,6 +8,9 @@ fromJs: jsBool
 	INLINE 'if( jsBool == null ) return stNil'.
 	^ INLINE '( jsBool ? stTrue : stFalse )'.
 !
+fromInteger: integer
+	^ ( integer = 0 | integer isNil ) not.
+!
 
 METHODS
 
@@ -15,6 +18,9 @@ METHODS
 
 toString
 	^ self ifTrue: [ 'true' ] ifFalse: [ 'false' ].
+!
+toInteger
+	^ self ifTrue: [ 1 ] ifFalse: [ 0 ].
 !
 
 "Comparing"

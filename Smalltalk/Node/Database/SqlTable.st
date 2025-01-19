@@ -56,7 +56,7 @@ columnList
 	result := ''.
 	self rowClass columns do: [ :column |
 		result = '' ifFalse: [ result := result + ', ' ].
-		result := result + ( self quoted: column ) ].
+		result := result + ( self quoted: column first ) ].
 	^ result.
 !
 columnListWithId
@@ -75,8 +75,8 @@ insertValuesParameters
 	 E.g.: '$1, $2, $3' for a three column table, excluding the id column."
 
 	| result |
-
 	result := ''.
+
 	1 to: rowClass columns length do: [ :index |
 		result = '' ifFalse: [ result := result, ', ' ].
 		result := result, ( self parameter: index ) ].
@@ -92,7 +92,15 @@ updateSetParameters
 	result := ''.
 	1 to: rowClass columns length do: [ :index |
 		result = '' ifFalse: [ result := result, ', ' ].
-		result := result, ( self quoted: ( rowClass columns at: index - 1 ) ), ' = ', ( self parameter: index ) ].
+		result := result, ( self quoted: ( rowClass columns at: index - 1 ) first ), ' = ', ( self parameter: index ) ].
 
 	^ result.
+!
+columnValues: sqlObject
+	"Return array with values of columns variables, excluding the id column.
+	 This method may be overloaded with database specific value converions needed,
+	 depending on the type support of that database."
+
+	"The default is no conversions."
+	^ sqlObject columnValues.
 !

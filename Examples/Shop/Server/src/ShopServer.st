@@ -82,34 +82,32 @@ login: request response: response
 
 	userName := request query atJsProperty: 'user'.
 	userName isNil
-		ifTrue: [ result message: 'Login parameter "user" missing' ]
+		ifTrue: [ response send: ( result message: 'Login parameter "user" missing' ) ]
 		ifFalse: [
 			password := request query atJsProperty: 'password'.
 			password isNil
-				ifTrue: [ result message: 'Login parameter "password" missing' ]
-				ifFalse: [ self login: request userName: userName password: password result: result ] ].
-
-	response send: result.
+				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
+				ifFalse: [ self login: request response: response userName: userName password: password result: result ] ].
 !
-login: request userName: userName password: password result: result
+login: request response: response userName: userName password: password result: result
 	| query |
 
 	"Note: Return from block is not allowed in Postgres callbacks."
 	query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-	personTable query: query
+	personTable select: query
 		with: #( userName )
 		then: [ :persons |
 			persons length < 1
-				ifTrue: [ result message: 'User not found: ', userName ]
-				ifFalse: [ self login: request person: persons first password: password result: result ] ]
+				ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
+				ifFalse: [ self login: request response: response person: persons first password: password result: result ] ]
 		catch: [ :error | error throw ].
 !
-login: request person: person password: password result: result
+login: request response: response person: person password: password result: result
 	( person checkPassword: password ) not
-		ifTrue: [ result message: 'Password check failed' ]
+		ifTrue: [ response send: ( result message: 'Password check failed' ) ]
 		ifFalse: [
 			request session set: 'user' to: person.
-			result success: true; message: 'Login succeeded' ].
+			response send: ( result success: true; message: 'Login succeeded' ) ].
 !
 getRequestUser: request response: response
 	"Returns the logged-in user (Person) from the request or nil if it does not exist.
@@ -140,7 +138,7 @@ products: request response: response
 	( self checkRequestUser: request response: response ) ifFalse: [ ^ nil ].
 
 	productTable
-		queryAllThen: [ :products | response send: products toJsObject ]
+		selectAllThen: [ :products | response send: products toJsObject ]
 		catch: [ :error | error throw ].
 !
 
@@ -158,12 +156,12 @@ orders: request response: response
 
 	query := ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ).
 	userId := user id.
-	orderTable query: query
+	orderTable select: query
 		with: #( userId )
 		then: [ :orders |
 			query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
 				' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
-			productTable query: query
+			productTable select: query
 				with: #( userId )
 				then: [ :products |
 					result := Object new

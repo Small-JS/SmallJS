@@ -11,9 +11,9 @@ parameter: index
 	^ '?'.
 !
 
-"Querying"
+"Selecting"
 
-queryAllThen: block catch: errorBlock
+selectAllThen: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY `id`'.
@@ -21,7 +21,7 @@ queryAllThen: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-query: condition then: block catch: errorBlock
+select: condition then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
@@ -29,7 +29,7 @@ query: condition then: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-query: condition with: parameters then: block catch: errorBlock
+select: condition with: parameters then: block catch: errorBlock
 	| query |
 
 	query := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' WHERE ', condition.
@@ -37,15 +37,15 @@ query: condition with: parameters then: block catch: errorBlock
 		then: [ :rows | block value: ( rowClass fromRows: rows ) ]
 		catch: errorBlock.
 !
-queryId: id then: block catch: errorBlock
+selectId: id then: block catch: errorBlock
 	"Return a new rowClass instance with values from the row with the argument id in the argument SQL table."
 
-	self query: '`id` = ?'
+	self select: '`id` = ?'
 		with: #( id )
-		then: [ :sqlObjects | self onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock ]
+		then: [ :sqlObjects | self onSelectId: id sqlObjects: sqlObjects then: block catch: errorBlock ]
 		catch: errorBlock.
 !
-onQueryId: id sqlObjects: sqlObjects then: block catch: errorBlock
+onSelectId: id sqlObjects: sqlObjects then: block catch: errorBlock
 	| sqlObject |
 
 	sqlObjects length > 1 ifTrue: [
@@ -65,7 +65,8 @@ insert: sqlObject then: block catch: errorBlock
 
 	sqlObject id: nil.
 	query := 'INSERT INTO ', self quotedName, ' ( ', self columnList, ' ) VALUES ( ', self insertValuesParameters, ' )'.
-	database query: query with: sqlObject columnValues
+	database query: query
+		with: ( self columnValues: sqlObject )
 		then: [ :result | self onInsert: sqlObject result: result then: block catch: errorBlock ]
 		catch: errorBlock.
 !
@@ -89,7 +90,7 @@ update: sqlObject then: block catch: errorBlock
 
 	query := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE `id` = ?'.
 	database query: query
-		with: ( sqlObject columnValues add: sqlObject id )
+		with: ( ( self columnValues: sqlObject ) add: sqlObject id )
 		then: [ :result | self onUpdate: sqlObject result: result then: block catch: errorBlock ]
 		catch: errorBlock.
 !
@@ -102,6 +103,15 @@ onUpdate: sqlObject result: result then: block catch: errorBlock
 
 "Deleting"
 
+deleteAllThen: block catch: errorBlock
+	"Delete all rows from table."
+	| query |
+
+	query := 'DELETE FROM ', self quotedName.
+	database query: query
+		then: [ block value ]
+		catch: errorBlock.
+!
 delete: sqlObject then: block catch: errorBlock
 	"Delete sqlObject in table using id."
 

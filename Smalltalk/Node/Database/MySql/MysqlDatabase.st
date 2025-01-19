@@ -1,23 +1,17 @@
 CLASS MysqlDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
-	"This class implements MySQL database functionality.
-	 Variable 'js' will contain an instance of 'my.Client'.
 
-	 Note: The method 'end' should be called when you are done with the database connection
-	 	   to free up resources and be able to terminate your app."
+"This class implements MySQL database functionality.
+	Variable 'js' will contain an instance of 'my.Client'.
+
+Note: The method 'end' should be called when you are done with the database connection
+	to free up resources and be able to terminate your app."
 
 INLINE 'import * as MySql from "mysql2";'
-
-METHODS
-
-references
-	"Force import of classes that are referenced in INLINE statements."
-
-	MysqlQueryError.
-!
 
 "Connecting"
 
 connect: connectionString then: block catch: errorBlock
+	MysqlQueryError.    "Force import"
 	INLINE '
 		this.js = MySql.createConnection( connectionString.js );
 		this.js.connect( ( queryError ) => this.$onConnect$then$catch$(
@@ -40,10 +34,12 @@ connectTable: name rowClass: rowClass
 "Querying"
 
 query: query then: block catch: errorBlock
+	MysqlQueryError.    "Force import"
 	INLINE 'this.js.query( query.js, ( error, result ) => this.$onQuery$result$then$catch$(
 		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block, errorBlock ) )'.
 !
 query: query with: parameters then: block catch: errorBlock
+	MysqlQueryError.    "Force import"
 	INLINE 'this.js.query( query.js, parameters.$toJs(), ( error, result ) => this.$onQuery$result$then$catch$(
 		stMysqlQueryError$class.$fromJs$( error ), stJsObject$class.$fromJs$( result ), block, errorBlock ) )'.
 !

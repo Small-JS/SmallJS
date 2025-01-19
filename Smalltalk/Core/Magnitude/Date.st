@@ -3,6 +3,8 @@ CLASS Date EXTENDS Magnitude MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+"Creating"
+
 new
 	^ self fromJs: INLINE 'new Date()'.
 !
@@ -23,6 +25,12 @@ year: year month: month day: day hours: hours minutes: minutes seconds: seconds
 !
 utcYear: year month: month day: day hours: hours minutes: minutes seconds: seconds
 	^ self fromJs: INLINE 'new Date( Date.UTC( year.js, month.js - 1, day.js, hours.js, minutes.js, seconds.js ) )'.
+!
+
+"Testing"
+
+isJsDate: jsDate
+	^ Boolean fromJs: INLINE 'jsDate instanceof Date'.
 !
 
 METHODS

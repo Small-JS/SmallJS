@@ -44,4 +44,7 @@ test
 	self assert: [ date2 toJson = '1995-10-15T14:13:12.999Z' ].
 	self assert: [ date2 toLocaleDateString includes: '15' ].
 	self assert: [ date2 toLocaleTimeString includes: '13' ].
+
+	self assert: [ Date isJsDate: INLINE 'new Date()' ].
+	self assert: [ ( Date isJsDate: INLINE '1' ) not ].
 !

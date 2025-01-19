@@ -3,7 +3,8 @@ CLASS Product EXTENDS SqlObject MODULE ShopServer CLASSVARS '' VARS 'name price'
 CLASSMETHODS
 
 columns
-	^ #( 'name' 'price' ).
+	^ #( #( 'name' String )
+		#( 'price' Integer ) ).
 !
 fromObject: object
 	^ Product new

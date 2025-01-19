@@ -3,7 +3,9 @@ CLASS Person EXTENDS SqlObject MODULE ShopServer CLASSVARS '' VARS 'name salt pa
 CLASSMETHODS
 
 columns
-	^ #( 'name' 'salt' 'password' ).
+	^ #( #( 'name' String )
+		#( 'password' String )
+		#( 'salt' Integer ) ).
 !
 fromObject: object
 	^ self new

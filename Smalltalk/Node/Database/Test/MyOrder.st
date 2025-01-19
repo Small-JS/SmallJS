@@ -3,7 +3,9 @@ CLASS MyOrder EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'person pr
 CLASSMETHODS
 
 columns
-	^ #( 'person' 'product' 'amount' ).
+	^ #( #( 'person' Integer )
+		#( 'product' Integer )
+		#( 'amount' Integer ) ).
 !
 
 METHODS

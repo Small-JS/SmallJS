@@ -16,12 +16,10 @@
 
 
 -- Dumping database structure for smalljs
-DROP DATABASE IF EXISTS `smalljs`;
 CREATE DATABASE IF NOT EXISTS `smalljs` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `smalljs`;
 
 -- Dumping structure for table smalljs.order
-DROP TABLE IF EXISTS `order`;
 CREATE TABLE IF NOT EXISTS `order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `person` int(11) NOT NULL,
@@ -41,7 +39,6 @@ INSERT INTO `order` (`id`, `person`, `product`, `amount`) VALUES
 	(3, 2, 3, 2);
 
 -- Dumping structure for table smalljs.person
-DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -49,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `salt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=508 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=641 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table smalljs.person: ~3 rows (approximately)
 INSERT INTO `person` (`id`, `name`, `password`, `salt`) VALUES
@@ -58,7 +55,6 @@ INSERT INTO `person` (`id`, `name`, `password`, `salt`) VALUES
 	(3, 'Robert', '35e2b3530c3b7b2c7c0ae6670a1a6eb60a2e9e57c3c393f4a0ceaf11e71351ff', 484813);
 
 -- Dumping structure for table smalljs.product
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -72,6 +68,21 @@ INSERT INTO `product` (`id`, `name`, `price`) VALUES
 	(1, 'Apple', 100),
 	(2, 'Orange', 150),
 	(3, 'Mango', 220);
+
+-- Dumping structure for table smalljs.type
+CREATE TABLE IF NOT EXISTS `type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `string` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `integer` int(11) NOT NULL,
+  `float` double NOT NULL,
+  `date` text NOT NULL,
+  `boolean` tinyint(4) NOT NULL,
+  `binary` blob NOT NULL,
+  `anil` int(11) DEFAULT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dumping data for table smalljs.type: ~0 rows (approximately)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -3,7 +3,8 @@ CLASS MyProduct EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name pr
 CLASSMETHODS
 
 columns
-	^ #( 'name' 'price' ).
+	^ #( #( 'name' String )
+		#( 'price' Integer ) ).
 !
 
 METHODS

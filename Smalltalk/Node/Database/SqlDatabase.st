@@ -16,6 +16,7 @@ newFor: connectionString
 	self error: 'Cannot match connection string to database type:', connectionString.
 !
 checkSqlite: connectionString
+	connectionString := connectionString toLowerCase.
 	^ #( '.db' '.db3' '.sqlite' '.sqlite3' ) some: [ :extension |
-		connectionString includes: extension ].
+		connectionString endsWith: extension ].
 !

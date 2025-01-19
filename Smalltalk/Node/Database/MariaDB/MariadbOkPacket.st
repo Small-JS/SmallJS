@@ -9,4 +9,3 @@ insertId
 warningStatus
 	^ Integer fromJs: INLINE 'this.js.warningStatus'.
 !
-

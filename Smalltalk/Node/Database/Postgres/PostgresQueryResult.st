@@ -2,8 +2,6 @@ CLASS PostgresQueryResult EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
 
 "This class implements a Postgres SqlQueryResult."
 
-METHODS
-
 fieldNames
 	^ Array fromJsStrings: INLINE 'this.js.fields.map( field => field.name )'.
 !
@@ -14,10 +12,11 @@ toId
 	"Return then id column value (integer) of the single row in self.
 	 Otherwise return nil."
 
-	| id |
+	| id rows |
 
-	self rows length = 1 ifFalse: [ ^ nil ].
-	id := self rows first atProperty: 'id'.
+	rows := self rows.
+	rows length = 1 ifFalse: [ ^ nil ].
+	id := rows first atProperty: 'id'.
 	id class == Integer ifFalse: [ ^ nil ].
 	id > 0 ifFalse: [ ^ nil ].
 

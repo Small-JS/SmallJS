@@ -25,6 +25,8 @@ checkExists: path
 
 METHODS
 
+"================================== Sync operations"
+
 "Opening & closing"
 
 open
@@ -42,11 +44,6 @@ connect: path options: options
 	SqliteDatabase checkExists: path.
 	self js: INLINE 'new DatabaseSync( path.js, options.js )'.
 	self checkValid.
-!
-connect: path then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ self connect: path. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
 !
 checkValid
 	"Check if the file opened is a valid SQLite database, otherwise throw an error."
@@ -68,19 +65,6 @@ exec: sql
 prepare: sql
 	^ SqliteStatement fromJs: INLINE 'this.js.prepare( sql.js )'.
 !
-query: query then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-
-	self query: query with: #() then: block catch: errorBlock.
-!
-query: query with: parameters then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-
-	| statement |
-	statement := self prepare: query.
-	[ block value: ( statement all: parameters ) ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
 
 "Table"
 
@@ -98,3 +82,23 @@ loadExtension: path
 	INLINE 'this.js.loadExtension( path.js )'.
 !
 
+"================================== Async operations"
+
+"Connecting"
+
+connect: path then: block catch: errorBlock
+	[ self connect: path. block value ]
+		tryCatch: [ :error | errorBlock value: error ].
+!
+
+"SQL statements"
+
+query: query then: block catch: errorBlock
+	self query: query with: #() then: block catch: errorBlock.
+!
+query: query with: parameters then: block catch: errorBlock
+	| statement |
+	statement := self prepare: query.
+	[ block value: ( statement all: parameters ) ]
+		tryCatch: [ :error | errorBlock value: error ].
+!

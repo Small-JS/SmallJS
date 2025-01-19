@@ -1,22 +1,21 @@
-CLASS TestSqliteDatabaseSync EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS 'database personTable productTable orderTable'
-
-METHODS
+CLASS TestSqliteDatabaseSync EXTENDS Test MODULE TestDatabase CLASSVARS ''
+	VARS 'database typeTable type'
 
 disabled
 	"Disable these tests if database env var is not set."
 	^ ( Process envAt: 'SMALLJS_SQLITE' ) isNil.
 !
 test
-	| person |
 	self open.
-	self databaseQuery.
-	self tableQueryAll.
-	self tableQuery.
-	self tableQueryParameters.
-	self tableQueryId.
-	person := self tableInsert.
-	person := self tableUpdate: person.
-	self tableDelete: person.
+	self deleteAll.
+	self tableInsert.
+	self databaseSelect.
+	self tableSelectAll.
+	self tableSelect.
+	self tableSelectParameters.
+	self tableSelectId.
+	self tableUpdate.
+	self tableDelete.
 	self close.
 !
 open
@@ -26,90 +25,78 @@ open
 	database := SqliteDatabase new: path.
 	database checkValid.
 
-	personTable := database connectTable: 'Person' rowClass: MyPerson.
-	productTable := database connectTable: 'Product' rowClass: MyProduct.
-	orderTable := database connectTable: 'Order' rowClass: MyOrder.
+	typeTable := database connectTable: 'Type' rowClass: MyType.
 !
-databaseQuery
-	| statement rows |
-
-	statement := database prepare: 'SELECT "id", "name" FROM "Person" WHERE "id" = ?'.
-	rows := statement all: #( 1 ).
-
-	self assert: [ rows length = 1 ].
-	self assert: [ ( rows first atProperty: 'id' ) = 1 ].
-	self assert: [ ( rows first atProperty: 'name' ) = 'John' ].
-!
-tableQueryAll
-	| products |
-	products := productTable queryAll.
-
-	self assert: [ products length = 3 ].
-	self assert: [ ( products first atProperty: 'id' ) = 1 ].
-	self assert: [ ( products first atProperty: 'name' ) = 'Apple' ].
-!
-tableQuery
-	| order orders |
-
-	orders := orderTable query: '"Person" = 1'.
-	self assert: [ orders length = 2 ].
-
-	order := orders first.
-	self assert: [ order id = 1 ].
-	self assert: [ order person = 1 ].
-	self assert: [ order product = 1 ].
-	self assert: [ order amount = 10 ].
-
-	order := orders last.
-	self assert: [ order id = 2 ].
-	self assert: [ order person = 1 ].
-	self assert: [ order product = 2 ].
-	self assert: [ order amount = 5 ].
-!
-tableQueryParameters
-	| persons person |
-
-	persons := personTable query: '"name" = ?' with: #( 'Robert' ).
-	self assert: [ persons length = 1 ].
-
-	person := persons first.
-	self assert: [ person id = 3 ].
-!
-tableQueryId
-	| product |
-
-	product := productTable queryId: 2.
-	self assert: [ product id = 2 ].
-	self assert: [ product name = 'Orange' ].
-!
-tableDeleteTest
-	"Delete person named Test*, that might have been left after an interrupted test."
-	database exec: 'DELETE FROM "Person" WHERE "name" LIKE \'Test%\''
+deleteAll
+	typeTable deleteAll.
 !
 tableInsert
-	| person |
+	"This test the default type member object for subsequent tests."
+	| binary |
+	binary := ( Uint8Array new: 8 ) fill: 240 start: 0 end: 8.
+	type := MyType new
+		string: 'Hello'; integer: 13; float: Float pi;
+		date: Date new; binary: binary; boolean: true.
 
-	self tableDeleteTest.
-
-	person := MyPerson new name: 'Test'; setPassword: 'secret'.
-	personTable insert: person.
-	self assert: [ person id > 0 ].
-
-	^ person.
+	typeTable insert: type.
+	self assert: [ type id > 0 ].
 !
-tableUpdate: person
-	| updatedPerson |
-	person name: 'Test updated'.
-	personTable update: person.
+databaseSelect
+	| statement rows newType |
 
-	updatedPerson := personTable queryId: person id.
-	self assert: [ updatedPerson name = 'Test updated' ].
+	statement := database prepare: 'SELECT * FROM "Type" WHERE "string" = ?'.
+	rows := statement all: #( ( type string ) ).
+	self assert: [ rows length = 1 ].
 
-	^ person.
+	newType := MyType fromObject: rows first.
+	"Manual type conversions, because the desired types are not known here."
+	newType date: ( Date fromString: newType date ).
+	newType boolean: ( Boolean fromInteger: newType boolean ).
+	self assert: [ newType = type ].
 !
-tableDelete: person
-	personTable delete: person.
-	self assert: [ ( personTable queryId: person id ) isNil ].
+tableSelectAll
+	| selectedTypes |
+	selectedTypes := typeTable selectAll.
+
+	self assert: [ selectedTypes length = 1 ].
+	self assert: [ selectedTypes first = type ].
+!
+tableSelect
+	| selectedTypes |
+	selectedTypes := typeTable select: '"string" = \'Hello\''.
+
+	self assert: [ selectedTypes length = 1 ].
+	self assert: [ selectedTypes first = type ].
+!
+tableSelectParameters
+	| selectedTypes |
+	selectedTypes := typeTable select: '"integer" = ?' with: #( 13 ).
+
+	self assert: [ selectedTypes length = 1 ].
+	self assert: [ selectedTypes first = type ].
+!
+tableSelectId
+	| selectedType |
+	selectedType := typeTable selectId: type id.
+
+	self assert: [ selectedType notNil ].
+	self assert: [ selectedType = type ].
+!
+tableUpdate
+	| selectedType |
+	type string: 'World'.
+	typeTable update: type.
+	selectedType := typeTable selectId: type id.
+
+	self assert: [ selectedType notNil ].
+	self assert: [ selectedType = type ].
+!
+tableDelete
+	| selectedType |
+	typeTable delete: type.
+	selectedType := typeTable selectId: type id.
+
+	self assert: [ selectedType isNil ].
 !
 close
 	database close.

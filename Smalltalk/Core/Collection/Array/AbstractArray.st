@@ -12,6 +12,18 @@ with: element1 with: element2
 
 METHODS
 
+"Comparing."
+
+= array
+	( array isKindOf: AbstractArray ) ifFalse: [ ^ false ].
+	self length = array length ifFalse: [ ^ false ].
+
+	0 to: self length - 1 do: [ :index |
+		( self at: index ) = ( array at: index  ) ifFalse: [ ^ false ] ].
+
+	^ true.
+!
+
 "Conversion"
 
 copy

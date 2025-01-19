@@ -53,18 +53,6 @@ copy
 	^ self class fromJs: INLINE '[... this.js]'.
 !
 
-"Comparing."
-
-= array
-	( array isKindOf: Array ) ifFalse: [ ^ false ].
-	self length = array length ifFalse: [ ^ false ].
-
-	0 to: self length - 1 do: [ :index |
-		( self at: index ) = ( array at: index  ) ifFalse: [ ^ false ] ].
-
-	^ true.
-!
-
 "Accessing."
 
 at: index

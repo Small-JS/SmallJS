@@ -38,6 +38,9 @@ jsClassName
 		ifTrue: [ 'undefined' ]
 		ifFalse: [ String fromJs: INLINE 'this.js.constructor.name' ].
 !
+jsType
+	^ String fromJs: INLINE 'typeof this.js'
+!
 ownJsPropertyNames
 	^ Array fromJs: INLINE 'Object.getOwnPropertyNames( this.js )' elementClass: String.
 !

@@ -3,7 +3,9 @@ CLASS Order EXTENDS SqlObject MODULE ShopServer CLASSVARS '' VARS 'person produc
 CLASSMETHODS
 
 columns
-	^ #( 'person' 'product' 'amount' ).
+	^ #( #( 'person' Integer )
+			#( 'product' Integer )
+			#( 'amount' Integer ) ).
 !
 fromObject: object
 	^ Order new

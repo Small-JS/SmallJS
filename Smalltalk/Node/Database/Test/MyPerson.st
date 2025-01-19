@@ -3,7 +3,9 @@ CLASS MyPerson EXTENDS SqlObject MODULE TestDatabase CLASSVARS '' VARS 'name sal
 CLASSMETHODS
 
 columns
-	^ #( 'name' 'salt' 'password' ).
+	^ #( #( 'name' String )
+		#( 'salt' Integer )
+		#( 'password' String ) ).
 !
 
 METHODS

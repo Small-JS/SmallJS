@@ -5,7 +5,7 @@
 -- Dumped from database version 17.2
 -- Dumped by pg_dump version 17.1
 
--- Started on 2024-12-24 20:44:01
+-- Started on 2025-01-18 16:10:24
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 217 (class 1259 OID 16465)
+-- TOC entry 217 (class 1259 OID 16504)
 -- Name: Order; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -39,7 +39,7 @@ CREATE TABLE public."Order" (
 ALTER TABLE public."Order" OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 16468)
+-- TOC entry 218 (class 1259 OID 16507)
 -- Name: Order_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -55,7 +55,7 @@ CREATE SEQUENCE public."Order_id_seq"
 ALTER SEQUENCE public."Order_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 4923 (class 0 OID 0)
+-- TOC entry 4930 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: Order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -64,7 +64,7 @@ ALTER SEQUENCE public."Order_id_seq" OWNED BY public."Order".id;
 
 
 --
--- TOC entry 219 (class 1259 OID 16469)
+-- TOC entry 219 (class 1259 OID 16508)
 -- Name: Person; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -79,7 +79,7 @@ CREATE TABLE public."Person" (
 ALTER TABLE public."Person" OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 16474)
+-- TOC entry 220 (class 1259 OID 16513)
 -- Name: Person_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -95,7 +95,7 @@ CREATE SEQUENCE public."Person_id_seq"
 ALTER SEQUENCE public."Person_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 4924 (class 0 OID 0)
+-- TOC entry 4931 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: Person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -104,7 +104,7 @@ ALTER SEQUENCE public."Person_id_seq" OWNED BY public."Person".id;
 
 
 --
--- TOC entry 221 (class 1259 OID 16475)
+-- TOC entry 221 (class 1259 OID 16514)
 -- Name: Product; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -118,7 +118,7 @@ CREATE TABLE public."Product" (
 ALTER TABLE public."Product" OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 16480)
+-- TOC entry 222 (class 1259 OID 16519)
 -- Name: Product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -134,7 +134,7 @@ CREATE SEQUENCE public."Product_id_seq"
 ALTER SEQUENCE public."Product_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 4925 (class 0 OID 0)
+-- TOC entry 4932 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: Product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -143,7 +143,51 @@ ALTER SEQUENCE public."Product_id_seq" OWNED BY public."Product".id;
 
 
 --
--- TOC entry 4752 (class 2604 OID 16481)
+-- TOC entry 224 (class 1259 OID 16545)
+-- Name: Type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Type" (
+    id integer NOT NULL,
+    string text NOT NULL,
+    "integer" integer NOT NULL,
+    "float" double precision NOT NULL,
+    date text NOT NULL,
+    "boolean" boolean NOT NULL,
+    "binary" bytea NOT NULL,
+    anil integer
+);
+
+
+ALTER TABLE public."Type" OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16544)
+-- Name: Type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Type_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Type_id_seq" OWNER TO postgres;
+
+--
+-- TOC entry 4933 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: Type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Type_id_seq" OWNED BY public."Type".id;
+
+
+--
+-- TOC entry 4753 (class 2604 OID 16520)
 -- Name: Order id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -151,7 +195,7 @@ ALTER TABLE ONLY public."Order" ALTER COLUMN id SET DEFAULT nextval('public."Ord
 
 
 --
--- TOC entry 4753 (class 2604 OID 16482)
+-- TOC entry 4754 (class 2604 OID 16521)
 -- Name: Person id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -159,7 +203,7 @@ ALTER TABLE ONLY public."Person" ALTER COLUMN id SET DEFAULT nextval('public."Pe
 
 
 --
--- TOC entry 4754 (class 2604 OID 16483)
+-- TOC entry 4755 (class 2604 OID 16522)
 -- Name: Product id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -167,7 +211,15 @@ ALTER TABLE ONLY public."Product" ALTER COLUMN id SET DEFAULT nextval('public."P
 
 
 --
--- TOC entry 4911 (class 0 OID 16465)
+-- TOC entry 4756 (class 2604 OID 16548)
+-- Name: Type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Type" ALTER COLUMN id SET DEFAULT nextval('public."Type_id_seq"'::regclass);
+
+
+--
+-- TOC entry 4917 (class 0 OID 16504)
 -- Dependencies: 217
 -- Data for Name: Order; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -178,7 +230,7 @@ INSERT INTO public."Order" VALUES (3, 2, 3, 2);
 
 
 --
--- TOC entry 4913 (class 0 OID 16469)
+-- TOC entry 4919 (class 0 OID 16508)
 -- Dependencies: 219
 -- Data for Name: Person; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -189,7 +241,7 @@ INSERT INTO public."Person" VALUES (3, 'Robert', '35e2b3530c3b7b2c7c0ae6670a1a6e
 
 
 --
--- TOC entry 4915 (class 0 OID 16475)
+-- TOC entry 4921 (class 0 OID 16514)
 -- Dependencies: 221
 -- Data for Name: Product; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -200,7 +252,15 @@ INSERT INTO public."Product" VALUES (3, 'Mango', 220);
 
 
 --
--- TOC entry 4926 (class 0 OID 0)
+-- TOC entry 4924 (class 0 OID 16545)
+-- Dependencies: 224
+-- Data for Name: Type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4934 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: Order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -209,16 +269,16 @@ SELECT pg_catalog.setval('public."Order_id_seq"', 3, true);
 
 
 --
--- TOC entry 4927 (class 0 OID 0)
+-- TOC entry 4935 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: Person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Person_id_seq"', 452, true);
+SELECT pg_catalog.setval('public."Person_id_seq"', 637, true);
 
 
 --
--- TOC entry 4928 (class 0 OID 0)
+-- TOC entry 4936 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: Product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -227,7 +287,16 @@ SELECT pg_catalog.setval('public."Product_id_seq"', 3, true);
 
 
 --
--- TOC entry 4756 (class 2606 OID 16485)
+-- TOC entry 4937 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: Type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Type_id_seq"', 41, true);
+
+
+--
+-- TOC entry 4758 (class 2606 OID 16524)
 -- Name: Order Order_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -236,7 +305,25 @@ ALTER TABLE ONLY public."Order"
 
 
 --
--- TOC entry 4761 (class 2606 OID 16487)
+-- TOC entry 4763 (class 2606 OID 16543)
+-- Name: Person Person_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Person"
+    ADD CONSTRAINT "Person_name" UNIQUE (name);
+
+
+--
+-- TOC entry 4938 (class 0 OID 0)
+-- Dependencies: 4763
+-- Name: CONSTRAINT "Person_name" ON "Person"; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON CONSTRAINT "Person_name" ON public."Person" IS 'Must be unique.';
+
+
+--
+-- TOC entry 4765 (class 2606 OID 16526)
 -- Name: Person Person_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -245,7 +332,7 @@ ALTER TABLE ONLY public."Person"
 
 
 --
--- TOC entry 4763 (class 2606 OID 16489)
+-- TOC entry 4767 (class 2606 OID 16528)
 -- Name: Product Product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -254,7 +341,16 @@ ALTER TABLE ONLY public."Product"
 
 
 --
--- TOC entry 4757 (class 1259 OID 16490)
+-- TOC entry 4769 (class 2606 OID 16552)
+-- Name: Type Type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Type"
+    ADD CONSTRAINT "Type_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4759 (class 1259 OID 16529)
 -- Name: fki_Order - Person; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -262,7 +358,7 @@ CREATE INDEX "fki_Order - Person" ON public."Order" USING btree (person);
 
 
 --
--- TOC entry 4758 (class 1259 OID 16491)
+-- TOC entry 4760 (class 1259 OID 16530)
 -- Name: fki_Order - Person 2; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -270,7 +366,7 @@ CREATE INDEX "fki_Order - Person 2" ON public."Order" USING btree (person);
 
 
 --
--- TOC entry 4759 (class 1259 OID 16492)
+-- TOC entry 4761 (class 1259 OID 16531)
 -- Name: fki_Order - Product; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -278,7 +374,7 @@ CREATE INDEX "fki_Order - Product" ON public."Order" USING btree (product);
 
 
 --
--- TOC entry 4764 (class 2606 OID 16493)
+-- TOC entry 4770 (class 2606 OID 16532)
 -- Name: Order Order - Person; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -287,7 +383,7 @@ ALTER TABLE ONLY public."Order"
 
 
 --
--- TOC entry 4765 (class 2606 OID 16498)
+-- TOC entry 4771 (class 2606 OID 16537)
 -- Name: Order Order - Product; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -295,7 +391,7 @@ ALTER TABLE ONLY public."Order"
     ADD CONSTRAINT "Order - Product" FOREIGN KEY (product) REFERENCES public."Product"(id) NOT VALID;
 
 
--- Completed on 2024-12-24 20:44:01
+-- Completed on 2025-01-18 16:10:25
 
 --
 -- PostgreSQL database dump complete

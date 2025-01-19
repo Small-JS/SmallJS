@@ -21,7 +21,7 @@ new
 fromJs: js
 	"Return new ST object containing values of argument JS object, recursively."
 
-	| jsType float object jsObject |
+	| jsType jsClass float object jsObject |
 
 	INLINE 'if( js == null ) return stNil'.
 
@@ -43,6 +43,15 @@ fromJs: js
 			elementConverter: [ :element | Object fromJs: element ] ].
 
 	jsType = 'object' ifTrue: [
+		( Date isJsDate: js ) ifTrue: [
+			^ Date fromJs: js ].
+		jsClass := String fromJs: INLINE '( js.constructor ? js.constructor.name : null )'.
+		jsClass = 'Uint8Array' ifTrue: [
+			^ Uint8Array fromJs: js ].
+		"A NodeJS Buffers is also a Uint8Array"
+		jsClass = 'Buffer' ifTrue: [
+			^ Uint8Array fromJs: js ].
+
 		object := Object new.
 		jsObject := JsObject fromJs: js.
 		jsObject ownJsPropertyNames do: [ :name |
