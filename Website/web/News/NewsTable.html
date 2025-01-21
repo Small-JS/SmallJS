@@ -7,21 +7,21 @@
 	<tr>
 		<td>
 			<p class="newsTitle">SmallJS release 1.5
-				<span class="newsDate">19-JAN-2025</span>
+				<span class="newsDate">21-Jan-2025</span>
 			</p>
-
-			<p><b>Examples</b><br>
-				- Web Workers example app added!<br>
-				- Electron: Split up Node and Browser compilation to prevent class name clashes.
-			</p>
-
-			<p><b>Library</b><br>
+			<p>This one is all about database support and multi-threading.</p>
+			<p><b>Smalltalk library</b><br>
 				- Database: SQLite database support added!<br>
 				- Database: Added async error handling to all supported databases.<br>
 				- Database: Added support for ST classes: Float, Date, Boolean, Uint8Array.<br>
 				- Node: Worker threads support added.<br>
 				&nbsp&nbsp Enables development of multi-threaded Node.js apps.<br>
-				- Web Workers minimal support added, only to support the example app.<br>
+				- Browser: Web Workers minimal support added, only to support the example app.<br>
+			</p>
+
+			<p><b>Examples</b><br>
+				- Web Workers example app added!<br>
+				- Electron: Split up Node and Browser compilation to prevent class name clashes.
 			</p>
 
 			<p><b>Website</b><br>
@@ -49,7 +49,7 @@
 				&nbsp&nbsp The SmallJS client uses a standard web API to communicate with the Pharo Zinc web server.<br>
 			</p>
 
-			<p><b>Library</b><br>
+			<p><b>Smalltalk library</b><br>
 				- Minimal Electron support added, only to support the example app.<br>
 				- Minimal NodeGui support added, only to support the example app.<br>
 				If you want more complete support for these frameworks or if you want to contribute,<br>
@@ -78,7 +78,7 @@
 				- Hide instance variables for class methods.<br>
 			</p>
 
-			<p><b>Library</b><br>
+			<p><b>Smalltalk library</b><br>
 				- HTML Canvas 2D functionality fully implemented with supporting classes like:<br>
 				&nbsp&nbsp CanvasRenderingContext2d Path2d, DomMatrix, DomPoint, ImageData, ImageBitmap.<br>
 				- Standardized 3D point operations on new class Point3d (iso DomPoint).<br>
@@ -126,13 +126,13 @@
 				- Build scripts now exit on startup errors.<br>
 				- Added MacOS browser testing options.</p>
 
-			<p><b>Browser</b><br>
-				- Consolidated Fetch and Streams classes form modules Node and Browser to Core.<br>
-				- Fetch: ST implementation of full fetch API. Consolidated browser and Node.js functionality.<br>
-				- Added Linux default browser locations to .env.example files.</p>
+			<p><b>Smalltalk library</b><br>
+				- Node: Consolidated Fetch and Streams classes form modules Node and Browser to Core.<br>
+				- Node: ST implementation of full fetch API. Consolidated browser and Node.js functionality.<br>
+				- Node: Added Linux default browser locations to .env.example files.</p>
 
 			<p><b>Examples</b><br>
-				- Shop Server: Implemented session management.<br>
+				- Shop: Implemented session management.<br>
 				- Todo: Made it working on Firefox on MacOS.<br>
 				- Todo: Added language selection option with 2 languages.<br>
 				- Shop Client SPA: Created new shop client app as a Single Page Application (SPA).</p>

@@ -34,7 +34,7 @@ To get you started quickly, there are several example projects.
 
 SmallJS is currently set-up for use with Visual Studio Code, but other IDEs could be added.
 For the back-end, Node.js is the framework of choice, also using Express.
-Databases Postgres, MariaDB and MySQL are supported out of the box.
+Databases SQLite, Postgres, MariaDB and MySQL are supported out of the box.
 
 ## Install prerequisites
 

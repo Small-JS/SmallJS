@@ -28,8 +28,7 @@ The these can be installed with their default settings.
 
 ## SQLite
 
-- Server:   Is built into Nodes.js starting v 22.5.0,
-            Use a current version of node (v23.5.0+) that does *not* need this startup: "--experimental-sqlite".
+- Server:   Is built into Nodes.js starting version 22.5.0,
 - Admin:    https://sqlitebrowser.org/dl/
 
 # Create the SmallJS database
