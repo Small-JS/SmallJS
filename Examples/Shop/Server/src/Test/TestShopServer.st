@@ -17,7 +17,7 @@ testApi
 	self requestLogin.
 !
 requestLogin
-	NodeFetch
+	Fetch
 		request: 'http://localhost:3000/api/login?user=John&password=secret'
 		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
@@ -105,10 +105,10 @@ fetchObject: url then: block
 
 	headers := Headers new
 		set: 'cookie' value: cookie.
-	options := RequestOptions new
+	options := RequestInit new
 		headers: headers.
 
-	NodeFetch
+	Fetch
 		object: url
 		options: options
 		then: [ :objects | block value: objects ]

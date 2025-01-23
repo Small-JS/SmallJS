@@ -1,9 +1,13 @@
-CLASS TestRequestOptions EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestRequestInit EXTENDS Test MODULE Core CLASSVARS '' VARS ''
+
+"The RequestInit class in Node is similar to that of the browsers,
+ but not equal and have some different behaviors.
+ So there are different tests."
 
 test
 	| options request |
 
-	options := RequestOptions new.
+	options := RequestInit new.
 	self assert: [ options isEmpty ].
 
 	options method: 'POST'.
@@ -45,7 +49,8 @@ test
 	options priority: 'high'.
 	self assert: [ options priority = 'high' ].
 
-	request := Request url: 'Missing.json' options: options.
+	"options := RequestInit new."
+	request := Request url: 'http://localhost/Missing.json' options: options.
 	self assert: [ request url includes: 'Missing.json' ].
 
 	self assert: [ request bodyUsed not ].

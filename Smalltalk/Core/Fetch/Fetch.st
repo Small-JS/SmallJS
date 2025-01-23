@@ -1,10 +1,10 @@
-CLASS Fetch EXTENDS Object MODULE Browser CLASSVARS '' VARS ''
-	"Implements JS fetch() API for browsers."
+CLASS Fetch EXTENDS Object MODULE Core CLASSVARS '' VARS ''
+	"Implements JS fetch() API."
 
 CLASSMETHODS
 
 request: url then: block catch: errorBlock
-	self request: url options: RequestOptions new then: block catch: errorBlock
+	self request: url options: RequestInit new then: block catch: errorBlock
 !
 request: url options: options then: block catch: errorBlock
 	"Calls the block with the fetched Response object."
@@ -15,7 +15,7 @@ request: url options: options then: block catch: errorBlock
 			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 object: url then: block catch: errorBlock
-	self object: url options: RequestOptions new then: block catch: errorBlock
+	self object: url options: RequestInit new then: block catch: errorBlock
 !
 object: url options: options then: block catch: errorBlock
 	"Calls the block with a ST object constructed from the the fetched JSON response."
@@ -30,7 +30,7 @@ onObject: response then: block catch: errorBlock
 		ifFalse: [ errorBlock value: ( Error new: response statusAndText ) ].
 !
 text: url then: block catch: errorBlock
-	self text: url options: RequestOptions new then: block catch: errorBlock
+	self text: url options: RequestInit new then: block catch: errorBlock
 !
 text: url options: options then: block catch: errorBlock
 	"Calls the block with the fetched file content as a text string."

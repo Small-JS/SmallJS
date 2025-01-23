@@ -13,6 +13,9 @@ start
 	TestProcess.
 	TestPostgresDatabase.
 
+	"Test the first method compiled. Used for testing compiler."
 	Object myTest.
+
+	"Execute all test* methods on all Test* classes."
 	Test all.
 !

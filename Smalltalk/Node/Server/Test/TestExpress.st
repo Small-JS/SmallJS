@@ -1,5 +1,5 @@
 CLASS TestExpress EXTENDS Test MODULE TestServer CLASSVARS '' VARS 'express server port cookie'
-	"Tests classes: Express, Server, NodeFetch."
+	"Tests classes: Express, Server, Fetch."
 
 METHODS
 
@@ -28,7 +28,7 @@ requestLogin
 	| loginUrl |
 
 	loginUrl := 'http://localhost:', port toString, '/login?user=John&password=secret'.
-	NodeFetch
+	Fetch
 		request: loginUrl
 		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
@@ -62,11 +62,11 @@ requestProducts
 
 	headers := Headers new
 		set: 'cookie' value: cookie.
-	options := RequestOptions new
+	options := RequestInit new
 		headers: headers.
 
 	url := 'http://localhost:', port toString, '/products'.
-	NodeFetch text: url options: options
+	Fetch text: url options: options
 		then: [ :response | self onProductsResponse: response ]
 		catch: [ :error | error throw ] .
 !

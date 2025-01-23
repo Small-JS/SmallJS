@@ -1,5 +1,5 @@
-// This file imports JS npm classes and modules that are wrapped in ST
-// to facilitate checking out their TS types in VSCode.
+// This file imports exports from npm modules that are wrapped in ST elsewhere.
+// This is done to facilitate inspecting their TS types in VSCode.
 // This file is not used when running this app.
 
 // Files
@@ -7,7 +7,6 @@ import * as fs$ from "fs";
 import * as path$ from "path";
 
 // HTTP
-import fetch from "node-fetch";
 import http from "http";
 import { createHttpTerminator } from "http-terminator";
 

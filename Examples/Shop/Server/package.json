@@ -1,13 +1,14 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@types/node": "^22.10.7",
 		"express": "^4.21.2",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.0",
 		"mysql2": "^3.12.0",
-		"node-fetch": "^3.3.2",
 		"pg": "^8.13.1"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.10"
 	}
 }

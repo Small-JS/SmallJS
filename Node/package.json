@@ -6,13 +6,12 @@
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.0",
 		"mysql2": "^3.12.0",
-		"node-fetch": "^3.3.2",
 		"pg": "^8.13.1"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.0",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.10.7",
-		"@types/pg": "^8.11.10"
+		"@types/node": "^22.10.10",
+		"@types/pg": "^8.11.11"
 	}
 }
