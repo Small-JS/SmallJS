@@ -6,9 +6,10 @@ CLASSMETHODS
 
 myTest
 	"This is the first method compiled.
-	Can be used when testing the compiler."
-
-	4 squared; squared.
+	Can be changed when testing the compiler."
+	| a |
+	( a := 1 ) + 2.
+	self log: 'Object.myTest: ', a toString.
 !
 
 "Creating"

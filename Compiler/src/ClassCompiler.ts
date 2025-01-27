@@ -403,14 +403,17 @@ export class ClassCompiler
 		return node;
 	}
 
-		// Compile expression within parenthesis ( ... ).
+	// Compile expression within parenthesis ( ... ).
 	// The opening parenthesis has aleady been parsed.
 
 	private compileParenthesis(): SourceNode
 	{
-		let node = this.compileExpression();
+		let node = this.sourceNode( "( ", "parentheses" );
+
+		node.add( this.compileExpression() );
 
 		this.parser.mustParseTerm( ")" );
+		node.add( " )" );
 
 		return node;
 	}
