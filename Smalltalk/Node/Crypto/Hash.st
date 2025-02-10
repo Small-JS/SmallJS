@@ -1,6 +1,6 @@
 CLASS Hash EXTENDS JsObject MODULE Crypto CLASSVARS '' VARS ''
-	"This class implements the Express framework.
-	 Variable 'js' will contain an instance of the express() application object (function)'."
+
+"This class implements hash functions from the crypto framework."
 
 INLINE 'import crypto from "crypto";'
 

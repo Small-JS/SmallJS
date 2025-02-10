@@ -27,3 +27,6 @@ import crypto from "crypto";
 // Workers
 import { Worker } from "worker_threads";
 
+// AI
+import OpenAI from 'openai';
+import { ChatCompletion } from 'openai/resources/index.mjs';

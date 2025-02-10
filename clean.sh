@@ -19,18 +19,8 @@ echo "Removing compiled code..."
 ./Extension/clean.sh
 ./Browser/clean.sh
 ./Node/clean.sh
-./Examples/Balls/clean.sh
-./Examples/Benchmark/clean.sh
-./Examples/Counter/clean.sh
-./Examples/Electron/clean.sh
-./Examples/NodeGui/clean.sh
-./Examples/Pharo/Client/clean.sh
-./Examples/Shop/Client/clean.sh
-./Examples/Shop/ClientSpa/clean.sh
-./Examples/Shop/Server/clean.sh
-./Examples/Todo/clean.sh
-./Examples/WebWorkers/clean.sh
 ./Playground/clean.sh
 ./Website/clean.sh
+./Examples/clean.sh
 
-echo "To rebuild run: ./build.sh"
+echo "To rebuild run: ./buildAll.sh"

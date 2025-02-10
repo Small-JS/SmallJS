@@ -11,12 +11,11 @@ fi
 
 cd "$(dirname "$0")"
 
-echo "Removing modules..."
+echo "Removing core modules..."
 
-rm -fr ./Compiler/node_modules
-rm -fr ./Node/node_modules
-rm -fr ./Examples/Electron/node_modules
-rm -fr ./Examples/NodeGui/node_modules
-rm -fr ./Examples/Shop/Server/node_modules
+rm -fr Compiler/node_modules
+rm -fr Node/node_modules
+
+./Examples/removeModules.sh -y
 
 echo "To reinstall modules run: ./install.sh"

@@ -35,12 +35,10 @@ http-server -v
 
 ./Extension/install.sh
 
-echo "==== Installing NPM dependencies"
+echo "==== Installing core NPM dependencies"
 
 ./Compiler/install.sh
 ./Node/install.sh
-./Examples/Shop/Server/install.sh
-./Examples/Electron/install.sh
-./Examples/NodeGui/install.sh
+./Examples/install.sh
 
 echo "==== All installs successful"

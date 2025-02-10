@@ -1,9 +1,11 @@
 # Building & running tests
 
-Run main the bash script: `./build.sh`, that:
+Run the bash script: `./build.sh`, that:
 - Builds the Smalltalk to JS `./Compiler`.
-- Builds all other ST projects and runs their unit, API and browser (GUI) tests\
+- Builds other core ST projects and runs their unit, API and browser (GUI) tests\
   by calling the `build.sh` script in the project folders.
+
+Run the bash script: `./buildAll.sh`, to also build all examples.
 
 ## Browser testing
 

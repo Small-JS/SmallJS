@@ -1,7 +1,5 @@
 CLASS TestHash EXTENDS Test MODULE CryptoTest CLASSVARS '' VARS ''
 
-METHODS
-
 test
 	| hash |
 

@@ -54,7 +54,7 @@ This script:
 
 Run the bash script: `./build.sh`, that:
 - Builds the Smalltalk to JS `./Compiler`.
-- Builds all other ST projects and runs their unit tests.
+- Builds the core ST projects and runs their unit tests.
 
 Notes:
 - Browser testing is disabled by default. To enable it, check out:

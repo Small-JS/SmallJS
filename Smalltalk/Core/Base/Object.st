@@ -9,7 +9,6 @@ myTest
 	Can be changed when testing the compiler."
 	| a |
 	( a := 1 ) + 2.
-	self log: 'Object.myTest: ', a toString.
 !
 
 "Creating"
