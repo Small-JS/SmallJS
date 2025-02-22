@@ -12,7 +12,7 @@ start
 	TestHash.
 	TestProcess.
 	TestPostgresDatabase.
-	"TestOpenai."
+	TestOpenai.
 
 	"Test the first method compiled. Used for testing compiler."
 	Object myTest.

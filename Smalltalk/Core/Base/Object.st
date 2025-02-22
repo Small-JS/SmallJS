@@ -190,10 +190,10 @@ respondsTo: methodName
 	^ self class canUnderstand: methodName.
 !
 ifNil: block
-	^ false.
+	"I'm not nil, so don't evaluate block."
 !
 ifNotNil: block
-	^ true.
+	^ block value.
 !
 
 "Methods"

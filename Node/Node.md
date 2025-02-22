@@ -19,6 +19,20 @@ To set them up look here: [../Database/Database.md](../Database/Database.md)
 
 Database support is disabled by default.
 To enable it, copy the file `.env.example` to `.env`
-and uncomment the connection string(s) to the database(s) you want and enter the login credentials for your database server(s).
+and uncomment the connection string(s) to the database(s) you want
+and enter the login credentials for your database server(s).
 
 Now the unit tests of the selected databases will run automatically.
+
+## AI support
+
+These AI providers are currently supported: OpenAI, DeepSeek.
+
+To enable AI, copy the file `.env.example` to `.env`
+and uncomment the *_API_KEY variables for the AIs you want to use.
+Of course you will first have to get your own API keys from the providers.
+It's not expensive to get a usable token credit.
+
+Now the unit tests of the selected AIs will run automatically.<br>
+For a simple AI usage example, see the file: [../Smalltalk/Node/Ai/Test/TestAi.st](../Smalltalk/Node/Ai/Test/TestAi.st)
+

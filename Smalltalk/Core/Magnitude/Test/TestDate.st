@@ -25,6 +25,7 @@ test
 
 	self assert: [ ( date1 = date2 ) not ].
 	self assert: [ ( Date fromMilliseconds: date1 toMilliseconds ) = date1 ].
+	self assert: [ ( Date fromSeconds: date1 toSeconds ) = date1 ].
 
 	self assert: [ date1 = date1 ].
 	self assert: [ date2 < date1 ].

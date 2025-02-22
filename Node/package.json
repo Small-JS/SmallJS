@@ -6,13 +6,13 @@
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.0",
 		"mysql2": "^3.12.0",
-		"openai": "^4.83.0",
-		"pg": "^8.13.1"
+		"openai": "^4.85.3",
+		"pg": "^8.13.3"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.0",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.13.1",
+		"@types/node": "^22.13.5",
 		"@types/pg": "^8.11.11"
 	}
 }

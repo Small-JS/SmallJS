@@ -12,7 +12,10 @@ now
 	^ Integer fromJs: INLINE 'Date.now()'.
 !
 fromMilliseconds: milliseconds
-	^ self fromJs: milliseconds js.
+	^ self fromJs: INLINE 'new Date( milliseconds.js )'.
+!
+fromSeconds: seconds
+	^ self fromMilliseconds: seconds * 1000.
 !
 fromString: string
 	^ self fromJs: INLINE 'new Date( string.js )'.
@@ -69,6 +72,9 @@ toJson
 !
 toMilliseconds
 	^ Integer fromJs: INLINE 'this.js.getTime()'.
+!
+toSeconds
+	^ self toMilliseconds // 1000.
 !
 
 "Accessing local times"

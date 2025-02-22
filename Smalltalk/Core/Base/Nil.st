@@ -18,8 +18,8 @@ isNil
 	^ true.
 !
 ifNil: block
-	^ true.
+	^ block value.
 !
 ifNotNil: block
-	^ false.
+	"I'm nil, so don't evaluate block."
 !
