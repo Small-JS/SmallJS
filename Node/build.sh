@@ -20,12 +20,11 @@ if
 	! test -f .env
 then
 	echo "Warning: '.env' file missing. See '.env.example'."
-	echo "Skipping browser tests."
-	exit 0
+	echo "Running limited tests."
+else
+	set -o allexport
+	source .env
+	set +o allexport
 fi
-
-set -o allexport
-source .env
-set +o allexport
 
 node --experimental-sqlite out/main.js
