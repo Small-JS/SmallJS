@@ -34,12 +34,15 @@ To get you started quickly, there are several example projects.
 
 SmallJS is currently set-up for use with Visual Studio Code, but other IDEs could be added.
 For the back-end, Node.js is the framework of choice, also using Express.
-Databases SQLite, Postgres, MariaDB and MySQL are supported out of the box.
+Databases SQLite, Postgres, MariaDB and MySQL are supported out of the box,
+where SQLite is built into Node.js de can be used right away.
 
 ## Install prerequisites
 
 To install all the prerequisites, look at:
 >[./Documentation/Prerequisites.md](./Documentation/Prerequisites.md)
+
+## Install NPM modules
 
 Now run the bash script `./install.sh`.
 On Windows, the `.sh` extension should be associated with Git Bash once.
@@ -48,7 +51,7 @@ Do this by clicking on the file in the explorer and then choose open with Git Ba
 This script:
 - Checks if the prerequisites are present.
 - Installs the SmallJS language extension in VSCode.
-- Installs npm dependencies for all projects.
+- Installs NPM modules for all Node.js projects.
 
 ## Build and test SmallJS projects
 
@@ -57,10 +60,8 @@ Run the bash script: `./build.sh`, that:
 - Builds the core ST projects and runs their unit tests.
 
 Notes:
-- Browser testing is disabled by default. To enable it, check out:
+- Browser GUI testing is disabled by default. To enable it, check out:
   > [./Documentation/Building.md](./Documentation/Building.md)
-- To run the Shop server, you first need to setup a database for the server. Check out:
-  > [./Examples/Shop/Shop.md](./Examples/Shop/Shop.md)
 
 Check if everything builds tests successfully before going to the next step.
 
