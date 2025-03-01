@@ -31,7 +31,10 @@ To fix this, these lines should be added to the `launch.json` file of your brows
 ### Node.js
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
-Note: To use SQLite database support, install version 22.5.0 or higher.
+
+Note 1: To use SQLite database support, install version 22.5.0 or higher.\
+Note 2: SmallJS releases are tested on the latest (current) Node.js version, \
+so install that if you can, not the LTS.
 
 ### VSCode extension installer
 This is needed to install the SmallJS language extension.
