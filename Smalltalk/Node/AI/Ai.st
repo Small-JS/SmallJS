@@ -8,7 +8,7 @@ CLASSMETHODS
 "Meta"
 
 aiClasses
-	^ #( Openai Deepseek ).
+	^ #( Openai Deepseek Googleai ).
 !
 classNamed: name
 	| class |

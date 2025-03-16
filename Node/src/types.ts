@@ -38,3 +38,6 @@ import { ChatCompletionMessage } from "openai/resources/chat/completions.js";
 import { CompletionUsage } from "openai/resources/completions.js";
 type CompletionUsageCompletionTokensDetails = CompletionUsage.CompletionTokensDetails;
 type CompletionUsagePromptTokensDetails = CompletionUsage.PromptTokensDetails;
+
+import { GoogleGenerativeAI, ModelParams, GenerativeModel, 
+	GenerateContentResult, GenerateContentResponse } from "@google/generative-ai";

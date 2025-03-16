@@ -17,7 +17,7 @@ new: options
 "Testing"
 
 available
-	^ ( Process envAt: 'OPENAI_API_KEY') notNil.
+	^ ( Process envAt: 'OPENAI_API_KEY' ) notNil.
 !
 
 METHODS
