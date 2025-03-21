@@ -10,5 +10,5 @@ echo "==== Extension"
 
 # Suppress Node deprecation warnings
 export NODE_NO_WARNINGS=1
-vsce package
+../node_modules/.bin/vsce package
 code --install-extension smalljs-1.0.1.vsix

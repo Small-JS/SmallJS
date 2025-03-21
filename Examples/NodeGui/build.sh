@@ -20,7 +20,7 @@ echo "==== Example NodeGui"
 # Compile TypeScript
 
 echo "tsc Example NodeGui"
-tsc
+npx tsc
 
 # Compile Smalltalk
 

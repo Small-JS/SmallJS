@@ -11,7 +11,7 @@ echo "==== Shop Client SPA"
 # Compile TypeScript
 
 echo "tsc Shop ClientSpa"
-tsc
+npx tsc
 
 # Compile Smalltalk
 

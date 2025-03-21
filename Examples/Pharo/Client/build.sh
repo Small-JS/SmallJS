@@ -11,7 +11,7 @@ echo "==== Pharo Client"
 # Compile TypeScript
 
 echo "tsc Pharo Client"
-tsc
+npx tsc
 
 # Compile Smalltalk
 

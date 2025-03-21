@@ -9,4 +9,4 @@ cd "$(dirname "$0")"
 echo -n "Directory: "
 pwd
 
-http-server web -c-1 -p 3000
+npx http-server web -c-1 -p 3000

@@ -24,14 +24,20 @@ echo "==== Detecting global NPM packages"
 echo -n "Detecting NPM: "
 npm -v
 
+echo "==== Installing local NPM packages"
+
+npm install
+
+echo "==== Detecting local NPM packages"
+
 echo -n "Detecting TypeScript: "
-tsc -v
+npx tsc -v
 
 echo -n "Detecting VS Code Extension Manager: "
-vsce --version
+npx vsce --version
 
 echo -n "Detecting http-server: "
-http-server -v
+npx http-server -v
 
 ./Extension/install.sh
 

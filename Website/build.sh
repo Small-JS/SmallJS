@@ -11,7 +11,7 @@ echo "==== Website"
 # Compile TypeScript
 
 echo "tsc Website"
-tsc
+npx tsc
 
 # Copy examples
 # This assumes the selected examples have been built beforehand.
