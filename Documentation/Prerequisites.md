@@ -36,14 +36,8 @@ Note 1: To use SQLite database support, install version 22.5.0 or higher.\
 Note 2: SmallJS releases are tested on the latest (current) Node.js version, \
 so install that if you can, not the LTS.
 
-### VSCode extension installer
-This is needed to install the SmallJS language extension.
-> `npm install -g @vscode/vsce`
+### OpenGL support (under Linux)
 
-### TypeScript
-To install TypeScript globally:
-> `npm install -g typescript`
+If you see a build error under Linux related to OpenGL, you may need to install it yourself using:
+> `sudo apt install libopengl0`
 
-### HTTP Server
-A static HTTP server is installed globally with this command:
-> `npm install -g http-server`

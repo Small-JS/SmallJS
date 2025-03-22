@@ -11,7 +11,7 @@ echo "==== Benchmark"
 # Compile TypeScript
 
 echo "tsc Benchmark"
-tsc
+npx tsc
 
 # Compile Smalltalk
 
@@ -36,7 +36,7 @@ source .env
 # Suppress warnings for now:
 export NODE_NO_WARNINGS=1
 
-webServer="http-server web --port 3000 -c-1 --silent"
+webServer="../../node_modules/.bin/http-server  --port 3000 -c-1 --silent"
 echo "Starting web server: "$webServer
 $webServer &
 webServerPid=$!
