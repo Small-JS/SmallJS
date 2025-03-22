@@ -30,7 +30,6 @@ import { Worker } from "worker_threads";
 // AI
 import OpenAI from "openai";
 
-import { Chat } from "openai/resources/chat.js";
 import { ChatCompletion } from "openai/resources/chat/completions.js";
 type ChatCompletionChoice = ChatCompletion.Choice;
 import { ChatCompletionMessage } from "openai/resources/chat/completions.js";
@@ -39,5 +38,5 @@ import { CompletionUsage } from "openai/resources/completions.js";
 type CompletionUsageCompletionTokensDetails = CompletionUsage.CompletionTokensDetails;
 type CompletionUsagePromptTokensDetails = CompletionUsage.PromptTokensDetails;
 
-import { GoogleGenerativeAI, ModelParams, GenerativeModel, 
+import { GoogleGenerativeAI, ModelParams, GenerativeModel,
 	GenerateContentResult, GenerateContentResponse } from "@google/generative-ai";
