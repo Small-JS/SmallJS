@@ -29,4 +29,4 @@ echo "Pre-launch script"
 #     sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
 cd out
-../node_modules/.bin/electron main.js -test
+../node_modules/.bin/electron --no-sandbox main.js -test
