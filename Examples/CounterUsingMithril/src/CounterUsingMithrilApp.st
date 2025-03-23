@@ -12,8 +12,7 @@ start
 
 buildUI
 	^ Mithril
-		m: 'table' 
-		with: (Mithril attribute: 'id' value: 'formTable')
+		m: 'table#formTable' 
 		with: (Mithril 
 			m: 'tbody'
 			with: (Mithril
@@ -23,16 +22,14 @@ buildUI
 					with: (Mithril 
 						m: 'div.vertical-center'
 						with: (Mithril 
-							m: 'img' 
+							m: 'img#logoImage' 
 							with: (Mithril
-								attribute: 'id' value: 'logoImage'
 								attribute: 'src' value: 'logo.png'
 								attribute: 'height' value: '40'
 							)
 						) 
 						with: (Mithril 
-							m: 'span' 
-							with: (Mithril attribute: 'id' value: 'titleMessage')
+							m: 'span#titleMessage' 
 							with: (Mithril trust: '&nbsp;&nbsp;Counter')
 						)
 					)
@@ -43,8 +40,7 @@ buildUI
 				with: (Mithril 
 					m: 'td' 
 					with: (Mithril 
-						m: 'span' 
-						with: (Mithril attribute: 'id' value: 'counterSpan')
+						m: 'span#counterSpan'
 						with: counter value toString
 					) 
 				)
@@ -54,11 +50,8 @@ buildUI
 				with: (Mithril 
 					m: 'td'
 					with: (Mithril 
-						m: 'button' 
-						with: (Mithril 
-							attribute: 'id' value: 'incrementButton' 
-							attribute: 'onclick' value: [self increment]
-						) 
+						m: 'button#incrementButton' 
+						with: (Mithril attribute: 'onclick' value: [self increment]) 
 						with: '+'
 					)
 					with: (Mithril 
@@ -66,11 +59,8 @@ buildUI
 						with: (Mithril trust: '&nbsp;&nbsp;&nbsp;&nbsp;')
 					)
 					with: (Mithril 
-						m: 'button'
-						with: (Mithril 
-							attribute: 'id' value: 'resetButton' 
-							attribute: 'onclick' value: [self reset]
-						) 
+						m: 'button#resetButton'
+						with: (Mithril attribute: 'onclick' value: [self reset]) 
 						with: '0'
 					)
 				)
