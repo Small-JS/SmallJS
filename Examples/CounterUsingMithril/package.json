@@ -1,0 +1,13 @@
+{
+	"name": "counterusingmithril-smalljs",
+	"description": "CounterUsingMithril example app in SmallJS",
+	"version": "1.0.0",
+	"type": "module",
+	"keywords": [
+		"counterusingmithril"
+	],
+	"dependencies": {
+		"mithril": "^2.2.15",
+		"tachyons": "^4.12.0"
+	}
+}
