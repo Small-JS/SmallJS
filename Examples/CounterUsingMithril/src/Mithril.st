@@ -1,5 +1,7 @@
 CLASS Mithril EXTENDS Object MODULE CounterUsingMithrilApp CLASSVARS '' VARS ''
 
+INLINE 'import "../resources-from-npm/mithril.js";'
+
 CLASSMETHODS
 
 mount: aComponent on: aElement

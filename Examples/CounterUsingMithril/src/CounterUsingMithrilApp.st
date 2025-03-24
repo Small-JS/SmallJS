@@ -12,27 +12,24 @@ start
 
 buildUI
 	^ Mithril
-		m: 'table' 
-		with: (Mithril attribute: 'id' value: 'formTable')
+		m: 'table#formTable.w5.center.tc.br3.ba.bw1.bg-white.b--gray.bs-16px.shadow-10px-grey' 
 		with: (Mithril 
 			m: 'tbody'
 			with: (Mithril
 				m: 'tr'
 				with: (Mithril 
-					m: 'td.title'
+					m: 'td.f3.b.bg-light-blue.mt0.mb0'
 					with: (Mithril 
-						m: 'div.vertical-center'
+						m: 'div.flex.items-center.justify-center'
 						with: (Mithril 
-							m: 'img' 
+							m: 'img#logoImage' 
 							with: (Mithril
-								attribute: 'id' value: 'logoImage'
 								attribute: 'src' value: 'logo.png'
 								attribute: 'height' value: '40'
 							)
 						) 
 						with: (Mithril 
-							m: 'span' 
-							with: (Mithril attribute: 'id' value: 'titleMessage')
+							m: 'span#titleMessage' 
 							with: (Mithril trust: '&nbsp;&nbsp;Counter')
 						)
 					)
@@ -43,8 +40,7 @@ buildUI
 				with: (Mithril 
 					m: 'td' 
 					with: (Mithril 
-						m: 'span' 
-						with: (Mithril attribute: 'id' value: 'counterSpan')
+						m: 'span#counterSpan.b.black.garamond.f1'
 						with: counter value toString
 					) 
 				)
@@ -54,11 +50,8 @@ buildUI
 				with: (Mithril 
 					m: 'td'
 					with: (Mithril 
-						m: 'button' 
-						with: (Mithril 
-							attribute: 'id' value: 'incrementButton' 
-							attribute: 'onclick' value: [self increment]
-						) 
+						m: 'button#incrementButton.bg-light-green.br3.f3.w2' 
+						with: (Mithril attribute: 'onclick' value: [self increment]) 
 						with: '+'
 					)
 					with: (Mithril 
@@ -66,11 +59,8 @@ buildUI
 						with: (Mithril trust: '&nbsp;&nbsp;&nbsp;&nbsp;')
 					)
 					with: (Mithril 
-						m: 'button'
-						with: (Mithril 
-							attribute: 'id' value: 'resetButton' 
-							attribute: 'onclick' value: [self reset]
-						) 
+						m: 'button#resetButton.bg-light-coral.br3.f3.w2'
+						with: (Mithril attribute: 'onclick' value: [self reset]) 
 						with: '0'
 					)
 				)
