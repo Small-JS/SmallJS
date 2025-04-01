@@ -3,18 +3,18 @@
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.39.0",
 		"@google/generative-ai": "^0.24.0",
-		"express": "^4.21.2",
+		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.0",
 		"mysql2": "^3.14.0",
-		"openai": "^4.89.0",
+		"openai": "^4.91.1",
 		"pg": "^8.14.1"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.1",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.13.11",
+		"@types/node": "^22.13.17",
 		"@types/pg": "^8.11.11"
 	}
 }

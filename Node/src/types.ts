@@ -27,7 +27,7 @@ import crypto from "crypto";
 // Workers
 import { Worker } from "worker_threads";
 
-// AI
+// AI - OpenAI
 import OpenAI from "openai";
 
 import { ChatCompletion } from "openai/resources/chat/completions.js";
@@ -38,5 +38,11 @@ import { CompletionUsage } from "openai/resources/completions.js";
 type CompletionUsageCompletionTokensDetails = CompletionUsage.CompletionTokensDetails;
 type CompletionUsagePromptTokensDetails = CompletionUsage.PromptTokensDetails;
 
+// AI - Google AI
 import { GoogleGenerativeAI, ModelParams, GenerativeModel,
 	GenerateContentResult, GenerateContentResponse } from "@google/generative-ai";
+
+// AI - Anthropic
+import { Anthropic, ClientOptions } from '@anthropic-ai/sdk';
+import { MessageCreateParamsNonStreaming } from '@anthropic-ai/sdk/resources/index.mjs';
+import { Message, TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';

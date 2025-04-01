@@ -22,6 +22,11 @@ cwd=$(pwd)
 
 echo "Updating..."
 
+echo "==== Globals"
+cd $cwd
+ncu -u
+npm install
+
 echo "==== Compiler"
 cd $cwd/Compiler
 ncu -u
