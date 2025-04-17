@@ -1,9 +1,9 @@
 {
 	"type": "module",
 	"dependencies": {
-		"electron": "^35.1.2"
+		"electron": "^35.1.4"
 	},
 	"devDependencies": {
-		"@types/node": "^22.13.17"
+		"@types/node": "^22.14.0"
 	}
 }

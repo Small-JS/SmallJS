@@ -1,0 +1,36 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Server",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"--experimental-sqlite"
+			],
+			"program": "${workspaceFolder}/out/main.js",
+			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"preLaunchTask": "Compile server"
+		},
+		{
+			"name": "Launch Server test",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/out/main.js",
+			"args": "-test",
+			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"preLaunchTask": "Compile server"
+		}
+	]
+}

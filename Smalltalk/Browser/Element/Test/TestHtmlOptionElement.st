@@ -8,6 +8,9 @@ test
 	option value: 'Option value'.
 	self assert: [ option value = 'Option value' ].
 
+	option text: 'Option text'.
+	self assert: [ option text = 'Option text' ].
+
 	option selected: true.
 	self assert: [ option selected ].
 

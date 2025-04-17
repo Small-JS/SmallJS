@@ -16,6 +16,8 @@ echo "==== Building SmallJS examples"
 ./Shop/Server/build.sh
 ./Shop/Client/build.sh
 ./Shop/ClientSpa/build.sh
+./AI/Server/build.sh
+./AI/Client/build.sh
 ./Electron/build.sh
 ./NodeGui/build.sh
 ./Pharo/Client/build.sh

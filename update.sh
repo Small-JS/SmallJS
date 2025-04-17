@@ -24,32 +24,37 @@ echo "Updating..."
 
 echo "==== Globals"
 cd $cwd
-ncu -u
+npx node-check-updates -u
 npm install
 
 echo "==== Compiler"
 cd $cwd/Compiler
-ncu -u
+npx node-check-updates -u
 npm install
 
 echo "==== Node"
 cd $cwd/Node
-ncu -u
+npx node-check-updates -u
 npm install
 
 echo "==== Examples: Shop Server"
 cd $cwd/Examples/Shop/Server
-ncu -u
+npx node-check-updates -u
+npm install
+
+echo "==== Examples: AI Server"
+cd $cwd/Examples/AI/Server
+npx node-check-updates -u
 npm install
 
 echo "==== Examples: Electron"
 cd $cwd/Examples/Electron
-ncu -u
+npx node-check-updates -u
 npm install
 
 echo "==== Examples: NodeGui"
 cd $cwd/Examples/NodeGui
-ncu -u
+npx node-check-updates -u
 npm install
 
 # Ending messages

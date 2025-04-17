@@ -24,6 +24,7 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLButtonElement' ifTrue: [ ^ HtmlButtonElement fromJs: jsElement ].
 	jsClassName = 'HTMLFormElement' ifTrue: [ ^ HtmlFormElement fromJs: jsElement ].
 	jsClassName = 'HTMLInputElement' ifTrue: [ ^ HtmlInputElement fromJs: jsElement ].
+	jsClassName = 'HTMLSelectElement' ifTrue: [ ^ HtmlSelectElement fromJs: jsElement ].
 	jsClassName = 'HTMLLabelElement' ifTrue: [ ^ HtmlLabelElement fromJs: jsElement ].
 	jsClassName = 'HTMLTextAreaElement' ifTrue: [ ^ HtmlTextAreaElement fromJs: jsElement ].
 	jsClassName = 'HTMLSpanElement' ifTrue: [ ^ HtmlSpanElement fromJs: jsElement ].

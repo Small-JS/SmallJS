@@ -9,13 +9,13 @@ test
 	| googleai params model |
 
 	googleai := Googleai new.
-	self assert: [ googleai myApiKey length > 10 ].
+	self assert: [ googleai apiKey length > 10 ].
 
 	params := GoogleaiModelParams new
 		model: googleai models first.
 
 	model := googleai generativeModel: params.
-	self assert: [ model apiKey = googleai myApiKey ].
+	self assert: [ model apiKey = googleai apiKey ].
 	self assert: [ model model includes: params model ].
 
 	model generateContent: 'Say this is a test'

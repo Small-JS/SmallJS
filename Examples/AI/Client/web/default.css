@@ -1,0 +1,52 @@
+﻿
+body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F0F0F0;
+}
+
+#titleMessage {
+	font-size: X-Large;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background-color: lightblue;
+}
+
+#formTable {
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid grey;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	width: 400px;
+	box-shadow: 10px 10px 5px grey;
+}
+
+
+.formSection {
+	font-size: Large;
+	font-weight: bold;
+}
+
+#selectTable {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#selectTable th {
+	text-align: right;
+}
+
+#selectTable td {
+	text-align: left;
+}
+
+.formLabel {
+	font-weight: 650;
+}
+

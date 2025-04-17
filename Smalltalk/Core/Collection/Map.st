@@ -7,24 +7,42 @@ METHODS
 constructor
 	js := INLINE 'new Map()'.
 !
+
+"Properties"
+
 size
 	^ Integer fromJs: INLINE 'this.js.size'.
+!
+
+"Getting"
+
+get: key
+	^ INLINE 'this.js.get( key.js )'.
+!
+
+"Setting"
+
+set: key value: value
+	INLINE 'this.js.set( key.js, value )'.
+!
+
+"Deleting"
+
+delete: key
+	^ Boolean fromJs: INLINE 'this.js.delete( key.js )'.
 !
 clear
 	INLINE 'this.js.clear()'.
 !
-delete: key
-	^ Boolean fromJs: INLINE 'this.js.delete( key.js )'.
-!
-get: key
-	^ INLINE 'this.js.get( key.js )'.
-!
+
+"Testing"
+
 has: key
 	^ Boolean fromJs: INLINE 'this.js.has( key.js )'.
 !
-set: key value: value
-	INLINE 'this.js.set( key.js, value )'.
-!
+
+"Iterating"
+
 keys
 	^ Array fromJs: INLINE 'Array.from( this.js.keys() )' elementClass: String.
 !
@@ -37,6 +55,5 @@ entries
 !
 forEach: block
 	"Note: The block must have :key and :value as the 1st and 2nd argument."
-	INLINE 'this.js.forEach( ( value, key ) => block.js( key, value ) )'.
+	INLINE 'this.js.forEach( ( value, key ) => block.js( stString$class.$fromJs$( key ), value ) )'.
 !
-

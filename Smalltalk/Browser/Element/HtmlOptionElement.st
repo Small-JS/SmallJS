@@ -6,6 +6,12 @@ value
 value: value
 	INLINE 'this.js.value = value.js'.
 !
+text
+	^ String fromJs: INLINE 'this.js.text'.
+!
+text: text
+	INLINE 'this.js.text = text.js'.
+!
 defaultSelected
 	^ Boolean fromJs: INLINE 'this.js.defaultSelected'.
 !

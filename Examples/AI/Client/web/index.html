@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Chat</title>
+	<link rel="stylesheet" href="default.css" type="text/css" />
+	<script type="module" src="Script/main.js"></script>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td>
+				<img id="aiLogo" src="AiLogo.png" alt="AI logo" width="128" height="128" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p id="titleMessage">Welcome to multi-AI chat</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span id="selectAiSpan" class="formSection">Select AI</span><br>
+				<p style="margin:10px;"></p>
+				<table id="selectTable">
+					<tr>
+						<th>
+							<label id="providerLabel" class="formLabel" for="providerSelect">Provider</label>
+						</th>
+						<td>
+							<select id="providerSelect">
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label id="modelLabel" class="formLabel" for="modelSelect">Model</label>
+						</th>
+						<td>
+							<select id="modelSelect">
+							</select>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label id="questionLabel" for="questionTextArea" class="formSection">Question</label><br>
+				<p style="margin:10px;"></p>
+				<textarea id="questionTextArea" rows="4" cols="40"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button id="askButton">Ask</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label id="answerLabel" for="answerTextArea" class="formSection">Answer</label><br>
+				<p style="margin:10px;"></p>
+				<textarea id="answerTextArea" rows="4" cols="40" readonly="readonly"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span id="errorSpan"></span>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

@@ -10,7 +10,7 @@ new
 	"Use api key from environment variable ANTHROPIC_API_KEY by default"
 	| apiKey options |
 
-	apiKey := Process envAt: 'ANTHROPIC_API_KEY'.
+	apiKey := self apiKey.
 	apiKey ifNil: [
 		self error: 'Evironment variable not set: ANTHROPIC_API_KEY' ].
 
@@ -22,22 +22,7 @@ new: options
 	^ self fromJs: INLINE 'new Anthropic( options.js )'.
 !
 
-"Testing"
-
-available
-	^ ( Process envAt: 'ANTHROPIC_API_KEY' ) notNil.
-!
-
 METHODS
-
-"Models"
-
-models
-	| modelsString |
-	modelsString := Process envAt: 'ANTHROPIC_MODELS'.
-	modelsString ifNil: [ ^ #( 'gpt-4o-mini' ) ].  "Default"
-	^ modelsString split: ' '.
-!
 
 "Chat"
 

@@ -7,6 +7,8 @@ cd "$(dirname "$0")"
 
 echo "Removing compiled code from examples..."
 
+./AI/Client/clean.sh
+./AI/Server/clean.sh
 ./Balls/clean.sh
 ./Benchmark/clean.sh
 ./Counter/clean.sh

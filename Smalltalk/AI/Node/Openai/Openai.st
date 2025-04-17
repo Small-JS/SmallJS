@@ -14,22 +14,7 @@ new: options
 	^ self fromJs: INLINE 'new OpenAI( options.js )'.
 !
 
-"Testing"
-
-available
-	^ ( Process envAt: 'OPENAI_API_KEY' ) notNil.
-!
-
 METHODS
-
-"Models"
-
-models
-	| modelsString |
-	modelsString := Process envAt: 'OPENAI_MODELS'.
-	modelsString ifNil: [ ^ #( 'gpt-4o-mini' ) ].  "Default"
-	^ modelsString split: ' '.
-!
 
 "Chat"
 

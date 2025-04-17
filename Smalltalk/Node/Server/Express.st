@@ -1,4 +1,4 @@
-CLASS Express EXTENDS JsObject MODULE Server CLASSVARS '' VARS 'port'
+CLASS Express EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
 	"This class implements the Express framework.
 	 Variable 'js' will contain an instance of the express() application object (function)'."
 

@@ -13,6 +13,7 @@ cd "$(dirname "$0")"
 
 echo "Removing example modules..."
 
+rm -fr AI/Server/node_modules
 rm -fr Electron/node_modules
 rm -fr NodeGui/node_modules
 rm -fr Shop/Server/node_modules

@@ -9,12 +9,6 @@ new
 	^ self fromJs: INLINE 'new OpenAI( { baseURL: baseUrl.js, apiKey: apiKey.js } )'.
 !
 
-available
-	^ ( Process envAt: 'DEEPSEEK_API_KEY') notNil.
-!
-
-METHODS
-
 "Models"
 
 models
@@ -23,3 +17,6 @@ models
 	modelsString ifNil: [ ^ #( 'deepseek-chat' ) ].  "Default"
 	^ modelsString split: ' '.
 !
+
+METHODS
+

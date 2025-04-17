@@ -10,16 +10,21 @@ cwd=$(pwd)
 
 echo "==== Examples: Shop Server"
 cd $cwd/Shop/Server
-ncu -u
+npx node-check-updates -u
+npm install
+
+echo "==== Examples: AI Server"
+cd $cwd/AI/Server
+npx node-check-updates -u
 npm install
 
 echo "==== Examples: Electron"
 cd $cwd/Electron
-ncu -u
+npx node-check-updates -u
 npm install
 
 echo "==== Examples: NodeGui"
 cd $cwd/NodeGui
-ncu -u
+npx node-check-updates -u
 npm install
 

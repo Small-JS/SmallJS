@@ -13,6 +13,7 @@ cd "$(dirname "$0")"
 
 echo "Removing core modules..."
 
+rm -fr ./node_modules
 rm -fr Compiler/node_modules
 rm -fr Node/node_modules
 

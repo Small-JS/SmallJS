@@ -4,11 +4,11 @@
 		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
-		"mariadb": "^3.4.0",
+		"mariadb": "^3.4.1",
 		"mysql2": "^3.14.0",
 		"pg": "^8.14.1"
 	},
 	"devDependencies": {
-		"@types/node": "^22.13.17"
+		"@types/node": "^22.14.0"
 	}
 }

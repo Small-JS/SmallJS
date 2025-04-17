@@ -1,10 +1,10 @@
 CLASS ShopServer EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'express server database personTable productTable orderTable'
 	"This app provides a Shop API for users, products and orders in the /api route.
-	 It alse provites a stetic http server for that content.
-	 It uses Postgres a back-end database, with the 'pg' npm library, so both should be installed.
+	 It also provides a static web server for web content of the client.
+	 It uses databases enabled in the '.env' file.
 
 	 Note: Within callbacks of pg functions, you cannot use return from block [ ^ x ].
-	 	This will exit the application with unresolved promises vs exceptions. "
+	 	This will exit the application with unresolved promises vs. exceptions. "
 
 METHODS
 
@@ -73,7 +73,7 @@ testMode
 "Example login request:
 	localhost:3000/api/login?user=John&password=secret
  Example result:
- 	{ true, 'Login succeeded' }"
+ 	{ success: true, message: 'Login succeeded' }"
 
 login: request response: response
 	| result userName password query person |

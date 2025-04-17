@@ -29,7 +29,10 @@ test
 	self assert: [ ( ( map entries at: 2 ) at: 1 ) = 2 ].
 
 	sum := 0.
-	map forEach: [ :key :value | sum := sum + value ].
+	map forEach: [ :key :value |
+		self assert: [ #( 'a' 'b' 'c' ) includes: key ].
+		self assert: [ value > 0 ].
+		sum := sum + value ].
 	self assert: [ sum = 6 ].
 
 	map clear.

@@ -11,8 +11,7 @@ start
 	TestExpress.
 	TestHash.
 	TestProcess.
-	TestPostgresDatabase.
-	TestOpenai.
+	TestSqliteDatabaseSync.
 
 	"Test the first method compiled. Used for testing compiler."
 	Object myTest.
