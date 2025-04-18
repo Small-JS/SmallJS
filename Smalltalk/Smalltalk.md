@@ -8,6 +8,7 @@ Subfolders in this folder:
 - Node - Node.js specific classes for, creating server apps.
 - Electron - Classes for creating Electron apps.
 - NodeGui - Classes for creating NodeGui apps.
+- AI - Classes for creating AI apps.
 
 Every class is implemented in a separate *.st file.
 Further subfolders are used to group classes logically,

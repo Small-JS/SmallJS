@@ -31,7 +31,7 @@ Test application for running SmallJS code in Node.js.
 
 Test testing application for running SmallJS code in a web browser.
 
-### [./Database](../Browser/README.md)
+### [./Database](../Database/Database.md)
 
 A guide to installing and using supported databases with SmallJS.
 
