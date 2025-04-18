@@ -20,7 +20,6 @@ echo "Removing compiled code..."
 ./Browser/clean.sh
 ./Node/clean.sh
 ./Playground/clean.sh
-./Website/clean.sh
 ./Examples/clean.sh
 
 echo "To rebuild run: ./buildAll.sh"

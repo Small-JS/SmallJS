@@ -9,6 +9,5 @@ cd "$(dirname "$0")"
 
 ./build.sh
 ./Examples/build.sh
-./Website/build.sh
 
 echo "==== All builds successful"
