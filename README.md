@@ -7,6 +7,14 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
+## News - 18-APR-2025
+
+SmallJS v1.6 was released with support for 4 AIs and a client / server example chat app.\
+More info here: https://small-js.org/News
+
+In this release, sources where moved around a bit, to it's best to start from fresh clone.\
+Have fun!
+
 ## Introducing SmallJS
 
 SmallJS is a free and open source implementation of the elegant and powerful Smalltalk-80 (ST) language.
