@@ -9,6 +9,7 @@ cd "$(dirname "$0")"
 
 echo "==== Installing NPM dependencies for examples"
 
+./AI/Server/install.sh
 ./Shop/Server/install.sh
 ./Electron/install.sh
 ./NodeGui/install.sh
