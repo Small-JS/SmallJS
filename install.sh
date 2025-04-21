@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script
-# 	- checks SmallJS prerequisite appplications
+# 	- checks SmallJS prerequisite applications
 # 	- Installs the SmallJS language extension in VSCode.
 #	- Installs npm dependencies
 

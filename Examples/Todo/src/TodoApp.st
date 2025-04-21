@@ -1,36 +1,23 @@
 CLASS TodoApp EXTENDS BrowserApp MODULE Todo CLASSVARS ''
 	VARS 'language tasks
-		languageInput languageDataList
+		languageSelect
 		newTaskTitleInput newTaskDueInput newTaskAddButton
 		taskTable sortColumn sortDescending'
 
 start
-	self loadTasks.
 	self bindElements.
 	self loadDefaultLanguage.
+	self loadTasks.
 	self showTasks.
 
 	self testMode ifTrue: [
 		TestTodoApp new test: self ].
 !
-loadDefaultLanguage
-	| languageName |
-	language := Language supported: #( 'en-US' 'es' ).
-
-	self testMode
-		ifTrue: [ language load: 'en-US' ]
-		ifFalse: [ language load: Window default navigator language ].
-
-	languageName := ( languageDataList children at: language currentIndex ) value.
-	languageInput value: languageName.
-!
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
 
-	languageInput := Document getElementById: 'languageInput' class: HtmlInputElement.
-	languageInput addEventListener: 'input' then: [ self loadLanguage ].
-
-	languageDataList := Document getElementById: 'languageDataList' class: HtmlDataListElement.
+	languageSelect := Document getElementById: 'languageSelect' class: HtmlSelectElement.
+	languageSelect addEventListener: 'change' then: [ self loadLanguage ].
 
 	newTaskTitleInput := Document getElementById: 'newTaskTitleInput' class: HtmlInputElement.
 	newTaskTitleInput value: 'New task'.
@@ -44,9 +31,15 @@ bindElements
 	taskTable := Document getElementById: 'taskTable' class: HtmlTableElement.
 	taskTable onClick: [ :event | self taskTableClicked: event ].
 !
+loadDefaultLanguage
+	| languageId |
+	language := Language supported: #( 'en-US' 'es' ).
+	languageId := languageSelect selectedValue.
+	language load: languageId.
+!
 loadLanguage
 	| index |
-	index := languageDataList indexOf: languageInput value.
+	index := languageSelect selectedIndex.
 	index >= 0 ifTrue: [
 		language load: ( language supported at: index ) ].
 !
@@ -151,11 +144,8 @@ deleteTask: position
 tasks
 	^ tasks.
 !
-languageInput
-	^ languageInput.
-!
-languageDataList
-	^ languageDataList.
+languageSelect
+	^ languageSelect.
 !
 newTaskTitleInput
 	^ newTaskTitleInput.

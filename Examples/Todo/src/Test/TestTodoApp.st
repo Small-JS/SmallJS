@@ -79,12 +79,11 @@ testSortTasksThen: block
 testLanguageThen: block
 	"Select second language (Spanish) and check of GUI changed to it."
 
-	| languageName inputEvent titleSpan |
+	| changeEvent titleSpan |
 
-	languageName := ( todoApp languageDataList children at: 1 ) value.
-	todoApp languageInput value: languageName.
-	inputEvent := Event type: 'input'.
-	todoApp languageInput dispatchEvent: inputEvent.
+	todoApp languageSelect selectedIndex: 1.
+	changeEvent := Event type: 'change'.
+	todoApp languageSelect dispatchEvent: changeEvent.
 
 	Timer timeout: 1000 then: [
 		titleSpan := Document getElementById: 'titleSpan' class: HtmlSpanElement.

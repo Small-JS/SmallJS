@@ -27,6 +27,14 @@ selectedText
 	options length > 0 ifFalse: [ ^ nil ].
 	^ options first text.
 !
+selectedValue
+	"Answer the value of the first selected item
+	 or nil if there is no selection."
+	| options |
+	options := self selectedOptions.
+	options length > 0 ifFalse: [ ^ nil ].
+	^ options first value.
+!
 
 "Methods"
 
