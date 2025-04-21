@@ -30,13 +30,13 @@ npm install
 
 echo "==== Detecting local NPM packages"
 
-echo -n "Detecting TypeScript: "
+echo "Detecting TypeScript: "
 npx tsc -v
 
-echo -n "Detecting VS Code Extension Manager: "
+echo "Detecting VS Code Extension Manager: "
 npx vsce --version
 
-echo -n "Detecting http-server: "
+echo "Detecting http-server: "
 npx http-server -v
 
 ./Extension/install.sh
@@ -45,6 +45,5 @@ echo "==== Installing core NPM dependencies"
 
 ./Compiler/install.sh
 ./Node/install.sh
-./Examples/install.sh
 
-echo "==== All installs successful"
+echo "==== All core installs successful"
