@@ -13,11 +13,8 @@ echo "==== Building SmallJS examples"
 ./Balls/build.sh
 ./Benchmark/build.sh
 ./WebWorkers/build.sh
-./Shop/Server/build.sh
-./Shop/Client/build.sh
-./Shop/ClientSpa/build.sh
-./AI/Server/build.sh
-./AI/Client/build.sh
+./Shop/build.sh
+./AI/build.sh
 ./Electron/build.sh
 ./NodeGui/build.sh
 ./Pharo/Client/build.sh
