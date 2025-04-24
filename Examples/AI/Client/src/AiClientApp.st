@@ -46,6 +46,7 @@ onProvidersResponse: object
 	providers do: [ :provider |
 		option := Document default createElement: 'option'.
 		option text: provider.
+		option value: provider.
 		providerSelect add: option ].
 
 	self onOnProviderChange.
@@ -54,7 +55,7 @@ onOnProviderChange
 	"Set models for selected provider"
 	|  provider |
 
-	provider := providerSelect selectedText.
+	provider := providerSelect value.
 	provider ifNotNil: [
 		self setModelsFor: provider ].
 !
@@ -66,6 +67,7 @@ setModelsFor: provider
 	models := aiProviders modelsFor: provider.
 	models do: [ :model |
 		option := Document default createElement: 'option'.
+		option value: model.
 		option text: model.
 		modelSelect add: option ].
 !
@@ -75,8 +77,8 @@ onAsk
 	answerTextArea value: ''.
 
 	request := AiChatRequest new
-		provider: providerSelect selectedText;
-		model: modelSelect selectedText;
+		provider: providerSelect value;
+		model: modelSelect value;
 		text: questionTextArea value.
 
 	url := self url, '/api/chat', request toUrlQuery.

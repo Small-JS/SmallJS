@@ -6,11 +6,11 @@
 		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
-		"openai": "^4.95.1"
+		"openai": "^4.96.0"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.1",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.14.1"
+		"@types/node": "^22.15.0"
 	}
 }

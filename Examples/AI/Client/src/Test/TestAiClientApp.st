@@ -20,8 +20,8 @@ testGui
 		then: [ self testLoadedFields ].
 !
 testLoadedFields
-	self assert: [ aiClientApp modelSelect selectedText length > 0 ].
-	self assert: [ aiClientApp providerSelect selectedText length > 0 ].
+	self assert: [ aiClientApp modelSelect value length > 0 ].
+	self assert: [ aiClientApp providerSelect value length > 0 ].
 
 	self testAsk.
 !
