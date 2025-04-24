@@ -34,7 +34,7 @@ bindElements
 loadDefaultLanguage
 	| languageId |
 	language := Language supported: #( 'en-US' 'es' ).
-	languageId := languageSelect selectedValue.
+	languageId := languageSelect value.
 	language load: languageId.
 !
 loadLanguage

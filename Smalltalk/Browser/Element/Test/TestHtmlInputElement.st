@@ -1,5 +1,6 @@
 CLASS TestHtmlInputElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
-	"Form related properties are tested in TestHtmlFormElement."
+
+"Form related properties are tested in TestHtmlFormElement."
 
 test
 	| input |

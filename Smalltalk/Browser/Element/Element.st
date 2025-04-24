@@ -187,9 +187,6 @@ before: node
 closest: selector
 	^ Element fromJsSubElement: INLINE 'this.js.closest( selector.js )'.
 !
-dispatchEvent: event
-	INLINE 'this.js.dispatchEvent( event.js )'.
-!
 getAttribute: name
 	^ String fromJs: INLINE 'this.js.getAttribute( name.js )'.
 !
