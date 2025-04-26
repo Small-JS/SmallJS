@@ -42,7 +42,8 @@
 	text-align: right;
 }
 
-#resultsTable th:nth-child(1) {
+#resultsTable th:nth-child(1),
+#resultsTable td:nth-child(1) {
 	text-align: left;
 }
 

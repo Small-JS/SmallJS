@@ -1,17 +1,15 @@
-CLASS Person EXTENDS SqlObject MODULE ShopServer CLASSVARS '' VARS 'name salt password'
+CLASS DbPerson EXTENDS Person MODULE ShopServer CLASSVARS '' VARS 'salt'
+
+"Implements a person in the datase, which is a supperset of the shared Person class."
 
 CLASSMETHODS
 
 columns
-	^ #( #( 'name' String )
-		#( 'password' String )
-		#( 'salt' Integer ) ).
+	^ super columns
+		add: #( 'salt' Integer ).
 !
 fromObject: object
-	^ self new
-		id: ( object atProperty: 'id' );
-		name: ( object atProperty: 'name' );
-		password: ( object atProperty: 'password' );
+	^ super fromObject: object
 		salt: ( object atProperty: 'salt' ).
 !
 
@@ -19,18 +17,6 @@ METHODS
 
 "Accessing"
 
-name
-	^ name.
-!
-name: aName
-	name := aName.
-!
-password
-	^ password.
-!
-password: aPassword
-	password := aPassword.
-!
 salt
 	^ salt.
 !

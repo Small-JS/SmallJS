@@ -15,7 +15,7 @@ npx tsc
 
 # Compile Smalltalk
 
-../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t src out
+../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Node +t ../Shared src out
 
 # Check and run .env file
 

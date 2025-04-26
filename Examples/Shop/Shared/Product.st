@@ -1,4 +1,4 @@
-CLASS Product EXTENDS SqlObject MODULE ShopServer CLASSVARS '' VARS 'name price'
+CLASS Product EXTENDS SqlObject MODULE ShopShared CLASSVARS '' VARS 'name price'
 
 CLASSMETHODS
 

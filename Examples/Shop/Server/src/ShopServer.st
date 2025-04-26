@@ -26,7 +26,7 @@ connectDatabase
 		catch: [ :error | error throw ].
 !
 connectTables
-	personTable := database connectTable: 'Person' rowClass: Person.
+	personTable := database connectTable: 'Person' rowClass: DbPerson.
 	productTable := database connectTable: 'Product' rowClass: Product.
 	orderTable := database connectTable: 'Order' rowClass: Order.
 
@@ -72,42 +72,45 @@ testMode
 !
 "Example login request:
 	localhost:3000/api/login?user=John&password=secret
- Example result:
+ Example LoginResponse:
  	{ success: true, message: 'Login succeeded' }"
 
 login: request response: response
-	| result userName password query person |
-
-	result := LoginResult success: false message: 'Unknown'.
-
-	userName := request query atJsProperty: 'user'.
-	userName isNil
-		ifTrue: [ response send: ( result message: 'Login parameter "user" missing' ) ]
+	| person |
+	person := Person fromJsObject: request query.
+	person name isNil
+		ifTrue: [ self sendLoginResponse: response success: false message: 'Login parameter "user" missing' ]
 		ifFalse: [
-			password := request query atJsProperty: 'password'.
-			password isNil
-				ifTrue: [ response send: ( result message: 'Login parameter "password" missing' ) ]
-				ifFalse: [ self login: request response: response userName: userName password: password result: result ] ].
+			person password isNil
+				ifTrue: [ self sendLoginResponse: response success: false message: 'Login parameter "password" missing' ]
+				ifFalse: [ self login2: request response: response person: person ] ].
 !
-login: request response: response userName: userName password: password result: result
+login2: request response: response person: person
 	| query |
-
 	"Note: Return from block is not allowed in Postgres callbacks."
 	query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
 	personTable select: query
-		with: #( userName )
-		then: [ :persons |
-			persons length < 1
-				ifTrue: [ response send: ( result message: 'User not found: ', userName ) ]
-				ifFalse: [ self login: request response: response person: persons first password: password result: result ] ]
+		with: #( ( person name ) )
+		then: [ :dbPersons | self login3: request response: response person: person dbPersons: dbPersons ]
 		catch: [ :error | error throw ].
 !
-login: request response: response person: person password: password result: result
-	( person checkPassword: password ) not
-		ifTrue: [ response send: ( result message: 'Password check failed' ) ]
+login3: request response: response person: person dbPersons: dbPersons
+	dbPersons length < 1
+		ifTrue: [ self sendLoginResponse: response success: false message: 'User not found: ', person name ]
+		ifFalse: [ self login4: request response: response person: person dbPerson: dbPersons first ].
+!
+login4: request response: response person: person dbPerson: dbPerson
+	( dbPerson checkPassword: person password ) not
+		ifTrue: [ self sendLoginResponse: response success: false message: 'Password check failed' ]
 		ifFalse: [
-			request session set: 'user' to: person.
-			response send: ( result success: true; message: 'Login succeeded' ) ].
+			request session set: 'user' to: dbPerson.
+			self sendLoginResponse: response success: true message: 'Login succeeded' ].
+!
+sendLoginResponse: response success: success message: message
+	| loginResponse |
+	loginResponse := LoginResponse success: success message: message.
+	self log: 'Sending login response: ', loginResponse toString.
+	response send: loginResponse.
 !
 getRequestUser: request response: response
 	"Returns the logged-in user (Person) from the request or nil if it does not exist.

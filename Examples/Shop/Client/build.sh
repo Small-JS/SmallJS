@@ -15,7 +15,7 @@ npx tsc
 
 # Compile Smalltalk
 
-../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t src web/Script
+../../../Compiler/start.sh -t ../../../Smalltalk/Core ../../../Smalltalk/Browser +t ../Shared src web/Script
 
 # Check for and run .env file for locations of enabled browsers to test.
 

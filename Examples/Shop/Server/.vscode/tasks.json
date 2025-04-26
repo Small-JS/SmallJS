@@ -19,7 +19,7 @@
 			"label": "Compile server",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../../../Compiler/out/main.js", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node",  "+t", "src", "out" ],
+			"args": [  "../../../Compiler/out/main.js", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node", "+t", "../Shared", "src", "out" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
@@ -29,7 +29,7 @@
 			"label": "Compile server minimized",
 			"type": "shell",
 			"command": "node",
-			"args": [  "../../../Compiler/out/main.js", "-m", "ShopServer", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node",  "+t", "src", "out" ],
+			"args": [  "../../../Compiler/out/main.js", "-m", "ShopServer", "-t", "../../../Smalltalk/Core", "../../../Smalltalk/Node", "+t", "../Shared", "src", "out" ],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},

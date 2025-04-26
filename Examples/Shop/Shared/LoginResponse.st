@@ -1,4 +1,4 @@
-CLASS LoginResult EXTENDS Object MODULE ShopServer CLASSVARS '' VARS 'success message'
+CLASS LoginResponse EXTENDS Object MODULE ShopShared CLASSVARS '' VARS 'success message'
 
 CLASSMETHODS
 
@@ -13,6 +13,8 @@ fromObject: object
 
 METHODS
 
+"Accessing"
+
 success
 	^ success.
 !
@@ -24,4 +26,10 @@ message
 !
 message: aMessage
 	message := aMessage.
+!
+
+"Conversion"
+
+toString
+	^ 'LoginResponse( success: ', success toString, ', message: ', message toString, ' )'.
 !

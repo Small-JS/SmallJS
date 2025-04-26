@@ -1,4 +1,4 @@
-CLASS TestProduct EXTENDS Test MODULE TestShopServer CLASSVARS '' VARS ''
+CLASS TestProduct EXTENDS Test MODULE TestShopShared CLASSVARS '' VARS ''
 
 test
 	| product |

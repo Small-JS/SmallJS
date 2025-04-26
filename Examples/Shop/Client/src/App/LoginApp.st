@@ -30,11 +30,12 @@ bindElements
 	loginErrorSpan := Document getElementById: 'loginErrorSpan' class: HtmlSpanElement.
 !
 onLogin
-	| userName password loginApi |
+	| person loginApi |
 
-	userName := userNameInput value.
-	password := passwordInput value.
-	loginApi := self url, '/api/login?user=', userName, '&password=', password.
+	person := Person new
+		name: userNameInput value;
+		password: passwordInput value.
+	loginApi := self url, '/api/login', person toQuery.
 
 	Fetch
 		object: loginApi
@@ -42,15 +43,14 @@ onLogin
 		catch: [ :error | self onLoginError: error ] .
 !
 onLoginResponse: object
-	| success message |
+	| response |
 
-	success := object atProperty: 'success'.
-	message := object atProperty: 'message'.
-	self log: 'ShopServer login response: ', success, ', message: ', message.
+	response := LoginResponse fromObject: object.
+	self log: 'ShopServer login response: ', response toString.
 
-	success
+	response success
 		ifTrue: [ self navigateTo: '../Product/Product.html' ]
-		ifFalse: [ loginErrorSpan textContent: message ].
+		ifFalse: [ loginErrorSpan textContent: response message ].
 !
 onLoginError: error
 	loginErrorSpan textContent: error message.

@@ -1,9 +1,11 @@
-CLASS Order EXTENDS SqlObject MODULE ShopClient CLASSVARS '' VARS 'person product amount'
+CLASS Order EXTENDS SqlObject MODULE ShopShared CLASSVARS '' VARS 'person product amount'
 
 CLASSMETHODS
 
 columns
-	^ #( 'person' 'product' 'amount' ).
+	^ #( #( 'person' Integer )
+			#( 'product' Integer )
+			#( 'amount' Integer ) ).
 !
 fromObject: object
 	^ Order new

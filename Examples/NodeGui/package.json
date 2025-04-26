@@ -7,7 +7,7 @@
 		"nodegui"
 	],
 	"devDependencies": {
-		"@types/node": "^22.15.0"
+		"@types/node": "^22.15.2"
 	},
 	"dependencies": {
 		"@nodegui/nodegui": "^0.71.0"

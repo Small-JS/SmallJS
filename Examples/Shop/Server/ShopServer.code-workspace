@@ -4,6 +4,9 @@
 			"path": "."
 		},
 		{
+			"path": "../Shared"
+		},
+		{
 			"path": "../../../Smalltalk"
 		},
 		{

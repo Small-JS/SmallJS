@@ -6,6 +6,8 @@ CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'sho
 test: aShopServer
 	shopServer := aShopServer.
 
+	"Force import of unit tests shared module."
+	TestPerson.
 	"Run sync and async unit tests of all imported Test* classes and log results."
 	Test allThen: [
 		self testApi ].
@@ -32,7 +34,7 @@ onLoginResponse: response
 
 	self assert: [ response status = 200 ].
 	response jsonThen: [ :object |
-		result := LoginResult fromObject: object.
+		result := LoginResponse fromObject: object.
 		self assert: [ result success ].
 		self assert: [ result message = 'Login succeeded' ].
 
