@@ -131,7 +131,7 @@ export class ClassCompiler
 
 		this.method.name = this.parser.parseTerm();
 
-		if( this.method.isUnary() ) {}
+		if( this.method.isUnary() ) { }
 		else if( this.method.isBinary() )
 			this.compileMethodHeaderVariable();
 		else if( this.method.isKeywordSelector() ) {
@@ -197,8 +197,10 @@ export class ClassCompiler
 			this.error( "Local variable name is reserved word: " + variableName );
 
 		let compiledVariable = new CompiledVariable( variableName );
+		if( compiledVariable.includedIn( this.method.args ) )
+			this.error( "Local variable name already used as argument: " + variableName );
 		if( compiledVariable.includedIn( this.method.vars ) )
-			this.error( "Duplicate local variable: " + variableName);
+			this.error( "Duplicate local variable: " + variableName );
 
 		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil;\n";
 		compiledVariable.node = this.sourceNode( source, "variable" );
@@ -224,8 +226,7 @@ export class ClassCompiler
 	{
 		let node = this.sourceNode( "\t\t", "statement" );
 
-		if( this.parser.tryParseTerm( "^" ) )
-		{
+		if( this.parser.tryParseTerm( "^" ) ) {
 			this.method.hasReturn = true;
 			node.add( "return " );
 		}
@@ -310,7 +311,7 @@ export class ClassCompiler
 		let node = this.sourceNode( "", "await" );
 
 		let className = this.parser.parseTerm();
-		if( ! CharUtil.isUppercase( className ) )
+		if( !CharUtil.isUppercase( className ) )
 			this.error( "Failed to parse class name after await" );
 		node.add( this.compileClassReference( className ) + ".$fromJs$( " );
 
@@ -364,8 +365,7 @@ export class ClassCompiler
 	compileBlockArguments( node: SourceNode )
 	{
 		let first = true;
-		while( this.parser.tryParseTerm( ":" ) )
-		{
+		while( this.parser.tryParseTerm( ":" ) ) {
 			if( first )
 				first = false;
 			else
@@ -418,7 +418,7 @@ export class ClassCompiler
 		return node;
 	}
 
-// Compile number or string or literal array
+	// Compile number or string or literal array
 
 	private compileLiteral( literal: string ): SourceNode
 	{
@@ -524,7 +524,7 @@ export class ClassCompiler
 		let jsName: string = '';
 		if( this.method.checkVariableReference( compiledVariable ) )
 			jsName = compiledVariable.jsName();
-		else if( ! this.compilingClassMethods &&
+		else if( !this.compilingClassMethods &&
 			this.class.checkVariableReference( compiledVariable ) )
 			jsName = "this." + compiledVariable.jsName();
 		else if( this.class.checkClassVariableReference( compiledVariable ) ) {
@@ -563,7 +563,7 @@ export class ClassCompiler
 		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
-		if( ! this.parser.tryParseTerm( ";" ) )
+		if( !this.parser.tryParseTerm( ";" ) )
 			return;
 
 		if( receiver.children.length <= 1 )
@@ -596,7 +596,7 @@ export class ClassCompiler
 		this.compileBinaryMessages( receiver );
 
 		// Not a keyword message
-		if( ! Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
+		if( !Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
 			return;
 
 		let message = this.positionedSourceNode( "", "keywordMessage" );
@@ -700,10 +700,9 @@ export class ClassCompiler
 
 		let result = "";
 		let pos = 0;
-		while( pos < folder.length )
-		{
+		while( pos < folder.length ) {
 			result += "../";
-			pos = folder.indexOf( "/" , pos );
+			pos = folder.indexOf( "/", pos );
 			pos = pos < 0 ? folder.length : pos + 1;
 		}
 

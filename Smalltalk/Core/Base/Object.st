@@ -8,7 +8,7 @@ myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
 	| a |
-	( a := 1 ) + 2.
+	a := 1.
 !
 
 "Creating"

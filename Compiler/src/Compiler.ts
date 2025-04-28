@@ -71,7 +71,7 @@ export class Compiler
 
 	version()
 	{
-		console.log( "SmallJS version: " + "1.5.0" );
+		console.log( "SmallJS version: " + "1.6.1" );
 	}
 
 	compile( inputFolders: string[], outputFolder: string )
