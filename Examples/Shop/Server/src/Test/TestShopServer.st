@@ -19,8 +19,11 @@ testApi
 	self requestLogin.
 !
 requestLogin
+	| person |
+	person := Person new name: 'John'; password: 'secret'.
+
 	Fetch
-		request: 'http://localhost:3000/api/login?user=John&password=secret'
+		request: 'http://localhost:3000/api/login', person toQuery
 		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
 
@@ -28,20 +31,21 @@ requestLogin
 			Error throw: 'Fetch login timer expired' ].
 !
 onLoginResponse: response
-	| result |
-
 	timer clearTimeout.
 
 	self assert: [ response status = 200 ].
-	response jsonThen: [ :object |
-		result := LoginResponse fromObject: object.
-		self assert: [ result success ].
-		self assert: [ result message = 'Login succeeded' ].
+	response jsonThen: [ :object | self onLoginResponse2: response object: object ].
+!
+onLoginResponse2: response object: object
+	| result |
+	result := LoginResponse fromObject: object.
+	self assert: [ result success ].
+	self assert: [ result message = 'Login succeeded' ].
 
-		cookie := response cookie.
-		self assert: [ cookie includes: 'connect.sid' ].
+	cookie := response cookie.
+	self assert: [ cookie includes: 'connect.sid' ].
 
-		self requestProducts ].
+	self requestProducts.
 !
 requestProducts
 	self fetchObject: 'http://localhost:3000/api/products'

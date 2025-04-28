@@ -88,7 +88,7 @@ onChat: request response: response
 
 	chatResponse := AiChatResponse new success: false; text: ''.
 
-	chatRequest := AiChatRequest fromObject: request queryObject.
+	chatRequest := AiChatRequest fromObject: request query.
 	self log: 'AiServer: Received chat request: ', chatRequest toString.
 
 	chatRequest provider isNil

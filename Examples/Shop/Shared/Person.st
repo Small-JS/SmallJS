@@ -39,5 +39,5 @@ password: aPassword
 
 toQuery
 	"Return URL query part to request this person."
-	^ '?user=', name, '&password=', password.
+	^ '?name=', name, '&password=', password.
 !

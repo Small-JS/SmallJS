@@ -71,15 +71,15 @@ testMode
 	^ Process argv length >= 3 and: [ ( Process argv at: 2 ) = '-test' ].
 !
 "Example login request:
-	localhost:3000/api/login?user=John&password=secret
+	localhost:3000/api/login?name=John&password=secret
  Example LoginResponse:
  	{ success: true, message: 'Login succeeded' }"
 
 login: request response: response
 	| person |
-	person := Person fromJsObject: request query.
+	person := Person fromObject: request query.
 	person name isNil
-		ifTrue: [ self sendLoginResponse: response success: false message: 'Login parameter "user" missing' ]
+		ifTrue: [ self sendLoginResponse: response success: false message: 'Login parameter "name" missing' ]
 		ifFalse: [
 			person password isNil
 				ifTrue: [ self sendLoginResponse: response success: false message: 'Login parameter "password" missing' ]

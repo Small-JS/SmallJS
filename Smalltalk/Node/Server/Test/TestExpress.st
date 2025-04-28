@@ -27,18 +27,19 @@ onExpressListen: error
 requestLogin
 	| loginUrl |
 
-	loginUrl := 'http://localhost:', port toString, '/login?user=John&password=secret'.
+	loginUrl := 'http://localhost:', port toString, '/login?name=John&password=secret'.
 	Fetch
 		request: loginUrl
 		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
 !
 onLoginRequest: request response: response
-	| user password |
+	| name password |
 
-	user := request query atJsProperty: 'user'.
-	self assert: [ user = 'John' ].
-	password := request query atJsProperty: 'password'.
+
+	name := request query atProperty: 'name'.
+	self assert: [ name = 'John' ].
+	password := request query atProperty: 'password'.
 	self assert: [ password = 'secret' ].
 
 	request session set: 'loggedIn' to: true.

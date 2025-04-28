@@ -11,9 +11,6 @@ method
 	^ String fromJs: INLINE 'this.js.method'.
 !
 query
-	^ JsObject fromJs: INLINE 'this.js.query'.
-!
-queryObject
 	^ Object fromJs: INLINE 'this.js.query'.
 !
 session
