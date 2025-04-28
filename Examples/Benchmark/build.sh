@@ -51,7 +51,7 @@ if
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
-	"$browserChrome" http://localhost:3000/?test
+	"$browserChrome" --log-level=3 http://localhost:3000/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 12
@@ -61,7 +61,7 @@ if
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
-	"$browserEdge" http://localhost:3000/?test
+	"$browserEdge" --log-level=3 http://localhost:3000/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 12
