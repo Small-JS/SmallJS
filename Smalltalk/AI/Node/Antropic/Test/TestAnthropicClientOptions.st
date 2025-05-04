@@ -1,4 +1,4 @@
-CLASS TestAnthropicClientOptions EXTENDS Test MODULE AiTest CLASSVARS '' VARS ''
+CLASS TestAnthropicClientOptions EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 test
 	| anthropic options |

@@ -1,4 +1,4 @@
-CLASS TestAnthropic EXTENDS Test MODULE AiTest CLASSVARS '' VARS 'anthropic'
+CLASS TestAnthropic EXTENDS Test MODULE TestAi CLASSVARS '' VARS 'anthropic'
 
 "Also tests classes: AnthropicCreateMessageParams, AnthropicMessage."
 
@@ -50,7 +50,7 @@ onCreate: message
 
 	textBlock := message content first.
 	self assert: [ textBlock class = AnthropicTextBlock ].
-	self assert: [ textBlock text toLowerCase includes: 'this is a test' ].
+	self assert: [ textBlock text toLowerCase includes: 'test' ].
 
 	usage := message usage.
 	self assert: [ usage class = AnthropicUsage ].

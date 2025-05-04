@@ -5,10 +5,10 @@
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.2",
-		"mysql2": "^3.14.0",
+		"mysql2": "^3.14.1",
 		"pg": "^8.15.6"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.2"
+		"@types/node": "^22.15.3"
 	}
 }

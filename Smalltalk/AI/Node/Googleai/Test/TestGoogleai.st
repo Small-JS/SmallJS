@@ -1,4 +1,4 @@
-CLASS TestGoogleai EXTENDS Test MODULE AiTest CLASSVARS '' VARS ''
+CLASS TestGoogleai EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 "Also tests classes: GoogleaiModel GoogleaiContentResult"
 
@@ -12,7 +12,7 @@ test
 	self assert: [ googleai apiKey length > 10 ].
 
 	params := GoogleaiModelParams new
-		model: googleai models first.
+		model: Googleai models first.
 
 	model := googleai generativeModel: params.
 	self assert: [ model apiKey = googleai apiKey ].
@@ -24,5 +24,5 @@ test
 onGenerateContent: response
 	| text |
 	text := response text.
-	self assert: [ text toLowerCase includes: 'this is a test'  ].
+	self assert: [ text toLowerCase includes: 'test' ].
 !

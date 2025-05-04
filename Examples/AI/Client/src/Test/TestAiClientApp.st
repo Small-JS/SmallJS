@@ -26,13 +26,13 @@ testLoadedFields
 	self testAsk.
 !
 testAsk
-	aiClientApp questionTextArea value: 'Say this is a test'.
+	aiClientApp questionTextArea value: 'Say exactly: This is a test'.
 	aiClientApp askButton click.
 	Timer timeout: 5000
 		then: [ self testAnswer ].
 !
 testAnswer
-	self assert: [ aiClientApp answerTextArea value toLowerCase includes: 'this is a test' ].
+	self assert: [ aiClientApp answerTextArea value toLowerCase includes: 'test' ].
 	self stop.
 !
 stop

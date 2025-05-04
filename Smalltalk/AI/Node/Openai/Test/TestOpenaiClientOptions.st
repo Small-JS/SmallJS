@@ -1,4 +1,4 @@
-CLASS TestOpenaiClientOptions EXTENDS Test MODULE AiTest CLASSVARS '' VARS ''
+CLASS TestOpenaiClientOptions EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 test
 	| openai options |

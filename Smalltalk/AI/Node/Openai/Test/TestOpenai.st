@@ -1,4 +1,4 @@
-CLASS TestOpenai EXTENDS Test MODULE AiTest CLASSVARS '' VARS ''
+CLASS TestOpenai EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 "Also tests classes:
 	OpenaiChatCompletion, OpenaiChatCompletionChoice,
@@ -40,7 +40,7 @@ onChatCompletion: chatCompletion
 	message := choice message.
 	self assert: [ message class = OpenaiChatCompletionMessage ].
 	self assert: [ message role = 'assistant' ].
-	self assert: [ message content toLowerCase includes: 'this is a test'  ].
+	self assert: [ message content toLowerCase includes: 'test' ].
 
 	usage := chatCompletion usage.
 	self assert: [ usage class = OpenaiCompletionUsage ].

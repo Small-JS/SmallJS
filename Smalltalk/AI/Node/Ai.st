@@ -17,7 +17,7 @@ new: name
 "Providers"
 
 aiClasses
-	^ #( Openai Deepseek Googleai Anthropic ).
+	^ #( Ollama Openai Deepseek Googleai Anthropic ).
 !
 classNamed: name
 	| class |
@@ -44,7 +44,7 @@ providers
 "Configuration"
 
 baseUrl
-	"Return base URL key set in varable <classname>_BASE_URL, e.g.: DEEPSEEK_BASE_URL"
+	"Return base URL key set in varable <classname>_BASE_URL, e.g.: OPENAI_BASE_URL"
 	| variableName |
 	variableName := self name toUpperCase, '_BASE_URL'.
 	^ Process envAt: variableName.
@@ -63,8 +63,8 @@ apiKey
 	^ Process envAt: variableName.
 !
 available
-	"Return true if the API key is set for this AI."
-	^ self apiKey notNil.
+	"Return true if the base URL key is set for this AI."
+	^ self baseUrl notNil.
 !
 available: name
 	"Return true if the API key is set for the named AI."

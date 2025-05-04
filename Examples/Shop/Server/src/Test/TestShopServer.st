@@ -125,5 +125,4 @@ stopServer
 	self log: 'Stopping server.'.
 	Timer timeout: 1000 then: [
 		shopServer stop ].
-
 !

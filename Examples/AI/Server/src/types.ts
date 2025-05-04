@@ -15,6 +15,9 @@ import express from "express";
 import cors from "express";
 import session from "express-session";
 
+// AI - Ollama
+import { Ollama, ChatRequest, ChatResponse, Message as OllamaMessage } from 'ollama';
+
 // AI - OpenAI
 import OpenAI from "openai";
 import { ChatCompletion } from "openai/resources/chat/completions.js";
@@ -32,3 +35,4 @@ import { GoogleGenerativeAI, ModelParams, GenerativeModel,
 import { Anthropic, ClientOptions } from '@anthropic-ai/sdk';
 import { MessageCreateParamsNonStreaming } from '@anthropic-ai/sdk/resources/index.mjs';
 import { Message, TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';
+

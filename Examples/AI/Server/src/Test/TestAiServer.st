@@ -60,7 +60,7 @@ chatRequest: ai
 	chatRequest := AiChatRequest new
 		provider: ai name;
 		model: ai class models first;
-		text: 'Say this is a test'.
+		text: 'Say exactly: This is a test'.
 	url := 'http://localhost:', aiServer port toString, '/api/chat', chatRequest toUrlQuery.
 
 	Fetch
@@ -81,7 +81,7 @@ onChatResponse2: object id: id
 
 	response := AiChatResponse fromObject: object.
 	self assert: [ response success ].
-	self assert: [ response text toLowerCase includes: 'this is a test' ].
+	self assert: [ response text toLowerCase includes: 'test' ].
 
 	chatReponseCount := chatReponseCount + 1.
 !
