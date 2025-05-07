@@ -164,6 +164,9 @@ testMethods2
 	p4 := ( document createElement: 'p' ) id: 'p4'.
 	p3 replaceWith: p4.
 	self assert: [ div children first id = 'p4' ].
+
+	div removeChildren.
+	self assert: [ div children length = 0 ].
 !
 testCreation
 	| document element |

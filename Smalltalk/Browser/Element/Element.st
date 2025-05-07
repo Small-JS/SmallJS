@@ -253,6 +253,9 @@ removeAttribute: attrName
 removeAttributeNode: attr
 	INLINE 'this.js.removeAttributeNode( attr.js )'.
 !
+removeChildren
+	INLINE 'this.js.replaceChildren( [] )'.
+!
 replaceChildren: nodes
 	INLINE 'this.js.replaceChildren( nodes.$toJs() )'.
 !

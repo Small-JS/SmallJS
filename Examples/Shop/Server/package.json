@@ -9,6 +9,6 @@
 		"pg": "^8.15.6"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.3"
+		"@types/node": "^22.15.15"
 	}
 }

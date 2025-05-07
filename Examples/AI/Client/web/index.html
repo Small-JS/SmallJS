@@ -25,11 +25,14 @@
 		<tr>
 			<td>
 				<span id="selectAiSpan" class="formSection">Select AI</span><br>
-				<p style="margin:10px;"></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<table id="selectTable">
 					<tr>
 						<th>
-							<label id="providerLabel" class="formLabel" for="providerSelect">Provider</label>
+							<label id="providerLabel" for="providerSelect">Provider</label>
 						</th>
 						<td>
 							<select id="providerSelect">
@@ -38,7 +41,7 @@
 					</tr>
 					<tr>
 						<th>
-							<label id="modelLabel" class="formLabel" for="modelSelect">Model</label>
+							<label id="modelLabel" for="modelSelect">Model</label>
 						</th>
 						<td>
 							<select id="modelSelect">
@@ -50,21 +53,47 @@
 		</tr>
 		<tr>
 			<td>
-				<label id="questionLabel" for="questionTextArea" class="formSection">Question</label><br>
-				<p style="margin:10px;"></p>
+				<span id="conversationSpan" class="formSection">Conversation</span>
+			</td>
+		</tr>
+		<tr>
+			<td id="formTableConversationCell">
+				<table id="conversationTable" width="100%">
+					<!-- Templates for rows below -->
+				</table>
+				<template id="conversationQuestionTemplate">
+					<tr>
+						<td class="questionCell">
+							<span class="conversationQuestion">User question</span>
+						</td>
+					</tr>
+				</template>
+				<template id="conversationAnswerTemplate">
+					<tr>
+						<td class="answerCell">
+							<img src="AiAnswerLogo.png" alt="AI answer logo" width="20" height="20" />
+							<span>AI answer</span>
+						</td>
+					</tr>
+				</template>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p style="margin: 10px">
+				<button id="conversationClearButton">Clear</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span id="questionSpan" class="formSection">Question</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<textarea id="questionTextArea" rows="4" cols="40"></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<button id="askButton">Ask</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label id="answerLabel" for="answerTextArea" class="formSection">Answer</label><br>
-				<p style="margin:10px;"></p>
-				<textarea id="answerTextArea" rows="4" cols="40" readonly="readonly"></textarea>
+				<p style="margin: 10px">
+				<button id="questionAskButton">Ask</button>
 			</td>
 		</tr>
 		<tr>

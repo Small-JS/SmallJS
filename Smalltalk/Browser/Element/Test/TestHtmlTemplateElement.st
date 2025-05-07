@@ -13,4 +13,8 @@ test
 
 	span appendChild: ( template content cloneNode: true ).
 	self assert: [ span firstChild textContent = 'Template text' ].
+
+	template content appendChild: ( document createTextNode: 'Template text2' ).
+	span appendChild: template cloneContent.
+	self assert: [ span lastChild textContent = 'Template text2' ].
 !

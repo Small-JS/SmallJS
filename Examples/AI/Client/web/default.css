@@ -27,7 +27,6 @@ body {
 	box-shadow: 10px 10px 5px grey;
 }
 
-
 .formSection {
 	font-size: Large;
 	font-weight: bold;
@@ -40,13 +39,28 @@ body {
 
 #selectTable th {
 	text-align: right;
+	font-weight: normal;
 }
 
 #selectTable td {
 	text-align: left;
 }
 
-.formLabel {
-	font-weight: 650;
+#formTableConversationCell {
+	padding-left: 24px; padding-right: 24px;
+}
+
+.conversationQuestion {
+	background-color: lightgray; border-radius: 8px; padding: 6px;
+}
+
+.questionCell {
+	padding-top: 16px;
+	text-align: right;
+}
+
+.answerCell {
+	padding-top: 16px;
+	text-align: left;
 }
 

@@ -1,5 +1,7 @@
 CLASS AiClientApp EXTENDS BrowserApp MODULE AiClientApp CLASSVARS ''
-	VARS 'aiProviders providerSelect modelSelect questionTextArea askButton answerTextArea errorSpan'
+	VARS 'aiProviders providerSelect modelSelect
+		conversationTable conversationQuestionTemplate conversationAnswerTemplate conversationClearButton
+		questionTextArea questionAskButton errorSpan'
 
 METHODS
 
@@ -13,16 +15,18 @@ start
 bindElements
 	providerSelect := Document getElementById: 'providerSelect' class: HtmlSelectElement.
 	providerSelect addEventListener: 'change' then: [ self onOnProviderChange ].
-
 	modelSelect := Document getElementById: 'modelSelect' class: HtmlSelectElement.
+
+	conversationTable := Document getElementById: 'conversationTable' class: HtmlTableElement.
+	conversationQuestionTemplate := Document getElementById: 'conversationQuestionTemplate' class: HtmlTemplateElement.
+	conversationAnswerTemplate := Document getElementById: 'conversationAnswerTemplate' class: HtmlTemplateElement.
+	conversationClearButton := Document getElementById: 'conversationClearButton' class: HtmlButtonElement.
+	conversationClearButton onClick: [ :event | self clearConversation ].
 
 	questionTextArea := Document getElementById: 'questionTextArea' class: HtmlTextAreaElement.
 	questionTextArea value: 'Say this is a test'.
-
-	askButton := Document getElementById: 'askButton' class: HtmlButtonElement.
-	askButton onClick: [ :event | self onAsk ].
-
-	answerTextArea := Document getElementById: 'answerTextArea' class: HtmlTextAreaElement.
+	questionAskButton := Document getElementById: 'questionAskButton' class: HtmlButtonElement.
+	questionAskButton onClick: [ :event | self askQuestion ].
 
 	errorSpan := Document getElementById: 'errorSpan' class: HtmlSpanElement.
 !
@@ -71,10 +75,11 @@ setModelsFor: provider
 		option text: model.
 		modelSelect add: option ].
 !
-onAsk
+clearConversation
+	conversationTable removeChildren.
+!
+askQuestion
 	| request url |
-
-	answerTextArea value: ''.
 
 	request := AiChatRequest new
 		provider: providerSelect value;
@@ -91,10 +96,22 @@ onAskResponse: object
 	| response |
 
 	response := AiChatResponse fromObject: object.
-
 	response success
-		ifTrue: [ answerTextArea value: response text  ]
+		ifTrue: [ self displayResponse: response ]
 		ifFalse: [ errorSpan textContent: response text ].
+!
+displayResponse: response
+	|  questionRow questionSpan answerRow answerSpan |
+
+	questionRow := conversationQuestionTemplate cloneContent firstElementChild.
+	questionSpan := questionRow cells first firstElementChild.
+	questionSpan textContent: questionTextArea value.
+	conversationTable appendChild: questionRow.
+
+	answerRow := conversationAnswerTemplate cloneContent firstElementChild.
+	answerSpan := answerRow cells first lastElementChild.
+	answerSpan textContent: response text.
+	conversationTable appendChild: answerRow.
 !
 onError: error
 	errorSpan textContent: 'Error: ', error message.
@@ -108,14 +125,17 @@ providerSelect
 modelSelect
 	^ modelSelect.
 !
+conversationTable
+	^ conversationTable.
+!
+conversationClearButton
+	^ conversationClearButton.
+!
 questionTextArea
 	^ questionTextArea.
 !
-askButton
-	^ askButton.
-!
-answerTextArea
-	^ answerTextArea.
+questionAskButton
+	^ questionAskButton.
 !
 errorSpan
 	^ errorSpan.
