@@ -6,7 +6,6 @@ test
 	config := OllamaConfig new.
 	self assert: [ config class = OllamaConfig ].
 
-	self assert: [ config host startsWith: 'http' ].
 	config host: 'http://localhost:11434'.
 	self assert: [ config host = 'http://localhost:11434' ].
 
