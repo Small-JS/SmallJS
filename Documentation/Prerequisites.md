@@ -42,7 +42,7 @@ so install that if you can, iso the current LTS.
 
 ### TypeScript
 
-For TypeScript to function *within* VSCode it needs to me installed globally, with:
+For TypeScript (tsc) to function *within* VSCode it needs to me installed globally, with:
 
 `npm -g install typescript`
 

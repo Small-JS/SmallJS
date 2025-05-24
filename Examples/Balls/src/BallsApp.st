@@ -52,8 +52,18 @@ move
 	timer timeout: 100 then: [ self move ].
 !
 drawBall: ball
+	| radius topRight bottomLeft gradient |
+
+	radius := ball radius.
+	topRight := ball position + ( Point x: radius y: radius negated ).
+	bottomLeft := ball position + ( Point x: radius negated y: radius ).
+
+	gradient := context createLinearGradientFrom: topRight to: bottomLeft.
+	gradient addColorStop: 0 color: ball color.
+	gradient addColorStop: 1 color: '#101010'.
+
 	context beginPath.
-	context fillStyle: ball color.
+	context fillStyle: gradient.
 	context arc: ball position radius: ball radius startAngle: 0 endAngle: Float pi * 2 counterclockwise: false.
 	context fill.
 	context closePath.
