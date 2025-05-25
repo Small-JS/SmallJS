@@ -60,7 +60,7 @@ fromJs: js
 
 	self error: 'Unknown JS type: ', jsType.
 !
-parse: json
+fromJson: json
 	^ Object fromJs: INLINE 'JSON.parse( json.js )'.
 !
 
@@ -81,17 +81,17 @@ toJs
 		result atJsProperty: name put: ( self atProperty: name ) ].
 	^ result js.
 !
+toJsObject
+	"Calls toJs and wraps result in a JsObject."
+
+	^ JsObject fromJs: self toJs.
+!
 toJson
 	"Return a JSON string representing self."
 	| jsObject |
 	"Separate step to prevent minimizing of method: toJs."
 	jsObject := self toJs.
 	^ String fromJs: INLINE 'JSON.stringify( jsObject )'.
-!
-toJsObject
-	"Calls toJs and wraps result in a JsObject."
-
-	^ JsObject fromJs: self toJs.
 !
 toString
 	^ 'a ', self class name.

@@ -1,4 +1,4 @@
-CLASS AiChatRequest EXTENDS Object MODULE AiShared CLASSVARS '' VARS 'provider model text'
+CLASS AiChatRequest EXTENDS Object MODULE AiShared CLASSVARS '' VARS 'provider model messages'
 
 CLASSMETHODS
 
@@ -6,9 +6,13 @@ fromObject: object
 	^ self new
 		provider: ( object atProperty: 'provider' );
 		model: ( object atProperty: 'model' );
-		text: ( object atProperty: 'text' ).
+		messages: ( Object fromJson: ( object atProperty: 'messages' ) ).
 !
 METHODS
+
+constructor
+	messages := #().
+!
 
 "Accessing"
 
@@ -24,18 +28,18 @@ model
 model: aModel
 	model := aModel.
 !
-text
-	^ text.
+messages
+	^ messages.
 !
-text: aText
-	text := aText.
+messages: aTexts
+	messages := aTexts.
 !
 
 "Converting"
 
 toUrlQuery
-	^ '?provider=', provider toString, '&model=', model toString, '&text="', text toString, '"'.
+	^ '?provider=', provider toString, '&model=', model toString, '&messages=', messages toJson.
 !
 toString
-	^ 'AiChatRequest( provider: ', provider toString, ', model: ', model toString, ', text: "', text toString, '" )'.
+	^ 'AiChatRequest( provider: ', provider toString, ', model: ', model toString, ', messages: "', messages toString, '" )'.
 !

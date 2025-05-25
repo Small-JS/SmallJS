@@ -13,10 +13,10 @@ model
 
 "Content"
 
-generateContent: text then: block
+generateContent: messages then: block
 	"This evaluates block with a ContentResponse.
 	 ContentResult is skipped because it only has the one reponse member."
-	INLINE 'this.js.generateContent( text.js )
+	INLINE 'this.js.generateContent( messages.$toJs() )
 		.then( result => block.$value$( stGoogleaiContentResponse$class.$fromJs$( result.response ) ) )'.
 !
 

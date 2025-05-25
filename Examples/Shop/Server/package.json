@@ -6,9 +6,9 @@
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.2",
 		"mysql2": "^3.14.1",
-		"pg": "^8.15.6"
+		"pg": "^8.16.0"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.17"
+		"@types/node": "^22.15.21"
 	}
 }

@@ -1,17 +1,17 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@anthropic-ai/sdk": "^0.50.3",
+		"@anthropic-ai/sdk": "^0.52.0",
 		"@google/generative-ai": "^0.24.1",
 		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
 		"ollama": "^0.5.15",
-		"openai": "^4.98.0"
+		"openai": "^4.103.0"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.1",
+		"@types/express": "^5.0.2",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.15.17"
+		"@types/node": "^22.15.21"
 	}
 }

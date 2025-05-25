@@ -15,11 +15,12 @@ METHODS
 
 "Chat"
 
-chat: content then: block
+chat: messages then: block
 	| request |
 	request := OllamaChatRequest new
-		model: self model;
-		addRole: 'user' content: content.
+		model: self model.
+	messages do: [ :message |
+		request addRole: 'user' content: message ].
 
 	self chatRequest: request
 		then: [ :response | self onChat: response then: block ].

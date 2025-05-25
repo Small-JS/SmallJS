@@ -33,6 +33,6 @@ import { GoogleGenerativeAI, ModelParams, GenerativeModel,
 
 // AI - Anthropic
 import { Anthropic, ClientOptions } from '@anthropic-ai/sdk';
-import { MessageCreateParamsNonStreaming } from '@anthropic-ai/sdk/resources/index.mjs';
+import { MessageCreateParams } from '@anthropic-ai/sdk/resources/index.mjs';
 import { Message, TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';
 

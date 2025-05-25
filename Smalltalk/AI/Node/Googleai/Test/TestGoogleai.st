@@ -18,7 +18,7 @@ test
 	self assert: [ model apiKey = googleai apiKey ].
 	self assert: [ model model includes: params model ].
 
-	model generateContent: 'Say this is a test'
+	model generateContent: #( 'Say exactly: This is a test' )
 		then: [ :response | self onGenerateContent: response ].
 !
 onGenerateContent: response

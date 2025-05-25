@@ -18,10 +18,12 @@ METHODS
 
 "Chat"
 
-chat: content then: block
+chat: messages then: block
 	| request |
 	request := OpenaiChatCompletionRequest new
-		model: self model; addRole: 'user' content: content.
+		model: self model.
+	messages do: [ :message |
+		request addRole: 'user' content: message ].
 
 	self createChatCompletion: request then: [ :chatCompletion |
 		block value: chatCompletion choices first message content ].

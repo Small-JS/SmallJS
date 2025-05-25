@@ -1,20 +1,20 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@anthropic-ai/sdk": "^0.50.3",
+		"@anthropic-ai/sdk": "^0.52.0",
 		"@google/generative-ai": "^0.24.1",
 		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.4.2",
 		"mysql2": "^3.14.1",
-		"openai": "^4.98.0",
-		"pg": "^8.15.6"
+		"openai": "^4.103.0",
+		"pg": "^8.16.0"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.1",
+		"@types/express": "^5.0.2",
 		"@types/express-session": "^1.18.1",
-		"@types/node": "^22.15.17",
-		"@types/pg": "^8.15.1"
+		"@types/node": "^22.15.21",
+		"@types/pg": "^8.15.2"
 	}
 }

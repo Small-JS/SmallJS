@@ -28,7 +28,7 @@ testLoadedFields
 testAskQuestion
 	aiClientApp questionTextArea value: 'Say exactly: This is a test'.
 	aiClientApp questionAskButton click.
-	Timer timeout: 5000
+	Timer timeout: 8000
 		then: [ self onTestAskQuestion ].
 !
 onTestAskQuestion

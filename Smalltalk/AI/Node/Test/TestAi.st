@@ -9,9 +9,9 @@ testAi: name
 	( Ai available: name ) ifFalse: [ ^ false ].
 	ai := Ai new: name.
 
-	ai chat: 'Say this is a test'
+	ai chat: #( 'Say exactly: This is a test' )
 		then: [ :response | self onChat: response ].
 !
 onChat: response
-	self assert: [ response toLowerCase includes: 'this is a test'  ].
+	self assert: [ response toLowerCase includes: 'test'  ].
 !

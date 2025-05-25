@@ -1,7 +1,11 @@
 CLASS AiClientApp EXTENDS BrowserApp MODULE AiClientApp CLASSVARS ''
 	VARS 'aiProviders providerSelect modelSelect
-		conversationTable conversationQuestionTemplate conversationAnswerTemplate conversationClearButton
+		conversationQuestions conversationTable conversationQuestionTemplate conversationAnswerTemplate conversationClearButton
 		questionTextArea questionAskButton errorSpan'
+
+"Note:
+	The variable 'conversationQuestions' is an string array that holds the user questions.
+	It's is needed to resend it to an AI with every question, to allow the AI to have the conversation context."
 
 METHODS
 
@@ -16,6 +20,7 @@ bindElements
 	providerSelect := Document getElementById: 'providerSelect' class: HtmlSelectElement.
 	providerSelect addEventListener: 'change' then: [ self onOnProviderChange ].
 	modelSelect := Document getElementById: 'modelSelect' class: HtmlSelectElement.
+	modelSelect addEventListener: 'change' then: [ self onModelChange ].
 
 	conversationTable := Document getElementById: 'conversationTable' class: HtmlTableElement.
 	conversationQuestionTemplate := Document getElementById: 'conversationQuestionTemplate' class: HtmlTemplateElement.
@@ -74,17 +79,25 @@ setModelsFor: provider
 		option value: model.
 		option text: model.
 		modelSelect add: option ].
+
+	self onModelChange.
+!
+onModelChange
+	self clearConversation.
 !
 clearConversation
+	conversationQuestions := #().
 	conversationTable removeChildren.
 !
 askQuestion
 	| request url |
 
+	conversationQuestions add: questionTextArea value.
+
 	request := AiChatRequest new
 		provider: providerSelect value;
 		model: modelSelect value;
-		text: questionTextArea value.
+		messages: conversationQuestions.
 
 	url := self url, '/api/chat', request toUrlQuery.
 	Fetch

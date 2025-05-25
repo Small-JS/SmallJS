@@ -97,8 +97,8 @@ onChat: request response: response
 			chatRequest model isNil
 				ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "model" missing' ) ]
 				ifFalse: [
-					chatRequest text isNil
-						ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "text" missing' ) ]
+					chatRequest messages isNil
+						ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "messages" missing' ) ]
 						ifFalse: [ self onChat2: chatRequest response: response ] ] ].
 !
 onChat2: chatRequest response: response
@@ -108,7 +108,7 @@ onChat2: chatRequest response: response
 	ai := aiMap get: provider.
 	ai isNil
 		ifTrue: [ response send: ( AiChatResponse success: false text: 'AI provider not available: ', provider ) ]
-		ifFalse: [ ai chat: chatRequest text
+		ifFalse: [ ai chat: chatRequest messages
 			then: [ :text | self onChat3: text response: response ] ].
 !
 onChat3: text response: response

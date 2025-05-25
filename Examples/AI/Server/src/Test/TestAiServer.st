@@ -60,13 +60,13 @@ chatRequest: ai
 	chatRequest := AiChatRequest new
 		provider: ai name;
 		model: ai class models first;
-		text: 'Say exactly: This is a test'.
+		messages: #( 'Say exactly: This is a test' ).
 	url := 'http://localhost:', aiServer port toString, '/api/chat', chatRequest toUrlQuery.
 
 	Fetch
 		request: url
 		then: [ :response | self onChatResponse: response id: ai nextId ]
-		catch: [ :error | error throw ] .
+		catch: [ :error | error throw ].
 
 !
 onChatResponse: response id: id

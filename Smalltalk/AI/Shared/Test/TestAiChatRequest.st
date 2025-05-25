@@ -6,18 +6,18 @@ test
 	request := AiChatRequest new
 		provider: 'openai';
 		model: 'gpt-4o';
-		text: 'Say this is a test'.
+		messages: #( 'Say this is a test' ).
 	self assert:[ request provider = 'openai' ].
 	self assert:[ request model = 'gpt-4o' ].
-	self assert:[ request text = 'Say this is a test' ].
-	self assert: [ request toString = 'AiChatRequest( provider: openai, model: gpt-4o, text: "Say this is a test" )' ].
+	self assert:[ request messages = #( 'Say this is a test' ) ].
+	self assert: [ request toString = 'AiChatRequest( provider: openai, model: gpt-4o, messages: "#( Say this is a test )" )' ].
 
 	object := Object new
 		atProperty: 'provider' put: 'deepthought';
 		atProperty: 'model' put: 'universal';
-		atProperty: 'text' put: 'The question of life etc.'.
+		atProperty: 'messages' put: '["The question of life"]'.
 	request := AiChatRequest fromObject: object.
 	self assert:[ request provider = 'deepthought' ].
 	self assert:[ request model = 'universal' ].
-	self assert:[ request text = 'The question of life etc.' ].
+	self assert:[ request messages = #( 'The question of life' ) ].
 !

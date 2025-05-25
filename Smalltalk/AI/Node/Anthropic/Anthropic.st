@@ -26,17 +26,18 @@ METHODS
 
 "Chat"
 
-chat: content then: block
-	| messageParam createMessageParams |
+chat: messages then: block
+	| messageParams createMessageParams |
 
-	messageParam := AnthropicMessageParam new
-		role: 'user';
-		content: content.
+	messageParams := messages map: [ :message |
+		AnthropicMessageParam new
+			role: 'user';
+			content: message ].
 
 	createMessageParams := AnthropicCreateMessageParams new
 		model: self model;
 		maxTokens: 1024;
-		messages: ( Array with: messageParam ).
+		messages: messageParams.
 
 	self create: createMessageParams
 		then: [ :message | self onChat: message then: block ].
