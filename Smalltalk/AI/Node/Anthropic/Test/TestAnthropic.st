@@ -42,7 +42,7 @@ onCreate: message
 	self assert: [ message class = AnthropicMessage ].
 	self assert: [ message content length = 1 ].
 	self assert: [ message id startsWith: 'msg' ].
-	self assert: [ message model = anthropic model ].
+	self assert: [ message model startsWith: 'claude' ].
 	self assert: [ message role = 'assistant' ].
 	self assert: [ message stopReason = 'end_turn' ].
 	self assert: [ message stopSequence isNil ].

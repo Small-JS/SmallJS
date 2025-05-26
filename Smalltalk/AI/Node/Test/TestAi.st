@@ -1,7 +1,7 @@
 CLASS TestAi EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 test
-	#( 'openai' 'deepseek' 'googleai' 'anthropic' ) do: [ :name |
+	#( 'ollama' 'openai' 'deepseek' 'googleai' 'anthropic' ) do: [ :name |
 		self testAi: name ]
 !
 testAi: name
