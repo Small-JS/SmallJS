@@ -21,6 +21,8 @@ export class Compiler
 	minimizeStartClassName: string = '';
 	minimizedMethodCount = 0;
 
+	static version = "1.6.1";
+
 	start()
 	{
 		let args: string[] = process.argv.slice( 2 );
@@ -29,7 +31,7 @@ export class Compiler
 
 		while( args.length > 0 ) {
 			if( args[ 0 ] == '-v' ) {
-				this.version();
+				this.showVersion();
 				exit(0);
 			}
 			else if( args[ 0 ] == '-s' ) {
@@ -69,9 +71,9 @@ export class Compiler
 		exit( 1 );
 	}
 
-	version()
+	showVersion()
 	{
-		console.log( "SmallJS version: " + "1.6.1" );
+		console.log( "SmallJS version: " + Compiler.version );
 	}
 
 	compile( inputFolders: string[], outputFolder: string )

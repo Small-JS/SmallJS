@@ -59,7 +59,8 @@ drawBall: ball
 	bottomLeft := ball position + ( Point x: radius negated y: radius ).
 
 	gradient := context createLinearGradientFrom: topRight to: bottomLeft.
-	gradient addColorStop: 0 color: ball color.
+	gradient addColorStop: 0 color: 'white'.
+	gradient addColorStop: 0.4 color: ball color.
 	gradient addColorStop: 1 color: '#101010'.
 
 	context beginPath.
