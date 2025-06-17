@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== CounterUsingMithril"
+echo "==== Building: CounterUsingMithril"
 
 # Compile TypeScript
 

@@ -254,8 +254,8 @@ export class ClassCompiler
 		return this.compileAssignment();
 	}
 
-	// Compile variable assignment and before that,
-	// compile higher precedence message sends (all).
+	// Compile variable assignment,
+	// but first compile message sends, which have higher precedence.
 
 	private compileAssignment(): SourceNode
 	{
@@ -660,7 +660,7 @@ export class ClassCompiler
 	}
 
 	// Generate a new source node that is not connected to any ST source,
-	// so does cannot have a breakpoint.
+	// so cannot have a breakpoint.
 
 	sourceNode( script: string, name: string ): SourceNode
 	{

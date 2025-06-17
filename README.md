@@ -78,10 +78,15 @@ Notes:
 
 Check if everything builds tests successfully before going to the next step.
 
-## Example projects
+## Examples
 
 For a first impression of running SmallJS code, see the example projects:
 >[./Examples/Examples.md](./Examples/Examples.md)
+
+## Contributions
+
+Contributions to SmallJS that are not mart of the main system.
+>[./Contributions/Contributions.md](./Contributions/Contributions.md)
 
 ## Playground
 

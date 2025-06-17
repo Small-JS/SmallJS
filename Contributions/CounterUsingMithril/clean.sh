@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example CounterUsingMithril"
+echo "==== Cleaning: CounterUsingMithril"
 
 rm -fr ./web/Script

@@ -7,8 +7,18 @@ CLASSMETHODS
 myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	| a |
-	a := 1.
+	"| block |
+	block := [ :a |
+		a * a
+	].
+	self log: ( block value: 3 )"
+
+	true ifTrue:
+	[
+		"self log: 'h1'."
+		2 * 3.
+		"self log: 'h2'."
+	].
 !
 
 "Creating"
