@@ -6,9 +6,14 @@ testConstants
 !
 testConversion
 	self assert: [ 3.4 toInteger = 3 ].
+	self assert: [ 4.0 toString = '4' ].
+
+	self assert: [ 2.5 f16Round = 2.5 ].
+	"2.6 rounded to float16 is about: 2.599609375"
+	self assert: [ 2.6 f16Round - 2.6 < -0.00001 ].
+
 	self assert: [ 9007199254740991.0 isSafeInteger ].
 	self assert: [ 9007199254740992.0 isSafeInteger not ].
-
 !
 testComparisons
 	| bigInt fraction |

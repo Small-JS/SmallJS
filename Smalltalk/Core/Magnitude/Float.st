@@ -36,6 +36,9 @@ toInteger
 toFixed: decimals
 	^ String fromJs: INLINE 'this.js.toFixed( decimals.js )'.
 !
+f16Round
+	^ Float fromJs: INLINE 'Math.f16round( this.js )'.
+!
 
 "Testing."
 

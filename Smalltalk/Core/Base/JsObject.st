@@ -75,6 +75,9 @@ isObject
 isEmpty
 	^ Boolean fromJs: INLINE 'Object.keys( this.js ).length === 0'.
 !
+hasOwn: property
+	^ Boolean fromJs: INLINE 'Object.hasOwn( this.js, property.js )'.
+!
 
 "Converting"
 

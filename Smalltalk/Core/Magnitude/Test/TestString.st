@@ -106,4 +106,9 @@ testEscapedChars
 
 	string := '\''.
 	self assert: [ string length = 1 & ( ( string at: 0 ) = 39 ) ].
+
+	self assert: [ 'Hello world!' isWellFormed ].
+	self assert: [ 'Hello world \uD800' isWellFormed not ].
+	self assert: [ 'Hello world!' toWellFormed = 'Hello world!' ].
+	self assert: [ 'Hello world \uD800' toWellFormed isWellFormed ].
 !

@@ -87,6 +87,9 @@ slice: start to: end
 reverse
 	INLINE 'this.js.reverse()'.
 !
+toReversed
+	^ self class fromJs: INLINE 'this.js.toReversed()'.
+!
 swap: index1 with: index2
 	| temp |
 	temp := self at: index1.

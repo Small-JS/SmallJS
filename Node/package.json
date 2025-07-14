@@ -1,20 +1,18 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@anthropic-ai/sdk": "^0.54.0",
-		"@google/generative-ai": "^0.24.1",
 		"express": "^5.1.0",
 		"express-session": "^1.18.1",
 		"http-terminator": "^3.2.0",
-		"mariadb": "^3.4.2",
-		"mysql2": "^3.14.1",
-		"openai": "^5.5.1",
-		"pg": "^8.16.0"
+		"mariadb": "^3.4.4",
+		"mysql2": "^3.14.2",
+		"pg": "^8.16.3"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.3",
 		"@types/express-session": "^1.18.2",
-		"@types/node": "^24.0.3",
+		"@types/geojson": "^7946.0.16",
+		"@types/node": "^24.0.13",
 		"@types/pg": "^8.15.4"
 	}
 }

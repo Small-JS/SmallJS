@@ -189,3 +189,12 @@ do: block
 		for( let $char of this.js ) {
 			block.$value$( stCharacter$class.$fromJs$( $char.charCodeAt( 0 ) ) ) }'.
 !
+
+"Testing."
+
+isWellFormed
+	^ Boolean fromJs: INLINE 'this.js.isWellFormed()'.
+!
+toWellFormed
+	^ String fromJs: INLINE 'this.js.toWellFormed()'.
+!

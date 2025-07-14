@@ -23,6 +23,9 @@ test
 	self assert: [ ( ( jsObject atJsProperty: 'things' ) at: 1 ) = 'b' ].
 	self assert: [ ( ( jsObject atJsProperty: 'nested' ) atProperty: 'inHere' ) = 'I am in here' ].
 
+	self assert: [ jsObject hasOwn: 'age' ].
+	self assert: [ ( jsObject hasOwn: 'missing' ) not ].
+
 	self assert: [ Date new jsClassName = 'Date' ].
 	self assert: [ true jsType = 'boolean' ].
 

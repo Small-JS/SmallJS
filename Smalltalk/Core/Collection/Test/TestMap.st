@@ -38,3 +38,12 @@ test
 	map clear.
 	self assert: [ map size = 0 ].
 !
+testGroupBy
+	| groupBlock map v |
+	groupBlock := [ :element | element % 2 = 0 ifTrue: [ 'even' ] ifFalse: [ 'odd' ] ].
+	map := Map group: #( 1 2 3 4 5 ) by: groupBlock.
+	self assert: [ map size = 2 ].
+	v := map get: 'even'.
+	self assert: [ ( map get: 'even' ) = #( 2 4 ) ].
+	self assert: [ ( map get: 'odd' ) = #( 1 3 5 ) ].
+!

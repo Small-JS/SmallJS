@@ -67,6 +67,10 @@ at: index put: value
 
 	INLINE 'this.js[ index.js ] = value'.
 !
+at: index with: value
+	"Returns a copy of the array with value placed at index."
+	^ Array fromJs: INLINE 'this.js.with( index.js, value )'.
+!
 
 "Add / remove."
 
@@ -91,11 +95,17 @@ pop
 find: block
 	^ Nil fromJs: INLINE 'this.js.find( ( element ) => block.js( element ).js )'.
 !
-includes: findElement
-	^ ( self find: [ :element | element = findElement ] ) notNil.
-!
 findIndex: block
 	^ Integer fromJs: INLINE 'this.js.findIndex( ( element ) => block.js( element ).js )'.
+!
+findLast: block
+	^ Nil fromJs: INLINE 'this.js.findLast( ( element ) => block.js( element ).js )'.
+!
+findLastIndex: block
+	^ Integer fromJs: INLINE 'this.js.findLastIndex( ( element ) => block.js( element ).js )'.
+!
+includes: findElement
+	^ ( self find: [ :element | element = findElement ] ) notNil.
 !
 indexOf: findElement
 	^ self findIndex: [ :element | element = findElement ].
@@ -148,6 +158,12 @@ splice: start
 splice: start count: count
 	INLINE 'this.js.splice( start.js, count.js )'.
 !
+toSpliced: start
+	^ Array fromJs: INLINE 'this.js.toSpliced( start.js )'.
+!
+toSpliced: start count: count
+	^ Array fromJs: INLINE 'this.js.toSpliced( start.js, count.js )'.
+!
 removeAt: index
 	self splice: index count: 1
 !
@@ -166,4 +182,10 @@ sortWith: compareBlock
 	"Need helper block to convert ST compare values to JS."
 	jsCompareBlock := [ :a :b | ( compareBlock value: a value: b ) js ].
 	INLINE 'this.js.sort( jsCompareBlock.js )'.
+!
+toSorted
+	^ self copy sort.
+!
+toSortedWith: block
+	^ self copy sortWith: block.
 !

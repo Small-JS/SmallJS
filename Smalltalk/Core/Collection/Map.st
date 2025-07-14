@@ -1,6 +1,20 @@
 CLASS Map EXTENDS Collection MODULE Core CLASSVARS '' VARS ''
 	"Encapsulates the JS Map class, that is stored in the inherited 'js' variable.
-	 As in a JS Map, the keys must be strings."
+	 As in a JS Map, the keys must be strings.
+	 Otherwise use class Dictionary."
+
+
+CLASSMETHODS
+
+group: array by: block
+	| map |
+	map := self fromJs: INLINE 'Map.groupBy( array.js,
+		( element ) => block.js( element ).js )'.
+	"Now convert all values from JS array to ST array."
+	map forEach: [ :key :jsArray |
+		map set: key value: ( Array fromJs: jsArray ) ].
+	^ map.
+!
 
 METHODS
 
@@ -57,3 +71,5 @@ forEach: block
 	"Note: The block must have :key and :value as the 1st and 2nd argument."
 	INLINE 'this.js.forEach( ( value, key ) => block.js( stString$class.$fromJs$( key ), value ) )'.
 !
+
+

@@ -19,6 +19,8 @@ testCore
 	array2 add: 8.
 	self assert: [ array2 length = 4 ].
 
+	self assert: [ ( #( 1 2 3 ) at: 1 with: 9 ) = #( 1 9 3 ) ].
+
 	self assert: [ #( 1 2 ) , #( 3 4 ) = #( 1 2 3 4 ) ].
 	self assert: [ array2 pop = 8 ].
 	self assertError: [ Array new pop ].
@@ -61,6 +63,8 @@ testSearch
 	self assert: [ ( array find: [ :element | element = 10 ] ) = nil ].
 	self assert: [ ( array findIndex: [ :element | element = 8 ] ) = 3 ].
 	self assert: [ ( array findIndex: [ :element | element = 10 ] ) = -1 ].
+	self assert: [ ( array findLastIndex: [ :element | element % 2 = 0 ] ) = 3 ].
+	self assert: [ ( array findLastIndex: [ :element | element >= 10 ] ) = -1 ].
 	self assert: [ ( array indexOf: 6 ) = 1 ].
 	self assert: [ ( array indexOf: 3 ) = -1 ].
 	self assert: [ array includes: 8 ].
@@ -76,12 +80,15 @@ testModify
 	self assert: [ ( array reduceRight: [ :element1 :element2 | element1 - element2 ] ) = -4 ].
 	self assert: [ ( array reduceRight: [ :element1 :element2 | element1 - element2 ] with: 100 ) = 82 ].
 	self assert: [ array copy reverse = #( 7 6 5 ) ].
+	self assert: [ array toReversed = #( 7 6 5 ) ].
 	self assert: [ ( array shift = 5 ) & ( array = #( 6 7 ) ) ].
 	self assert: [ ( array unshift: 5 ) = #( 5 6 7 ) ].
 	self assert: [ ( array slice: 1 ) = #( 6 7 ) ].
 	self assert: [ ( array slice: 0 to: 2 ) = #( 5 6 ) ].
 	self assert: [ ( array copy splice: 1 ) = #( 5 ) ].
 	self assert: [ ( array copy splice: 1 count: 1 ) = #( 5 7 ) ].
+	self assert: [ ( array toSpliced: 1 ) = #( 5 ) ].
+	self assert: [ ( array toSpliced: 1 count: 1 ) = #( 5 7 ) ].
 	self assert: [ ( array copy swap: 0 with: 2 ) = #( 7 6 5 ) ].
 	self assert: [ ( #( 4 5 6 ) removeAt: 1 ) = #( 4 6 ) ].
 	self assert: [ ( array copy copyWithin: 0 start: 1 end: 3 ) = #( 6 7 7 ) ].
@@ -100,6 +107,14 @@ testIteration
 
 !
 testSort
+	| reverseCompareBlock |
 	self assert: [ #( 9 8 7 6 5 4 3 2 1 0 ) sort = #( 0 1 2 3 4 5 6 7 8 9 ) ].
-	self assert: [ #( 10 90 32 74 34 57 89 61 30 44 ) sort = #( 10 30 32 34 44 57 61 74 89 90 ) ].
+	self assert: [ #( 10 90 32 74 34 57 89 61 32 44 ) sort = #( 10 32 32 34 44 57 61 74 89 90 ) ].
+
+	self assert: [ #( 9 8 7 6 5 4 3 2 1 0 ) toSorted = #( 0 1 2 3 4 5 6 7 8 9 ) ].
+	self assert: [ #( 10 90 32 74 34 57 89 61 32 44 ) toSorted = #( 10 32 32 34 44 57 61 74 89 90 ) ].
+
+	reverseCompareBlock := [ :a :b | b compare: a ].
+	self assert: [ ( #( 10 90 32 74 34 57 89 61 32 44 ) sortWith: reverseCompareBlock ) = #( 90 89 74 61 57 44 34 32 32 10 ) ].
+	self assert: [ ( #( 10 90 32 74 34 57 89 61 32 44 ) toSortedWith: reverseCompareBlock ) = #( 90 89 74 61 57 44 34 32 32 10 ) ].
 !

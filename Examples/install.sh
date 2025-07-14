@@ -11,4 +11,3 @@ cd "$(dirname "$0")"
 ./Shop/Server/install.sh
 ./Electron/install.sh
 ./NodeGui/install.sh
-./CounterUsingMithril/install.sh
