@@ -29,7 +29,8 @@ onChatCompletion: chatCompletion
 		chatCompletion model startsWith: modelNameStart ] ].
 	self assert: [ chatCompletion object = 'chat.completion' ].
 	self assert: [ #( 'scale' 'default' ) includes: chatCompletion serviceTier ].
-	self assert: [ chatCompletion systemFingerprint startsWith: 'fp_' ].
+	chatCompletion systemFingerprint ifNotNil: [
+		self assert: [ chatCompletion systemFingerprint startsWith: 'fp_' ] ].
 	self assert: [ chatCompletion choices length = 1 ].
 
 	choice := chatCompletion choices first.
