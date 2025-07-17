@@ -11,7 +11,6 @@ test
 	self assert: [ set values = #( 'a' 'b' 'c' ) ].
 	self assert: [ set keys = set values ].
 	self assert: [ set entries = #( #( 'a' 'a' ) #( 'b' 'b' ) #( 'c' 'c' ) ) ].
-	self log: set toString.
 	self assert: [ set toString = 'Set( a b c )' ].
 
 	self assert: [ ( set find: 'b' ) = 'b' ].

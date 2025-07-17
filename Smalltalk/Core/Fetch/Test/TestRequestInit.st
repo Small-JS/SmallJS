@@ -1,9 +1,5 @@
 CLASS TestRequestInit EXTENDS Test MODULE Core CLASSVARS '' VARS ''
 
-"The RequestInit class in Node is similar to that of the browsers,
- but not equal and have some different behaviors.
- So there are different tests."
-
 test
 	| options request |
 
@@ -31,8 +27,8 @@ test
 	options redirect: 'follow'.
 	self assert: [ options redirect = 'follow' ].
 
-	options referrer: 'no-referrer'.
-	self assert: [ options referrer = 'no-referrer' ].
+	options referrer: ''.
+	self assert: [ options referrer = '' ].
 
 	options referrerPolicy: 'no-referrer'.
 	self assert: [ options referrerPolicy = 'no-referrer' ].
