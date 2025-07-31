@@ -5,13 +5,13 @@ CLASSMETHODS
 new
 	^ self fromJs: INLINE 'new Headers()'.
 !
-init: strings
-	^ self fromJs: strings toJs.
+init: entries
+	^ self fromJs: INLINE 'new Headers( entries.$toJs() )'.
 !
 
 METHODS
 
-"CRUD"
+"Modifying"
 
 append: name value: value
 	INLINE 'this.js.append( name.js, value.js )'.
@@ -20,13 +20,14 @@ get: name
 	^ String fromJs: INLINE 'this.js.get( name.js )'.
 !
 set: name value: value
+	"Note: This method *appends* values to any exiting values, comma separated."
 	INLINE 'this.js.append( name.js, value.js )'.
 !
 delete: name
 	INLINE 'this.js.delete( name.js )'.
 !
 
-"Testing "
+"Testing"
 
 has: name
 	^ Boolean fromJs: INLINE 'this.js.has( name.js )'.
@@ -35,18 +36,20 @@ has: name
 "Iterating"
 
 entries
-	^ Array fromJs: INLINE 'this.js.entries()' elementConverter: [ :jsArray |
-		Array fromJs: jsArray elementClass: String ].
+	| pairsJs |
+	pairsJs := Array fromJs: INLINE 'Array.from( this.js.entries() )'.
+	^ pairsJs map: [ :jsPair | Array fromJsStrings: jsPair ].
 !
 keys
-	^ Array fromJs: INLINE 'this.js.keys()' elementClass: String.
+	^ Array fromJsStrings: INLINE 'Array.from( this.js.keys() )'.
 !
 values
-	^ Array fromJs: INLINE 'this.js.values()' elementClass: String.
+	^ Array fromJsStrings: INLINE 'Array.from( this.js.values() )'.
 !
 
 "Cookie"
 
 getSetCookie
-	^ Array fromJs: INLINE 'this.js.getSetCookie()' elementClass: String.
+	"This returns an *array* of cookie values."
+	^ Array fromJsStrings: INLINE 'this.js.getSetCookie()'.
 !

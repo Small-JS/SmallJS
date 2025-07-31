@@ -13,29 +13,19 @@ new
 
 METHODS
 
-method
-	^ String fromJs: INLINE 'this.js.method'.
-!
-method: method
-	INLINE 'this.js.method = method.js'.
-!
-headers
-	^ Headers fromJs: INLINE 'this.js.headers'.
-!
-headers: headers
-	INLINE 'this.js.headers = headers.js'.
-!
+"Properties"
+
 body
 	^ ArrayBuffer fromJs: INLINE 'this.js.body'.
 !
 body: body
 	INLINE 'this.js.body = body.js'.
 !
-mode
-	^ String fromJs: INLINE 'this.js.mode'.
+cache
+	^ String fromJs: INLINE 'this.js.cache'.
 !
-mode: mode
-	INLINE 'this.js.mode = mode.js'.
+cache: cache
+	INLINE 'this.js.cache = cache.js'.
 !
 credentials
 	^ String fromJs: INLINE 'this.js.credentials'.
@@ -43,11 +33,41 @@ credentials
 credentials: credentials
 	INLINE 'this.js.credentials = credentials.js'.
 !
-cache
-	^ String fromJs: INLINE 'this.js.cache'.
+headers
+	^ Headers fromJs: INLINE 'this.js.headers'.
 !
-cache: cache
-	INLINE 'this.js.cache = cache.js'.
+headers: headers
+	INLINE 'this.js.headers = headers.js'.
+!
+integrity
+	^ String fromJs: INLINE 'this.js.integrity'.
+!
+integrity: integrity
+	INLINE 'this.js.integrity = integrity.js'.
+!
+keepalive
+	^ Boolean fromJs: INLINE 'this.js.keepalive'.
+!
+keepalive: keepalive
+	INLINE 'this.js.keepalive = keepalive.js'.
+!
+method
+	^ String fromJs: INLINE 'this.js.method'.
+!
+method: method
+	INLINE 'this.js.method = method.js'.
+!
+mode
+	^ String fromJs: INLINE 'this.js.mode'.
+!
+mode: mode
+	INLINE 'this.js.mode = mode.js'.
+!
+priority
+	^ String fromJs: INLINE 'this.js.priority'.
+!
+priority: priority
+	INLINE 'this.js.priority = priority.js'.
 !
 redirect
 	^ String fromJs: INLINE 'this.js.redirect'.
@@ -67,28 +87,9 @@ referrerPolicy
 referrerPolicy: referrerPolicy
 	INLINE 'this.js.referrerPolicy = referrerPolicy.js'.
 !
-integrity
-	^ String fromJs: INLINE 'this.js.integrity'.
-!
-integrity: integrity
-	INLINE 'this.js.integrity = integrity.js'.
-!
-keepalive
-	^ Boolean fromJs: INLINE 'this.js.keepalive'.
-!
-keepalive: keepalive
-	INLINE 'this.js.keepalive = keepalive.js'.
-!
 signal
 	^ AbortSignal fromJs: INLINE 'this.js.signal'.
 !
 signal: signal
 	INLINE 'this.js.signal = signal.js'.
 !
-priority
-	^ String fromJs: INLINE 'this.js.priority'.
-!
-priority: priority
-	INLINE 'this.js.priority = priority.js'.
-!
-

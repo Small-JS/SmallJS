@@ -381,7 +381,7 @@ export class Parser
 	{
 		let fullMessage: string =
 			"Compile error in file: " + this.filename +
-			", line: " + String( this.position.line ) + ", column: " + String( this.position.tabbedColumn ) +
+			", line " + String( this.position.line ) + ", column " + String( this.position.tabbedColumn ) +
 			": " + message;
 
 		console.error( fullMessage )

@@ -51,8 +51,22 @@ url
 	^ String fromJs: INLINE 'this.js.url'.
 !
 
-"Methods"
+"Copying"
 
+clone
+	^ Response fromJs: INLINE 'this.js.clone()'.
+!
+
+"Conversion"
+
+textThen: block
+	INLINE 'this.js.text().then( string =>
+		block.$value$( stString$class.$fromJs$( string ) ) )'.
+!
+bytesThen: block
+	INLINE 'this.js.bytes().then( uint8Array =>
+		block.$value$( stUint8Array$class.$fromJs$( uint8Array ) ) )'.
+!
 arrayBufferThen: block
 	INLINE 'this.js.arrayBuffer().then( buffer =>
 		block.$value$( stArrayBuffer$class.$fromJs$( buffer ) ) )'.
@@ -61,23 +75,16 @@ blobThen: block
 	INLINE 'this.js.blob().then( blob =>
 		block.$value$( stBlob$class.$fromJs$( blob ) ) )'.
 !
-clone
-	Response fromJs: INLINE 'this.js.clone()'.
+jsonThen: block
+	INLINE 'this.js.json().then( object =>
+		block.$value$( stObject$class.$fromJs$( object ) ) )'.
 !
 formDataThen: block
 	INLINE 'this.js.formData().then( formData =>
 		block.$value$( stFormData$class.$fromJs$( buffer ) ) )'.
 !
-jsonThen: block
-	INLINE 'this.js.json().then( object =>
-		block.$value$( stObject$class.$fromJs$( object ) ) )'.
-!
-textThen: block
-	INLINE 'this.js.text().then( string =>
-		block.$value$( stString$class.$fromJs$( string ) ) )'.
-!
 
-"Cookie"
+"Cookies"
 
 cookie
 	^ String fromJs: INLINE 'this.js.headers.get( "set-cookie" )'.

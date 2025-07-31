@@ -24,7 +24,7 @@ npx tsc
 
 # Compile Smalltalk
 
-../../Compiler/start.sh ../../Smalltalk/Core ../../Smalltalk/Node ../../Smalltalk/NodeGui src out
+../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Node +t ../../Smalltalk/NodeGui src out
 
 # Run tests
 # If this fails on Ubuntu, you maybe need to run this:

@@ -3,14 +3,19 @@ CLASS Request EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
+new
+	self error: 'Create a new Request with method: Request.url:[options:]'.
+!
 url: url
 	^ self fromJs: INLINE 'new Request( url.js )'.
 !
-url: url options: options
-	^ self fromJs: INLINE 'new Request( url.js, options.js )'.
+url: url options: requestInit
+	^ self fromJs: INLINE 'new Request( url.js, requestInit.js )'.
 !
 
 METHODS
+
+"Properties"
 
 body
 	^ ReadableStream fromJs: INLINE 'this.body'.
@@ -36,6 +41,9 @@ headers
 integrity
 	^ String fromJs: INLINE 'this.js.integrity'.
 !
+keepalive
+	^ Boolean fromJs: INLINE 'this.js.keepalive'.
+!
 method
 	^ String fromJs: INLINE 'this.js.method'.
 !
@@ -57,6 +65,15 @@ signal
 url
 	^ String fromJs: INLINE 'this.js.url'.
 !
+
+"Copying"
+
+clone
+	Request fromJs: INLINE 'this.js.clone()'.
+!
+
+"Reading body"
+
 arrayBufferThen: block
 	INLINE 'this.js.arrayBuffer().then( buffer =>
 		block.$value$( stArrayBuffer$class.$fromJs$( buffer ) ) )'.
@@ -65,18 +82,19 @@ blobThen: block
 	INLINE 'this.js.blob().then( blob =>
 		block.$value$( stBlob$class.$fromJs$( blob ) ) )'.
 !
-clone
-	Request fromJs: INLINE 'this.js.clone()'.
+bytesThen: block
+	INLINE 'this.js.bytes().then( bytes =>
+		block.$value$( stUint8Array$class.$fromJs$( bytes ) ) )'.
 !
-formDataThen: block
-	INLINE 'this.js.formData().then( formData =>
-		block.$value$( stFormData$class.$fromJs$( formData ) ) )'.
+textThen: block
+	INLINE 'this.js.text().then( string =>
+		block.$value$( stString$class.$fromJs$( string ) ) )'.
 !
 jsonThen: block
 	INLINE 'this.js.json().then( object =>
 		block.$value$( stObject$class.$fromJs$( object ) ) )'.
 !
-textThen: block
-	INLINE 'this.js.text().then( string =>
-		block.$value$( stString$class.$fromJs$( string ) ) )'.
+formDataThen: block
+	INLINE 'this.js.formData().then( formData =>
+		block.$value$( stFormData$class.$fromJs$( formData ) ) )'.
 !
