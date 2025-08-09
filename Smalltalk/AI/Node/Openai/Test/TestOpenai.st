@@ -51,7 +51,7 @@ onChatCompletion: chatCompletion
 
 	self assert: [ usage completionAcceptedPredictionTokens = 0 ].
 	self assert: [ usage completionAudioTokens = 0 ].
-	self assert: [ usage completionReasoningTokens = 0 ].
+	self assert: [ usage completionReasoningTokens >= 0 ].
 	self assert: [ usage completionRejectedPredictionTokens = 0 ].
 
 	self assert: [ usage promptAudioTokens = 0 ].

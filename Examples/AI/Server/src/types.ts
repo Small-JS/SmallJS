@@ -24,8 +24,8 @@ import { ChatCompletion } from "openai/resources/chat/completions.js";
 type ChatCompletionChoice = ChatCompletion.Choice;
 import { ChatCompletionMessage } from "openai/resources/chat/completions.js";
 import { CompletionUsage } from "openai/resources/completions.js";
-type CompletionUsageCompletionTokensDetails = CompletionUsage.CompletionTokensDetails;
-type CompletionUsagePromptTokensDetails = CompletionUsage.PromptTokensDetails;
+let completionTokensDetails: CompletionUsage.CompletionTokensDetails;
+let promptTokensDetails: CompletionUsage.PromptTokensDetails;
 
 // AI - Google AI
 import { GoogleGenerativeAI, ModelParams, GenerativeModel,
