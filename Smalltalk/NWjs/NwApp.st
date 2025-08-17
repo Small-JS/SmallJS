@@ -31,19 +31,19 @@ window
 	"Return the default window for the app."
 	^ NwWindow get.
 !
-"Methods"
+"Running"
 
-clearCache
-	INLINE 'this.js.clearCache()'.
-!
 closeAllWindows
 	INLINE 'this.js.closeAllWindows()'.
 !
-getProxyForUrl: url
-	^ String fromJs: INLINE 'this.js.getProxyForURL( url.js )'.
-!
 quit
 	INLINE 'this.js.quit()'.
+!
+clearCache
+	INLINE 'this.js.clearCache()'.
+!
+getProxyForUrl: url
+	^ String fromJs: INLINE 'this.js.getProxyForURL( url.js )'.
 !
 addOriginAccessWhitelistEntry: sourceOrigin destinationProtocol: destinationProtocol destinationHost: destinationHost
 	allowDestinationSubdomains: allowDestinationSubdomains

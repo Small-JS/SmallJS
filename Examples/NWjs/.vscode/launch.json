@@ -9,6 +9,8 @@
 			// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw*" },
 			// So we used a manually a downloaded version in the ./bin folder:
 			"runtimeExecutable": "${workspaceRoot}/bin/nw",
+			"osx" : {
+				"runtimeExecutable": "${workspaceRoot}/bin/nwjs.app/Contents/MacOS/nwjs" },
 			"windows" : {
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
@@ -33,6 +35,8 @@
 			// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw*" },
 			// So we used a manually a downloaded version in the ./bin folder:
 			"runtimeExecutable": "${workspaceRoot}/bin/nw",
+			"osx" : {
+				"runtimeExecutable": "${workspaceRoot}/bin/nwjs.app/Contents/MacOS/nwjs" },
 			"windows" : {
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
