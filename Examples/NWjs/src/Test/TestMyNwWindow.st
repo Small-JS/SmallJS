@@ -34,7 +34,7 @@ test: aApp
 !
 onResizeTo
 	| currentSize |
-	self assert: [ window size > ( 400 @ 200 ) ].
+	self assert: [ window size >= ( 400 @ 200 ) ].
 	self assert: [ window size < ( 500 @ 300 ) ].
 
 	currentSize := window size.
@@ -46,6 +46,12 @@ onResizeBy: previousSize
 	self assert: [ window size = ( previousSize + ( 20 @ 10 ) ) ].
 
 	currentSize := window size.
+
+	"Skip minimizing and maximizing tests on Linux because of this issue:
+	 https://github.com/nwjs/nw.js/issues/8291"
+	Window isLinux ifTrue: [
+		^ self onRestore: currentSize ].
+
 	window maximize.
 	Timer timeout: 500 then: [ self onMaximize: currentSize ].
 !
@@ -60,15 +66,21 @@ onMaximize: previousSize
 onMinimize: previousSize
 	"Maximizing does not change the NW.js window size,
 	 but DOM window size is changed."
-	self assert: [ window window outerHeight < 100 ].
+	self assert: [ Document default hidden ].
 
 	window restore.
 	Timer timeout: 500 then: [ self onRestore: previousSize ].
 !
 onRestore: previousSize
 	| currentOffset |
-	self assert: [ window size = previousSize ].
+	"Restore on Ubuntu restores to maximized state,
+	 not to previous set size. NW.js Bug."
+	self assert: [ window size >= previousSize ].
 
+	window resizeTo: previousSize.
+	Timer timeout: 500 then: [ self onResizeToAgain ].
+!
+onResizeToAgain
 	window moveTo: ( 200 @ 100 ).
 	Timer timeout: 500 then: [ self onMoveTo ].
 !

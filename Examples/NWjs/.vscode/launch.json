@@ -5,11 +5,11 @@
 			"name": "NW",
 			"type": "nwjs",
 			"request": "launch",
-			"runtimeExecutable": "${workspaceRoot}/.bin/nw",
+			// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
+			// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw*" },
+			// So we used a manually a downloaded version in the ./bin folder:
+			"runtimeExecutable": "${workspaceRoot}/bin/nw",
 			"windows" : {
-				// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
-				// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw.exe" },
-				// So we used a manually downloaded version:
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",
@@ -29,11 +29,11 @@
 			"name": "NW Test",
 			"type": "nwjs",
 			"request": "launch",
-			"runtimeExecutable": "${workspaceRoot}/.bin/nw",
+			// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
+			// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw*" },
+			// So we used a manually a downloaded version in the ./bin folder:
+			"runtimeExecutable": "${workspaceRoot}/bin/nw",
 			"windows" : {
-				// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
-				// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw.exe" },
-				// So we used a manually downloaded version:
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",

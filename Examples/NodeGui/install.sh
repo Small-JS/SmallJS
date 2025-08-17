@@ -15,5 +15,5 @@ then
 	exit 0;
 fi
 
-echo "Installing NPM packages for example NodeGui"
+echo "Installing NPM packages for: Example NodeGui"
 npm install

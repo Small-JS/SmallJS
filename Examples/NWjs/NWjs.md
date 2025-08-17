@@ -13,6 +13,8 @@ but have the advantage running exiting web apps unmodified.
 
 # Installation
 
+To enable debugging NW.js apps in VSCode, install this extension: "Debugger for NWjs"
+
 It is currently (2025-07-31) not possible to setup the NW.js npm package \
 in a multi-platform way that supports launching (debugging) on VSCode.
 
