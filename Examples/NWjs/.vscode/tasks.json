@@ -1,0 +1,31 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "tsc: watch - tsconfig.json",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"runOptions": {	"runOn": "folderOpen" }
+		},
+		// Must compile Node and Browser file separately
+		// because of same class names with different implementations.
+		{
+			"label": "Compile Smalltalk",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/main.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "../../Smalltalk/NWjs", "src", "web/Script" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		}
+	]
+}

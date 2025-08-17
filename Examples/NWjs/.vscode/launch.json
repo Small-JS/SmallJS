@@ -1,0 +1,51 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "NW",
+			"type": "nwjs",
+			"request": "launch",
+			"runtimeExecutable": "${workspaceRoot}/.bin/nw",
+			"windows" : {
+				// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
+				// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw.exe" },
+				// So we used a manually downloaded version:
+			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
+			"runtimeArgs": [
+				"${workspaceRoot}/web",
+				// "--enable-features=NWESM,NWChainImportDom"
+				// "--enable-features=NWESM,NWChainImportNode"
+				// "--enable-features=NWESM"
+			],
+			"webRoot": "${workspaceRoot}/web",
+			"sourceMaps": true,
+			"port": 9222,
+			// If this is set to false, a small (~500 msec) delay must be done before starting the app
+			// to allow the debugger to attach before the main page is loaded.
+			"reloadAfterAttached": false,
+			"preLaunchTask": "Compile Smalltalk"
+		},
+		{
+			"name": "NW Test",
+			"type": "nwjs",
+			"request": "launch",
+			"runtimeExecutable": "${workspaceRoot}/.bin/nw",
+			"windows" : {
+				// 2025-08-10: The NW.js debugger in VSCode fails to attach if the NPM version is used:
+				// "runtimeExecutable": "${workspaceRoot}/node_modules/nw/nwjs/nw.exe" },
+				// So we used a manually downloaded version:
+			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
+			"runtimeArgs": [
+				"${workspaceRoot}/web",
+				"-test"
+			],
+			"webRoot": "${workspaceRoot}/web",
+			"sourceMaps": true,
+			"port": 9222,
+			// If this is set to false, a small (~500 msec) delay must be done before starting the app
+			// to allow the debugger to attach before the main page is loaded.
+			"reloadAfterAttached": false,
+			"preLaunchTask": "Compile Smalltalk"
+		}
+	]
+}

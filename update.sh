@@ -37,25 +37,10 @@ cd $cwd/Node
 npx npm-check-updates -u
 npm install
 
-echo "==== Examples: Shop Server"
-cd $cwd/Examples/Shop/Server
-npx npm-check-updates -u
-npm install
+# Update examples
 
-echo "==== Examples: AI Server"
-cd $cwd/Examples/AI/Server
-npx npm-check-updates -u
-npm install
-
-echo "==== Examples: Electron"
-cd $cwd/Examples/Electron
-npx npm-check-updates -u
-npm install
-
-echo "==== Examples: NodeGui"
-cd $cwd/Examples/NodeGui
-npx npm-check-updates -u
-npm install
+cd $cwd
+./Examples/update.sh
 
 # Ending messages
 

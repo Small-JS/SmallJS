@@ -7,6 +7,9 @@ CLASS TestConsole EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 METHODS
 
+"This test is disabled default by calling it 'noTest',
+ so console testing massages do not obscure other loggings."
+
 noTest
 	| label |
 

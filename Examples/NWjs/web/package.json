@@ -1,0 +1,10 @@
+{
+	"name": "my-nw-app",
+	"main": "index.html",
+	"window": {
+		"show": true,
+		"position": "center",
+		"width": 500,
+		"height": 500
+	}
+}

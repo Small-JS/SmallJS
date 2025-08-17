@@ -1,9 +1,8 @@
 CLASS Console EXTENDS Object MODULE Core CLASSVARS '' VARS ''
-	"This class encasulates the JS class: Console."
+
+"This class encasulates the JS class: Console."
 
 CLASSMETHODS
-
-"Todo: Implement properties and methods."
 
 clear
 	INLINE 'console.clear()'.

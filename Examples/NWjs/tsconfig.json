@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "esNext",
+	"module": "nodeNext",
+	"outDir": "web/Script",
+	"strict": true,
+	"sourceMap": true
+  }
+}

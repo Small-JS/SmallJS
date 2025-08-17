@@ -23,6 +23,11 @@ cd $cwd/Electron
 npx npm-check-updates -u
 npm install
 
+echo "==== Examples: NWjs"
+cd $cwd/NWjs
+npx npm-check-updates -u
+npm install
+
 echo "==== Examples: NodeGui"
 cd $cwd/NodeGui
 npx npm-check-updates -u

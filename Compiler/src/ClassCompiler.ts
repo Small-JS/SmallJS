@@ -4,8 +4,6 @@ import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
 import { CharUtil, Naming } from "./Runtime.js";
 
-// Playground uses local SourceNode class
-// import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
 
 export class ClassCompiler
@@ -347,10 +345,9 @@ export class ClassCompiler
 
 		node.add( " ) => {\n" );
 
-		while( this.parser.peekChar() != "]" )
+		while( ! this.parser.tryParseTerm( "]" ) )
 			node.add( this.compileBlockStatement() );
 
-		this.parser.mustParseTerm( "]" );
 		node.add( "\t\t\t} )" );
 
 		this.method.args = oldArgs;
