@@ -7,12 +7,11 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - 18-AUG-2025
+## News - SmallJS release 1.7 - 18-AUG-2025
 
-SmallJS v1.7 was released with:
-NW.js support: A new framework that lets you develop multi-platform desktop apps with ease!.<br>
+With NW.js framework support for developing multi-platform desktop apps!<br>
 The GUI of these apps is made with familiar HTML and CSS.<br>
-They take up less memory than Electron and are less complex to develop.<br>
+And they take up less memory than Electron and are less complex to develop.<br>
 
 More info here: https://small-js.org/News
 
@@ -100,3 +99,4 @@ The playground is also accessible though the offical website
 
 The complete documentation is located here:
 >[./Documentation/Documentation.md](./Documentation/Documentation.md)
+
