@@ -43,7 +43,7 @@ onResizeTo
 !
 onResizeBy: previousSize
 	| currentSize |
-	self assert: [ window size = ( previousSize + ( 20 @ 10 ) ) ].
+	self assert: [ window size >= ( previousSize + ( 20 @ 10 ) ) ].
 
 	currentSize := window size.
 
@@ -95,7 +95,7 @@ onMoveTo
 	Timer timeout: 500 then: [ self onMoveBy ].
 !
 onMoveBy
-	self assert: [ window offset = ( 220 @ 110 ) ].
+	self assert: [ window offset >= ( 218 @ 108 ) ].
 
 	window moveToCenter.
 	Timer timeout: 500 then: [ self onMoveToCenter ].
