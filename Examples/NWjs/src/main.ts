@@ -1,6 +1,5 @@
 // Invoke the start method on a new MyNwApp ST object.
 
-
 function startApp()
 {
 	let moduleName: string = "./MyNwApp.js";

@@ -8,7 +8,7 @@ set -e
 cd "$(dirname "$0")"
 
 ./AI/Server/install.sh
-./Shop/Server/install.sh
 ./Electron/install.sh
-./NWjs/install.sh
 ./NodeGui/install.sh
+./NWjs/install.sh
+./Shop/Server/install.sh

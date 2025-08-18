@@ -9,6 +9,8 @@ import * as fs from "fs";
 
 export class Compiler
 {
+	static version = "1.7";
+
 	classCompiler = new ClassCompiler();
 
 	modules: CompiledModule[] = [];
@@ -20,8 +22,6 @@ export class Compiler
 	minimize: boolean = false;
 	minimizeStartClassName: string = '';
 	minimizedMethodCount = 0;
-
-	static version = "1.6.1";
 
 	start()
 	{

@@ -7,18 +7,16 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - 25-MAY-2025
+## News - 18-AUG-2025
 
-SmallJS v1.6.1 was released with:
-- Support for 5 AIs, now including Ollama that can run locally.
-- A client / server example chat app that now remembers the conversation context.
-- Other improvements on the examples, compiler and build system.
+SmallJS v1.7 was released with:
+NW.js support: A new framework that lets you develop multi-platform desktop apps with ease!.<br>
+The GUI of these apps is made with familiar HTML and CSS.<br>
+They take up less memory than Electron and are less complex to develop.<br>
 
 More info here: https://small-js.org/News
 
-Note: In release 1.6, sources where moved around a bit, so it's best to start from a fresh clone.
-
-Have fun!
+Enjoy!
 
 ## Introducing SmallJS
 
