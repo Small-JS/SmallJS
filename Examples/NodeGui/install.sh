@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script installs NPM dependencies of this project.
+# This script installs npm dependencies of this project.
 
 # Exit script if a step fails
 set -e
@@ -15,5 +15,5 @@ then
 	exit 0;
 fi
 
-echo "==== Installing NPM packages for: Example NodeGui"
+echo "==== Installing npm packages for: Example NodeGui"
 npm install

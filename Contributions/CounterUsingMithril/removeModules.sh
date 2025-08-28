@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "This script will remove installed NPM dependencies (node_modules folders)."
+echo "This script will remove installed npm dependencies (node_modules folders)."
 read -p "To you want to continue? (y/N) " confirm
 if
 	[[ ! $confirm == [yY] ]]

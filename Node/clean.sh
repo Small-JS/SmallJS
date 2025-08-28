@@ -7,3 +7,4 @@ cd "$(dirname "$0")"
 echo "Cleaning: Node"
 
 rm -fr ./out
+rm -f *.tmp

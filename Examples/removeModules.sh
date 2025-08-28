@@ -1,5 +1,5 @@
 #!/bin/bash
-# Remove NPM modules of examples.
+# Remove npm modules of examples.
 # This script must be called with argument "-y" to perform removal.
 
 if

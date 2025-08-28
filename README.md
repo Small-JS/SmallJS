@@ -52,7 +52,7 @@ where SQLite is built into Node.js de can be used right away.
 To install all the prerequisites, look at:
 >[./Documentation/Prerequisites.md](./Documentation/Prerequisites.md)
 
-## Install NPM modules
+## Install npm modules
 
 Now run the bash script `./install.sh`.
 On Windows, the `.sh` extension should be associated with Git Bash once.
@@ -61,7 +61,7 @@ Do this by clicking on the file in the explorer and then choose open with Git Ba
 This script:
 - Checks if the prerequisites are present.
 - Installs the SmallJS language extension in VSCode.
-- Installs NPM modules for all Node.js projects.
+- Installs npm modules for all Node.js projects.
 
 ## Build and test SmallJS projects
 

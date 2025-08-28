@@ -19,16 +19,16 @@ node -v
 echo -n "Detecting Visual Studio Code: "
 code -v
 
-echo "==== Detecting global NPM packages"
+echo "==== Detecting global npm packages"
 
-echo -n "Detecting NPM: "
+echo -n "Detecting npm: "
 npm -v
 
-echo "==== Installing local NPM packages"
+echo "==== Installing local npm packages"
 
 npm install
 
-echo "==== Detecting local NPM packages"
+echo "==== Detecting local npm packages"
 
 echo "Detecting TypeScript: "
 npx tsc -v
@@ -41,7 +41,7 @@ npx http-server -v
 
 ./Extension/install.sh
 
-echo "==== Installing core NPM dependencies"
+echo "==== Installing core npm dependencies"
 
 ./Compiler/install.sh
 ./Node/install.sh

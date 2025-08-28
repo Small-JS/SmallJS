@@ -8,7 +8,7 @@ Install an updated version from:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
 
 ## Global Node.js packages
-To check for outdated global NPM packages:
+To check for outdated global npm packages:
 > `npm outdated -g`
 
 To update all global packages:
@@ -22,7 +22,7 @@ For updating specific global packages:
 ### HTTP server
 > `npm update -g http-server`
 
-## NPM packages with the "NPM Check Updates" package
+## npm packages with the "npm Check Updates" package
 To install the npm global package updater (once):
 > `npm i -g npm-check-updates`
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Update NPM dependencies for examples.
+# Update npm dependencies for examples.
 
 # Exit script if a step fails
 set -e

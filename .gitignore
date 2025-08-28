@@ -4,6 +4,7 @@
 *.log
 *.cmd
 *.vsix
+*.tmp
 ~$*
 .DS_Store
 **/node_modules
