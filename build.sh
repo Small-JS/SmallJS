@@ -14,4 +14,4 @@ echo "==== Building SmallJS core components"
 ./Browser/build.sh
 ./Playground/build.sh
 
-echo "==== Core component builds successful"
+echo "==== Core components built successful"

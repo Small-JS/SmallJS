@@ -20,11 +20,12 @@ Enjoy!
 ## Introducing SmallJS
 
 SmallJS is a free and open source implementation of the elegant and powerful Smalltalk-80 (ST) language.
-It compiles to JavaScript (JS) that runs in modern browsers or in Node.js.
+It compiles to JavaScript (JS) that runs in modern browsers or in recent Node.js.
 
 SmallJS is file based, not image based, so you can develop in your favorite IDE.
-The default setup is for Visual Studio Code, with ST syntax coloring and step debugging!
-You code separately from the SmallJS base libraries (image) and only the parts you use are imported automatically when running your app.
+The default setup is for Visual Studio Code, with ST syntax coloring and step-debugging!
+You code separately from the SmallJS base libraries (image)
+and only the parts you use are imported automatically when running your app.
 
 SmallJS is _fully_ object oriented, so customizable on every level.
 For usability, ST class and method names are kept mostly equal to their familiar JS counterparts.
@@ -32,9 +33,10 @@ For usability, ST class and method names are kept mostly equal to their familiar
 JS libraries already encapsulated in ST are:
 
 - Browsers: Document, Window, HTML elements, events, CSS, streams.
-- Node.js: HTTP server, Express, 3 databases, files.
+- Node.js: HTTP server, Express, files, 3 databases, 5 AI providers.
+- Desktop app options: NWjs, Electron, NodeGui.
 
-To get you started quickly, there are several example projects.
+To get you started quickly, there are several example projects using the above.
 
 ## Code example
 
@@ -42,17 +44,19 @@ To get you started quickly, there are several example projects.
 
 ## Getting started
 
-SmallJS is currently set-up for use with Visual Studio Code, but other IDEs could be added.
+SmallJS is currently set-up for use with Visual Studio Code.
 For the back-end, Node.js is the framework of choice, also using Express.
 Databases SQLite, Postgres, MariaDB and MySQL are supported out of the box,
 where SQLite is built into Node.js de can be used right away.
 
-## Install prerequisites
+## Installing
 
-To install all the prerequisites, look at:
+### Install prerequisite apps
+
+To install all the prerequisite apps, look at:
 >[./Documentation/Prerequisites.md](./Documentation/Prerequisites.md)
 
-## Install npm modules
+### Install npm modules
 
 Now run the bash script `./install.sh`.
 On Windows, the `.sh` extension should be associated with Git Bash once.
@@ -63,7 +67,7 @@ This script:
 - Installs the SmallJS language extension in VSCode.
 - Installs npm modules for all Node.js projects.
 
-## Build and test SmallJS projects
+### Build SmallJS compiler and core projects
 
 Run the bash script: `./build.sh`, that:
 - Builds the Smalltalk to JS `./Compiler`.
