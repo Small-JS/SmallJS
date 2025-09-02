@@ -3,9 +3,13 @@ CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
 "Also tests class: Stats"
 
 test
+	| fileName | 
 	self assertError: [ FileHandle new ].
 
-	Fs unlinkSync: 'FileHandle.tmp'.
+	fileName := 'FileHandle.tmp'.
+	( Fs existsSync: fileName ) ifTrue: [
+		Fs unlinkSync: fileName ].
+
 	FileHandle open: 'FileHandle.tmp' flags: 'w+'
 		then: [ :aFileHandle | self onOpen: aFileHandle ]
 		error: [ :error | error throw ].
@@ -20,7 +24,7 @@ onOpen: aFileHandle
 		error: [ :error | error throw ].
 !
 onStat: stats
-	| now atime mtime |
+	| now |
 
 	self assert: [ stats dev >= 1 ].
 	self assert: [ stats ino >= 1 ].
