@@ -3,7 +3,7 @@ CLASS AbortSignal EXTENDS EventTarget MODULE Core CLASSVARS '' VARS ''
 CLASSMETHODS
 
 new
-	self error: 'AbortSignal cannot be created with new.'
+	self error: 'AbortSignal cannot be created with new.'.
 !
 abort
 	^ AbortSignal fromJs: INLINE 'AbortSignal.abort()'.

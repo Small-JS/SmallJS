@@ -21,3 +21,11 @@ testEnv
 testDirectory
 	self assert: [ ( Process cwd includes: '/' ) | ( Process cwd includes: '\\' ) ].
 !
+testPlatform
+	| platforms |
+	platforms := #( 'aix' 'darwin' 'freebsd' 'linux' 'openbsd' 'sunos' 'win32' 'android' ).
+	self assert: [ platforms includes: Process platform ].
+
+	Process isWindows ifTrue: [
+		self assert: [ Process platform = 'win32' ] ].
+!

@@ -1,6 +1,8 @@
 CLASS Fs EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 
-INLINE 'import * as fs$ from "fs";'
+"Use the second import form, because it's compatible with NW.js."
+"INLINE 'import * as fs$ from 'fs';'"
+INLINE 'const fs$ = await import( "fs" );'
 
 CLASSMETHODS
 

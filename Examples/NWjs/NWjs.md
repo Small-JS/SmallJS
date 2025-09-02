@@ -38,5 +38,4 @@ The issue has been reported here: https://github.com/nwjs/nw.js/issues/8157
 
 # Running
 
-Now the app can run normally from VSCode or the build.sh script.
-
+Now the app can run normally from VSCode or with the ./build.sh script.

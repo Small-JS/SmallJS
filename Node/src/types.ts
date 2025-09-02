@@ -4,6 +4,9 @@
 
 // Files
 import * as fs$ from "fs";
+let fsConstants = fs$.constants;
+import * as fsp$ from "fs/promises";
+let fileHandle: fsp$.FileHandle;
 import * as path$ from "path";
 
 // HTTP

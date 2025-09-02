@@ -34,3 +34,12 @@ cwd
 exit: code
 	INLINE 'process.exit( code.js )'.
 !
+
+"Platform"
+
+platform
+	^ String fromJs: INLINE 'process.platform'.
+!
+isWindows
+	^ self platform = 'win32'.
+!
