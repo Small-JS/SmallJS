@@ -14,3 +14,6 @@ readFileSync: path
 existsSync: path
 	^ Boolean fromJs: INLINE 'fs$.existsSync( path.js )'.
 !
+unlinkSync: path
+	INLINE 'fs$.unlinkSync( path.js )'.
+!

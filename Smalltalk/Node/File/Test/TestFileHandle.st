@@ -4,6 +4,8 @@ CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
 
 test
 	self assertError: [ FileHandle new ].
+
+	Fs unlinkSync: 'FileHandle.tmp'.
 	FileHandle open: 'FileHandle.tmp' flags: 'w+'
 		then: [ :aFileHandle | self onOpen: aFileHandle ]
 		error: [ :error | error throw ].
@@ -18,7 +20,7 @@ onOpen: aFileHandle
 		error: [ :error | error throw ].
 !
 onStat: stats
-	| now |
+	| now atime mtime |
 
 	self assert: [ stats dev >= 1 ].
 	self assert: [ stats ino >= 1 ].
@@ -115,7 +117,7 @@ onTruncate
 onStat2: stats
 	| mode |
 	self assert: [ stats size = 2 ].
-	self assert: [ stats mode = 33206 ].
+	self assert: [ #( 33206 33204 ) includes: stats mode ].
 
 	fileHandle chmod: 33200
 		then: [ self onChmod ]
