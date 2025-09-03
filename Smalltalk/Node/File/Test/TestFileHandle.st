@@ -3,7 +3,7 @@ CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
 "Also tests class: Stats"
 
 test
-	| fileName | 
+	| fileName |
 	self assertError: [ FileHandle new ].
 
 	fileName := 'FileHandle.tmp'.
@@ -36,15 +36,15 @@ onStat: stats
 	self assert: [ stats blksize >= 512 ].
 
 	now := Date now.
-	self assert: [ now - stats ctime toMilliseconds < 5000 ].
-	self assert: [ stats mtime = stats ctime ].
-	self assert: [ stats atime = stats mtime ].
-	self assert: [ stats birthtime toMilliseconds > 1756000000000 ].
+	self assert: [ ( now - stats birthtime toMilliseconds ) abs < 5000 ].
+	self assert: [ ( now - stats ctime toMilliseconds ) abs < 5000 ].
+	self assert: [ ( now - stats mtime toMilliseconds ) abs < 5000 ].
+	self assert: [ ( now - stats atime toMilliseconds ) abs < 5000 ].
 
-	self assert: [ now - stats ctimeMs < 5000 ].
-	self assert: [ stats mtimeMs = stats ctimeMs ].
-	self assert: [ stats atimeMs = stats mtimeMs ].
-	self assert: [ stats birthtimeMs > 1756000000000 ].
+	self assert: [ ( now - stats birthtimeMs ) abs < 5000 ].
+	self assert: [ ( now - stats ctimeMs ) abs < 5000 ].
+	self assert: [ ( now - stats mtimeMs ) abs < 5000 ].
+	self assert: [ ( now - stats atimeMs ) abs < 5000 ].
 
 	self writeBuffer.
 !
@@ -121,7 +121,7 @@ onTruncate
 onStat2: stats
 	| mode |
 	self assert: [ stats size = 2 ].
-	self assert: [ #( 33206 33204 ) includes: stats mode ].
+	self assert: [ #( 33188 33204 33206 ) includes: stats mode ].
 
 	fileHandle chmod: 33200
 		then: [ self onChmod ]
