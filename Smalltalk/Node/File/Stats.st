@@ -47,9 +47,6 @@ mtimeMs
 ctimeMs
 	^ Float fromJs: INLINE 'this.js.ctimeMs'.
 !
-birthtimeMs
-	^ Float fromJs: INLINE 'this.js.birthtimeMs'.
-!
 
 "Times as Dates"
 
@@ -61,7 +58,4 @@ mtime
 !
 ctime
 	^ Date fromJs: INLINE 'this.js.ctime'.
-!
-birthtime
-	^ Date fromJs: INLINE 'this.js.birthtime'.
 !

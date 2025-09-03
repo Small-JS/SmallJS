@@ -36,12 +36,10 @@ onStat: stats
 	self assert: [ stats blksize >= 512 ].
 
 	now := Date now.
-	self assert: [ ( now - stats birthtime toMilliseconds ) abs < 5000 ].
 	self assert: [ ( now - stats ctime toMilliseconds ) abs < 5000 ].
 	self assert: [ ( now - stats mtime toMilliseconds ) abs < 5000 ].
 	self assert: [ ( now - stats atime toMilliseconds ) abs < 5000 ].
 
-	self assert: [ ( now - stats birthtimeMs ) abs < 5000 ].
 	self assert: [ ( now - stats ctimeMs ) abs < 5000 ].
 	self assert: [ ( now - stats mtimeMs ) abs < 5000 ].
 	self assert: [ ( now - stats atimeMs ) abs < 5000 ].
