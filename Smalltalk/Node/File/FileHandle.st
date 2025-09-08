@@ -3,14 +3,10 @@ CLASS FileHandle EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 "Note: Node.js readable and writable streams are not implemented,
 	because they duplicate browser stream functionality."
 
-"Use the second import form, because it's compatible with NW.js."
-"INLINE 'import * as fsp$ from 'node:fs/promises';'"
-INLINE 'const fsp$ = await import( "node:fs/promises" );'
-
 CLASSMETHODS
 
 new
-	self error: 'FileHandle instances are created with the "open" class method.'.
+	self error: 'FileHandle instances are created with class methods: "open:*"'.
 !
 
 "Opening"
@@ -19,10 +15,7 @@ open: path flags: flags then: block error: errorBlock
 	^ self open: path flags: flags mode: 438 then: block error: errorBlock.
 !
 open: path flags: flags mode: mode then: block error: errorBlock
-	Error. 	"Force reference"
-	INLINE 'fsp$.open( path.js, flags.js, mode.js )
-		.then( jsFileHandle => block.$value$( stFileHandle$class.$fromJs$( jsFileHandle ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+	^ Fsp open: path flags: flags mode: mode then: block error: errorBlock.
 !
 
 METHODS
@@ -31,7 +24,7 @@ METHODS
 
 closeThen: block error: errorBlock
 	INLINE 'this.js.close()
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 
@@ -42,7 +35,7 @@ fd
 !
 statThen: block error: errorBlock
 	INLINE 'this.js.stat()
-		.then( jsStats => block.$value$( stStats$class.$fromJs$( jsStats ) ) )
+		.then( jsStats => block.$value$( stFileStats$class.$fromJs$( jsStats ) ) )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 
@@ -82,12 +75,12 @@ writeFile: data then: block error: errorBlock
 !
 writeFile: data options: options then: block error: errorBlock
 	INLINE 'this.js.writeFile( data.js, options.js )
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 truncate: len then: block error: errorBlock
 	INLINE 'this.js.truncate( len.js )
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 
@@ -95,17 +88,17 @@ truncate: len then: block error: errorBlock
 
 chmod: mode then: block error: errorBlock
 	INLINE 'this.js.chmod( mode.js )
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 chown: uid gid: gid then: block error: errorBlock
 	INLINE 'this.js.chown( uid.js, gid.js )
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 atime: atime mtime: mtime then: block error: errorBlock
 	INLINE 'this.js.utimes( atime.js, mtime.js )
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 
@@ -113,12 +106,12 @@ atime: atime mtime: mtime then: block error: errorBlock
 
 syncThen: block error: errorBlock
 	INLINE 'this.js.sync()
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 datasyncThen: block error: errorBlock
 	INLINE 'this.js.datasync()
-		.then( block.$value() )
+		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
 

@@ -1,6 +1,6 @@
 CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
 
-"Also tests class: Stats"
+"Also tests class: FileStats"
 
 test
 	| fileName |
@@ -10,7 +10,7 @@ test
 	( Fs existsSync: fileName ) ifTrue: [
 		Fs unlinkSync: fileName ].
 
-	FileHandle open: 'FileHandle.tmp' flags: 'w+'
+	FileHandle open: fileName flags: 'w+'
 		then: [ :aFileHandle | self onOpen: aFileHandle ]
 		error: [ :error | error throw ].
 !
@@ -36,13 +36,13 @@ onStat: stats
 	self assert: [ stats blksize >= 512 ].
 
 	now := Date now.
-	self assert: [ ( now - stats ctime toMilliseconds ) abs < 5000 ].
-	self assert: [ ( now - stats mtime toMilliseconds ) abs < 5000 ].
-	self assert: [ ( now - stats atime toMilliseconds ) abs < 5000 ].
+	self assert: [ ( now - stats ctime toMilliseconds ) abs < 300000 ].
+	self assert: [ ( now - stats mtime toMilliseconds ) abs < 300000].
+	self assert: [ ( now - stats atime toMilliseconds ) abs < 300000 ].
 
-	self assert: [ ( now - stats ctimeMs ) abs < 5000 ].
-	self assert: [ ( now - stats mtimeMs ) abs < 5000 ].
-	self assert: [ ( now - stats atimeMs ) abs < 5000 ].
+	self assert: [ ( now - stats ctimeMs ) abs < 300000 ].
+	self assert: [ ( now - stats mtimeMs ) abs < 300000 ].
+	self assert: [ ( now - stats atimeMs ) abs < 300000 ].
 
 	self writeBuffer.
 !

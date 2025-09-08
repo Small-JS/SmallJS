@@ -1,4 +1,4 @@
-CLASS Stats EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
+CLASS FileStats EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 
 new
 	^ self newEmpty.
