@@ -15,7 +15,7 @@ npx tsc
 
 # Compile Smalltalk
 
-../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Browser +t ../../Smalltalk/NWjs src web/Script
+../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Browser ../../Smalltalk/Node/Base ../../Smalltalk/Node/File +t ../../Smalltalk/NWjs src web/Script
 
 # Run NW app
 
