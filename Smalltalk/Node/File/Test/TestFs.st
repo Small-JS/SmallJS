@@ -1,7 +1,7 @@
 CLASS TestFs EXTENDS Test MODULE TestNode CLASSVARS ''
 	VARS 'tempDirName subDirName tempFilePath tempFileFd'
 
-"Also tests classes: Dir, Dirent"
+"Also tests classes Dir, Dirent in sync mode."
 
 test
 	| prefix options mode |
@@ -119,7 +119,7 @@ accessFd
 	self assert: [ stats atimeMs = 4000 ].
 	self assert: [ stats mtimeMs = 3000 ].
 
-	"chmod and chown to nothing on Windows,
+	"chmod and chown do nothing on Windows,
 	 so don't actually change them and can't check results."
 	Fs fchmodSync: tempFileFd mode: stats mode.
 	Fs fchownSync: tempFileFd uid: stats uid gid: stats gid.
@@ -154,13 +154,13 @@ directory
 	self assert: [ fileNames length = 2 ].
 	self assert: [ fileNames includes: 'sub1' ].
 
-	fileNames := #().
 	dir := Fs opendirSync: tempDirName options: nil.
+	fileNames := #().
 	[ ( dirent := dir readSync ) notNil ] whileTrue: [
 		self dirent: dirent.
 		fileNames add: dirent name ].
-	dir closeSync.
 	self assert: [ fileNames length = 2 ].
+	dir closeSync.
 
 	self end.
 !

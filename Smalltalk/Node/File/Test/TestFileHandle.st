@@ -74,10 +74,10 @@ onReadBuffer: bytesRead buffer: readBuffer
 	self assert: [ ( readBuffer subarray: 2 to: 6 ) toArray = #( 99 100 101 102 ) ].
 
 	"Must reopen file to test writeFile."
-	fileHandle closeThen: [ self close2 ]
+	fileHandle closeThen: [ self onClose ]
 		error: [ :error | error throw ].
 !
-close2
+onClose
 	FileHandle open: 'FileHandle.tmp' flags: 'w+'
 		then: [ :aFileHandle | self onOpen2: aFileHandle ]
 		error: [ :error | error throw ].
@@ -92,10 +92,10 @@ onOpen2: aFileHandle
 !
 onWriteFile
 	"Must reopen file to test readFile."
-	fileHandle closeThen: [ self close3 ]
+	fileHandle closeThen: [ self onClose2 ]
 		error: [ :error | error throw ].
 !
-close3
+onClose2
 	FileHandle open: 'FileHandle.tmp' flags: 'r+'
 		then: [ :aFileHandle | self onOpen3: aFileHandle ]
 		error: [ :error | error throw ].
@@ -171,13 +171,9 @@ onSync
 onDatasync
 	self assert: [ true ].
 
-	self close.
-!
-close
-	fileHandle closeThen: [ self onClose ]
+	fileHandle closeThen: [ self onClose3 ]
 		error: [ :error | error throw ].
 !
-onClose
+onClose3
 	self assert: [ true ].
 !
-

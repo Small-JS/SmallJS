@@ -131,7 +131,7 @@ readdirSync: path options: options
 	^ Array fromJsStrings: INLINE 'fs$.readdirSync( path.js, options.js )'.
 !
 globSync: pattern options: options
-	^ Array fromJsStrings: INLINE 'fs$.globSync(  pattern.js, ( options.js ? options.js : undefined ) )'.
+	^ Array fromJsStrings: INLINE 'fs$.globSync( pattern.js, ( options.js ? options.js : undefined ) )'.
 !
 rmdirSync: path
 	INLINE 'fs$.rmdirSync( path.js )'.

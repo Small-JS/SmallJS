@@ -21,4 +21,4 @@ npx tsc
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
-node_modules/.bin/qode out/main.js -test
+./node_modules/.bin/qode out/main.js -test

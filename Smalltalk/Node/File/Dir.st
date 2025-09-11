@@ -6,6 +6,15 @@ path
 	^ String fromJs: INLINE 'this.js.path'.
 !
 
+"Sync operations"
+
+readSync
+	^ Dirent fromJs: INLINE 'this.js.readSync()'.
+!
+closeSync
+	INLINE 'this.js.closeSync()'.
+!
+
 "Async operations"
 
 closeThen: block error: errorBlock
@@ -17,13 +26,4 @@ readThen: block error: errorBlock
 	INLINE 'this.js.read()
 		.then( jsDirent => block.$value$( stDirent$class.$fromJs$( jsDirent ) ) )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
-!
-
-"Sync operations"
-
-readSync
-	^ Dirent fromJs: INLINE 'this.js.readSync()'.
-!
-closeSync
-	INLINE 'this.js.closeSync()'.
 !
