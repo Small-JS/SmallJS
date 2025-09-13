@@ -54,8 +54,8 @@ checkPriority
 	normalPriority := OsConstants priority atJsProperty: 'PRIORITY_NORMAL'.
 	self assert: [ ( Os getPriority: 0 ) = normalPriority ].
 
-	"Linux does not allow changing process priority by default."
-	Os isLinux ifTrue: [ ^ self ].
+	"Linux and MacOS do not allow changing the process priority by default."
+	Os isLinux | Os isMacos ifTrue: [ ^ self ].
 
 	lowerPriority := OsConstants priority atJsProperty: 'PRIORITY_BELOW_NORMAL'.
 	Os setPriority: 0 to: lowerPriority.
