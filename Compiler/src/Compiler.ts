@@ -152,8 +152,8 @@ export class Compiler
 	{
 		let duplicateClass = this.classes.find( _class => _class.name == newClass.name );
 		if( duplicateClass )
-			this.error( "Duplicate class name: " + newClass.name, +
-				" in files: " + newClass.fileName + " and: " + duplicateClass.fileName );
+			this.error( "Duplicate class name: " + newClass.name,
+				newClass.fileName + " and: " + duplicateClass.fileName );
 		this.classes.push( newClass );
 
 		// Add class to existing module or create new module for it.
