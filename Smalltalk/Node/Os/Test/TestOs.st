@@ -3,7 +3,7 @@ CLASS TestOs EXTENDS Test MODULE TestNode CLASSVARS '' VARS ''
 METHODS
 
 test
-	| priority loadavg |
+	| loadavg |
 
 	self assert: [ Os tmpdir length > 0 ].
 	self assert: [ #( '\n' '\r\n' ) includes: Os eol ].
@@ -16,12 +16,7 @@ test
 
 	"Process"
 
-	priority := OsConstants priority atJsProperty: 'PRIORITY_BELOW_NORMAL'.
-	Os setPriority: 0 to: priority.
-	self assert: [ ( Os getPriority: 0 ) = priority ].
-	priority := OsConstants priority atJsProperty: 'PRIORITY_NORMAL'.
-	Os setPriority: 0 to: priority.
-
+	self checkPriority.
 	self assert: [ Os uptime > 0 ].
 
 	loadavg := Os loadavg.
@@ -52,4 +47,18 @@ test
 	self assert: [ #( 'BE' 'LE' ) includes: Os endianness ].
 	self assert: [ Os availableParallelism > 0 ].
 	self assert: [ Os cpus first class = OsCpuInfo ].
+!
+checkPriority
+	| normalPriority lowerPriority |
+
+	normalPriority := OsConstants priority atJsProperty: 'PRIORITY_NORMAL'.
+	self assert: [ ( Os getPriority: 0 ) = normalPriority ].
+
+	"Linux does not allow changing process priority by default."
+	Os isLinux ifTrue: [ ^ self ].
+
+	lowerPriority := OsConstants priority atJsProperty: 'PRIORITY_BELOW_NORMAL'.
+	Os setPriority: 0 to: lowerPriority.
+	self assert: [ ( Os getPriority: 0 ) = lowerPriority ].
+	Os setPriority: 0 to: normalPriority.
 !

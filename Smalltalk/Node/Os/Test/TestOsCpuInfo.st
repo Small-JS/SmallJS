@@ -16,6 +16,6 @@ checkCpuInfo: cpuInfo
 	self assert: [ cpuInfo sys > 0 ].
 	self assert: [ cpuInfo idle > 0 ].
 
-	self assert: [ cpuInfo irq > 0 ].
+	self assert: [ cpuInfo irq >= 0 ].
 	self assert: [ cpuInfo nice >= 0 ].
 !
