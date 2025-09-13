@@ -11,6 +11,12 @@ let fileHandle: fsp$.FileHandle;
 let fsConstants = fs$.constants;
 import * as path$ from "path";
 
+// OS
+import * as os$ from "os";
+let osConstants = os$.constants;
+let cpus = os$.cpus();
+let networkInterfaces = os$.networkInterfaces();
+
 // HTTP
 import http from "http";
 import { createHttpTerminator } from "http-terminator";
