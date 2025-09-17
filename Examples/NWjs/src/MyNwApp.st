@@ -1,5 +1,7 @@
 CLASS MyNwApp EXTENDS NwApp MODULE MyNwApp CLASSVARS ''
-	VARS 'body menuBar contextMenu'
+	VARS 'body fileInput fileOpenButton
+		fileOutputCell fileTextAreaTemplate fileTextArea
+		menuBar contextMenu'
 
 "Running"
 
@@ -15,9 +17,18 @@ bindElements
 	"Bind HTML elements to variables, set defaults, set event listeners."
 
 	body := Document default body.
+
+	fileInput := Document default getElementById: 'fileInput' class: HtmlInputElement.
+	fileInput value: 'poem.txt'.
+
+	fileOpenButton := Document default getElementById: 'fileOpenButton' class: HtmlButtonElement.
+	fileOpenButton onClick: [ self openFile ].
+
+	fileOutputCell := Document default getElementById: 'fileOutputCell' class: HtmlTableCellElement.
+	fileTextAreaTemplate := Document default getElementById: 'fileTextAreaTemplate' class: HtmlTemplateElement.
 !
 setMenuBar
-	"The menu is built from the bottom up."
+	"The menus are built from the bottom up."
 
 	| exitMenuItem fileMenu fileMenuItem |
 
@@ -61,6 +72,25 @@ onColorMenu: color
 	contextMenu items do: [ :item |
 		item checked: item label = color ].
 !
+openFile
+	| fileName text |
+	fileName := fileInput value.
+	text := ( Fs existsSync: fileName )
+		ifTrue: [ ( Fs readFileSync: fileName ) toString ]
+		ifFalse: [ 'File not found: ', fileName ].
+	self displayFileText: text.
+!
+displayFileText: text
+	self createFileTextArea.
+	fileTextArea value: text.
+!
+createFileTextArea
+	"Only create it once"
+	fileTextArea ifNotNil: [ ^ nil ].
+
+	fileTextArea := fileTextAreaTemplate cloneContent children first.
+	fileOutputCell replaceChildren: fileTextArea.
+!
 
 "Accessing (used by tests)"
 
@@ -72,5 +102,11 @@ menuBar
 !
 contextMenu
 	^ contextMenu.
+!
+fileOpenButton
+	^ fileOpenButton.
+!
+fileTextArea
+	^ fileTextArea.
 !
 

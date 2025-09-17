@@ -15,9 +15,7 @@
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",
-				// "--enable-features=NWESM,NWChainImportDom"
-				// "--enable-features=NWESM,NWChainImportNode"
-				// "--enable-features=NWESM"
+				"--enable-features=NWESM,NWChainImportNode"
 			],
 			"webRoot": "${workspaceRoot}/web",
 			"sourceMaps": true,
@@ -41,6 +39,7 @@
 			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",
+				"--enable-features=NWESM,NWChainImportNode",
 				"-test"
 			],
 			"webRoot": "${workspaceRoot}/web",

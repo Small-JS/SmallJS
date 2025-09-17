@@ -14,6 +14,13 @@ test: aApp
 	self assert: [ window menu class = NwMenu ].
 	self assert: [ window zoomLevel = 0 ].
 
+	app fileOpenButton click.
+	Timer timeout: 1000
+		then: [ self onFileOpen ].
+!
+onFileOpen
+	self assert: [ app fileTextArea value includes: 'Lizard' ].
+
 	window moveToCenter.
 	window resizable: true.
 	"Minium and maximum sizes are one enforced after window move or resize,

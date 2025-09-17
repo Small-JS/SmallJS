@@ -1,6 +1,8 @@
 CLASS Path EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 
-INLINE 'import * as path$ from "path";'
+"Use the second import form, because it's compatible with NW.js."
+"INLINE 'import * as path$ from 'path';'"
+INLINE 'const path$ = await import( "path" );'
 
 CLASSMETHODS
 

@@ -13,8 +13,29 @@ body {
 	background-color: #C5ECF9;
 	display: flex;
 	justify-content: center;
+	font-family: 'Segoe UI', sans-serif;
 }
 
-#nwjsImage {
-	margin: auto
+table {
+	border-collapse: collapse;
+}
+
+td {
+	/* border: 1px solid black; */
+	text-align: center;
+}
+
+#fileLabel {
+	font-weight: 600;
+}
+
+button {
+	padding: 2px 4px;
+	font-weight: 600;
+	border-radius: 6px;
+	border-width: 1px
+}
+
+textarea {
+	padding: 8px;
 }

@@ -36,5 +36,8 @@ import { DatabaseSync, DatabaseSyncOptions, StatementSync } from "node:sqlite";
 import crypto from "crypto";
 
 // Workers
-import { Worker } from "worker_threads";
-
+import { Worker, MessagePort } from "worker_threads";
+// import { parentPort, isMainThread, setEnvironmentData, getEnvironmentData } from "worker_threads";
+import * as worker$ from "worker_threads";
+let worker = new Worker( "worker.js" );
+let pp = worker$.parentPort;

@@ -11,7 +11,23 @@
 </head>
 
 <body>
-	<img id="nwjsImage" src="icon.png">
+	<table id="bodyTable">
+		<tr>
+			<td>
+				<label id="fileLabel" for="fileInput">File:</label>
+				<input id="fileInput" size="10">
+				<button id="fileOpenButton">Open</button>
+			</td>
+		</tr>
+		<tr>
+			<td id="fileOutputCell">
+				<img id="nwjsImage" src="icon.png" width="300" height="342">
+			</td>
+				<template id="fileTextAreaTemplate">
+					<textarea id="fileTextAreaTemplate" cols="36" rows="20"></textarea>
+				</template>
+		</tr>
+	</table>
 </body>
 
 </html>

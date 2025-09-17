@@ -20,4 +20,4 @@ npx tsc
 # Run NW app
 
 echo "Running NW app"
-./node_modules/.bin/nw web -test
+./node_modules/.bin/nw web --enable-features=NWESM,NWChainImportNode -test

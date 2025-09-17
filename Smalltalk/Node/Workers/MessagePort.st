@@ -17,18 +17,6 @@ setEnvironmentData: key to: value
 	INLINE 'setEnvironmentData( key.js, value.js )'.
 !
 
-"These less common features are not yet implemented:
-	worker.markAsUntransferable(object)
-	worker.isMarkedAsUntransferable(object)
-	worker.markAsUncloneable(object)
-	worker.moveMessagePortToContext(port, contextifiedSandbox)
-	worker.postMessageToThread(threadId, value[, transferList][, timeout])
-	worker.receiveMessageOnPort(port)
-	worker.resourceLimits
-	worker.SHARE_ENV
-	worker.workerData
-"
-
 METHODS
 
 start
@@ -43,3 +31,16 @@ unref
 close
 	INLINE 'this.js.close()'.
 !
+
+"These less common features are not yet implemented:
+	worker.markAsUntransferable(object)
+	worker.isMarkedAsUntransferable(object)
+	worker.markAsUncloneable(object)
+	worker.moveMessagePortToContext(port, contextifiedSandbox)
+	worker.postMessageToThread(threadId, value[, transferList][, timeout])
+	worker.receiveMessageOnPort(port)
+	worker.resourceLimits
+	worker.SHARE_ENV
+	worker.workerData
+"
+
