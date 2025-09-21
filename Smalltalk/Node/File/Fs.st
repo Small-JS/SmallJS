@@ -5,8 +5,8 @@ CLASS Fs EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
  use the promises based class Fsp for async."
 
 "Use the second import form, because it's compatible with NW.js."
-"INLINE 'import * as fs$ from 'fs';'"
-INLINE 'const fs$ = await import( "fs" );'
+"INLINE 'import * as fs$ from 'node:fs';'"
+INLINE 'const fs$ = await import( "node:fs" );'
 
 CLASSMETHODS
 

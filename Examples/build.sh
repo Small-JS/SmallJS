@@ -18,6 +18,6 @@ echo "==== Building SmallJS examples"
 ./Electron/build.sh
 ./NodeGui/build.sh
 ./NWjs/build.sh
-./Pharo/Client/build.sh
+./Pharo/build.sh
 
 echo "==== Example builds successful"

@@ -1,6 +1,8 @@
 CLASS Os EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 
-INLINE 'import * as os$ from "os";'
+"Use the second import form, because it's compatible with NW.js."
+"INLINE 'import * as os$ from 'os';"
+INLINE 'const os$ = await import( "os" );'
 
 CLASSMETHODS
 

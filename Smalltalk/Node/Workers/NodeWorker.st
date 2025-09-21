@@ -1,11 +1,11 @@
-CLASS Worker EXTENDS EventEmitter MODULE Node1 CLASSVARS '' VARS ''
+CLASS NodeWorker EXTENDS EventEmitter MODULE Node1 CLASSVARS '' VARS ''
 
-INLINE 'import { Worker } from "worker_threads";'
+INLINE 'const workerThreads$ = await import( "worker_threads" );'
 
 CLASSMETHODS
 
 new: fileName
-	^ self fromJs: INLINE 'new Worker( fileName.js )'.
+	^ self fromJs: INLINE 'new workerThreads$.Worker( fileName.js )'.
 !
 
 METHODS
@@ -27,4 +27,3 @@ unref
 terminate
 	INLINE 'this.js.terminate()'.
 !
-

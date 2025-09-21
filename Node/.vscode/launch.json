@@ -11,9 +11,6 @@
 			"skipFiles": [
 				"<node_internals>/**"
 			],
-			"runtimeArgs": [
-				"--experimental-sqlite"
-			],
 			"program": "${workspaceFolder}/out/main.js",
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",

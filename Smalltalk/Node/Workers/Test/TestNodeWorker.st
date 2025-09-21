@@ -1,12 +1,9 @@
-CLASS TestWorker EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'worker'
+CLASS TestNodeWorker EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'worker'
 
 METHODS
 
-disabled
-	^ false.
-!
 test
-	worker := Worker new: './out/worker.js'.
+	worker := NodeWorker new: './out/worker.js'.
 
 	self assert: [ worker threadId >= 0 ].
 
@@ -22,10 +19,10 @@ onMessage: message
 	self terminate.
 !
 onMessageError: error
-	self error: 'TestWorker: Worker massage error: ', error message.
+	self error: 'TestNodeWorker: NodeWorker massage error: ', error message.
 !
 onError: error
-	self error: 'TestWorker: Worker error: ', error message.
+	self error: 'TestNodeWorker: NodeWorker error: ', error message.
 !
 terminate
 	worker ref.

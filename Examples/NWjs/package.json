@@ -1,10 +1,13 @@
 {
 	"type": "module",
 	"devDependencies": {
-		"@types/node": "^24.3.3",
+		"@types/node": "^24.5.2",
 		"@types/nw.gui": "^0.0.26"
 	},
 	"dependencies": {
-		"nw": "^0.103.1"
+		"mariadb": "^3.4.5",
+		"mysql2": "^3.15.0",
+		"nw": "^0.103.1",
+		"pg": "^8.16.3"
 	}
 }

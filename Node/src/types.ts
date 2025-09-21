@@ -40,4 +40,4 @@ import { Worker, MessagePort } from "worker_threads";
 // import { parentPort, isMainThread, setEnvironmentData, getEnvironmentData } from "worker_threads";
 import * as worker$ from "worker_threads";
 let worker = new Worker( "worker.js" );
-let pp = worker$.parentPort;
+let parentPort = worker$.parentPort;

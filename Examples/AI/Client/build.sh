@@ -43,7 +43,7 @@ pushd ../Server > /dev/null
 set -o allexport
 source ../Server/.env
 set +o allexport
-node --experimental-sqlite out/main.js &
+node out/main.js &
 serverPid=$!
 popd > /dev/null
 sleep 2

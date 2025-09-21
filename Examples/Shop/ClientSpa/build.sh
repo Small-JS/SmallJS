@@ -44,7 +44,7 @@ set -o allexport
 source ../Server/.env
 SHOP_CLIENT="../ClientSpa/web"
 set +o allexport
-node --experimental-sqlite out/main.js &
+node out/main.js &
 serverPid=$!
 popd > /dev/null
 sleep 2

@@ -1,4 +1,4 @@
-CLASS TestHash EXTENDS Test MODULE CryptoTest CLASSVARS '' VARS ''
+CLASS TestHash EXTENDS Test MODULE NodeTest CLASSVARS '' VARS ''
 
 test
 	| hash |

@@ -1,19 +1,21 @@
 CLASS MysqlDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
 
 "This class implements MySQL database functionality.
-	Variable 'js' will contain an instance of 'my.Client'.
+Variable 'js' will contain an instance of 'mysql2.Client'.
 
 Note: The method 'end' should be called when you are done with the database connection
 	to free up resources and be able to terminate your app."
 
-INLINE 'import * as MySql from "mysql2";'
+"Use the second import form, because it's compatible with NW.js."
+"INLINE 'import * as mysql$ from 'mysql2';'"
+INLINE 'const mysql$ = await import( "mysql2" );'
 
-"Connecting"
+"Connect / disconnect"
 
 connect: connectionString then: block catch: errorBlock
 	MysqlQueryError.    "Force import"
 	INLINE '
-		this.js = MySql.createConnection( connectionString.js );
+		this.js = mysql$.createConnection( connectionString.js );
 		this.js.connect( ( queryError ) => this.$onConnect$then$catch$(
 			stMysqlQueryError$class.$fromJs$( queryError ), block, errorBlock ) )'.
 !
@@ -22,6 +24,9 @@ onConnect: queryError then: block catch: errorBlock
 		^ errorBlock value: queryError ].
 
 	block value.
+!
+end
+	INLINE 'this.js.close()'.
 !
 
 "Table"
@@ -56,7 +61,4 @@ onQuery: error result: result then: block catch: errorBlock
 		ifFalse: [ result := Object fromJs: result js ].
 
 	block value: result.
-!
-end
-	INLINE 'this.js.close()'.
 !

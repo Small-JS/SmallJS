@@ -15,7 +15,7 @@ open: path flags: flags then: block error: errorBlock
 	^ self open: path flags: flags mode: 438 then: block error: errorBlock.
 !
 open: path flags: flags mode: mode then: block error: errorBlock
-	^ Fsp open: path flags: flags mode: mode then: block error: errorBlock.
+	Fsp open: path flags: flags mode: mode then: block error: errorBlock.
 !
 
 METHODS

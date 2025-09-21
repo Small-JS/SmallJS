@@ -1,21 +1,23 @@
 CLASS SqliteDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
 
 "This class implements SQLite database functionality.
- Variable 'js' will contain an instance of the JS class DatabaseSync.
+ Variable 'js' will contain an instance of the JS class sqlite.DatabaseSync.
 
  Database operations are synchronous.
  There optional wrapper functions with async 'then:' interfaces,
  to be compatible with the other databases from a single code base."
 
-INLINE 'import { DatabaseSync } from "node:sqlite";'
+"Use the second import form, because it's compatible with NW.js."
+"INLINE 'import * as sqlite$ from 'node:sqlite';'"
+INLINE 'const sqlite$ = await import( "node:sqlite" );'
 
 CLASSMETHODS
 
 new: path
-	^ self fromJs: INLINE 'new DatabaseSync( path.js )'.
+	^ self fromJs: INLINE 'new sqlite$.DatabaseSync( path.js )'.
 !
 new: path options: options
-	^ self fromJs: INLINE 'new DatabaseSync( path.js, options.js )'.
+	^ self fromJs: INLINE 'new sqlite$.DatabaseSync( path.js, options.js )'.
 !
 checkExists: path
 	"Check database at path exists, otherwise throw error."
@@ -42,7 +44,7 @@ connect: path options: options
 		self error: 'SQLite database already connected.' ].
 
 	SqliteDatabase checkExists: path.
-	self js: INLINE 'new DatabaseSync( path.js, options.js )'.
+	self js: INLINE 'new sqlite$.DatabaseSync( path.js, options.js )'.
 	self checkValid.
 !
 checkValid

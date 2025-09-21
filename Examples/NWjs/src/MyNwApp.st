@@ -1,18 +1,22 @@
 CLASS MyNwApp EXTENDS NwApp MODULE MyNwApp CLASSVARS ''
 	VARS 'body fileInput fileOpenButton
 		fileOutputCell fileTextAreaTemplate fileTextArea
-		menuBar contextMenu'
+		menuBar contextMenu
+		database'
 
 "Running"
 
 start
 	self bindElements.
-	self setMenuBar.
-	self setContextMenu.
+	self setMenu.
+	self openDatabase.
 
 	self testMode ifTrue: [
 		TestMyNwApp new test: self ].
 !
+
+"HTML Elements"
+
 bindElements
 	"Bind HTML elements to variables, set defaults, set event listeners."
 
@@ -26,6 +30,13 @@ bindElements
 
 	fileOutputCell := Document default getElementById: 'fileOutputCell' class: HtmlTableCellElement.
 	fileTextAreaTemplate := Document default getElementById: 'fileTextAreaTemplate' class: HtmlTemplateElement.
+!
+
+"Menus"
+
+setMenu
+	self setMenuBar.
+	self setContextMenu.
 !
 setMenuBar
 	"The menus are built from the bottom up."
@@ -60,6 +71,9 @@ setContextMenu
 	body addEventListener: 'contextmenu'
 		then: [ :mouseEvent | self onMouseContextMenu: mouseEvent ].
 !
+
+"Color changes"
+
 onMouseContextMenu: mouseEvent
 	mouseEvent preventDefault.
 	contextMenu popup: mouseEvent client.
@@ -72,6 +86,9 @@ onColorMenu: color
 	contextMenu items do: [ :item |
 		item checked: item label = color ].
 !
+
+"File display"
+
 openFile
 	| fileName text |
 	fileName := fileInput value.
@@ -90,6 +107,17 @@ createFileTextArea
 
 	fileTextArea := fileTextAreaTemplate cloneContent children first.
 	fileOutputCell replaceChildren: fileTextArea.
+!
+
+"Database"
+
+openDatabase
+	"This only creates an in-memory SQLite database,
+	 to verify the database module can be used from NWjs"
+
+	"Importing non-built-in npm packages does not work yet."
+	"Console log: 'Opening database'."
+	"MariadbDatabase."
 !
 
 "Accessing (used by tests)"

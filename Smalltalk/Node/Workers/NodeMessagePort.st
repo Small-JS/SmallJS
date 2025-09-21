@@ -1,20 +1,18 @@
-CLASS MessagePort EXTENDS EventEmitter MODULE Node1 CLASSVARS '' VARS ''
-
-INLINE 'import { parentPort, isMainThread, setEnvironmentData, getEnvironmentData } from "worker_threads";'
+CLASS NodeMessagePort EXTENDS EventEmitter MODULE Node1 CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
 parentPort
-	^ self fromJs: INLINE 'parentPort'.
+	^ self fromJs: INLINE 'workerThreads$.parentPort'.
 !
 isMainThread
-	^ Boolean fromJs: INLINE 'isMainThread'.
+	^ Boolean fromJs: INLINE 'workerThreads$.isMainThread'.
 !
 getEnvironmentData: key
-	^ String fromJs: INLINE 'getEnvironmentData( key.js )'.
+	^ String fromJs: INLINE 'workerThreads$.getEnvironmentData( key.js )'.
 !
 setEnvironmentData: key to: value
-	INLINE 'setEnvironmentData( key.js, value.js )'.
+	INLINE 'workerThreads$.setEnvironmentData( key.js, value.js )'.
 !
 
 METHODS
@@ -32,7 +30,7 @@ close
 	INLINE 'this.js.close()'.
 !
 
-"These less common features are not yet implemented:
+"TODO: These less common features are not yet implemented:
 	worker.markAsUntransferable(object)
 	worker.isMarkedAsUntransferable(object)
 	worker.markAsUncloneable(object)
@@ -43,4 +41,3 @@ close
 	worker.SHARE_ENV
 	worker.workerData
 "
-

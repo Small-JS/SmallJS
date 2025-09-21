@@ -27,4 +27,4 @@ else
 	set +o allexport
 fi
 
-node --experimental-sqlite out/main.js
+node out/main.js

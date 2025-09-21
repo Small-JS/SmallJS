@@ -1,7 +1,5 @@
 CLASS SqliteStatement EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
 
-INLINE 'import { StatementSync } from "node:sqlite";'
-
 "================================== Sync operations"
 
 "Executing"
