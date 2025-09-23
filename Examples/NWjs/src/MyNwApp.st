@@ -1,15 +1,14 @@
 CLASS MyNwApp EXTENDS NwApp MODULE MyNwApp CLASSVARS ''
 	VARS 'body fileInput fileOpenButton
 		fileOutputCell fileTextAreaTemplate fileTextArea
-		menuBar contextMenu
-		database'
+		menuBar contextMenu'
 
 "Running"
 
 start
 	self bindElements.
 	self setMenu.
-	self openDatabase.
+	self testLpad.
 
 	self testMode ifTrue: [
 		TestMyNwApp new test: self ].
@@ -111,13 +110,12 @@ createFileTextArea
 
 "Database"
 
-openDatabase
-	"This only creates an in-memory SQLite database,
-	 to verify the database module can be used from NWjs"
+testLpad
+	"Test call to Lpad class, then encapsulates the npm package: lpad"
+	| padded |
 
-	"Importing non-built-in npm packages does not work yet."
-	"Console log: 'Opening database'."
-	"MariadbDatabase."
+	padded := Lpad leftPad: 'abc' with: 'xx'.
+	self assert: [ padded = 'xxabc' ]
 !
 
 "Accessing (used by tests)"
