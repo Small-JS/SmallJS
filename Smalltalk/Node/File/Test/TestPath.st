@@ -79,7 +79,11 @@ checkWindows: pathClass
 
 	self assert: [ ( pathClass normalize: '\\dir\\..\\file.txt' ) = '\\file.txt' ].
 	self assert: [ ( pathClass relativeFrom: '\\a\\b\\c' to: '\\a\\b\\d' ) = '..\\d' ].
-	self assert: [ ( pathClass toNamespacedPath: '\\dir\\file.txt' ) startsWith: '\\\\?' ].
+
+	"toNamespacedPath: only has Windows behavior when run on Windows OS,
+	 so not when the pathClass win32 version is run on Linux."
+	Os isWindows ifTrue: [
+		self assert: [ ( pathClass toNamespacedPath: '\\dir\\file.txt' ) startsWith: '\\\\?' ] ].
 
 	self assert: [ pathClass posix = pathClass win32 posix ].
 	self assert: [ pathClass win32 = pathClass posix win32 ].
