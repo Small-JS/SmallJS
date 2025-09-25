@@ -19,6 +19,7 @@ To enable debugging NW.js apps in VSCode, install this extension: "Debugger for 
 
 It is currently (2025-08-30) not possible to setup the NW.js npm package \
 in a multi-platform way that supports launching (debugging) on VSCode.
+The issue has been reported here: https://github.com/nwjs/nw.js/issues/8303
 
 The workaround for now is to install NW.js manually in the ./bin folder of the project.
 
