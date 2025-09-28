@@ -7,7 +7,7 @@ test
 	| prefix options mode |
 
 	"Create temp directory"
-	prefix := Path join: Os tmpdir with: 'smalljs-'.
+	prefix := Path join: Os tmpDir with: 'smalljs-'.
 	tempDirName := Fs mkdtempSync: prefix options: nil.
 	self assert: [ tempDirName includes: 'smalljs-' ].
 	self assert: [ Fs existsSync: tempDirName ].

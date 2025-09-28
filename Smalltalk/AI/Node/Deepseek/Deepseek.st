@@ -4,8 +4,8 @@ CLASSMETHODS
 
 new
 	| baseUrl apiKey |
-	baseUrl := Process envAt: 'DEEPSEEK_BASE_URL'.
-	apiKey := Process envAt: 'DEEPSEEK_API_KEY'.
+	baseUrl := Environment at: 'DEEPSEEK_BASE_URL'.
+	apiKey := Environment at: 'DEEPSEEK_API_KEY'.
 	^ self fromJs: INLINE 'new OpenAI( { baseURL: baseUrl.js, apiKey: apiKey.js } )'.
 !
 
@@ -13,7 +13,7 @@ new
 
 models
 	| modelsString |
-	modelsString := Process envAt: 'DEEPSEEK_MODELS'.
+	modelsString := Environment at: 'DEEPSEEK_MODELS'.
 	modelsString ifNil: [ ^ #( 'deepseek-chat' ) ].  "Default"
 	^ modelsString split: ' '.
 !

@@ -3,14 +3,14 @@ CLASS TestPostgresDatabase EXTENDS Test MODULE TestDatabase CLASSVARS ''
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_POSTGRES' ) isNil.
+	^ ( Environment at: 'SMALLJS_POSTGRES' ) isNil.
 !
 test
 	self connect.
 !
 connect
 	| connectionString |
-	connectionString := Process envAt: 'SMALLJS_POSTGRES'.
+	connectionString := Environment at: 'SMALLJS_POSTGRES'.
 	self assert: [ connectionString startsWith: 'postgres:' ].
 
 	database := PostgresDatabase new.

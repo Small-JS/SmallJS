@@ -3,14 +3,14 @@ CLASS TestMariadbDatabase EXTENDS Test MODULE TestDatabase CLASSVARS ''
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_MARIADB' ) isNil.
+	^ ( Environment at: 'SMALLJS_MARIADB' ) isNil.
 !
 test
 	self connect.
 !
 connect
 	| connectionString |
-	connectionString := Process envAt: 'SMALLJS_MARIADB'.
+	connectionString := Environment at: 'SMALLJS_MARIADB'.
 	self assert: [ connectionString startsWith: 'mariadb:' ].
 
 	database := MariadbDatabase new.

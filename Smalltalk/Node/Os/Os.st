@@ -6,8 +6,13 @@ INLINE 'const os$ = await import( "os" );'
 
 CLASSMETHODS
 
-tmpdir
+tmpDir
 	^ String fromJs: INLINE 'os$.tmpdir()'.
+!
+tmpPath: prefix
+	| fileName |
+	fileName := prefix, ( Integer randomFrom: 0 to: 999999 ).
+	^ Path join: self tmpDir with: fileName.
 !
 eol
 	^ String fromJs: INLINE 'os$.EOL'.

@@ -4,10 +4,10 @@ CLASSMETHODS
 
 new
 	^ self newEmpty
-		baseUrl: ( Process envAt: 'OPENAI_BASE_URL' );
-		apiKey: ( Process envAt: 'OPENAI_API_KEY' );
-		organization: ( Process envAt: 'OPENAI_ORG_ID' );
-		project: ( Process envAt: 'OPENAI_PROJECT_ID' ).
+		baseUrl: ( Environment at: 'OPENAI_BASE_URL' );
+		apiKey: ( Environment at: 'OPENAI_API_KEY' );
+		organization: ( Environment at: 'OPENAI_ORG_ID' );
+		project: ( Environment at: 'OPENAI_PROJECT_ID' ).
 !
 
 METHODS

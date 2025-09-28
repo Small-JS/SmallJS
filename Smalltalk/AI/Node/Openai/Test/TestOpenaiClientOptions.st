@@ -6,10 +6,10 @@ test
 	options := OpenaiClientOptions new.
 	self assert: [ options class = OpenaiClientOptions ].
 
-	self assert: [ options baseUrl = ( Process envAt: 'OPENAI_BASE_URL' ) ].
-	self assert: [ options apiKey = ( Process envAt: 'OPENAI_API_KEY' ) ].
-	self assert: [ options organization = ( Process envAt: 'OPENAI_ORGANIZATION' ) ].
-	self assert: [ options project = ( Process envAt: 'OPENAI_PROJECT' ) ].
+	self assert: [ options baseUrl = ( Environment at: 'OPENAI_BASE_URL' ) ].
+	self assert: [ options apiKey = ( Environment at: 'OPENAI_API_KEY' ) ].
+	self assert: [ options organization = ( Environment at: 'OPENAI_ORGANIZATION' ) ].
+	self assert: [ options project = ( Environment at: 'OPENAI_PROJECT' ) ].
 
 	options baseUrl: 'https://api.openai.com/v1'.
 	self assert: [ options baseUrl = 'https://api.openai.com/v1' ].

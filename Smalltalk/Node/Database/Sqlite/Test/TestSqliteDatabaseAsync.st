@@ -6,14 +6,14 @@ CLASS TestSqliteDatabaseAsync EXTENDS Test MODULE TestDatabase CLASSVARS ''
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_SQLITE' ) isNil.
+	^ ( Environment at: 'SMALLJS_SQLITE' ) isNil.
 !
 test
 	self connect.
 !
 connect
 	| connectionString |
-	connectionString := Process envAt: 'SMALLJS_SQLITE'.
+	connectionString := Environment at: 'SMALLJS_SQLITE'.
 	self assert: [ connectionString endsWith: '.db' ].
 
 	database := SqliteDatabase new.

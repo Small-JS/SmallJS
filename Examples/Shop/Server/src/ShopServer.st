@@ -15,7 +15,7 @@ start
 connectDatabase
 	| connectionString |
 
-	connectionString := Process envAt: 'SHOP_DATABASE'.
+	connectionString := Environment at: 'SHOP_DATABASE'.
 	connectionString isNil ifTrue: [
 			self error: 'Environment variable "SHOP_DATABASE" not set.' ].
 
@@ -35,14 +35,14 @@ connectTables
 startServer
 	| portString port clientPath |
 
-	portString := Process envAt: 'SHOP_PORT'.
+	portString := Environment at: 'SHOP_PORT'.
 	portString isNil ifTrue: [
 		self error: 'Environment variable "SHOP_PORT" not set.' ].
 	port := portString toInteger.
 	( port <= 0 ) | ( port >= 65536 ) ifTrue: [
 		self error: 'Invalid port number: ', portString ].
 
-	clientPath := Process envAt: 'SHOP_CLIENT'.
+	clientPath := Environment at: 'SHOP_CLIENT'.
 	clientPath isNil ifTrue: [
 		clientPath := '../Client/web'.
 		self log: 'Environment variable "SHOP_CLIENT" not set, defaulting to: ', clientPath ].

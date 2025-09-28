@@ -6,8 +6,8 @@ test
 	options := AnthropicClientOptions new.
 	self assert: [ options class = AnthropicClientOptions ].
 
-	self assert: [ options baseUrl = ( Process envAt: 'ANTHROPIC_BASE_URL' ) ].
-	self assert: [ options apiKey = ( Process envAt: 'ANTHROPIC_API_KEY' ) ].
+	self assert: [ options baseUrl = ( Environment at: 'ANTHROPIC_BASE_URL' ) ].
+	self assert: [ options apiKey = ( Environment at: 'ANTHROPIC_API_KEY' ) ].
 
 	options baseUrl: 'https://api.anthropic.com/newBaseUrl'.
 	self assert: [ options baseUrl = 'https://api.anthropic.com/newBaseUrl' ].

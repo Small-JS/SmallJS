@@ -6,7 +6,7 @@ CLASS TestFsp EXTENDS Test MODULE TestNode CLASSVARS ''
 
 test
 	| prefix |
-	prefix := Path join: Os tmpdir with: 'smalljs-'.
+	prefix := Path join: Os tmpDir with: 'smalljs-'.
 
 	Fsp mkdtemp: prefix
 		then: [ :dirName | self onMkdtemp: dirName ]

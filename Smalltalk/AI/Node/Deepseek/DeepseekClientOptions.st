@@ -4,8 +4,8 @@ CLASSMETHODS
 
 new
 	self newEmpty
-		baseUrl: ( Process envAt: 'DEEPSEEK_BASE_URL' );
-		apiKey: ( Process envAt: 'DEEPSEEK_API_KEY' );
-		organization: ( Process envAt: 'DEEPSEEK_ORG_ID' );
-		project: ( Process envAt: 'DEEPSEEK_PROJECT_ID' ).
+		baseUrl: ( Environment at: 'DEEPSEEK_BASE_URL' );
+		apiKey: ( Environment at: 'DEEPSEEK_API_KEY' );
+		organization: ( Environment at: 'DEEPSEEK_ORG_ID' );
+		project: ( Environment at: 'DEEPSEEK_PROJECT_ID' ).
 !

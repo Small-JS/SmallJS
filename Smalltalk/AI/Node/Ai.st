@@ -47,20 +47,20 @@ baseUrl
 	"Return base URL key set in varable <classname>_BASE_URL, e.g.: OPENAI_BASE_URL"
 	| variableName |
 	variableName := self name toUpperCase, '_BASE_URL'.
-	^ Process envAt: variableName.
+	^ Environment at: variableName.
 !
 models
 	"Return list of model names set in varable <classname>_MODELS, e.g.: OPENAI_MODELS"
 	| variableName modelsString |
 	variableName := self name toUpperCase, '_MODELS'.
-	modelsString := Process envAt: variableName.
+	modelsString := Environment at: variableName.
 	^ modelsString split: ' '.
 !
 apiKey
 	"Return API key set in varable <classname>_API_KEY, e.g.: OPENAI_API_KEY"
 	| variableName |
 	variableName := self name toUpperCase, '_API_KEY'.
-	^ Process envAt: variableName.
+	^ Environment at: variableName.
 !
 available
 	"Return true if the base URL key is set for this AI."

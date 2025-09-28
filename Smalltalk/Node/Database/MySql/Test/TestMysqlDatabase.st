@@ -3,14 +3,14 @@ CLASS TestMysqlDatabase EXTENDS Test MODULE TestDatabase CLASSVARS ''
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_MYSQL' ) isNil.
+	^ ( Environment at: 'SMALLJS_MYSQL' ) isNil.
 !
 test
 	self connect.
 !
 connect
 	| connectionString |
-	connectionString := Process envAt: 'SMALLJS_MYSQL'.
+	connectionString := Environment at: 'SMALLJS_MYSQL'.
 	self assert: [ connectionString startsWith: 'mysql:' ].
 
 	database := MysqlDatabase new.

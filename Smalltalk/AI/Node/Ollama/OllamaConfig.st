@@ -4,7 +4,7 @@ CLASSMETHODS
 
 new
 	^ self newEmpty
-		host: ( Process envAt: 'OLLAMA_BASE_URL' ).
+		host: ( Environment at: 'OLLAMA_BASE_URL' ).
 !
 
 METHODS

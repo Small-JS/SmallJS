@@ -37,7 +37,7 @@ startServer
 	express get: '/api/chat'
 		then: [ :request :response | self onChat: request response: response ].
 
-	portString := Process envAt: 'AI_SERVER_PORT'.
+	portString := Environment at: 'AI_SERVER_PORT'.
 	portString ifNil: [
 		self error: 'Environment variable "AI_SERVER_PORT" not set.' ].
 	port := portString toInteger.

@@ -4,8 +4,8 @@ CLASSMETHODS
 
 new
 	^ self newEmpty
-		baseUrl: ( Process envAt: 'ANTHROPIC_BASE_URL' );
-		apiKey: ( Process envAt: 'ANTHROPIC_API_KEY' ).
+		baseUrl: ( Environment at: 'ANTHROPIC_BASE_URL' );
+		apiKey: ( Environment at: 'ANTHROPIC_API_KEY' ).
 !
 
 METHODS

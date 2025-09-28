@@ -3,9 +3,12 @@ CLASS TestOs EXTENDS Test MODULE TestNode CLASSVARS '' VARS ''
 METHODS
 
 test
-	| loadavg |
+	| loadavg tmpPath |
 
-	self assert: [ Os tmpdir length > 0 ].
+	self assert: [ Os tmpDir length > 0 ].
+	tmpPath := Os tmpPath: 'smalljs-'.
+	self assert: [ tmpPath includes: Os tmpDir ].
+	self assert: [ tmpPath includes: 'smalljs-' ].
 	self assert: [ #( '\n' '\r\n' ) includes: Os eol ].
 	self assert: [ #( '/dev/null' '\\\\.\\nul' ) includes: Os devNull ].
 

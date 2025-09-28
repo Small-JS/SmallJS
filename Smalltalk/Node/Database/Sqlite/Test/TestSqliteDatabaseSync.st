@@ -3,7 +3,7 @@ CLASS TestSqliteDatabaseSync EXTENDS Test MODULE TestDatabase CLASSVARS ''
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Process envAt: 'SMALLJS_SQLITE' ) isNil.
+	^ ( Environment at: 'SMALLJS_SQLITE' ) isNil.
 !
 test
 	self open.
@@ -20,7 +20,7 @@ test
 !
 open
 	| path |
-	path := Process envAt: 'SMALLJS_SQLITE'.
+	path := Environment at: 'SMALLJS_SQLITE'.
 	SqliteDatabase checkExists: path.
 	database := SqliteDatabase new: path.
 	database checkValid.
