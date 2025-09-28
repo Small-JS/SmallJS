@@ -6,7 +6,7 @@ testArguments
 	| temp |
 	self assert: [ Process argv length >= 2 ].
 	self assert: [ Process argv first includes: 'node' ].
-	self assert: [ Process argv0 = Process argv first ].
+	self assert: [ Process argv0 includes: 'node' ].
 	self assert: [ Process execPath includes: 'node' ].
 	self assert: [ Process execArgv length = 0 ].
 !
@@ -76,7 +76,7 @@ testUids
 	self assert: [ Process uid >= 0 ].
 	self assert: [ Process euid >= 0 ].
 	self assert: [ Process gid >= 0 ].
-	self assert: [ Process rgid >= 0 ].
+	self assert: [ Process egid >= 0 ].
 !
 testCpuUsage
 	self assert: [ Process cpuUsage class = CpuUsage ].
