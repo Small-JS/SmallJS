@@ -12,7 +12,25 @@ Now start the project run the project and see that unit tests are performed succ
 The file `src/App.ts` (compiled to `out/App.js`) does application startup.
 It dynamically loads the compiled ST class NodeApp from `out/NodeApp.js` and call its start method.
 
-## Database support
+## Node support
+
+Node support classes are in the folder: '/Smalltalk/Node'.
+
+### File support
+
+Filesystem support classes are in the subfolder: 'File'.
+
+### OS support
+
+OS specific support classes are in the subfolder: 'OS'.
+
+### Process support
+
+Process support classes are in the subfolder: 'Process'.
+
+### Database support
+
+Process support classes are in the subfolder: 'Database'.
 
 These databases are supported: Postgres, MariaDB and MySQL.
 To set them up look here: [../Database/Database.md](../Database/Database.md)
