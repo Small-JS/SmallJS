@@ -11,7 +11,7 @@ echo "==== Electron example"
 # Compile TypeScript
 
 echo "tsc Electron example"
-npx tsc
+tsc
 
 # Compile Smalltalk
 # Compile Node and Browser parts separately to prevent class name clashes.

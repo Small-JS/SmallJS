@@ -11,7 +11,7 @@ echo "==== Browser"
 # Compile TypeScript
 
 echo "tsc Browser"
-npx tsc
+tsc
 
 # Compile Smalltalk
 
@@ -28,16 +28,12 @@ then
 fi
 source .env
 
-# Start web server and remember PID.
+# Start web server
 
-# Suppress deprecation warnings
-export NODE_NO_WARNINGS=1
-
-webServer="../node_modules/.bin/http-server web --port 3000 -c-1 --silent"
+webServer="npx http-server web --port 3000 -c-1 --silent"
 echo "Starting web server: "$webServer
 $webServer &
-webServerPid=$!
-sleep 2
+sleep 4
 
 # Test in enabled browsers.
 # Browsers will close automatically if all tests succeed.
@@ -77,6 +73,6 @@ fi
 
 # Stop web server
 
-echo "Terminating web server PID: "$webServerPid
-kill $webServerPid
+echo "Terminating web server"
+npx kill-port 3000
 sleep 2

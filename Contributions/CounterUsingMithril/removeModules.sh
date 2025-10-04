@@ -9,6 +9,7 @@ then
 	exit 1
 fi
 
+# Change directory to script directory
 cd "$(dirname "$0")"
 
 echo "Removing core modules..."

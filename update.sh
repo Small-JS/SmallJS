@@ -22,11 +22,6 @@ cwd=$(pwd)
 
 echo "Updating..."
 
-echo "==== Globals"
-cd $cwd
-npx npm-check-updates -u
-npm install
-
 echo "==== Compiler"
 cd $cwd/Compiler
 npx npm-check-updates -u

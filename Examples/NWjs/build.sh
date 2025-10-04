@@ -11,7 +11,7 @@ echo "==== NWjs"
 # Compile TypeScript
 
 echo "tsc NWjs"
-npx tsc
+tsc
 
 # Compile Smalltalk
 

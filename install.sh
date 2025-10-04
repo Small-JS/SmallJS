@@ -9,40 +9,35 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "Note: See Documentation/Prerequisites.md for installation instructions."
-
 echo "==== Detecting prerequisite applications"
-
-echo -n "Detecting Node.js: "
-node -v
+echo "Note: For installing prerequisite apps, see: Documentation/Prerequisites.md."
 
 echo -n "Detecting Visual Studio Code: "
 code -v
 
-echo "==== Detecting global npm packages"
+echo -n "Detecting Node.js: "
+node -v
 
 echo -n "Detecting npm: "
 npm -v
 
-echo "==== Installing local npm packages"
+# TypeScript must be installed globally to work from VSCode.
+echo -n "Detecting TypeScript: "
+tsc -v
 
-npm install
-
-echo "==== Detecting local npm packages"
-
-echo "Detecting TypeScript: "
-npx tsc -v
-
-echo "Detecting VS Code Extension Manager: "
-npx vsce --version
+# Check npx dependencies here to force first-time installation
 
 echo "Detecting http-server: "
-npx http-server -v
+npx http-server --version
+
+echo "Detecting kill-port: "
+npx kill-port
+# kill-port does not produce output.
+echo "OK".
+
+echo "==== Installing core npm packages"
 
 ./Extension/install.sh
-
-echo "==== Installing core npm dependencies"
-
 ./Compiler/install.sh
 ./Node/install.sh
 

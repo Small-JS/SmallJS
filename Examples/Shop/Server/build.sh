@@ -11,7 +11,7 @@ echo "==== Building: Example Shop Server"
 # Compile TypeScript
 
 echo "tsc Shop Server"
-npx tsc
+tsc
 
 # Compile Smalltalk
 

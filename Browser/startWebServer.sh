@@ -1,6 +1,5 @@
 #!/bin/bash
-# Start static web server.
-# To install: npm install --global http-server
+# Start static web server on folder: ./web
 
 # Exit script if a step fails
 set -e

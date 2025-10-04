@@ -11,7 +11,7 @@ echo "==== Building: Example Shop Client"
 # Compile TypeScript
 
 echo "tsc Shop Client"
-npx tsc
+tsc
 
 # Compile Smalltalk
 
@@ -86,6 +86,6 @@ fi
 
 # Stop web server
 
-echo "Terminating server PID: "$serverPid
-kill $serverPid
+echo "Terminating web server"
+npx kill-port 3000
 sleep 2

@@ -10,4 +10,4 @@ echo "==== Compiler"
 
 # Compile TypeScript
 echo "tsc Compiler"
-npx tsc
+tsc

@@ -11,7 +11,7 @@ echo "==== AI Client"
 # Compile TypeScript
 
 echo "tsc AI Client"
-npx tsc
+tsc
 
 # Compile Smalltalk
 
@@ -85,6 +85,6 @@ fi
 
 # Stop web server
 
-echo "Terminating server PID: "$serverPid
-kill $serverPid
+echo "Terminating web server"
+npx kill-port 3000
 sleep 2

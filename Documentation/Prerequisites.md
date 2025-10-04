@@ -37,14 +37,14 @@ To fix this, these lines should be added to the FireFox configurations  in  `lau
 
 SmallJS implements the latest Node.js features
 so you should install the current version, currently V24.x.x, not the LTS version.
-There are different options for running different Node.js versions side by side.
+Note: There are options for running different Node.js versions side by side.
 
 Download the latest version here:
 > [nodejs.org/en/download](https://nodejs.org/en/download)
 
 ### TypeScript
 
-To use TypeScript (tsc) from VSCode it needs to me installed globally, with:
+To use TypeScript (tsc) from VSCode it needs to be installed globally, with:
 
 `npm -g install typescript`
 

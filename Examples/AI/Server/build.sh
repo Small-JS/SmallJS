@@ -11,7 +11,7 @@ echo "==== AI Server"
 # Compile TypeScript
 
 echo "tsc AI Server"
-npx tsc
+tsc
 
 # Compile Smalltalk
 

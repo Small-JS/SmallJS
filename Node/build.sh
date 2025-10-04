@@ -10,7 +10,7 @@ echo "==== Node"
 
 # Compile TypeScript
 echo "tsc Node"
-npx tsc
+tsc
 
 # Compile Smalltalk
 ../Compiler/start.sh ../Smalltalk/Core ../Smalltalk/Node src out
