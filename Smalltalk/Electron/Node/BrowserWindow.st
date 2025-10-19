@@ -14,7 +14,7 @@ loadFile: fileName then: block error: errorBlock
 loadFile: fileName options: options then: block error: errorBlock
 	INLINE 'this.js.loadFile( fileName.js, options.js )
 			.then( () => block.$value() )
-			.catch( ( error ) => errorBLock.$value$( stError$class.$fromJs$( error ) ) )'.
+			.catch( ( error ) => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 openDevTools
 	"2024-09-01:

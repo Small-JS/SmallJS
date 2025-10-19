@@ -8,8 +8,8 @@ METHODS
 start
 	"These test class references are needed to force importing their full unit test modules."
 	TestObject.
+	TestCrypto.
 	TestExpress.
-	TestHash.
 	TestProcess.
 	TestSqliteDatabaseSync.
 

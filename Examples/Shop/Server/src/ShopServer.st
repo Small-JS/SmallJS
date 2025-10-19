@@ -100,7 +100,12 @@ login3: request response: response person: person dbPersons: dbPersons
 		ifFalse: [ self login4: request response: response person: person dbPerson: dbPersons first ].
 !
 login4: request response: response person: person dbPerson: dbPerson
-	( dbPerson checkPassword: person password ) not
+	dbPerson checkPassword: person password
+		then: [ :match | self login5: request response: response person: person dbPerson: dbPerson mmatch: match ]
+		error: [ :error | error throw ].
+!
+login5: request response: response person: person dbPerson: dbPerson mmatch: match
+	match not
 		ifTrue: [ self sendLoginResponse: response success: false message: 'Password check failed' ]
 		ifFalse: [
 			request session set: 'user' to: dbPerson.

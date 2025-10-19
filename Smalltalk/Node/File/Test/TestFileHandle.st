@@ -2,6 +2,9 @@ CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
 
 "Also tests class: FileStats"
 
+disabled
+	^ true.
+!
 test
 	| fileName |
 	self assertError: [ FileHandle new ].

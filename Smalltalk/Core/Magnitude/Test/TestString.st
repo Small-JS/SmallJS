@@ -8,7 +8,8 @@ testCreation
 	self assert: [ ( ( String newline ) at: 0 ) code = 10 ].
 	self assert: [ 'a' toString = 'a' ].
 !
-testConvertion
+testConversion
+	self assert: [ 'abc' toString = 'abc' ].
 	self assert: [ '42' toInteger = 42 ].
 	self assert: [ '3.14' toFloat = 3.14 ].
 !

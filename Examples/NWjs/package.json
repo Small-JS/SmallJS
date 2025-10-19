@@ -1,11 +1,11 @@
 {
 	"type": "module",
 	"devDependencies": {
-		"@types/node": "^24.6.2",
+		"@types/node": "^24.8.1",
 		"@types/nw.gui": "^0.0.26"
 	},
 	"dependencies": {
 		"lpad": "^3.0.0",
-		"nw": "^0.104.0"
+		"nw": "^0.104.1"
 	}
 }

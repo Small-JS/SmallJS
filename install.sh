@@ -18,6 +18,23 @@ code -v
 echo -n "Detecting Node.js: "
 node -v
 
+# Check minimum version of Node.js
+
+if [[ "$OS" == "Windows_NT" ]]
+then
+	nodeBin="node.exe"
+else
+	nodeBin="node"
+fi
+
+nodeVersion=`$nodeBin -v`
+if [[ "$nodeVersion" != v25.* ]]
+then
+	echo "Failed: SmallJS requires Node.js with minimum version: V25.0.0"
+	echo "You can download it from: https://nodejs.org/en/download/current"
+	exit 1
+fi
+
 echo -n "Detecting npm: "
 npm -v
 

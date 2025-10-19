@@ -21,6 +21,15 @@ testConversion
 	self assert: [ ( array entries at: 1 ) = #( 1 5 ) ].
 	self assert: [ ( array join: ' ' ) = '4 5 6' ].
 	self assert: [ array toString = '#( 4 5 6 )' ].
+
+	self assert: [ array toHex = '040506' ].
+	self assert: [ ( Uint8Array fromHex: '4a4b4c' ) toArray = #( 74 75 76 ) ].
+!
+testCoding
+	| array |
+	array := Uint8Array encodeFromString: 'ABC'.
+	self assert: [ array toArray = #( 65 66 67 ) ].
+	self assert: [ array decodeToString = 'ABC' ].
 !
 testBuffer
 	| array |

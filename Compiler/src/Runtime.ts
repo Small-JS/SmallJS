@@ -78,9 +78,10 @@ export class Naming
 		"false", "extends", "false", "finally",
 		"for", "function", "if", "import",
 		"in", "instanceof", "new", "null",
-		"return", "super", "switch", "this",
-		"throw", "true", "try", "typeof",
-		"var", "void", "while", "with", "yield"
+		"private", "public", "return", "super",
+		"switch", "this", "throw", "true",
+		"try", "typeof", "var", "void",
+		"while", "with", "yield"
 	];
 
 	// ================================ Method  Naming

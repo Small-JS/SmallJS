@@ -9,8 +9,17 @@ test
 	person name: 'Test'.
 	self assert: [ person name = 'Test' ].
 
-	person setPassword: 'secret'.
+	person setPassword: 'secret'
+		then: [ self onSetPassword: person ]
+		error: [ :error | error throw ].
+!
+onSetPassword: person
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
-	self assert: [ person checkPassword: 'secret' ].
+	person checkPassword: 'secret'
+		then: [ :match | self onCheckPassword: match ]
+		error: [ :error | error throw ].
+!
+onCheckPassword: match
+	self assert: [ match ].
 !

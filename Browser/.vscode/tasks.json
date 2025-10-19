@@ -20,6 +20,7 @@
 			"type": "shell",
 			"command": "node",
 			"args": [  "../Compiler/out/main.js", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Script" ],
+			// To compile without generating source maps:
 			// "args": [  "../Compiler/out/main.js", "-s", "../Smalltalk/Core", "../Smalltalk/Browser", "src", "web/Script" ],
 			"options": {
 				"cwd": "${workspaceFolder}"

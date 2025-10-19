@@ -13,7 +13,7 @@ echo "Removing compiled code from examples..."
 ./Counter/clean.sh
 ./Electron/clean.sh
 ./NodeGui/clean.sh
-./NW/clean.sh
+./NWjs/clean.sh
 ./Pharo/Client/clean.sh
 ./Shop/clean.sh
 ./Todo/clean.sh

@@ -20,6 +20,7 @@ testUnitsThen: block
 	"Refer to one unit test class per module to force importing all classes of that module."
 	TestObject.     "Core"
 	TestDocument.   "Browser"
+	TestCrypto.		"Crypto"
 
 	Test allThen: [
 		block value ].

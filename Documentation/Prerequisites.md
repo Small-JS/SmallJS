@@ -36,7 +36,7 @@ To fix this, these lines should be added to the FireFox configurations  in  `lau
 ### Node.js
 
 SmallJS implements the latest Node.js features
-so you should install the current version, currently V24.x.x, not the LTS version.
+so you should install the latest version, currently V25.x.x, not the LTS version.
 Note: There are options for running different Node.js versions side by side.
 
 Download the latest version here:
