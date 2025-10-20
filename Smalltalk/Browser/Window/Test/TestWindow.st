@@ -5,7 +5,7 @@ METHODS
 testPlatforms
 	self assert: [ Window isFirefox | true ].
 	self assert: [ Window isChromium | true ].
-	self assert: [ Window isMac | true ].
+	self assert: [ Window isMacos | true ].
 !
 testProperties
 	| window |

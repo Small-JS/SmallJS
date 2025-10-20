@@ -17,7 +17,11 @@ isChromium
 	"Shortcut method to test for Chromium based browser: Chrome or Edge."
 	^ self default navigator userAgent includes: 'Chrome'.
 !
-isMac
+isWindows
+	"Shortcut method to test for MacOs platform."
+	^ self default navigator platform startsWith: 'Win'.
+!
+isMacos
 	"Shortcut method to test for MacOs platform."
 	^ self default navigator platform startsWith: 'Mac'.
 !

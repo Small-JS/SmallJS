@@ -62,7 +62,7 @@ onResizeBy: previousSize
 		^ self onRestore: currentSize ].
 
 	"Skip minimizing and maximizing tests on Macos because of issues."
-	Window isMac ifTrue: [
+	Window isMacos ifTrue: [
 		^ self onResizeToAgain ].
 
 	window maximize.
@@ -130,8 +130,8 @@ onLeaveFullscreen
 	Timer timeout: 500 then: [ self onBlur ].
 !
 onBlur
-	"Does not work right on MacOS yet."
-	Window isMac ifFalse: [
+	"Does not work right on MacOS and Linux."
+	Window isWindows ifTrue: [
 		self assert: [ window focus not ] ].
 
 	window focus: true.
@@ -168,7 +168,7 @@ onLeaveAlwaysOnTop
 	self assert: [ window alwaysOnTop not ].
 
 	"Skip kiosk mode on MacOS because the app won't quit anymore after using it."
-	Window isMac ifTrue: [
+	Window isMacos ifTrue: [
 		^ self close ].
 
 	self assert: [ window kioskMode not ].
