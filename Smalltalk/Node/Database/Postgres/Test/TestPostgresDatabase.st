@@ -2,6 +2,10 @@ CLASS TestPostgresDatabase EXTENDS Test MODULE TestDatabase CLASSVARS ''
 	VARS 'database typeTable type'
 
 disabled
+	"Temporaryly disable this module when there are connection timeouts
+	 due to breakpoints in unrelated async functions."
+	"^ true."
+
 	"Disable these tests if database env var is not set."
 	^ ( Environment at: 'SMALLJS_POSTGRES' ) isNil.
 !
@@ -14,6 +18,10 @@ connect
 	self assert: [ connectionString startsWith: 'postgres:' ].
 
 	database := PostgresDatabase new.
+	"Note: MySQL server will close the connection
+	if the user is not logged in within ~ 10 seconds of the connection attempt.
+	This can occur if there is a breakpoint in another async function that is run first.
+	The solution is to temporarily disable this module by returning 'true' from the method 'disabled'."
 	database connect: connectionString
 		then: [ self onConnect ]
 		catch: [ :error | error throw ].

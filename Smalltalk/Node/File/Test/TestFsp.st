@@ -1,6 +1,5 @@
 CLASS TestFsp EXTENDS Test MODULE TestNode CLASSVARS ''
-	VARS 'tempDirName subDirName tempFilePath tempFilePath2
-		tempFileFd'
+	VARS 'tempDirName subDirName tempFilePath tempFilePath2'
 
 "Also tests classes Dir, Dirent in async mode."
 

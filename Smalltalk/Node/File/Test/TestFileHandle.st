@@ -1,17 +1,11 @@
-CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileHandle'
+CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileName fileHandle'
 
 "Also tests class: FileStats"
 
-disabled
-	^ true.
-!
 test
-	| fileName |
 	self assertError: [ FileHandle new ].
 
-	fileName := 'FileHandle.tmp'.
-	( Fs existsSync: fileName ) ifTrue: [
-		Fs unlinkSync: fileName ].
+	fileName := Os tmpPath: 'smalljs-tfh-'.
 
 	FileHandle open: fileName flags: 'w+'
 		then: [ :aFileHandle | self onOpen: aFileHandle ]
@@ -81,7 +75,7 @@ onReadBuffer: bytesRead buffer: readBuffer
 		error: [ :error | error throw ].
 !
 onClose
-	FileHandle open: 'FileHandle.tmp' flags: 'w+'
+	FileHandle open: fileName flags: 'w+'
 		then: [ :aFileHandle | self onOpen2: aFileHandle ]
 		error: [ :error | error throw ].
 !
@@ -99,7 +93,7 @@ onWriteFile
 		error: [ :error | error throw ].
 !
 onClose2
-	FileHandle open: 'FileHandle.tmp' flags: 'r+'
+	FileHandle open: fileName flags: 'r+'
 		then: [ :aFileHandle | self onOpen3: aFileHandle ]
 		error: [ :error | error throw ].
 !
@@ -179,4 +173,5 @@ onDatasync
 !
 onClose3
 	self assert: [ true ].
+	Fs unlinkSync: fileName.
 !

@@ -90,7 +90,7 @@ rename: oldPath to: newPath then: block error: errorBlock
 "Access"
 
 access: path mode: mode then: block error: errorBlock
-	INLINE 'fsp$.open( path.js, mode.js )
+	INLINE 'fsp$.access( path.js, mode.js )
 		.then( () => block.$value() )
 		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
 !
