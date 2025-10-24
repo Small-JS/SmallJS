@@ -22,13 +22,14 @@ export class CompiledMethod
 	generate(): SourceNode
 	{
 		let node = new SourceNode( null, null, "", "", "method" );
+		node.add( "\t" );
 
 		// Generate optional async
 		if( this.isAsync )
 			node.add( 'async ' );
 
 		// Generate name.
-		node.add( "\t" + Naming.methodStToJs( this.name ) );
+		node.add( Naming.methodStToJs( this.name ) );
 
 		// Generate arguments.
 		node.add( "(" + this.generateArguments() + ")\n\t{\n" );

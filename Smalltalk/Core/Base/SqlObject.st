@@ -38,7 +38,7 @@ fromRow: row
 			value := value = 1 ].
 		"String to Date conversion for SQLite, Postgres."
 		( value class = String ) & ( targetValueClass = Date ) ifTrue: [
-			value := Date fromString: value ].    "String to Date"
+			value := Date fromString: value ].
 		sqlObject atProperty: columnName put: value ].
 
 	^ sqlObject.

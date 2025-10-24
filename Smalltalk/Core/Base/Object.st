@@ -4,21 +4,10 @@ INLINE 'import { Naming } from "./Runtime.js";'
 
 CLASSMETHODS
 
-myTest
+async myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	"| block |
-	block := [ :a |
-		a * a
-	].
-	self log: ( block value: 3 )"
-
-	true ifTrue:
-	[
-		"self log: 'h1'."
-		2 * 3.
-		"self log: 'h2'."
-	].
+	await 1 + 2.
 !
 
 "Creating"

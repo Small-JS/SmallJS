@@ -306,16 +306,12 @@ export class ClassCompiler
 
 	private compileAwait(): SourceNode
 	{
+		if( ! this.method.isAsync )
+			this.error( '"await" can only be used in "async" methods.');
+
 		let node = this.sourceNode( "", "await" );
-
-		let className = this.parser.parseTerm();
-		if( !CharUtil.isUppercase( className ) )
-			this.error( "Failed to parse class name after await" );
-		node.add( this.compileClassReference( className ) + ".$fromJs$( " );
-
 		node.add( "await " );
 		node.add( this.compileExpression() );
-		node.add( ".js )" );
 
 		return node;
 	}
