@@ -1,15 +1,10 @@
 CLASS TestCryptoRsaSigning EXTENDS Test MODULE TestCrypto CLASSVARS ''
-	VARS 'plainText algorithm keyPair'
+	VARS 'algorithm keyPair'
 
 "Tests the RSA signing algorithm RSA-PSS."
 
-test
-	plainText := 'Hello, RSA-PSS!'.
-
-	self generateKey.
-!
-generateKey
-	| params |
+async testGenerateKey
+	| params privateKey publicKey |
 	algorithm := 'RSA-PSS'.
 	params := RsaKeyGenParams new
 		name: algorithm;
@@ -17,14 +12,7 @@ generateKey
 		publicExponent: ( Uint8Array from: #( 1 0 1 ) );
 		hash: 'SHA-256'.
 
-	Crypto generateKey: params extractable: true usages: #( 'sign' 'verify' )
-		then: [ :aKeyPair | self onGenerateKey: aKeyPair ]
-		error: [ :error | error throw ].
-!
-onGenerateKey: aKeyPair
-	| privateKey publicKey params |
-	keyPair := aKeyPair.
-
+	keyPair := await Crypto generateKey: params extractable: true usages: #( 'sign' 'verify' ).
 	self assert: [ keyPair class = CryptoKeyPair ].
 
 	privateKey := keyPair privateKey.
@@ -40,7 +28,7 @@ onGenerateKey: aKeyPair
 	self assert: [ publicKey usages = #( 'verify' ) ].
 	self checkParams: publicKey algorithm.
 
-	self sign.
+	await self signVerify.
 !
 checkParams: params
 	self assert: [ params class = RsaKeyGenParams ].
@@ -48,19 +36,14 @@ checkParams: params
 	self assert: [ params modulusLength = 2048 ].
 	self assert: [ params publicExponent = ( Uint8Array from: #( 1 0 1 ) ) ].
 !
-sign
-	| params plainData |
+async signVerify
+	| params plainText plainData signatureBuffer verified |
+
 	params := RsaPssParams new saltLength: 32.
+	plainText := 'Hello, RSA-PSS!'.
 	plainData := Uint8Array encodeFromString: plainText.
-	Crypto sign: params key: keyPair privateKey data: plainData
-		then: [ :signatureBuffer | self verify: signatureBuffer params: params data: plainData ]
-		error: [ :error | error throw ].
-!
-verify: signatureBuffer params: params data: plainData
-	Crypto verify: params key: keyPair publicKey signature: signatureBuffer data: plainData
-		then: [ :verified | self onVerify: verified ]
-		error: [ :error | error throw ].
-!
-onVerify: verified
+	signatureBuffer := await Crypto sign: params key: keyPair privateKey data: plainData.
+
+	verified := await Crypto verify: params key: keyPair publicKey signature: signatureBuffer data: plainData.
 	self assert: [ verified ].
 !

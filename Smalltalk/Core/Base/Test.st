@@ -84,7 +84,6 @@ assert: block
 	Test globalAssertCount increment.
 
 	"If evaluation of block is not true, raise an error indicating the failed current test."
-
 	block value = true ifFalse: [
 		currentMethodName isNil ifTrue: [ currentMethodName := '<unknown>' ].
 		self error: 'Test failed: ', self class name, '.', currentMethodName, ' #', methodAssertCount toString, ': ', block script ].
@@ -92,4 +91,12 @@ assert: block
 assertError: block
 	"Evalute block expecting an error. If *no* error occurs, then raise an error."
 	self assert: [ ( block tryCatch: [ :error | error ] ) class = Error ].
+!
+async assertAsync: asyncBlock
+	methodAssertCount increment.
+	Test globalAssertCount increment.
+
+	( await asyncBlock value ) = true ifFalse: [
+		currentMethodName isNil ifTrue: [ currentMethodName := '<unknown>' ].
+		self error: 'Test failed: ', self class name, '.', currentMethodName, ' #', methodAssertCount toString, ': ', asyncBlock script ].
 !

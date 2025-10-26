@@ -1,15 +1,10 @@
 CLASS TestCryptoRsa EXTENDS Test MODULE TestCrypto CLASSVARS ''
-	VARS 'plainText algorithm keyPair'
+	VARS 'algorithm keyPair'
 
 "Tests the RSA encryption algorithm RSA-OAEP."
 
-test
-	plainText := 'Hello, RSA-OAEP!'.
-
-	self generateKey.
-!
-generateKey
-	| params |
+async testGenerateKey
+	| params privateKey publicKey |
 	algorithm := 'RSA-OAEP'.
 	params := RsaKeyGenParams new
 		name: algorithm;
@@ -17,14 +12,7 @@ generateKey
 		publicExponent: ( Uint8Array from: #( 1 0 1 ) );
 		hash: 'SHA-256'.
 
-	Crypto generateKey: params extractable: true usages: #( 'encrypt' 'decrypt' )
-		then: [ :aKeyPair | self onGenerateKey: aKeyPair ]
-		error: [ :error | error throw ].
-!
-onGenerateKey: aKeyPair
-	| privateKey publicKey params |
-	keyPair := aKeyPair.
-
+	keyPair := await Crypto generateKey: params extractable: true usages: #( 'encrypt' 'decrypt' ).
 	self assert: [ keyPair class = CryptoKeyPair ].
 
 	privateKey := keyPair privateKey.
@@ -41,7 +29,7 @@ onGenerateKey: aKeyPair
 	self assert: [ publicKey usages = #( 'encrypt' ) ].
 	self checkParams: publicKey algorithm.
 
-	self encrypt.
+	await self encryptDecrypt.
 !
 checkParams: params
 	self assert: [ params class = RsaKeyGenParams ].
@@ -49,21 +37,14 @@ checkParams: params
 	self assert: [ params modulusLength = 2048 ].
 	self assert: [ params publicExponent = ( Uint8Array from: #( 1 0 1 ) ) ].
 !
-encrypt
-	| plainData |
-	plainData := Uint8Array encodeFromString: plainText.
+async encryptDecrypt
+	| plainText plainData encryptedBuffer decryptedBuffer decryptedData decryptedText |
 
-	Crypto encrypt: algorithm key: keyPair publicKey data: plainData
-		then: [ :cypherBuffer | self decrypt: cypherBuffer ]
-		error: [ :error | error throw ].
-!
-decrypt: cypherBuffer
-	Crypto decrypt: algorithm key: keyPair privateKey data: cypherBuffer
-		then: [ :decryptedBuffer | self onDecrypt: decryptedBuffer ]
-		error: [ :error | error throw ].
-!
-onDecrypt: decryptedBuffer
-	| decryptedData decryptedText |
+	plainText := 'Hello, RSA-OAEP!'.
+	plainData := Uint8Array encodeFromString: plainText.
+	encryptedBuffer := await Crypto encrypt: algorithm key: keyPair publicKey data: plainData.
+
+	decryptedBuffer := await Crypto decrypt: algorithm key: keyPair privateKey data: encryptedBuffer.
 	decryptedData := Uint8Array buffer: decryptedBuffer.
 	decryptedText := decryptedData decodeToString.
 	self assert: [ decryptedText = plainText ].

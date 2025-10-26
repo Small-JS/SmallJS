@@ -9,16 +9,12 @@ test
 
 	self assert: [ Crypto randomUuid length = 36 ].
 !
-testDigest
-	| plainText plainData |
+async testDigest
+	| plainText plainData digestBuffer digestData |
 	plainText := 'secret'.
 	plainData := Uint8Array encodeFromString: plainText.
-	Crypto digest: 'SHA-256' data: plainData
-		then: [ :digestBuffer | self onDigest: digestBuffer ]
-		error: [ :error | error throw ].
-!
-onDigest: digestBuffer
-	| digestData |
+
+	digestBuffer := await Crypto digest: 'SHA-256' data: plainData.
 	self assert: [ digestBuffer class = ArrayBuffer ].
 	self assert: [ digestBuffer byteLength = 32 ].
 

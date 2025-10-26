@@ -16,78 +16,68 @@ randomUuid
 
 "Encryption  / decryption"
 
-encrypt: algorithm key: key data: data then: block error: errorBlock
+async encrypt: algorithm key: key data: data
 	Error.	"force import"
-	INLINE 'crypto.subtle.encrypt( algorithm.js, key.js, data.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.encrypt( algorithm.js, key.js, data.js ) )'.
 !
-decrypt: algorithm key: key data: data then: block error: errorBlock
-	INLINE 'crypto.subtle.decrypt( algorithm.js, key.js, data.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async decrypt: algorithm key: key data: data
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.decrypt( algorithm.js, key.js, data.js ) )'.
 !
 
 "Hashing"
 
-digest: algorithm data: data then: block error: errorBlock
-	INLINE 'crypto.subtle.digest( algorithm.js, data.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async digest: algorithm data: data
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.digest( algorithm.js, data.js ) ) '.
 !
 
 "Signing"
 
-sign: algorithm key: key data: data then: block error: errorBlock
-	INLINE 'crypto.subtle.sign( algorithm.js, key.js, data.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async sign: algorithm key: key data: data
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.sign( algorithm.js, key.js, data.js ) )'.
 !
-verify: algorithm key: key signature: signature data: data then: block error: errorBlock
-	INLINE 'crypto.subtle.verify( algorithm.js, key.js, signature.js, data.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async verify: algorithm key: key signature: signature data: data
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.verify( algorithm.js, key.js, signature.js, data.js ) )'.
 !
 
 "Keys"
 
-generateKey: algorithm extractable: extractable usages: usages then: block error: errorBlock
-	INLINE 'let algorithmPrefix = algorithm.js.name.substring( 0, 2 );
-			let isKeyPairAlgorithm = [ "RS", "EC" ].includes( algorithmPrefix );
-			let stKeyClass = isKeyPairAlgorithm ? stCryptoKeyPair$class : stCryptoKey$class;
-			crypto.subtle.generateKey( algorithm.js, extractable.js, usages.$toJs() )
-			.then( generatedKey => block.$value$( stKeyClass.$fromJs$( generatedKey ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async generateKey: algorithm extractable: extractable usages: usages
+	INLINE '
+		let algorithmPrefix = algorithm.js.name.substring( 0, 2 );
+		let isKeyPairAlgorithm = [ "RS", "EC" ].includes( algorithmPrefix );
+		let stKeyClass = isKeyPairAlgorithm ? stCryptoKeyPair$class : stCryptoKey$class;
+		return stKeyClass.$fromJs$(
+			await crypto.subtle.generateKey( algorithm.js, extractable.js, usages.$toJs() ) );'
 !
-deriveKey: algorithm key: key type: type extractable: extractable usages: usages then: block error: errorBlock
-	INLINE 'crypto.subtle.deriveKey( algorithm.js, key.js, type.js, extractable.js, usages.$toJs() )
-			.then( derivedKey => block.$value$( stCryptoKey$class.$fromJs$( derivedKey ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async deriveKey: algorithm key: key type: type extractable: extractable usages: usages
+	^ INLINE 'stCryptoKey$class.$fromJs$(
+		await crypto.subtle.deriveKey( algorithm.js, key.js, type.js, extractable.js, usages.$toJs() ) )'.
 !
-deriveBits: algorithm key: key length: length then: block error: errorBlock
-	INLINE 'crypto.subtle.deriveBits( algorithm.js, key.js, length.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async deriveBits: algorithm key: key length: length
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.deriveBits( algorithm.js, key.js, length.js ) )'.
 !
-exportKey: format key: key then: block error: errorBlock
-	INLINE 'let stExportedKeyClass = format.js == "jwk" ? stJsObject$class : stArrayBuffer$class;
-			crypto.subtle.exportKey( format.js, key.js )
-			.then( exportedKey => block.$value$( stExportedKeyClass.$fromJs$( exportedKey ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async exportKey: format key: key
+	INLINE '
+		let stExportedKeyClass = format.js == "jwk" ? stJsObject$class : stArrayBuffer$class;
+		return stExportedKeyClass.$fromJs$(
+			await crypto.subtle.exportKey( format.js, key.js ) );'
 !
-importKey: format keyData: keyData algorithm: algorithm extractable: extractable usages: usages then: block error: errorBlock
-	INLINE 'crypto.subtle.importKey( format.js, keyData.js, algorithm.js, extractable.js, usages.$toJs() )
-			.then( importedKey => block.$value$( stCryptoKey$class.$fromJs$( importedKey ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async importKey: format keyData: keyData algorithm: algorithm extractable: extractable usages: usages
+	^ INLINE 'stCryptoKey$class.$fromJs$(
+		await crypto.subtle.importKey( format.js, keyData.js, algorithm.js, extractable.js, usages.$toJs() ) )'.
 !
-wrapKey: format key: key wrappingKey: wrappingKey algorithm: algorithm then: block error: errorBlock
-	INLINE 'crypto.subtle.wrapKey( format.js, key.js, wrappingKey.js, algorithm.js )
-			.then( arrayBuffer => block.$value$( stArrayBuffer$class.$fromJs$( arrayBuffer ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async wrapKey: format key: key wrappingKey: wrappingKey algorithm: algorithm
+	^ INLINE 'stArrayBuffer$class.$fromJs$(
+		await crypto.subtle.wrapKey( format.js, key.js, wrappingKey.js, algorithm.js ) )'.
 !
-unwrapKey: format key: key unwrappingKey: unwrappingKey unwrapAlgo: unwrapAlgo
-	algorithm: algorithm extractable: extractable usages: usages then: block error: errorBlock
-	INLINE 'crypto.subtle.unwrapKey( format.js, key.js, unwrappingKey.js, unwrapAlgo.js, algorithm.js, extractable.js, usages.$toJs() )
-			.then( unwrappedKey => block.$value$( stCryptoKey$class.$fromJs$( unwrappedKey ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async unwrapKey: format key: key unwrappingKey: unwrappingKey unwrapAlgo: unwrapAlgo
+	algorithm: algorithm extractable: extractable usages: usages
+	^ INLINE 'stCryptoKey$class.$fromJs$(
+		await crypto.subtle.unwrapKey( format.js, key.js, unwrappingKey.js, unwrapAlgo.js, algorithm.js, extractable.js, usages.$toJs() ) )'.
 !

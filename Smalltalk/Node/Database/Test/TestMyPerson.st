@@ -1,6 +1,6 @@
 CLASS TestMyPerson EXTENDS Test MODULE TestDatabase CLASSVARS '' VARS ''
 
-test
+async test
 	| person |
 	person := MyPerson new.
 
@@ -9,17 +9,9 @@ test
 	person name: 'Test'.
 	self assert: [ person name = 'Test' ].
 
-	person setPassword: 'secret'
-		then: [ self onSetPassword: person ]
-		error: [ :error | error throw ].
-!
-onSetPassword: person
+	await person setPassword: 'secret'.
 	self assert: [ person salt >= 0 ].
 	self assert: [ person password length = 64 ].
-	person checkPassword: 'secret'
-		then: [ :match | self onCheckPassword: match ]
-		error: [ :error | error throw ].
-!
-onCheckPassword: match
-	self assert: [ match ].
+
+	await self assertAsync: [ person checkPassword: 'secret' ].
 !

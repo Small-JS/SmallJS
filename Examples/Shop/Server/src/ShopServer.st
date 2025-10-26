@@ -100,9 +100,9 @@ login3: request response: response person: person dbPersons: dbPersons
 		ifFalse: [ self login4: request response: response person: person dbPerson: dbPersons first ].
 !
 login4: request response: response person: person dbPerson: dbPerson
-	dbPerson checkPassword: person password
+	Promise fromJs: ( dbPerson checkPassword: person password )
 		then: [ :match | self login5: request response: response person: person dbPerson: dbPerson mmatch: match ]
-		error: [ :error | error throw ].
+		catch: [ :error | error throw ].
 !
 login5: request response: response person: person dbPerson: dbPerson mmatch: match
 	match not

@@ -7,10 +7,10 @@
 		"express-session": "^1.18.2",
 		"http-terminator": "^3.2.0",
 		"ollama": "^0.6.0",
-		"openai": "^6.6.0"
+		"openai": "^6.7.0"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.3",
+		"@types/express": "^5.0.4",
 		"@types/express-session": "^1.18.2",
 		"@types/node": "^24.9.1"
 	}
