@@ -1,8 +1,8 @@
 CLASS Fs EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 
-"This class only implements the sync API of the fs module.
- So, the callback API is not implemented,
- use the promises based class Fsp for async."
+"This class only implements the *sync* API of the fs module.
+ So the callback API is not implemented.
+ Use the promises based class Fsp for async."
 
 "Use the second import form, because it's compatible with NW.js."
 "INLINE 'import * as fs$ from 'node:fs';'"

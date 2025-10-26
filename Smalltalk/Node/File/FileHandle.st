@@ -11,21 +11,21 @@ new
 
 "Opening"
 
-open: path flags: flags then: block error: errorBlock
-	^ self open: path flags: flags mode: 438 then: block error: errorBlock.
+async open: path flags: flags
+	^ INLINE 'stFileHandle$class.$fromJs$(
+		await fsp$.open( path.js, flags.js ) )'.
 !
-open: path flags: flags mode: mode then: block error: errorBlock
-	Fsp open: path flags: flags mode: mode then: block error: errorBlock.
+async open: path flags: flags mode: mode
+	^ INLINE 'stFileHandle$class.$fromJs$(
+		await fsp$.open( path.js, flags.js, mode.js ) )'.
 !
 
 METHODS
 
 "Closing"
 
-closeThen: block error: errorBlock
-	INLINE 'this.js.close()
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async close
+	INLINE 'await this.js.close()'.
 !
 
 "Properties"
@@ -33,85 +33,63 @@ closeThen: block error: errorBlock
 fd
 	^ Integer fromJs: INLINE 'this.js.fd'.
 !
-statThen: block error: errorBlock
-	INLINE 'this.js.stat()
-		.then( jsStats => block.$value$( stFileStats$class.$fromJs$( jsStats ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async stat
+	^ INLINE 'stFileStats$class.$fromJs$(
+		await this.js.stat() )'.
 !
 
 "Reading"
 
-read: buffer offset: offset length: length position: position then: block error: errorBlock
-	INLINE 'this.js.read( buffer.js, offset.js, length.js, position.js )
-		.then( jsResult => block.$value$value$(
-			stInteger$class.$fromJs$( jsResult.bytesRead ),
-			stBuffer$class.$fromJs$( jsResult.buffer ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async read: buffer offset: offset length: length position: position
+	"This methods only returns the number of bytes read,
+	 not also the (identical) buffer agrument."
+	^ INLINE 'stInteger$class.$fromJs$(
+		( await this.js.read( buffer.js, offset.js, length.js, position.js ) ).bytesRead )'.
 !
-readFileThen: block error: errorBlock
-	INLINE 'this.js.readFile()
-		.then( jsBuffer => block.$value$( stBuffer$class.$fromJs$( jsBuffer ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async readFile
+	^ INLINE 'stBuffer$class.$fromJs$(
+		await this.js.readFile() )'.
 !
-readFile: options then: block error: errorBlock
-	INLINE 'this.js.readFile( options.js )
-		.then( jsResult => typeof jsResult === "string"
-			? block.$value$( stString$class.$fromJs$( jsResult ) )
-			: block.$value$( stBuffer$class.$fromJs$( jsResult ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async readFile: options
+	^ INLINE 'stBuffer$class.$fromJs$(
+		await this.js.readFile( options.js ) )'.
 !
 
 "Writing"
 
-write: buffer offset: offset length: length position: position then: block error: errorBlock
-	INLINE 'this.js.write( buffer.js, offset.js, length.js, position.js )
-		.then( jsResult => block.$value$value$(
-			stInteger$class.$fromJs$( jsResult.bytesWritten ),
-			stBuffer$class.$fromJs$( jsResult.buffer ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async write: buffer offset: offset length: length position: position
+	"This methods only returns the number of bytes written,
+	 not also the (identical) buffer agrument."
+	^ INLINE 'stInteger$class.$fromJs$(
+		( await this.js.write( buffer.js, offset.js, length.js, position.js ) ).bytesWritten )'.
 !
-writeFile: data then: block error: errorBlock
-	self writeFile: data options: nil then: block error: errorBlock.
+async writeFile: data
+	await self writeFile: data options: nil.
 !
-writeFile: data options: options then: block error: errorBlock
-	INLINE 'this.js.writeFile( data.js, options.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async writeFile: data options: options
+	INLINE 'await this.js.writeFile( data.js, options.js )'.
 !
-truncate: len then: block error: errorBlock
-	INLINE 'this.js.truncate( len.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async truncate: length
+	INLINE 'await this.js.truncate( length.js )'.
 !
 
 "Access"
 
-chmod: mode then: block error: errorBlock
-	INLINE 'this.js.chmod( mode.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async chmod: mode
+	INLINE 'await this.js.chmod( mode.js )'.
 !
-chown: uid gid: gid then: block error: errorBlock
-	INLINE 'this.js.chown( uid.js, gid.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async chown: uid gid: gid
+	INLINE 'await this.js.chown( uid.js, gid.js )'.
 !
-atime: atime mtime: mtime then: block error: errorBlock
-	INLINE 'this.js.utimes( atime.js, mtime.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async atime: atime mtime: mtime
+	INLINE 'await this.js.utimes( atime.js, mtime.js )'.
 !
 
 "System"
 
-syncThen: block error: errorBlock
-	INLINE 'this.js.sync()
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async sync
+	INLINE 'await this.js.sync()'.
 !
-datasyncThen: block error: errorBlock
-	INLINE 'this.js.datasync()
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async datasync
+	INLINE 'await this.js.datasync()'.
 !
-

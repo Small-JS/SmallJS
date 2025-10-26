@@ -10,145 +10,112 @@ CLASSMETHODS
 
 "Opening"
 
-open: path flags: flags mode: mode then: block error: errorBlock
-	Error. 	"Force reference"
-	INLINE 'fsp$.open( path.js, flags.js, mode.js )
-		.then( jsFileHandle => block.$value$( stFileHandle$class.$fromJs$( jsFileHandle ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async open: path flags: flags
+	^ INLINE 'stFileHandle$class.$fromJs$(
+		await fsp$.open( path.js, flags.js ) )'.
+!
+async open: path flags: flags mode: mode
+	^ INLINE 'stFileHandle$class.$fromJs$(
+		await fsp$.open( path.js, flags.js, mode.js ) )'.
 !
 
 "Removing"
 
-unlink: path then: block error: errorBlock
-	INLINE 'fsp$.unlink( path.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async unlink: path
+	INLINE 'await fsp$.unlink( path.js )'.
 !
-rm: path options: options then: block error: errorBlock
-	INLINE 'fsp$.rm( path.js, ( options.js ? options.js : undefined ) )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async rm: path options: options
+	INLINE 'await fsp$.rm( path.js, ( options.js ? options.js : undefined ) )'.
 !
 
 "Properties"
 
-stat: path  options: options then: block error: errorBlock
-	INLINE 'fsp$.stat( path.js, ( options.js ? options.js : undefined ) )
-		.then( ( jsStats ) => block.$value$( stFileStats$class.$fromJs$( jsStats ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async stat: path options: options
+	^ INLINE 'stFileStats$class.$fromJs$(
+		await fsp$.stat( path.js, ( options.js ? options.js : undefined ) ) )'.
 !
 
 "Reading"
 
-readFile: path options: options then: block error: errorBlock
-	INLINE 'fsp$.readFile( path.js, options.js )
-		.then( jsResult => typeof jsResult === "string"
-			? block.$value$( stString$class.$fromJs$( jsResult ) )
-			: block.$value$( stBuffer$class.$fromJs$( jsResult ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async readFile: path options: options
+	INLINE '
+		let jsResult = await fsp$.readFile( path.js, options.js );
+		return typeof jsResult === "string" ?
+			stString$class.$fromJs$( jsResult ) :
+			stBuffer$class.$fromJs$( jsResult )'.
 !
 
 "Writing"
 
-appendFile: path data: data options: options then: block error: errorBlock
-	INLINE 'fsp$.appendFile( path.js, data.js, options.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async appendFile: path data: data options: options
+	INLINE 'await fsp$.appendFile( path.js, data.js, options.js )'.
 !
-truncate: path length: length then: block error: errorBlock
-	INLINE 'fsp$.truncate( path.js, length.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async truncate: path length: length
+	INLINE 'await fsp$.truncate( path.js, length.js )'.
 !
-writeFile: path data: data options: options then: block error: errorBlock
-	INLINE 'fsp$.writeFile( path.js, data.js, options.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async writeFile: path data: data options: options
+	INLINE 'await fsp$.writeFile( path.js, data.js, options.js )'.
 !
 
 "Copying"
 
-copyFile: src to: dest mode: mode then: block error: errorBlock
-	INLINE 'fsp$.copyFile( src.js, dest.js, mode.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async copyFile: src to: dest mode: mode
+	INLINE 'await fsp$.copyFile( src.js, dest.js, mode.js )'.
 !
-cp: src to: dest options: options then: block error: errorBlock
-	INLINE 'fsp$.cp( src.js, dest.js, ( options.js ? options.js : undefined ) )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async cp: src to: dest options: options
+	INLINE 'await fsp$.cp( src.js, dest.js, ( options.js ? options.js : undefined ) )'.
 !
 
 "Renaming"
 
-rename: oldPath to: newPath then: block error: errorBlock
-	INLINE 'fsp$.rename( oldPath.js, newPath.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async rename: oldPath to: newPath
+	INLINE 'await fsp$.rename( oldPath.js, newPath.js )'.
 !
 
 "Access"
 
-access: path mode: mode then: block error: errorBlock
-	INLINE 'fsp$.access( path.js, mode.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async access: path mode: mode
+	INLINE 'await fsp$.access( path.js, mode.js )'.
 !
-chmod: path mode: mode then: block error: errorBlock
-	INLINE 'fsp$.chmod( path.js, mode.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async chmod: path mode: mode
+	INLINE 'await fsp$.chmod( path.js, mode.js )'.
 !
-chown: path uid: uid gid: gid then: block error: errorBlock
-	INLINE 'fsp$.chown( path.js, uid.js, gid.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async chown: path uid: uid gid: gid
+	INLINE 'await fsp$.chown( path.js, uid.js, gid.js )'.
 !
-utimes: path atime: atime mtime: mtime then: block error: errorBlock
-	INLINE 'fsp$.utimes( path.js, atime.js, mtime.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async utimes: path atime: atime mtime: mtime
+	INLINE 'await fsp$.utimes( path.js, atime.js, mtime.js )'.
 !
 
 "Directories"
 
-opendir: path options: options then: block error: errorBlock
-	INLINE 'fsp$.opendir( path.js, options.js )
-		.then( jsDir => block.$value$( stDir$class.$fromJs$( jsDir ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async opendir: path options: options
+	^ INLINE 'stDir$class.$fromJs$(
+		await fsp$.opendir( path.js, options.js ) )'.
 !
-readdir: path options: options then: block error: errorBlock
-	INLINE 'fsp$.readdir( path.js, options.js )
-		.then( jsFiles => block.$value$( stArray$class.$fromJsStrings$( jsFiles ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async readdir: path options: options
+	^ INLINE 'stArray$class.$fromJsStrings$(
+		await fsp$.readdir( path.js, options.js ) )'.
 !
-glob: pattern options: options iterate: iterateBlock then: thenBlock error: errorBlock
+async glob: pattern options: options iterate: iterateBlock
 	INLINE '
 		let asyncIterator = fsp$.glob( pattern.js, ( options.js ? options.js : undefined ) );
-		( async () => {
-  			for await ( const fileName of asyncIterator ) {
-				iterateBlock.$value$( stString$class.$fromJs$( fileName ) ) };
-			thenBlock.$value() } ) ()'.
+  		for await ( const fileName of asyncIterator ) {
+			iterateBlock.$value$( stString$class.$fromJs$( fileName ) ) }'.
 !
-mkdir: path options: options then: block error: errorBlock
-	INLINE 'fsp$.mkdir( path.js, options.js )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async mkdir: path options: options
+	INLINE 'await fsp$.mkdir( path.js, options.js )'.
 !
-mkdtemp: prefix then: block error: errorBlock
-	INLINE 'fsp$.mkdtemp( prefix.js )
-		.then( jsDirectoryName => block.$value$( stString$class.$fromJs$( jsDirectoryName ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async mkdtemp: prefix
+	^ INLINE 'stString$class.$fromJs$(
+		await fsp$.mkdtemp( prefix.js ) )'.
 !
-mkdtempDisposable: prefix options: options then: block error: errorBlock
-	INLINE 'fsp$.mkdtempDisposable( prefix.js, options.js )
-		.then( jsDirectoryName => block.$value$( stString$class.$fromJs$( jsDirectoryName ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async mkdtempDisposable: prefix options: options
+	^ INLINE 'stString$class.$fromJs$(
+		await fsp$.mkdtempDisposable( prefix.js, options.js ) )'.
 !
-rmdir: path options: options then: block error: errorBlock
-	INLINE 'fsp$.rmdir( path.js, ( options.js ? options.js : undefined ) )
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async rmdir: path options: options
+	INLINE 'await fsp$.rmdir( path.js, ( options.js ? options.js : undefined ) )'.
 !
 
 "TODO:
@@ -165,5 +132,4 @@ And also:
 	fsPromises.statfs(path[, options])
 	fsPromises.watch(filename[, options])
 "
-
 

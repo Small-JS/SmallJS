@@ -17,13 +17,13 @@ closeSync
 
 "Async operations"
 
-closeThen: block error: errorBlock
-	INLINE 'this.js.close()
-		.then( () => block.$value() )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async close
+	INLINE 'await this.js.close()'.
 !
-readThen: block error: errorBlock
-	INLINE 'this.js.read()
-		.then( jsDirent => block.$value$( stDirent$class.$fromJs$( jsDirent ) ) )
-		.catch( jsError => errorBlock.$value$( stError$class.$fromJs$( jsError ) ) )'.
+async read: block
+	"Evaluates 'block' with 'Dirent' entries from self."
+	INLINE '
+		let dirent;
+		while( dirent = await this.js.read() )
+			block.$value$( stDirent$class.$fromJs$( dirent ) );'
 !

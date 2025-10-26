@@ -2,30 +2,27 @@ CLASS TestFileHandle EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'fileName fi
 
 "Also tests class: FileStats"
 
-test
-	self assertError: [ FileHandle new ].
-
-	fileName := Os tmpPath: 'smalljs-tfh-'.
-
-	FileHandle open: fileName flags: 'w+'
-		then: [ :aFileHandle | self onOpen: aFileHandle ]
-		error: [ :error | error throw ].
+async test
+	await self open.
+	await self stat.
+	await self writeRead.
+	await self properties.
+	await self closeRemove.
 !
-onOpen: aFileHandle
-	fileHandle := aFileHandle.
+async open
+	fileName := Os tmpPath: 'smalljs-tfh-'.
+	fileHandle := await FileHandle open: fileName flags: 'w+'.
 	self assert: [ fileHandle class = FileHandle ].
 	self assert: [ fileHandle jsClassName = 'FileHandle' ].
 	self assert: [ fileHandle fd >= 0 ].
-
-	fileHandle statThen: [ :stats | self onStat: stats ]
-		error: [ :error | error throw ].
 !
-onStat: stats
-	| now |
+async stat
+	| stats now |
 
+	stats := await fileHandle stat.
 	self assert: [ stats dev >= 1 ].
 	self assert: [ stats ino >= 1 ].
-	self assert: [ stats mode >= 1 ].
+	self assert: [ #( 33188 33204 33206 ) includes: stats mode ].
 	self assert: [ stats nlink = 1 ].
 	self assert: [ stats uid >= 0 ].
 	self assert: [ stats gid >= 0 ].
@@ -40,138 +37,61 @@ onStat: stats
 	self assert: [ ( now - stats ctimeMs ) abs < 300000 ].
 	self assert: [ ( now - stats mtimeMs ) abs < 300000 ].
 	self assert: [ ( now - stats atimeMs ) abs < 300000 ].
-
-	self writeBuffer.
 !
-writeBuffer
-	| writeBuffer |
-
+async writeRead
+	| writeBuffer bytesWritten readBuffer bytesRead buffer stats |
 	writeBuffer := Buffer new: 8.
 	0 to: 7 do: [ :index |
 		writeBuffer at: index put: 97 + index ].
 
-	fileHandle write: writeBuffer offset: 2 length: 4 position: nil
-		then: [ :bytesWritten :buffer | self onWriteBuffer: bytesWritten buffer: buffer ]
-		error: [ :error | error throw ].
-!
-onWriteBuffer: bytesWritten buffer: writeBuffer
-	| readBuffer |
-
+	bytesWritten := await fileHandle write: writeBuffer offset: 2 length: 4 position: nil.
 	self assert: [ bytesWritten = 4 ].
-	self assert: [ writeBuffer length = 8 ].
 
 	readBuffer := Buffer new: 8.
-	fileHandle read: readBuffer offset: 2 length: 4 position: 0
-		then: [ :bytesRead :buffer | self onReadBuffer: bytesRead buffer: buffer ]
-		error: [ :error | error throw ].
-!
-onReadBuffer: bytesRead buffer: readBuffer
+	bytesRead := await fileHandle read: readBuffer offset: 2 length: 4 position: 0.
 	self assert: [ bytesRead = 4 ].
 	self assert: [ readBuffer length = 8 ].
 	self assert: [ ( readBuffer subarray: 2 to: 6 ) toArray = #( 99 100 101 102 ) ].
 
 	"Must reopen file to test writeFile."
-	fileHandle closeThen: [ self onClose ]
-		error: [ :error | error throw ].
-!
-onClose
-	FileHandle open: fileName flags: 'w+'
-		then: [ :aFileHandle | self onOpen2: aFileHandle ]
-		error: [ :error | error throw ].
-!
-onOpen2: aFileHandle
-	| buffer |
-	fileHandle := aFileHandle.
+	await fileHandle close.
+	fileHandle := await FileHandle open: fileName flags: 'w+'.
 	buffer := Buffer from: 'abcd'.
-	fileHandle writeFile: buffer
-		then: [ self onWriteFile ]
-		error: [ :error | error throw ].
-!
-onWriteFile
+	await fileHandle writeFile: buffer.
+
 	"Must reopen file to test readFile."
-	fileHandle closeThen: [ self onClose2 ]
-		error: [ :error | error throw ].
-!
-onClose2
-	FileHandle open: fileName flags: 'r+'
-		then: [ :aFileHandle | self onOpen3: aFileHandle ]
-		error: [ :error | error throw ].
-!
-onOpen3: aFileHandle
-	fileHandle := aFileHandle.
-	fileHandle readFileThen: [ :buffer | self onReadFile: buffer ]
-		error: [ :error | error throw ].
-!
-onReadFile: buffer
+	await fileHandle close.
+	fileHandle := await FileHandle open: fileName flags: 'r+'.
+	buffer := await fileHandle readFile.
 	self assert: [ buffer toString = 'abcd' ].
 
-	fileHandle truncate: 2
-		then: [ self onTruncate ]
-		error: [ :error | error throw ].
-!
-onTruncate
-	fileHandle statThen: [ :stats | self onStat2: stats ]
-		error: [ :error | error throw ].
-!
-onStat2: stats
-	| mode |
+	await fileHandle truncate: 2.
+	stats := await fileHandle stat.
 	self assert: [ stats size = 2 ].
-	self assert: [ #( 33188 33204 33206 ) includes: stats mode ].
 
-	fileHandle chmod: 33200
-		then: [ self onChmod ]
-		error: [ :error | error throw ].
+	await fileHandle sync.
+	await fileHandle datasync.
 !
-onChmod
-	fileHandle statThen: [ :stats | self onStat3: stats ]
-		error: [ :error | error throw ].
-!
-onStat3: stats
+async properties
+	| stats |
+	await fileHandle chmod: 33200.
+	stats := await fileHandle stat.
 	"On Windows chmod does work and stays 33206."
-
 	self assert: [ #( 33200 33206 ) includes: stats mode ].
 
-	fileHandle atime: 1 mtime: 2
-		then: [ self onAmTimes ]
-		error: [ :error | error throw ].
-!
-onAmTimes
-	fileHandle statThen: [ :stats | self onStat4: stats ]
-		error: [ :error | error throw ].
-!
-onStat4: stats
-	self assert: [ stats atimeMs = 1000 ].
-	self assert: [ stats mtimeMs = 2000 ].
-
-	"Don't actually change the user and group,
-	 just set the currrent uid and gid and see if the call executes."
-	fileHandle chown: stats uid gid: stats gid
-		then: [ self onChown ]
-		error: [ :error | error throw ].
-!
-onChown
-	fileHandle statThen: [ :stats | self onStat5: stats ]
-		error: [ :error | error throw ].
-!
-onStat5: stats
+	"Don't actually change the user and group because we probably don't have permission.
+	 Just set the currrent uid and gid and see if the call executes."
+	await fileHandle chown: stats uid gid: stats gid.
+	stats := await fileHandle stat.
 	self assert: [ stats uid >= 0 ].
 	self assert: [ stats gid >= 0 ].
 
-	fileHandle syncThen: [ self onSync ]
-		error: [ :error | error throw ].
+	await fileHandle atime: 1 mtime: 2.
+	stats := await fileHandle stat.
+	self assert: [ stats atimeMs = 1000 ].
+	self assert: [ stats mtimeMs = 2000 ].
 !
-onSync
-	self assert: [ true ].
-	fileHandle datasyncThen: [ self onDatasync ]
-		error: [ :error | error throw ].
-!
-onDatasync
-	self assert: [ true ].
-
-	fileHandle closeThen: [ self onClose3 ]
-		error: [ :error | error throw ].
-!
-onClose3
-	self assert: [ true ].
+async closeRemove
+	await fileHandle close.
 	Fs unlinkSync: fileName.
 !
