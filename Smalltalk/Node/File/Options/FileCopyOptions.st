@@ -51,6 +51,8 @@ verbatimSymlinks: verbatimSymlinks
 	INLINE 'this.js.verbatimSymlinks = verbatimSymlinks.js'.
 !
 filter: block
-	INLINE 'this.js.filter = ( src, dest ) => stBoolean$class.$fromJs$(
-		block.$value$value$( stString$class.$fromJs$( src ), stString$class.$fromJs$( dest ) ) )'.
+	"Block should have 2 path arguments: src and dest,
+	and return true of the file should be copied."
+	INLINE 'this.js.filter = ( src, dest ) =>
+		block.$value$value$( stString$class.$fromJs$( src ), stString$class.$fromJs$( dest ) ).js'.
 !

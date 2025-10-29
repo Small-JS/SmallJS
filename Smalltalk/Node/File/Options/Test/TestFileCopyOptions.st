@@ -25,5 +25,5 @@ test
 	options verbatimSymlinks: true.
 	self assert: [ options verbatimSymlinks ].
 
-	options filter: [ :path | true ].
+	options filter: [ :src :dest | true ].
 !

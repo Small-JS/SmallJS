@@ -11,12 +11,12 @@ CLASSMETHODS
 "Opening"
 
 async open: path flags: flags
-	^ INLINE 'stFileHandle$class.$fromJs$(
-		await fsp$.open( path.js, flags.js ) )'.
+	^ FileHandle fromJs:
+		INLINE 'await fsp$.open( path.js, flags.js )'.
 !
 async open: path flags: flags mode: mode
-	^ INLINE 'stFileHandle$class.$fromJs$(
-		await fsp$.open( path.js, flags.js, mode.js ) )'.
+	^ FileHandle fromJs:
+		INLINE 'await fsp$.open( path.js, flags.js, mode.js )'.
 !
 
 "Removing"
@@ -31,18 +31,17 @@ async rm: path options: options
 "Properties"
 
 async stat: path options: options
-	^ INLINE 'stFileStats$class.$fromJs$(
-		await fsp$.stat( path.js, ( options.js ? options.js : undefined ) ) )'.
+	^ FileStats fromJs:
+		INLINE 'await fsp$.stat( path.js, ( options.js ? options.js : undefined ) )'.
 !
 
 "Reading"
 
 async readFile: path options: options
-	INLINE '
-		let jsResult = await fsp$.readFile( path.js, options.js );
-		return typeof jsResult === "string" ?
-			stString$class.$fromJs$( jsResult ) :
-			stBuffer$class.$fromJs$( jsResult )'.
+	| resultClass |
+	resultClass := ( options isNil or: [ options encoding isNil ] ) ifTrue: [ Buffer ] ifFalse: [ String ].
+	^ resultClass fromJs:
+		INLINE 'await fsp$.readFile( path.js, options.js )'.
 !
 
 "Writing"
@@ -90,12 +89,12 @@ async utimes: path atime: atime mtime: mtime
 "Directories"
 
 async opendir: path options: options
-	^ INLINE 'stDir$class.$fromJs$(
-		await fsp$.opendir( path.js, options.js ) )'.
+	^ Dir fromJs:
+		INLINE 'await fsp$.opendir( path.js, options.js )'.
 !
 async readdir: path options: options
-	^ INLINE 'stArray$class.$fromJsStrings$(
-		await fsp$.readdir( path.js, options.js ) )'.
+	^ Array fromJsStrings:
+		INLINE 'await fsp$.readdir( path.js, options.js )'.
 !
 async glob: pattern options: options iterate: iterateBlock
 	INLINE '
@@ -107,12 +106,12 @@ async mkdir: path options: options
 	INLINE 'await fsp$.mkdir( path.js, options.js )'.
 !
 async mkdtemp: prefix
-	^ INLINE 'stString$class.$fromJs$(
-		await fsp$.mkdtemp( prefix.js ) )'.
+	^ String fromJs:
+		INLINE 'await fsp$.mkdtemp( prefix.js )'.
 !
 async mkdtempDisposable: prefix options: options
-	^ INLINE 'stString$class.$fromJs$(
-		await fsp$.mkdtempDisposable( prefix.js, options.js ) )'.
+	^ String fromJs:
+		INLINE 'await fsp$.mkdtempDisposable( prefix.js, options.js )'.
 !
 async rmdir: path options: options
 	INLINE 'await fsp$.rmdir( path.js, ( options.js ? options.js : undefined ) )'.

@@ -12,12 +12,12 @@ new
 "Opening"
 
 async open: path flags: flags
-	^ INLINE 'stFileHandle$class.$fromJs$(
-		await fsp$.open( path.js, flags.js ) )'.
+	^ FileHandle fromJs:
+		INLINE 'await fsp$.open( path.js, flags.js )'.
 !
 async open: path flags: flags mode: mode
-	^ INLINE 'stFileHandle$class.$fromJs$(
-		await fsp$.open( path.js, flags.js, mode.js ) )'.
+	^ FileHandle fromJs:
+		INLINE 'await fsp$.open( path.js, flags.js, mode.js )'.
 !
 
 METHODS
@@ -31,11 +31,12 @@ async close
 "Properties"
 
 fd
-	^ Integer fromJs: INLINE 'this.js.fd'.
+	^ Integer fromJs:
+		INLINE 'this.js.fd'.
 !
 async stat
-	^ INLINE 'stFileStats$class.$fromJs$(
-		await this.js.stat() )'.
+	^ FileStats fromJs:
+		INLINE 'await this.js.stat()'.
 !
 
 "Reading"
@@ -43,16 +44,16 @@ async stat
 async read: buffer offset: offset length: length position: position
 	"This methods only returns the number of bytes read,
 	 not also the (identical) buffer agrument."
-	^ INLINE 'stInteger$class.$fromJs$(
-		( await this.js.read( buffer.js, offset.js, length.js, position.js ) ).bytesRead )'.
+	^ Integer fromJs:
+		INLINE '( await this.js.read( buffer.js, offset.js, length.js, position.js ) ).bytesRead'.
 !
 async readFile
-	^ INLINE 'stBuffer$class.$fromJs$(
-		await this.js.readFile() )'.
+	^ Buffer fromJs:
+		INLINE 'await this.js.readFile()'.
 !
 async readFile: options
-	^ INLINE 'stBuffer$class.$fromJs$(
-		await this.js.readFile( options.js ) )'.
+	^ Buffer fromJs:
+		INLINE 'await this.js.readFile( options.js )'.
 !
 
 "Writing"
@@ -60,8 +61,8 @@ async readFile: options
 async write: buffer offset: offset length: length position: position
 	"This methods only returns the number of bytes written,
 	 not also the (identical) buffer agrument."
-	^ INLINE 'stInteger$class.$fromJs$(
-		( await this.js.write( buffer.js, offset.js, length.js, position.js ) ).bytesWritten )'.
+	^ Integer fromJs:
+		INLINE '( await this.js.write( buffer.js, offset.js, length.js, position.js ) ).bytesWritten'.
 !
 async writeFile: data
 	await self writeFile: data options: nil.

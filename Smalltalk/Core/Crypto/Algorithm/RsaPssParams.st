@@ -15,7 +15,7 @@ name
 	^ String fromJs: INLINE 'this.js.name'.
 !
 name: name
-	self assert:[ #( 'RSA-PSS' ) includes: name ].
+	self assert: [ #( 'RSA-PSS' ) includes: name ].
 	INLINE 'this.js.name = name.js'.
 !
 saltLength

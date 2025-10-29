@@ -13,7 +13,7 @@ name
 	^ String fromJs: INLINE 'this.js.name'.
 !
 name: name
-	self assert:[ #( 'RSA-OAEP' ) includes: name ].
+	self assert: [ #( 'RSA-OAEP' ) includes: name ].
 	INLINE 'this.js.name = name.js'.
 !
 label

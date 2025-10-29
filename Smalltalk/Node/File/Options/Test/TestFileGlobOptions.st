@@ -10,5 +10,5 @@ test
 	options withFileTypes: true.
 	self assert: [ options withFileTypes ].
 
-	options exclude: [ :fileName | false ].
+	options exclude: [ :path | false ].
 !

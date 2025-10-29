@@ -13,7 +13,8 @@ CLASSMETHODS
 "Opening / closing / deleting"
 
 openSync: path flags: flags mode: mode
-	^ Integer fromJs: INLINE 'fs$.openSync( path.js, flags.js, mode.js )'.
+	^ Integer fromJs:
+		INLINE 'fs$.openSync( path.js, flags.js, mode.js )'.
 !
 closeSync: fd
 	INLINE 'fs$.closeSync( fd.js )'.
@@ -28,7 +29,8 @@ rmSync: path options: options
 "Testing"
 
 existsSync: path
-	^ Boolean fromJs: INLINE 'fs$.existsSync( path.js )'.
+	^ Boolean fromJs:
+		INLINE 'fs$.existsSync( path.js )'.
 !
 accessSync: path mode: mode
 	INLINE 'fs$.accessSync( path.js, mode.js )'.
@@ -37,29 +39,35 @@ accessSync: path mode: mode
 "Reading"
 
 readFileSync: path
-	^ Buffer fromJs: INLINE 'fs$.readFileSync( path.js )'.
+	^ Buffer fromJs:
+		INLINE 'fs$.readFileSync( path.js )'.
 !
 readSync: fd buffer: buffer options: options
-	^ Integer fromJs: INLINE 'fs$.readSync( fd.js, buffer.js, options.js )'.
+	^ Integer fromJs:
+		INLINE 'fs$.readSync( fd.js, buffer.js, options.js )'.
 !
 readSync: fd buffer: buffer offset: offset length: length position: position
-	^ Integer fromJs: INLINE 'fs$.readSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
+	^ Integer fromJs:
+		INLINE 'fs$.readSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
 !
 
 "Writing"
 
 writeFileSync: file data: data options: options
 	"Argument file can be path or file descriptor."
-	^ Buffer fromJs: INLINE 'fs$.writeFileSync( file.js, data.js, options.js )'.
+	^ Buffer fromJs:
+		INLINE 'fs$.writeFileSync( file.js, data.js, options.js )'.
 !
 appendFileSync: path data: data options: options
 	INLINE 'fs$.appendFileSync( path.js, data.js, options.js )'.
 !
 writeSync: fd buffer: buffer options: options
-	^ Buffer fromJs: INLINE 'fs$.writeSync( fd.js, buffer.js, options.js )'.
+	^ Buffer fromJs:
+		INLINE 'fs$.writeSync( fd.js, buffer.js, options.js )'.
 !
 writeSync: fd buffer: buffer offset: offset length: length position: position
-	^ Buffer fromJs: INLINE 'fs$.writeSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
+	^ Buffer fromJs:
+		INLINE 'fs$.writeSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
 !
 truncateSync: path length: length
 	INLINE 'fs$.truncateSync( path.js, length.js )'.
@@ -110,28 +118,35 @@ fchownSync: fd uid: uid gid: gid
 "Properties"
 
 statSync: path options: options
-	^ FileStats fromJs: INLINE 'fs$.statSync( path.js, ( options.js ? options.js : undefined ) )'.
+	^ FileStats fromJs:
+		INLINE 'fs$.statSync( path.js, ( options.js ? options.js : undefined ) )'.
 !
 fstatSync: fd options: options
-	^ FileStats fromJs: INLINE 'fs$.fstatSync( fd.js, ( options.js ? options.js : undefined ) )'.
+	^ FileStats fromJs:
+		INLINE 'fs$.fstatSync( fd.js, ( options.js ? options.js : undefined ) )'.
 !
 
 "Directories"
 
 mkdirSync: path options: options
-	^ String fromJs: INLINE 'fs$.mkdirSync( path.js, options.js )'.
+	^ String fromJs:
+		INLINE 'fs$.mkdirSync( path.js, options.js )'.
 !
 mkdtempSync: prefix options: options
-	^ String fromJs: INLINE 'fs$.mkdtempSync( prefix.js, options.js )'.
+	^ String fromJs:
+		INLINE 'fs$.mkdtempSync( prefix.js, options.js )'.
 !
 opendirSync: path options: options
-	^ Dir fromJs: INLINE 'fs$.opendirSync( path.js, options.js )'.
+	^ Dir fromJs:
+		INLINE 'fs$.opendirSync( path.js, options.js )'.
 !
 readdirSync: path options: options
-	^ Array fromJsStrings: INLINE 'fs$.readdirSync( path.js, options.js )'.
+	^ Array fromJsStrings:
+		INLINE 'fs$.readdirSync( path.js, options.js )'.
 !
 globSync: pattern options: options
-	^ Array fromJsStrings: INLINE 'fs$.globSync( pattern.js, ( options.js ? options.js : undefined ) )'.
+	^ Array fromJsStrings:
+		INLINE 'fs$.globSync( pattern.js, ( options.js ? options.js : undefined ) )'.
 !
 rmdirSync: path
 	INLINE 'fs$.rmdirSync( path.js )'.

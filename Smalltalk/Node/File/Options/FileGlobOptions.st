@@ -21,6 +21,6 @@ withFileTypes: withFileTypes
 	INLINE 'this.js.withFileTypes = withFileTypes.js'.
 !
 exclude: block
-	INLINE 'this.js.exclude = ( fileName ) => stBoolean$class.$fromJs$(
-		block.$value$value$( stString$class.$fromJs$( fileName ) ) )'.
+	INLINE 'this.js.exclude = ( path ) =>
+		block.$value$( stString$class.$fromJs$( path ) ).js'.
 !

@@ -19,7 +19,7 @@ name
 	^ String fromJs: INLINE 'this.js.name'.
 !
 name: name
-	self assert:[ #( 'RSASSA-PKCS1-v1_5' 'RSA-PSS' 'RSA-OAEP' ) includes: name ].
+	self assert: [ #( 'RSASSA-PKCS1-v1_5' 'RSA-PSS' 'RSA-OAEP' ) includes: name ].
 	INLINE 'this.js.name = name.js'.
 !
 modulusLength
@@ -38,6 +38,6 @@ hash
 	^ String fromJs: INLINE 'this.js.hash'
 !
 hash: hash
-	self assert:[ #( 'SHA-256' 'SHA-384' 'SHA-512' ) includes: hash ].
+	self assert: [ #( 'SHA-256' 'SHA-384' 'SHA-512' ) includes: hash ].
 	INLINE 'this.js.hash = hash.js'
 !
