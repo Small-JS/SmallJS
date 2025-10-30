@@ -1,7 +1,8 @@
 CLASS SqlTable EXTENDS Object MODULE Database CLASSVARS '' VARS 'name database rowClass'
-	"This class implements an abstract SQL Table.
-	 The table in the database should have an column named 'id' of type autonumber to manage peristance.
-	 Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
+
+"This class implements an abstract SQL Table.
+The table in the database should have an column named 'id' of type autonumber to manage peristance.
+Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
 
 CLASSMETHODS
 

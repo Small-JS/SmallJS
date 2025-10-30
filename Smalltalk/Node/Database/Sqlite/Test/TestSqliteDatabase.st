@@ -1,6 +1,11 @@
 CLASS TestSqliteDatabaseSync EXTENDS Test MODULE TestDatabase CLASSVARS ''
 	VARS 'database typeTable type'
 
+"Tests SQLite with its *sync* interface,
+that is compatible with that of other supported databases with async interfaces when using await.
+But awaits are not *necessary* and the testing functions don't need to be async.
+Also tests SqliteTable."
+
 disabled
 	"Disable these tests if database env var is not set."
 	^ ( Environment at: 'SMALLJS_SQLITE' ) isNil.

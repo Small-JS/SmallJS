@@ -12,14 +12,13 @@ INLINE 'const pg$ = await import( "pg" );'
 
 "Connect / disconnect"
 
-connect: connectionString then: block catch: errorBlock
-	INLINE 'this.js = new pg$.Client( connectionString.js )'.
-	INLINE 'this.js.connect()
-		.then( () => block.$value() )
-		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async connect: connectionString
+	INLINE '
+		this.js = new pg$.Client( connectionString.js );
+		await this.js.connect()'.
 !
-end
-	INLINE 'this.js.end()'.
+async end
+	INLINE 'await this.js.end()'.
 !
 
 "Table"
@@ -31,17 +30,11 @@ connectTable: name rowClass: rowClass
 
 "Querying"
 
-query: query then: block catch: errorBlock
-	"Force reference to prevent minimizing."
-	PostgresQueryResult.
-	INLINE 'this.js.query( query.js )
-		.then( ( queryResult ) => block.$value$( stPostgresQueryResult$class.$fromJs$( queryResult ) ) )
-		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async query: query
+	^ PostgresQueryResult fromJs:
+		INLINE 'await this.js.query( query.js )'.
 !
-query: query with: parameters then: block catch: errorBlock
-	"Force reference to prevent minimizing."
-	PostgresQueryResult.
-	INLINE 'this.js.query( query.js, parameters.$toJs() )
-		.then( ( queryResult ) => block.$value$( stPostgresQueryResult$class.$fromJs$( queryResult ) ) )
-		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async query: query with: parameters
+	^ PostgresQueryResult fromJs:
+		INLINE 'await this.js.query( query.js, parameters.$toJs() )'.
 !

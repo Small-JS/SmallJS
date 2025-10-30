@@ -1,4 +1,6 @@
-CLASS MariadbOkPacket EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS MariadbQueryResult EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+
+"Implements Mariadb JS class: OkPacket"
 
 affectedRows
 	^ Integer fromJs: INLINE 'this.js.affectedRows'.

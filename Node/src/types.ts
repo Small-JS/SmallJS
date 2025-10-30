@@ -43,9 +43,28 @@ import express from "express";
 import cors from "express";
 import session from "express-session";
 
-// Databases
-import { QueryResult, DatabaseError, Client, ClientConfig } from "pg";
-import * as Mariadb from "mariadb";
-import * as MySql from "mysql2";
-import { DatabaseSync, DatabaseSyncOptions, StatementSync } from "node:sqlite";
+// ==== Databases
 
+// SQLite
+import * as sqlite from "node:sqlite";
+let sqDatabaseSync: sqlite.DatabaseSync;
+let sqDatabaseSyncOptions: sqlite.DatabaseSyncOptions;
+let sqtatementSync: sqlite.StatementSync;
+
+// Postgres
+import * as pg from "pg";
+let pgClient: pg.Client;
+let pgClientConfig: pg.ClientConfig;
+let pgQueryResult: pg.QueryResult;
+let pgDatabaseError: pg.DatabaseError;
+
+// MariaDB
+import * as mariadb from "mariadb";
+import { createConnection as mdCreateConnection } from "mariadb";
+let mdConnection: mariadb.Connection;
+// Query result 'OkPacket' has no TS type definition.
+
+import * as mysql from "mysql2";
+import { createConnection as msCreateConnection } from "mysql2";
+let msConnection: mysql.Connection;
+let msResultSetHeader: mysql.ResultSetHeader;

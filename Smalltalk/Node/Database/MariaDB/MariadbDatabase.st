@@ -12,12 +12,12 @@ INLINE 'const mariadb$ = await import( "mariadb" );'
 
 "Connecting"
 
-connect: connectionString then: block catch: errorBlock
-	INLINE 'let savedThis = this;
-		mariadb$.createConnection( connectionString.js )
-			.then( function ( connection ) { savedThis.js = connection ; block.$value() } )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async connect: connectionString
+	self js: INLINE 'await mariadb$.createConnection( connectionString.js )'.
 !
+
+"Properties"
+
 threadId
 	self isUndefined ifTrue: [ ^ nil ].
 	^ Integer fromJs: INLINE 'this.js.info.threadId'.
@@ -36,27 +36,23 @@ connectTable: name rowClass: rowClass
 
 "Querying"
 
-query: query then: block catch: errorBlock
-	INLINE 'this.js.query( query.js )
-		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )
-		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async query: query
+	^ self onQuery: (
+		JsObject fromJs: INLINE 'await this.js.query( query.js )' ).
 !
-query: query with: parameters then: block catch: errorBlock
-	INLINE 'this.js.query( query.js, parameters.$toJs() )
-		.then( ( result ) => this.$onQuery$then$( stJsObject$class.$fromJs$( result ), block ) )
-		.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async query: query with: parameters
+	^ self onQuery: (
+		JsObject fromJs: INLINE 'await this.js.query( query.js, parameters.$toJs() )' ).
 !
-onQuery: result then: block
+onQuery: result
 	"Result is a JsObject containing one of:
-		For INSERT, UPDATE, DELETE: a MariadbOkPacket
+		For INSERT, UPDATE, DELETE: a MariadbQueryResult (JS 'OkPacket')
 		For SELECT: a JS array with result JS objects (rows)."
 
-	result jsClassName = 'OkPacket'
-		ifTrue: [ result := MariadbOkPacket fromJs: result js ]
-		ifFalse: [ result := Object fromJs: result js ].
-
-	block value: result.
+	^ result jsClassName = 'OkPacket'
+		ifTrue: [ MariadbQueryResult fromJs: result js ]
+		ifFalse: [ Object fromJs: result js ].
 !
-end
-	INLINE 'this.js.end()'.
+async end
+	INLINE 'await this.js.end()'.
 !

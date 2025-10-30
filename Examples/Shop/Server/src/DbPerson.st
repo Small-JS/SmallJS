@@ -24,13 +24,18 @@ salt: aSalt
 	salt := aSalt.
 !
 
-"Password management
- Passwords are stored internally as a SHA256 digests of a random salt prefixed to the plaintext password."
+"Password management"
+
+"Passwords are stored internally as a SHA256 digests
+of a random salt integer prefixed to the plaintext password."
 
 async setPassword: aPassword
 	"Set password using new salt."
 	salt := ( Float random * 1000000 ) toInteger.
 	password := await self hashPassword: aPassword.
+!
+async checkPassword: aPassword
+	^ ( await self hashPassword: aPassword ) = password.
 !
 async hashPassword: aPassword
 	"Return hashed password with stored salt."
@@ -39,7 +44,4 @@ async hashPassword: aPassword
 	digestBuffer := await Crypto digest: 'SHA-256' data: passwordData.
 	hashedPassword := ( Uint8Array buffer: digestBuffer ) toHex.
 	^ hashedPassword.
-!
-async checkPassword: aPassword
-	^ ( await self hashPassword: aPassword ) = password.
 !

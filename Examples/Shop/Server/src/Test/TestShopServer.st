@@ -27,7 +27,7 @@ requestLogin
 		then: [ :response | self onLoginResponse: response ]
 		catch: [ :error | error throw ] .
 
-	timer := Timer timeout: 5000 then: [
+	timer := Timer timeout: "5000" 99999 then: [
 			Error throw: 'Fetch login timer expired' ].
 !
 onLoginResponse: response
@@ -51,7 +51,7 @@ requestProducts
 	self fetchObject: 'http://localhost:3000/api/products'
 		then: [ :objects | self onProductsResponse: objects ].
 
-	timer := Timer timeout: 5000 then: [
+	timer := Timer timeout: "5000" 99999 then: [
 			Error throw: 'Fetch products timer expired' ].
 !
 onProductsResponse: objects
@@ -72,7 +72,7 @@ requestOrders
 	self fetchObject: 'http://localhost:3000/api/orders'
 		then: [ :objects | self onOrdersResponse: objects ].
 
-	timer := Timer timeout: 5000 then: [
+	timer := Timer timeout: "5000" 99999 then: [
 			Error throw: 'Fetch orders timer expired' ].
 !
 onOrdersResponse: object

@@ -3,7 +3,8 @@ CLASS PostgresQueryResult EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
 "This class implements a Postgres SqlQueryResult."
 
 fieldNames
-	^ Array fromJsStrings: INLINE 'this.js.fields.map( field => field.name )'.
+	^ Array fromJsStrings:
+		INLINE 'this.js.fields.map( field => field.name )'.
 !
 rows
 	^ Object fromJs: INLINE 'this.js.rows'.

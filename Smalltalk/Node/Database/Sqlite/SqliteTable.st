@@ -5,8 +5,6 @@ CLASS SqliteTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
  of which instances map to rows in this table,
  using an obigatory autonumber id column."
 
-METHODS
-
 "Quoting and parameters"
 
 quote
@@ -27,8 +25,6 @@ columnValues: sqlObject
 		value class = Boolean ifTrue: [ value := value ifTrue: [ 1 ] ifFalse: [ 0 ] ].
 		value ].
 !
-
-"=============================== Sync operations"
 
 "Selecting"
 
@@ -118,48 +114,3 @@ deleteAll
 	database exec: 'DELETE FROM ', self quotedName.
 !
 
-"=============================== Async operations"
-
-"Selecting"
-
-selectAllThen: block catch: errorBlock
-	[ block value: self selectAll ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-select: condition then: block catch: errorBlock
-	block value: ( self select: condition ).
-!
-select: condition with: parameters then: block catch: errorBlock
-	[ block value: ( self select: condition with: parameters ) ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-selectId: id then: block catch: errorBlock
-	[ block value: ( self selectId: id ) ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-
-"Inserting"
-
-insert: sqlObject then: block catch: errorBlock
-	[ self insert: sqlObject. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-
-"Updating"
-
-update: sqlObject then: block catch: errorBlock
-	"Async compatibility method that is executed sync."
-	[ self update: sqlObject. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-
-"Deleting"
-
-deleteAllThen: block catch: errorBlock
-	[ self deleteAll. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-delete: sqlObject then: block catch: errorBlock
-	[ self delete: sqlObject. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
-!

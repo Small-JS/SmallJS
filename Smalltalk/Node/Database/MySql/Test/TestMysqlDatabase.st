@@ -9,144 +9,95 @@ disabled
 	"Disable these tests if database env var is not set."
 	^ ( Environment at: 'SMALLJS_MYSQL' ) isNil.
 !
-test
-	self connect.
+async test
+	await self connect.
+	await self tableDeleteAll.
+	await self tableInsert.
+	await self databaseSelect.
+	await self tableSelectAll.
+	await self tableSelect.
+	await self tableSelectWith.
+	await self tableSelectId.
+	await self tableUpdate.
+	await self tableDelete.
+	await self end.
 !
-connect
+async connect
 	| connectionString |
 	connectionString := Environment at: 'SMALLJS_MYSQL'.
 	self assert: [ connectionString startsWith: 'mysql:' ].
 
 	database := MysqlDatabase new.
-	"Note: MySQL server will close the connection
-	if the user is not logged in within ~ 10 seconds of the connection attempt.
-	This can occur if there is a breakpoint in another async function that is run first.
-	The solution is to temporarily disable this module by returning 'true' from the method 'disabled'."
-	database connect: connectionString
-		then: [ self onConnect ]
-		catch: [ :error | error throw ].
-!
-onConnect
-	typeTable := database connectTable: 'type' rowClass: MyType.
+	await database connect: connectionString.
 
-	self tableDeleteAll.
+	typeTable := database connectTable: 'type' rowClass: MyType.
 !
-tableDeleteAll
+async tableDeleteAll
 	typeTable deleteAllThen: [ self tableInsert ]
 		catch: [ :error | error throw ].
 !
-tableInsert
+async tableInsert
 	| binary |
 	"The mysql2 package supports Node.js class Buffer and not the common class UInt8Array."
 	binary := ( Buffer new: 6 ) fill: 127 start: 0 end: 6.
 	type := MyType new
 		string: 'Hi'; integer: 7; float: Float pi * 2;
 		date: Date new; binary: binary; boolean: true.
-
-	typeTable insert: type
-		then: [ self onTableInsert ]
-		catch: [ :error | error throw ].
-!
-onTableInsert
+	await typeTable insert: type.
 	self assert: [ type id > 0 ].
-
-	self databaseSelect.
 !
-databaseSelect
-	database query: 'SELECT * FROM `Type` WHERE `string` = ?'
-		with: #( ( type string ) )
-		then: [ :result | self onDatabaseSelect: result ]
-		catch: [ :error | error throw ].
-!
-onDatabaseSelect: result
-	| newType |
+async databaseSelect
+	| query result selectedType |
+	query := 'SELECT * FROM `Type` WHERE `string` = ?'.
+	result := await database query: query with: #( ( type string ) ).
 	self assert: [ result length = 1 ].
 
-	newType := MyType fromObject: result first.
-	"Manual type conversion, because the desired type is not known here."
-	newType date: ( Date fromString: newType date ).
-	newType boolean: ( Boolean fromInteger: newType boolean ).
-
-	self assert: [ newType = type ].
-
-	self tableSelectAll.
+	selectedType := MyType fromObject: result first.
+	"Manual date and boolean type conversion."
+	selectedType date: ( Date fromString: selectedType date ).
+	selectedType boolean: ( Boolean fromInteger: selectedType boolean ).
+	self assert: [ selectedType = type ].
 !
-tableSelectAll
-	typeTable selectAllThen: [ :types | self onTableSelectAll: types ]
-		catch: [ :error | error throw ].
-!
-onTableSelectAll: selectedTypes
+async tableSelectAll
+	| selectedTypes |
+	selectedTypes := await typeTable selectAll.
 	self assert: [ selectedTypes length = 1 ].
 	self assert: [ selectedTypes first = type ].
-
-	self tableSelect.
 !
-tableSelect
-	typeTable select: '`string` = "Hi"'
-		then: [ :types | self onTableSelect: types ]
-		catch: [ :error | error throw ].
-!
-onTableSelect: selectedTypes
+async tableSelect
+	| selectedTypes |
+	selectedTypes := await typeTable select: '`string` = "Hi"'.
 	self assert: [ selectedTypes length = 1 ].
 	self assert: [ selectedTypes first = type ].
-
-	self tableSelectParameters.
 !
-tableSelectParameters
-	typeTable select: '`integer` = ?'
-		with: #( 7 )
-		then: [ :types | self onTableSelectParameters: types ]
-		catch: [ :error | error throw ].
-!
-onTableSelectParameters: selectedTypes
+async tableSelectWith
+	| selectedTypes |
+	selectedTypes := await typeTable select: '`integer` = ?' with: #( 7 ).
 	self assert: [ selectedTypes length = 1 ].
 	self assert: [ selectedTypes first = type ].
-
-	self tableSelectId.
 !
-tableSelectId
-	typeTable selectId: type id
-		then: [ :type | self onTableSelectId: type ]
-		catch: [ :error | error throw ].
-!
-onTableSelectId: selectedType
+async tableSelectId
+	| selectedType |
+	selectedType := await typeTable selectId: type id.
 	self assert: [ selectedType notNil ].
 	self assert: [ selectedType = type ].
-
-	self tableUpdate.
 !
-tableUpdate
+async tableUpdate
+	| selectedType |
 	type string: 'There'.
-	typeTable update: type
-		then: [ self tableUpdateCheck ]
-		catch: [ :error | error throw ].
-!
-tableUpdateCheck
-	typeTable selectId: type id
-		then: [ :type | self onTableUpdateCheck: type ]
-		catch: [ :error | error throw ].
-!
-onTableUpdateCheck: selectedType
+	await typeTable update: type.
+
+	selectedType := await typeTable selectId: type id.
 	self assert: [ selectedType notNil ].
 	self assert: [ selectedType = type ].
+!
+async tableDelete
+	| selectedType |
+	await typeTable delete: type.
 
-	self tableDelete.
-!
-tableDelete
-	typeTable delete: type
-		then: [ self tableDeleteCheck ]
-		catch: [ :error | error throw ].
-!
-tableDeleteCheck
-	typeTable selectId: type id
-		then: [ :type | self onTableDeleteCheck: type ]
-		catch: [ :error | error throw ].
-!
-onTableDeleteCheck: selectedType
+	selectedType := await typeTable selectId: type id.
 	self assert: [ selectedType isNil ].
-
-	self end.
 !
-end
-	database end.
+async end
+	await database end.
 !

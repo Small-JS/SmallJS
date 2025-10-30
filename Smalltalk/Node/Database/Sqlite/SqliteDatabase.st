@@ -14,10 +14,12 @@ INLINE 'const sqlite$ = await import( "node:sqlite" );'
 CLASSMETHODS
 
 new: path
-	^ self fromJs: INLINE 'new sqlite$.DatabaseSync( path.js )'.
+	^ self fromJs:
+		INLINE 'new sqlite$.DatabaseSync( path.js )'.
 !
 new: path options: options
-	^ self fromJs: INLINE 'new sqlite$.DatabaseSync( path.js, options.js )'.
+	^ self fromJs:
+		INLINE 'new sqlite$.DatabaseSync( path.js, options.js )'.
 !
 checkExists: path
 	"Check database at path exists, otherwise throw error."
@@ -26,8 +28,6 @@ checkExists: path
 !
 
 METHODS
-
-"================================== Sync operations"
 
 "Opening & closing"
 
@@ -68,6 +68,17 @@ prepare: sql
 	^ SqliteStatement fromJs: INLINE 'this.js.prepare( sql.js )'.
 !
 
+"Common SQL interface"
+
+query: query
+	self query: query with: #().
+!
+query: query with: parameters
+	| statement |
+	statement := self prepare: query.
+	^ statement all: parameters.
+!
+
 "Table"
 
 connectTable: name rowClass: rowClass
@@ -84,23 +95,3 @@ loadExtension: path
 	INLINE 'this.js.loadExtension( path.js )'.
 !
 
-"================================== Async operations"
-
-"Connecting"
-
-connect: path then: block catch: errorBlock
-	[ self connect: path. block value ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
-
-"SQL statements"
-
-query: query then: block catch: errorBlock
-	self query: query with: #() then: block catch: errorBlock.
-!
-query: query with: parameters then: block catch: errorBlock
-	| statement |
-	statement := self prepare: query.
-	[ block value: ( statement all: parameters ) ]
-		tryCatch: [ :error | errorBlock value: error ].
-!
