@@ -6,8 +6,6 @@ INLINE 'import express from "express";'
 INLINE 'import cors from "express";'
 INLINE 'import session from "express-session";'
 
-METHODS
-
 constructor
 	INLINE 'this.js = express()'.
 !
@@ -29,15 +27,8 @@ listen: port then: block
 !
 useSession
 	| key |
-	key := self generateSessionKey.
+	key := Crypto randomUuid.
 	INLINE 'this.js.use( session( { secret: key.js, resave: false, saveUninitialized: true } ) );'.
-!
-generateSessionKey
-	| key |
-	key := ''.
-	8 timesRepeat: [
-		key := key + ( ( Float random * 100 ) toInteger toString padStart: 2 with: '0' ) ].
-	^ key.
 !
 useCors
 	INLINE 'this.js.use( cors() )'.

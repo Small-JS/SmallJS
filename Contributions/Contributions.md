@@ -12,3 +12,10 @@ This is another implementation of the Counter example
 that uses the Mithril HTML UI library and the Tachyons CSS stylesheet.
 
 >[CounterUsingMithril.md](./CounterUsingMithril/CounterUsingMithril.md)
+
+## Pharo Smalltalk app server with SmallJS client
+
+Small Pharo Smalltalk web app server communicating with a SmallJS client\
+through a web API using Pharo Zinc framework.
+
+>[Pharo.md](./Pharo/Pharo.md)

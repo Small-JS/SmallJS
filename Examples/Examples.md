@@ -47,13 +47,6 @@ Electron example app in SmallJS.
 
 >[Electron.md](./Electron/Electron.md)
 
-## Pharo Smalltalk app server with SmallJS client
-
-Small Pharo Smalltalk web app server communicating with a SmallJS client\
-through a web API using Pharo Zinc framework.
-
->[Pharo.md](./Pharo/Pharo.md)
-
 ## NodeGui
 
 Node.js app with a GUI by using the NodeGui library, based in Qt.

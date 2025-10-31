@@ -1,9 +1,0 @@
-/vm/*
-!/vm/ExtractPharoVmHere.txt
-/pharo-local
-*.changes
-*.image
-*.sources
-*.version
-stderr*
-stdout*

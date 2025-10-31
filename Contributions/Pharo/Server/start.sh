@@ -32,6 +32,10 @@ fi
 
 # Start Pharo with config options
 
+# 2025-10-31 The startup 'st' command currently does not work anymore.
+# So the SmallJS web server web server needs to be started by hand in Pharo
+# with: SmalljsServer new start
+
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
