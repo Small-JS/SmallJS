@@ -1,37 +1,31 @@
 CLASS OrderApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
-	VARS 'orderTable orderTableBody orders products'
+	VARS 'orderTable orders products'
 
 METHODS
 
-start
+async start
 	orderTable := Document getElementById: 'orderTable' class: HtmlTableElement.
 
-	self loadOrders.
+	await self loadOrders.
 !
-loadOrders
-	|  ordersApi |
+async loadOrders
+	|  ordersApi object |
 
 	ordersApi := Window default location hostPath, '/api/orders'.
-	Fetch
-		object: ordersApi
-		then: [ :object | self onLoadOrders: object ]
-		catch: [ :error | self onLoadOrdersError: error ] .
-!
-onLoadOrders: object
-	orders := ( object atProperty: 'orders' ) map: [ :object | Order fromObject: object ].
-	products := ( object atProperty: 'products' ) map: [ :object | Product fromObject: object ].
+	object := await Fetch object: ordersApi.
 
+	products := ( object atProperty: 'products' )
+		map: [ :object | Product fromObject: object ].
+	orders := ( object atProperty: 'orders' )
+		map: [ :object | Order fromObject: object ].
 	"Connect orders to products by direct references, replacing product ids."
-	orders do: [ :order |
-		order product: ( products find: [ :product | product id = order product ] ) ].
+	orders do: [ :order | order product:
+		( products find: [ :product | product id = order product ] ) ].
 
 	self showOrders.
 
 	self testMode ifTrue: [
 		TestOrderApp new test: self ].
-!
-onLoadOrdersError: error
-	self error: error message.
 !
 showOrders
 	| row priceString |

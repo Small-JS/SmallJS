@@ -16,13 +16,13 @@ start
 	self testMode ifTrue: [
 		TestMyBrowserApp new test: self ].
 !
-bindElements
+async bindElements
 	"Load components and add them to the components var."
 
 	components := Array new.
-	self componentClasses do: [ :componentClass |
-		components add: (
-			componentClass new appendToElement: 'elementTesterTableBody' then: [] ) ].
+	self componentClasses do: async [ :componentClass |
+		components add:
+			await componentClass new appendToElement: 'elementTesterTableBody' ].
 !
 
 "Accessing"

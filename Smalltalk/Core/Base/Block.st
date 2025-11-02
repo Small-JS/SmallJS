@@ -16,10 +16,12 @@ value: arg1 value: arg2
 	^ INLINE 'this.js( arg1, arg2 )'.
 !
 tryCatch: block
-	INLINE 'try { return this.$value() } catch( error ) { return block.$value$( stError$class.$fromJs$( error ) ) }'.
+	INLINE 'try { return this.$value() }
+		catch( error ) { return block.$value$( stError$class.$fromJs$( error ) ) }'.
 !
 whileTrue: block
-	INLINE 'while( this.$value().js ) block.$value()'.
+	INLINE 'while( this.$value().js )
+		block.$value()'.
 !
 whileTrue
 	INLINE 'while( this.$value().js )'.

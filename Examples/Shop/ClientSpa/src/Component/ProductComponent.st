@@ -3,39 +3,33 @@ CLASS ProductComponent EXTENDS Component MODULE ShopClient CLASSVARS '' VARS 'pr
 htmlPath
 	^ 'Product/Product.html'.
 !
-start
+async start
 	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
-	NavBarComponent new app: self app;
-		loadIntoElement: 'productNavBar' then: [
-			self loadProducts ].
+	await NavBarComponent new
+		app: self app;
+		loadIntoElement: 'productNavBar'.
+	await self loadProducts.
 !
 
 "Loading"
 
-loadProducts
-	| productsApi |
+async loadProducts
+	| productsApi objects |
 
 	productsApi := self app url, '/api/products'.
-	Fetch
-		object: productsApi
-		then: [ :objects | self onLoadProducts: objects ]
-		catch: [ :error | self onLoadProductsError: error ] .
-!
-onLoadProducts: objects
+	objects := await Fetch object: productsApi.
+
 	products := objects map: [ :object | Product fromObject: object ].
 	self showProducts.
 
 	self app testMode ifTrue: [
 		TestProductComponent new test: self ].
 !
-onLoadProductsError: error
-	self error: error message.
-!
 
 "Showing"
 
-showProducts
+async showProducts
 	| row |
 
 	productTable tBody innerHtml: ''.

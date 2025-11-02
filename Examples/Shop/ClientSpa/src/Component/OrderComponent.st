@@ -6,25 +6,24 @@ METHODS
 htmlPath
 	^ 'Order/Order.html'.
 !
-start
+async start
 	orderTable := Document getElementById: 'orderTable' class: HtmlTableElement.
 
-	NavBarComponent new app: self app;
-		loadIntoElement: 'orderNavBar' then: [
-			self loadOrders ].
+	await NavBarComponent new
+		app: self app;
+		loadIntoElement: 'orderNavBar'.
+	await self loadOrders.
 !
-loadOrders
-	|  ordersApi |
+async loadOrders
+	|  ordersApi object |
 
 	ordersApi := Window default location hostPath, '/api/orders'.
-	Fetch
-		object: ordersApi
-		then: [ :object | self onLoadOrders: object ]
-		catch: [ :error | self onLoadOrdersError: error ] .
-!
-onLoadOrders: object
-	orders := ( object atProperty: 'orders' ) map: [ :object | Order fromObject: object ].
-	products := ( object atProperty: 'products' ) map: [ :object | Product fromObject: object ].
+	object := await Fetch  object: ordersApi.
+
+	orders := ( object atProperty: 'orders' )
+		map: [ :object | Order fromObject: object ].
+	products := ( object atProperty: 'products' )
+		map: [ :object | Product fromObject: object ].
 
 	"Connect orders to products by direct references, replacing product ids."
 	orders do: [ :order |
@@ -34,9 +33,6 @@ onLoadOrders: object
 
 	self app testMode ifTrue: [
 		TestOrderComponent new test: self ].
-!
-onLoadOrdersError: error
-	self error: error message.
 !
 showOrders
 	| row priceString |

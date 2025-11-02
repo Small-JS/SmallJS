@@ -1,4 +1,4 @@
-CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer timer cookie'
+CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer sessionCookie'
 
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
@@ -12,77 +12,50 @@ test: aShopServer
 	Test allThen: [
 		self testApi ].
 !
-testApi
+async testApi
 	self log: 'Starting API tests.'.
 
 	"The tests are chained end-to-start because they must run async."
-	self requestLogin.
+	await self requestLogin.
+	await self requestProducts.
+	await self requestOrders.
+	await self stopServer.
 !
-requestLogin
-	| person |
+async requestLogin
+	| person url response object loginResponse |
 	person := Person new name: 'John'; password: 'secret'.
-
-	Fetch
-		request: 'http://localhost:3000/api/login', person toQuery
-		then: [ :response | self onLoginResponse: response ]
-		catch: [ :error | error throw ] .
-
-	timer := Timer timeout: "5000" 99999 then: [
-			Error throw: 'Fetch login timer expired' ].
-!
-onLoginResponse: response
-	timer clearTimeout.
-
+	url := 'http://localhost:3000/api/login', person toQuery.
+	response := await Fetch request: url.
 	self assert: [ response status = 200 ].
-	response jsonThen: [ :object | self onLoginResponse2: response object: object ].
+
+	object := await response json.
+	loginResponse := LoginResponse fromObject: object.
+	self assert: [ loginResponse success ].
+	self assert: [ loginResponse message = 'Login succeeded' ].
+
+	sessionCookie := response cookie.
+	self assert: [ sessionCookie includes: 'connect.sid' ].
+
 !
-onLoginResponse2: response object: object
-	| result |
-	result := LoginResponse fromObject: object.
-	self assert: [ result success ].
-	self assert: [ result message = 'Login succeeded' ].
+async requestProducts
+	| objects products product |
+	objects := await self fetchObject: 'http://localhost:3000/api/products'.
 
-	cookie := response cookie.
-	self assert: [ cookie includes: 'connect.sid' ].
-
-	self requestProducts.
-!
-requestProducts
-	self fetchObject: 'http://localhost:3000/api/products'
-		then: [ :objects | self onProductsResponse: objects ].
-
-	timer := Timer timeout: "5000" 99999 then: [
-			Error throw: 'Fetch products timer expired' ].
-!
-onProductsResponse: objects
-	| products product |
-
-	timer clearTimeout.
-
+	"'objects' should contain an array of productss."
 	self assert: [ objects length = 3 ].
 
 	product := Product fromObject: objects first.
 	self assert: [ product id = 1 ].
 	self assert: [ product name = 'Apple' ].
 	self assert: [ product price = 100 ].
-
-	self requestOrders.
 !
-requestOrders
-	self fetchObject: 'http://localhost:3000/api/orders'
-		then: [ :objects | self onOrdersResponse: objects ].
+async requestOrders
+	| object orders order products product |
+	object := await self fetchObject: 'http://localhost:3000/api/orders'.
 
-	timer := Timer timeout: "5000" 99999 then: [
-			Error throw: 'Fetch orders timer expired' ].
-!
-onOrdersResponse: object
 	"'object' should contain properties 'orders' and 'products'
 	 each containting an array of objects with values of the type indicated.
 	 The products are the ones referenced by the orders."
-
-	| orders products order product |
-
-	timer clearTimeout.
 
 	orders := object atProperty: 'orders'.
 	self assert: [ orders class = Array ].
@@ -102,27 +75,20 @@ onOrdersResponse: object
 	self assert: [ product id = 2 ].
 	self assert: [ product name = 'Orange' ].
 	self assert: [ product price = 150 ].
-
-	self stopServer.
 !
-fetchObject: url then: block
-	"Fetch object while setting cookie."
+async fetchObject: url
+	"Fetch array of objects while setting session cookie."
 	| options headers |
 
 	headers := Headers new
-		set: 'cookie' value: cookie.
+		set: 'cookie' value: sessionCookie.
 	options := RequestInit new
 		headers: headers.
 
-	Fetch
-		object: url
-		options: options
-		then: [ :objects | block value: objects ]
-		catch: [ :error | error throw ] .
+	^ await Fetch object: url options: options.
 !
-stopServer
+async stopServer
 	self log: 'API tests successful.'.
 	self log: 'Stopping server.'.
-	Timer timeout: 1000 then: [
-		shopServer stop ].
+	await shopServer stop.
 !

@@ -9,9 +9,9 @@ close
 closeAllConnections
 	INLINE 'this.js.closeAllConnections()'.
 !
-terminate
+async terminate
 	INLINE '
 		let server = this.js;
 		const httpTerminator = createHttpTerminator( { server, } );
-		httpTerminator.terminate();'.
+		await httpTerminator.terminate();'.
 !

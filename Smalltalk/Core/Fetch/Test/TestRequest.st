@@ -55,8 +55,8 @@ testInitialized
 	self assert: [ request signal aborted not ].
 	self assert: [ request url includes: 'unknown.com' ].
 !
-testMethods
-	| url requestInit request |
+async testMethods
+	| url requestInit request arrayBuffer blob bytes text object formData |
 
 	url := 'http://unknown.com'.
 	requestInit := RequestInit new
@@ -72,40 +72,28 @@ testMethods
 	 so a new request is made for every buffer reading."
 
 	request := Request url: url options: requestInit.
-	request arrayBufferThen: [ :arrayBuffer | self onArrayBuffer: arrayBuffer ].
+	arrayBuffer := await request arrayBuffer.
+	self assert: [ arrayBuffer byteLength = 12 ].
 
 	request := Request url: url options: requestInit.
-	request blobThen: [ :blob | self onBlob: blob ].
+	blob := await request blob.
+	self assert: [ blob size = 12 ].
 
 	request := Request url: url options: requestInit.
-	request bytesThen: [ :bytes | self onBytes: bytes ].
+	bytes := await request bytes.
+	self assert: [ bytes byteLength = 12 ].
 
 	request := Request url: url options: requestInit.
-	request textThen: [ :text | self onText: text ].
+	text := await request text.
+	self assert: [ text = 'request body' ].
 
 	requestInit body: '{ "a": 1 }'.
 	request := Request url: url options: requestInit.
-	request jsonThen: [ :object | self onJson: object ].
+	object := await request json.
+	self assert: [ ( object atProperty: 'a' ) = 1 ].
 
 	requestInit body: ( FormData new append: 'b' value: 2 ).
 	request := Request url: url options: requestInit.
-	request formDataThen: [ :formData | self onFormData: formData ].
-!
-onArrayBuffer: arrayBuffer
-	self assert: [ arrayBuffer byteLength = 12 ].
-!
-onBlob: blob
-	self assert: [ blob size = 12 ].
-!
-onBytes: bytes
-	self assert: [ bytes byteLength = 12 ].
-!
-onText: text
-	self assert: [ text = 'request body' ].
-!
-onJson: object
-	self assert: [ ( object atProperty: 'a' ) = 1 ].
-!
-onFormData: formData
+	formData := await request formData.
 	self assert: [ ( formData get: 'b' ) = 2 ].
 !

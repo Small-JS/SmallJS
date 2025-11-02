@@ -38,6 +38,9 @@ import crypto from "node:crypto";
 import http from "node:http";
 import { createHttpTerminator } from "http-terminator";
 
+// Server
+import { HttpTerminator } from "http-terminator";
+
 // Express
 import express from "express";
 import cors from "express";

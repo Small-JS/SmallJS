@@ -12,28 +12,18 @@ test: aAiServer
 	Test allThen: [
 		self testApi ].
 !
-testApi
+async testApi
 	self log: 'TestAiServer: Starting API tests.'.
 
 	"Tests execution is chained to facilite debugging."
-	self testProviders.
+	await self testProviders.
+	self testChat.
 !
-testProviders
-	| url |
+async testProviders
+	| url object providers provider ai models |
 
 	url := 'http://localhost:', aiServer port toString, '/api/providers'.
-	Fetch
-		request: url
-		then: [ :response | self onProviders: response ]
-		catch: [ :error | error throw ] .
-!
-onProviders: response
-	self assert: [ response status = 200 ].
-	response jsonThen: [ :object | self onProviders2: object ].
-!
-onProviders2: object
-	| providers provider ai models |
-
+	object := await Fetch object: url.
 	providers := AiProviders fromObject: object.
 	self assert: [ providers size > 0 ].
 
@@ -43,8 +33,6 @@ onProviders2: object
 
 	models := providers modelsFor: provider.
 	self assert: [ models = ai class models ].
-
-	self testChat.
 !
 testChat
 	chatReponseCount := 0.
@@ -54,34 +42,22 @@ testChat
 	Timer timeout: 10000 then: [
 		self checkChatCount ].
 !
-chatRequest: ai
-	| chatRequest url |
+async chatRequest: ai
+	| id chatRequest url object chatResponse |
 
+	id := ai nextId.
 	chatRequest := AiChatRequest new
 		provider: ai name;
 		model: ai class models first;
 		messages: #( 'Say exactly: This is a test' ).
 	url := 'http://localhost:', aiServer port toString, '/api/chat', chatRequest toUrlQuery.
-
-	Fetch
-		request: url
-		then: [ :response | self onChatResponse: response id: ai nextId ]
-		catch: [ :error | error throw ].
-
-!
-onChatResponse: response id: id
-	self assert: [ response status = 200 ].
-	response jsonThen: [ :object | self onChatResponse2: object id: id ].
-!
-onChatResponse2: object id: id
-	| response |
-
+	object := await Fetch object: url.
 	self log: 'TestAiServer: Resonse received with id: ', id.
 	self assert: [ id endsWith: '-1' ].
 
-	response := AiChatResponse fromObject: object.
-	self assert: [ response success ].
-	self assert: [ response text toLowerCase includes: 'test' ].
+	chatResponse := AiChatResponse fromObject: object.
+	self assert: [ chatResponse success ].
+	self assert: [ chatResponse text toLowerCase includes: 'test' ].
 
 	chatReponseCount := chatReponseCount + 1.
 !

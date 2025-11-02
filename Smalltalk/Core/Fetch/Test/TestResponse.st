@@ -1,16 +1,13 @@
 CLASS TestResponse EXTENDS Test MODULE Core CLASSVARS '' VARS ''
 
-test
-	Fetch request: 'https://jsonplaceholder.typicode.com/posts/1'
-		then: [ :response | self onRequest: response ]
-		catch: [ :error | error throw ].
-!
-onRequest: response
-	"Example response body (will have double quotes for the strings):
+async test
+	| url response headers text bytes arrayBuffer blob object |
+
+	"The test API: https://jsonplaceholder.typicode.com/posts/1
+	Gives response body: (will have double quotes for the strings):
 	{ 'userId' : 1, 'id': 1, 'title': 'sunt aut facere ...', 'body': 'quia et suscipit ...' }"
-
-	| headers bytes |
-
+	url := 'https://jsonplaceholder.typicode.com/posts/1'.
+	response := await Fetch request: url.
 	self assert: [ response body class = ReadableStream ].
 	self assert: [ response bodyUsed not ].
 
@@ -27,28 +24,24 @@ onRequest: response
 	self assert: [ response redirected not ].
 	"Browsers give deault type 'cors' iso 'basic'"
 	self assert: [ #( 'basic' 'cors' ) includes: response type ].
-	self assert: [ response url = 'https://jsonplaceholder.typicode.com/posts/1'  ].
+	self assert: [ response url = url ].
 
-	response clone textThen: [ :text | self onResponseText: text ].
-	response clone bytesThen: [ :bytes | self onResponseBytes: bytes ].
-	response clone arrayBufferThen: [ :arrayBuffer | self onArrayBuffer: arrayBuffer ].
-	response clone blobThen: [ :blob | self onBlob: blob ].
-	response clone jsonThen: [ :object | self onJson: object ].
-	"formDataThen: is not tested, no suitable API present."
-!
-onResponseText: text
+	text := await response clone text.
 	self assert: [ text includes: 'title' ].
-!
-onResponseBytes: bytes
+
+	bytes := await response clone bytes.
 	self assert: [ ( bytes at: 0 ) = 123 ].
 	self assert: [ ( bytes at: 1 ) = 10 ].
-!
-onArrayBuffer: arrayBuffer
+
+	arrayBuffer := await response clone arrayBuffer.
 	self assert: [ arrayBuffer byteLength = 292 ].
-!
-onBlob: blob
+
+	blob := await response clone blob.
 	self assert: [ blob size = 292 ].
-!
-onJson: object
+
+	object := await response clone json.
 	self assert: [ ( object atProperty: 'id' ) = 1 ].
+
+	"formDataThen: is not tested here,
+	 because the is no suitable API present in API test site typicode.com."
 !

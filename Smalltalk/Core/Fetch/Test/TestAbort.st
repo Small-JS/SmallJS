@@ -13,13 +13,18 @@ testCreation
 	self assert: [ signal aborted ].
 !
 testFetchAbort
-	| controller requestInit signal |
+	| controller requestInit response signal |
+
+	"This test is disabled by default, because the VSCode debugger halts
+	on the rejected promise after the intentionally aborted fetch."
+	^ self.
+
 	controller := AbortController new.
 	requestInit := RequestInit new
 		signal: controller signal.
 
-	Fetch request: 'https://jsonplaceholder.typicode.com/posts/1'
-		options: requestInit
+	"Don't await the fetch, but immediately abort it after starting."
+	Promise fromJs: ( Fetch request: 'https://jsonplaceholder.typicode.com/posts/1' options: requestInit )
 		then: [ :response | self onFetchAbort: response ]
 		catch: [ :error | self onFetchAbortError: error ].
 
@@ -38,11 +43,15 @@ onFetchAbortError: error
 !
 testFetchTimedAbort
 	| requestInit |
+
+	"This test is disabled by default, because the VSCode debugger halts
+	on the rejected promise after the intentionally aborted fetch."
+	^ self.
+
 	requestInit := RequestInit new
 		signal: ( AbortSignal timeout: 0 ).
 
-	Fetch request: 'https://jsonplaceholder.typicode.com/posts/1'
-		options: requestInit
+	Promise fromJs: ( Fetch request: 'https://jsonplaceholder.typicode.com/posts/1' options: requestInit )
 		then: [ :response | self onFetchTimedAbort: response ]
 		catch: [ :error | self onFetchTimedAbortError: error ].
 !

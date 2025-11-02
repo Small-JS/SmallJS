@@ -1,46 +1,44 @@
 CLASS Fetch EXTENDS Object MODULE Core CLASSVARS '' VARS ''
-	"Implements JS fetch() API."
+
+"Implements JS fetch() API plus some conversions."
 
 CLASSMETHODS
 
-request: url then: block catch: errorBlock
-	self request: url options: RequestInit new then: block catch: errorBlock
+"Fetch Response"
+
+async request: url
+	^ Response fromJs: INLINE 'await fetch( url.js )'.
 !
-request: url options: options then: block catch: errorBlock
-	"Calls the block with the fetched Response object."
-	Response.  "Force import"
-	INLINE '
-		fetch( url.js, options.js )
-			.then( response => block.$value$( stResponse$class.$fromJs$( response ) ) )
-			.catch( error => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async request: url options: options
+	^ Response fromJs: INLINE 'await fetch( url.js, options.js )'.
 !
-text: url then: block catch: errorBlock
-	self text: url options: RequestInit new then: block catch: errorBlock
+
+"Fetch text string"
+
+async text: url
+	^ await self text: url options: nil.
 !
-text: url options: options then: block catch: errorBlock
-	"Calls the block with the fetched file content as a text string."
-	self request: url
-		options: options
-		then: [ :response | self onFile: response then: block catch: errorBlock ]
-		catch: errorBlock.
-!
-onFile: response then: block catch: errorBlock
+async text: url options: options
+	"Returns the fetched file content as a text string."
+	| response |
+	response := await self request: url options: options.
 	response status = 200
-		ifTrue: [ response textThen: [ :string | block value: string  ] ]
-		ifFalse: [ errorBlock value: ( Error new: response statusAndText ) ].
+		ifFalse: [ Error throw: response statusAndText ].
+
+	^ await response text.
 !
-object: url then: block catch: errorBlock
-	self object: url options: RequestInit new then: block catch: errorBlock
+
+"Fetch Object"
+
+async object: url
+	^ await self object: url options: nil
 !
-object: url options: options then: block catch: errorBlock
-	"Calls the block with a ST object constructed from the the fetched JSON response."
-	self request: url
-		options: options
-		then: [ :response | self onObject: response then: block catch: errorBlock ]
-		catch: errorBlock.
-!
-onObject: response then: block catch: errorBlock
+async object: url options: options
+	"Returns a ST object constructed from the the fetched JSON response."
+	| response |
+	response := await self request: url options: options.
 	response status = 200
-		ifTrue: [ response jsonThen: [ :object | block value: object  ] ]
-		ifFalse: [ errorBlock value: ( Error new: response statusAndText ) ].
+		ifFalse: [ Error throw: response statusAndText ].
+
+	^ await response json.
 !

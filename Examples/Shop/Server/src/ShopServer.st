@@ -154,7 +154,7 @@ async orders: request response: response
 		atProperty: 'products' put: products.
 	response send: result toJsObject.
 !
-stop
-	server terminate.
-	database end.
+async stop
+	await server terminate.
+	await database end.
 !

@@ -14,5 +14,5 @@ loadComponent: componentClass
 	| component |
 	component := componentClass new app: self.
 	"Note: The compontent start method is called automatically"
-	component loadIntoElement: 'component' then: [ ].
+	component loadIntoElement: 'component'.
 !

@@ -2,10 +2,10 @@ CLASS ProductApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS '' VARS 'product
 
 METHODS
 
-start
+async start
 	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
-	self loadProducts.
+	await self loadProducts.
 
 	self testMode ifTrue: [
 		TestProductApp new test: self ].
@@ -13,17 +13,14 @@ start
 
 "Loading"
 
-loadProducts
-	| productsApi |
+async loadProducts
+	| productsApi objects |
 
 	productsApi := self url, '/api/products'.
-	Fetch
-		object: productsApi
-		then: [ :objects | self onLoadProducts: objects ]
-		catch: [ :error | self onLoadProductsError: error ] .
-!
-onLoadProducts: objects
+	objects := await Fetch object: productsApi.
+
 	products := objects map: [ :object | Product fromObject: object ].
+
 	self showProducts.
 !
 onLoadProductsError: error

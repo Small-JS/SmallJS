@@ -1,17 +1,19 @@
-CLASS Language EXTENDS Object MODULE Browser CLASSVARS '' VARS 'current supported translations'
-	"Manages the displayed language for the user.
-	 It works by replacing text in HTML elements using their id's.
-	 The translated languages are loaded JSON files with an array of <id>, <text>.
-	 The JSON file should be named '<language>.json' and placed in the './Language' directory.
-	 The preferred language is detected through 'Window navigator language'.
- 	 HTML can retain static text in the default language, for readability and testing."
+CLASS Language EXTENDS Object MODULE Browser CLASSVARS ''
+	VARS 'current supported translations'
+
+"Manages the displayed language for the user.
+It works by replacing text in HTML elements using their id's.
+The translated languages are loaded JSON files with an array of <id>, <text>.
+The JSON file should be named '<language>.json' and placed in the './Language' directory.
+The preferred language is detected through 'Window navigator language'.
+HTML can retain static text in the default language, for readability and testing."
 
 CLASSMETHODS
 
-supported: aSupported
+supported: supported
 	"Create a new langauge object with an array of supported language id's by this site.
 	 The first language is used as the default language."
-	^ self new supported: aSupported.
+	^ self new supported: supported.
 !
 
 METHODS
@@ -37,16 +39,18 @@ translations
 
 "Loading"
 
-load: code
-	"Load argument language code into the current HTML."
+async load: code
+	"Load argument language code into the current HTML page."
 
-	| fileName |
+	| fileName element |
 
 	current := self matchCode: code.
 	fileName := 'Language/', current, '.json'.
-	Fetch object: fileName
-		then: [ :object | self onLoad: object ]
-		catch: [ :error | self log: 'Failed to load language: ', fileName, ': ', error message ].
+	translations := await Fetch object: fileName.
+	translations entries do: [ :entry |
+		element := Document getElementById: ( entry at: 0 ).
+		element notNil ifTrue: [
+			self setTranslationOn: element to: ( entry at: 1 ) ] ].
 !
 matchCode: matchCode
 	"Match the argument language ID to the closest language supported.
@@ -64,17 +68,6 @@ matchCode: matchCode
 			best notNil ifTrue: [ best := code ] ] ].  "First coutry match"
 
 	^ best notNil ifTrue: [ best ] ifFalse: [ supported first  ].  "Default match"
-!
-onLoad: aTranslations
-	"Load the argument translations into the HTML page."
-
-	| element translation |
-
-	translations := aTranslations.
-	translations entries do: [ :entry |
-		element := Document getElementById: ( entry at: 0 ).
-		element notNil ifTrue: [
-			self setTranslationOn: element to: ( entry at: 1 ) ] ].
 !
 setTranslationOn: element to: translation
 	element textContent: translation.

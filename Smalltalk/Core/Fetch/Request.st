@@ -72,29 +72,23 @@ clone
 	Request fromJs: INLINE 'this.js.clone()'.
 !
 
-"Reading body"
+"Reading body as types"
 
-arrayBufferThen: block
-	INLINE 'this.js.arrayBuffer().then( buffer =>
-		block.$value$( stArrayBuffer$class.$fromJs$( buffer ) ) )'.
+async arrayBuffer
+	^ ArrayBuffer fromJs: INLINE 'await this.js.arrayBuffer()'.
 !
-blobThen: block
-	INLINE 'this.js.blob().then( blob =>
-		block.$value$( stBlob$class.$fromJs$( blob ) ) )'.
+async blob
+	^ Blob fromJs: INLINE 'await this.js.blob()'.
 !
-bytesThen: block
-	INLINE 'this.js.bytes().then( bytes =>
-		block.$value$( stUint8Array$class.$fromJs$( bytes ) ) )'.
+async bytes
+	^ Uint8Array fromJs: INLINE 'await this.js.bytes()'.
 !
-textThen: block
-	INLINE 'this.js.text().then( string =>
-		block.$value$( stString$class.$fromJs$( string ) ) )'.
+async text
+	^ String fromJs: INLINE 'await this.js.text()'.
 !
-jsonThen: block
-	INLINE 'this.js.json().then( object =>
-		block.$value$( stObject$class.$fromJs$( object ) ) )'.
+async json
+	^ Object fromJs: INLINE 'await this.js.json()'.
 !
-formDataThen: block
-	INLINE 'this.js.formData().then( formData =>
-		block.$value$( stFormData$class.$fromJs$( formData ) ) )'.
+async formData
+	^ FormData fromJs: INLINE 'await this.js.formData()'.
 !

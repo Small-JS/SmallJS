@@ -15,20 +15,12 @@ bindElements
 
 	responseSpan := Document getElementById: 'responseSpan' class: HtmlSpanElement.
 !
-sendHello
+async sendHello
 	"Send a '/hello' GET request to the server and catch the response."
-	Fetch
-		object: '/hello'
-		then: [ :object | self onResponse: object ]
-		catch: [ :error | self onError: error ] .
-!
-onResponse: object
+	| object |
+	object := await Fetch object: '/hello'.
 	responseSpan textContent: (
 		object atProperty: 'message' ).
-!
-onError: error
-	responseSpan textContent: (
-		error toString ).
 !
 
 testMode

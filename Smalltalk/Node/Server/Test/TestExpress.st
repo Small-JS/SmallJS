@@ -1,5 +1,6 @@
-CLASS TestExpress EXTENDS Test MODULE TestServer CLASSVARS '' VARS 'express server port cookie'
-	"Tests classes: Express, Server, Fetch."
+CLASS TestExpress EXTENDS Test MODULE TestServer CLASSVARS '' VARS 'express server sessionCookie'
+
+"Also tests class Server."
 
 METHODS
 
@@ -7,87 +8,67 @@ test
 	express := Express new.
 	express useSession.
 
-	express get: '/login' then:
-		[ :request :response | self onLoginRequest: request response: response ].
-	express get: '/products' then:
-		[ :request :response | self onProductsRequest: request response: response ].
+	express get: '/login'
+		then: [ :request :response | self onLoginRequest: request response: response ].
+	express get: '/products'
+		then: [ :request :response | self onProductsRequest: request response: response ].
 
-	port := 3000.
-	server := express listen: port
+	server := express listen: 3000
 		then: [ :error | self onExpressListen: error ].
 !
-onExpressListen: error
+async onExpressListen: error
 	error isNil ifFalse: [ error throw ].
 
-	self requestLogin.
+	await self requestLogin.
+	await self requestProducts.
+	server terminate.
 !
 
 "=============================== Login"
 
-requestLogin
-	| loginUrl |
+async requestLogin
+	| url response text |
 
-	loginUrl := 'http://localhost:', port toString, '/login?name=John&password=secret'.
-	Fetch
-		request: loginUrl
-		then: [ :response | self onLoginResponse: response ]
-		catch: [ :error | error throw ] .
+	url := 'http://localhost:3000/login?name=John&password=secret'.
+	response := await Fetch request: url.
+
+	text := await response text.
+	self assert: [ text = 'Login succeeded' ].
+
+	sessionCookie := response cookie.
+	self assert: [ sessionCookie includes: 'connect.sid' ].
 !
 onLoginRequest: request response: response
 	| name password |
 
-
 	name := request query atProperty: 'name'.
 	self assert: [ name = 'John' ].
+
 	password := request query atProperty: 'password'.
 	self assert: [ password = 'secret' ].
 
 	request session set: 'loggedIn' to: true.
-
 	response send: 'Login succeeded'.
-!
-onLoginResponse: response
-	response textThen: [ :text |
-		self assert: [ text = 'Login succeeded' ].
-
-		cookie := response cookie.
-		self assert: [ cookie includes: 'connect.sid' ].
-
-		self requestProducts ].
 !
 
 "=============================== Products"
 
-requestProducts
-	| url options headers |
+async requestProducts
+	| headers options url text |
 
 	headers := Headers new
-		set: 'cookie' value: cookie.
+		set: 'cookie' value: sessionCookie.
 	options := RequestInit new
 		headers: headers.
 
-	url := 'http://localhost:', port toString, '/products'.
-	Fetch text: url options: options
-		then: [ :response | self onProductsResponse: response ]
-		catch: [ :error | error throw ] .
+	url := 'http://localhost:3000/products'.
+	text := await Fetch text: url options: options.
+	self assert: [ text = 'Apple, Orange, Pear' ].
 !
 onProductsRequest: request response: response
 	| loggedIn |
-
 	loggedIn := ( request session get: 'loggedIn' ) = true.
 	loggedIn
 		ifFalse: [ response send: 'Not logged in' ]
 		ifTrue: [ response send: 'Apple, Orange, Pear' ].
-
-!
-onProductsResponse: string
-	self assert: [ string = 'Apple, Orange, Pear' ].
-
-	self end.
-!
-
-"=============================== End "
-
-end
-	server terminate.
 !

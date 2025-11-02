@@ -23,21 +23,14 @@ bindElements
 
 	loginErrorSpan := Document getElementById: 'loginErrorSpan' class: HtmlSpanElement.
 !
-onLogin
-	| person loginApi |
+async onLogin
+	| person loginApi object response |
 
 	person := Person new
 		name: userNameInput value;
 		password: passwordInput value.
 	loginApi := self app url, '/api/login', person toQuery.
-
-	Fetch
-		object: loginApi
-		then: [ :object | self onLoginResponse: object ]
-		catch: [ :error | self onLoginError: error ] .
-!
-onLoginResponse: object
-	| response |
+	object := await Fetch object: loginApi.
 
 	response := LoginResponse fromObject: object.
 	self log: 'ShopServer login response: ', response toString.
@@ -45,9 +38,6 @@ onLoginResponse: object
 	response success
 		ifTrue: [ self app loadComponent: ProductComponent ]
 		ifFalse: [ loginErrorSpan textContent: response message ].
-!
-onLoginError: error
-	loginErrorSpan textContent: error message.
 !
 
 "Accessing (used by tests)"

@@ -9,9 +9,9 @@ CLASS AiClientApp EXTENDS BrowserApp MODULE AiClientApp CLASSVARS ''
 
 METHODS
 
-start
+async start
 	self bindElements.
-	self loadData.
+	await self loadData.
 
 	self testMode ifTrue: [
 		TestAiClientApp new test: self ].
@@ -35,17 +35,11 @@ bindElements
 
 	errorSpan := Document getElementById: 'errorSpan' class: HtmlSpanElement.
 !
-loadData
+async loadData
+	| object providers option |
 	providerSelect length: 0.
 
-	Fetch
-		object: self url, '/api/providers'
-		then: [ :object | self onProvidersResponse: object ]
-		catch: [ :error | self onError: error ] .
-!
-onProvidersResponse: object
-	| providers option |
-
+	object := await Fetch object: self url, '/api/providers'.
 	aiProviders := AiProviders fromObject: object.
 	providers := aiProviders providers.
 	providers length > 0 ifFalse: [
@@ -89,8 +83,8 @@ clearConversation
 	conversationQuestions := #().
 	conversationTable removeChildren.
 !
-askQuestion
-	| request url |
+async askQuestion
+	| request url object response |
 
 	conversationQuestions add: questionTextArea value.
 
@@ -100,13 +94,7 @@ askQuestion
 		messages: conversationQuestions.
 
 	url := self url, '/api/chat', request toUrlQuery.
-	Fetch
-		object: url
-		then: [ :object | self onAskResponse: object ]
-		catch: [ :error | self onError: error ] .
-!
-onAskResponse: object
-	| response |
+	object := await Fetch object: url.
 
 	response := AiChatResponse fromObject: object.
 	response success

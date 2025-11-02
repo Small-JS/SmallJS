@@ -25,25 +25,18 @@ bindElements
 	passwordInput := Document getElementById: 'passwordInput' class: HtmlInputElement.
 
 	loginButton := Document getElementById: 'loginButton' class: HtmlButtonElement.
-	loginButton onClick: [ :event | self onLogin ].
+	loginButton onClick: [ :event | self login ].
 
 	loginErrorSpan := Document getElementById: 'loginErrorSpan' class: HtmlSpanElement.
 !
-onLogin
-	| person loginApi |
+async login
+	| person loginApi object response |
 
 	person := Person new
 		name: userNameInput value;
 		password: passwordInput value.
 	loginApi := self url, '/api/login', person toQuery.
-
-	Fetch
-		object: loginApi
-		then: [ :object | self onLoginResponse: object ]
-		catch: [ :error | self onLoginError: error ] .
-!
-onLoginResponse: object
-	| response |
+	object := await Fetch object: loginApi.
 
 	response := LoginResponse fromObject: object.
 	self log: 'ShopServer login response: ', response toString.
@@ -51,9 +44,6 @@ onLoginResponse: object
 	response success
 		ifTrue: [ self navigateTo: '../Product/Product.html' ]
 		ifFalse: [ loginErrorSpan textContent: response message ].
-!
-onLoginError: error
-	loginErrorSpan textContent: error message.
 !
 
 "Accessing (used by tests)"

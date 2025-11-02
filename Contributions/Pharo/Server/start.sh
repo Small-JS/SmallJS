@@ -25,22 +25,26 @@ fi
 if [ -z "$pharoImage" ]
 then echo "Error: Variable 'pharoImage not set"; exit 1;
 fi
+pharoImageDir=`dirname $pharoImage`
+pharoImageFile=`basename $pharoImage`
 
 if [ -z "$pharoWeb" ]
 then echo "Error: Variable 'pharoWeb not set"; exit 1;
 fi
 
-# Start Pharo with config options
+# Start Pharo with config options from image dir
+
+cd $pharoImageDir
 
 # 2025-10-31 The startup 'st' command currently does not work anymore.
 # So the SmallJS web server web server needs to be started by hand in Pharo
 # with: SmalljsServer new start
-
 if
 	[[ $OSTYPE == "darwin"* ]]
 then
 	startFile=`pwd`"/StartServer.st"
 	open -n $pharoVm --args $pharoImage st $startFile
 else
-	$pharoVm $pharoImage st StartServer.st &
+	# $pharoVm $pharoImage st StartServer.st &
+	$pharoVm $pharoImageFile &
 fi

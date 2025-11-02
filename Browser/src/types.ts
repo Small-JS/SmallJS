@@ -5,7 +5,7 @@
 
 // ==== Crypto
 
-let aCrypto = window.crypto;
+let aCrypto = crypto;
 let subtleCrypto = crypto.subtle;
 let algorithmIdentifier: Algorithm;
 let cryptoKey: CryptoKey;

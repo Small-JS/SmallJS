@@ -56,7 +56,7 @@ then: block
 	INLINE 'this.js.then( ( result ) => block.$value$( result ) )'.
 !
 catch: block
-	INLINE 'this.js.catch( ( error ) => block.$value$( error ) )'.
+	INLINE 'this.js.catch( ( error ) => block.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 finally: block
 	INLINE 'this.js.finally( () => block.$value() )'.
