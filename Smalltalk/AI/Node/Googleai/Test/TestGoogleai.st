@@ -5,8 +5,8 @@ CLASS TestGoogleai EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 disabled
 	^ Googleai available not.
 !
-test
-	| googleai params model |
+async test
+	| googleai params model response text |
 
 	googleai := Googleai new.
 	self assert: [ googleai apiKey length > 10 ].
@@ -18,11 +18,7 @@ test
 	self assert: [ model apiKey = googleai apiKey ].
 	self assert: [ model model includes: params model ].
 
-	model generateContent: #( 'Say exactly: This is a test' )
-		then: [ :response | self onGenerateContent: response ].
-!
-onGenerateContent: response
-	| text |
+	response := await model generateContent: #( 'Say exactly: This is a test' ).
 	text := response text.
 	self assert: [ text toLowerCase includes: 'test' ].
 !

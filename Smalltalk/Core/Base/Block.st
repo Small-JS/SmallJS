@@ -15,8 +15,12 @@ value: arg1
 value: arg1 value: arg2
 	^ INLINE 'this.js( arg1, arg2 )'.
 !
-tryCatch: block
+async tryCatch: block
 	INLINE 'try { return this.$value() }
+		catch( error ) { return block.$value$( stError$class.$fromJs$( error ) ) }'.
+!
+async tryAwaitCatch: block
+	INLINE 'try { return await this.$value() }
 		catch( error ) { return block.$value$( stError$class.$fromJs$( error ) ) }'.
 !
 whileTrue: block

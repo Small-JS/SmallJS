@@ -26,8 +26,8 @@ METHODS
 
 "Chat"
 
-chat: messages then: block
-	| messageParams createMessageParams |
+async chat: messages
+	| messageParams createMessageParams message |
 
 	messageParams := messages map: [ :message |
 		AnthropicMessageParam new
@@ -39,15 +39,11 @@ chat: messages then: block
 		maxTokens: 1024;
 		messages: messageParams.
 
-	self create: createMessageParams
-		then: [ :message | self onChat: message then: block ].
+	message := await self create: createMessageParams.
+	^ message content first text.
 !
-onChat: message then: block
-	block value: message content first text.
-!
-create: params then: block
-	INLINE 'this.js.messages.create( params.js )
-			.then( message => block.$value$( stAnthropicMessage$class.$fromJs$( message ) ) )'.
+async create: params
+	^ AnthropicMessage fromJs: INLINE 'await this.js.messages.create( params.js )'.
 !
 
 "Options set"

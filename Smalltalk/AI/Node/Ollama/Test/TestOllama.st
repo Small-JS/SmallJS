@@ -5,21 +5,17 @@ CLASS TestOllama EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 disabled
 	^ Ollama available not.
 !
-test
-	| ollama request |
+async test
+	| ollama request response message |
 
 	ollama := Ollama new.
 	self assert: [ ollama config host startsWith: 'http' ].
 
 	request := OllamaChatRequest new
 		model: ollama model;
-		addRole: 'user' content: 'Say exactly: this is a test'.
+		addRole: 'user' content: 'Say exactly: This is a test'.
 
-	ollama chatRequest: request
-		then: [ :response | self chatResponse: response ollama: ollama ].
-!
-chatResponse: response ollama: ollama
-	| message |
+	response := await ollama chatRequest: request.
 	self assert: [ response class = OllamaChatResponse ].
 	self assert: [ response model = ollama model ].
 	self assert: [ response createdAt toSeconds > ( Date new toSeconds - 60 ) ].

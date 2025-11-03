@@ -7,20 +7,14 @@ CLASS TestOpenai EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 disabled
 	^ Openai available not.
 !
-test
-	| openai request |
+async test
+	| openai request chatCompletion choice message usage |
 
 	openai := Openai new.
-
 	request := OpenaiChatCompletionRequest new
 		model: openai model;
-		addRole: 'user' content: 'Say this is a test'.
-
-	openai createChatCompletion: request
-		then: [ :chatCompletion | self onChatCompletion: chatCompletion ].
-!
-onChatCompletion: chatCompletion
-	| choice message usage |
+		addRole: 'user' content: 'Say exactly: This is a test'.
+	chatCompletion := await openai createChatCompletion: request.
 
 	self assert: [ chatCompletion class = OpenaiChatCompletion ].
 	self assert: [ ( Date new toSeconds - chatCompletion created toSeconds ) < 60 ].

@@ -15,22 +15,18 @@ METHODS
 
 "Chat"
 
-chat: messages then: block
-	| request |
+async chat: messages
+	| request response |
 	request := OllamaChatRequest new
 		model: self model.
 	messages do: [ :message |
 		request addRole: 'user' content: message ].
 
-	self chatRequest: request
-		then: [ :response | self onChat: response then: block ].
+	response := await self chatRequest: request.
+	^ response message content.
 !
-onChat: response then: block
-	block value: response message content.
-!
-chatRequest: request then: block
-	INLINE 'this.js.chat( request.js )
-			.then( response => block.$value$( stOllamaChatResponse$class.$fromJs$( response ) ) )'.
+async chatRequest: request
+	^ OllamaChatResponse fromJs: INLINE 'await this.js.chat( request.js )'.
 !
 
 "Accessing"

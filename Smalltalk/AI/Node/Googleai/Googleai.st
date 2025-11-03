@@ -29,11 +29,11 @@ generativeModel: params
 
 "Chat"
 
-chat: messages then: block
-	| params generativeModel |
+async chat: messages
+	| params generativeModel response |
 
 	params := GoogleaiModelParams new model: self model.
 	generativeModel := self generativeModel: params.
-	generativeModel generateContent: messages
-		then: [ :response | block value: response text ].
+	response := await generativeModel generateContent: messages.
+	^ response text.
 !

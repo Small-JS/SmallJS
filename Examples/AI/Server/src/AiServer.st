@@ -69,7 +69,6 @@ For an example result see class AiProviders."
 
 onProviders: request response: response
 	| providers |
-
 	providers := Ai providers.
 	response send: providers toObject.
 	self log: 'AiServer: Sent providers: ', providers toString.
@@ -83,40 +82,29 @@ Example request:
 Example result:
  	{ success: true, text: 'This is a test.' }"
 
-onChat: request response: response
-	| chatResponse chatRequest |
+async onChat: request response: response
+	| chatResponse chatRequest provider ai text |
 
 	chatResponse := AiChatResponse new success: false; text: ''.
 
 	chatRequest := AiChatRequest fromObject: request query.
 	self log: 'AiServer: Received chat request: ', chatRequest toString.
 
-	chatRequest provider isNil
-		ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "provider" missing' ) ]
-		ifFalse: [
-			chatRequest model isNil
-				ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "model" missing' ) ]
-				ifFalse: [
-					chatRequest messages isNil
-						ifTrue: [ response send: ( chatResponse text: 'Chat request parameter "messages" missing' ) ]
-						ifFalse: [ self onChat2: chatRequest response: response ] ] ].
-!
-onChat2: chatRequest response: response
-	| provider ai |
+	chatRequest provider ifNil: [
+		^ response send: ( chatResponse text: 'Chat request parameter "provider" missing' ) ].
+	chatRequest model ifNil: [
+		^ response send: ( chatResponse text: 'Chat request parameter "model" missing' ) ].
+	chatRequest messages ifNil: [
+		^ response send: ( chatResponse text: 'Chat request parameter "messages" missing' ) ].
 
 	provider := chatRequest provider toLowerCase.
 	ai := aiMap get: provider.
-	ai isNil
-		ifTrue: [ response send: ( AiChatResponse success: false text: 'AI provider not available: ', provider ) ]
-		ifFalse: [ ai chat: chatRequest messages
-			then: [ :text | self onChat3: text response: response ] ].
-!
-onChat3: text response: response
-	| chatResponse |
+	ai ifNil: [
+		^ response send: ( chatResponse text: 'AI provider not available: ', provider ) ].
 
-	chatResponse := AiChatResponse new success: true; text: text.
+	text := await ai chat: chatRequest messages.
+	chatResponse success: true; text: text.
 	response send: chatResponse.
-
 	self log: 'AiServer: Sent chat response: ', chatResponse toString.
 !
 stop

@@ -5,8 +5,8 @@ CLASS TestAnthropic EXTENDS Test MODULE TestAi CLASSVARS '' VARS 'anthropic'
 disabled
 	^ Anthropic available not.
 !
-test
-	| messageParam createMessageParams |
+async test
+	| messageParam createMessageParams message textBlock usage |
 
 	anthropic := Anthropic new.
 	self assert: [ anthropic apiKey startsWith: 'sk-ant' ].
@@ -17,9 +17,9 @@ test
 
 	messageParam := AnthropicMessageParam new
 		role: 'user';
-		content: 'Say this is a test'.
+		content: 'Say exactly: This is a test'.
 	self assert: [ messageParam role = 'user' ].
-	self assert: [ messageParam content = 'Say this is a test' ].
+	self assert: [ messageParam content = 'Say exactly: This is a test' ].
 
 	createMessageParams := AnthropicCreateMessageParams new
 		model: anthropic model;
@@ -31,14 +31,9 @@ test
 
 	messageParam := createMessageParams messages first.
 	self assert: [ messageParam role = 'user' ].
-	self assert: [ messageParam content = 'Say this is a test' ].
+	self assert: [ messageParam content = 'Say exactly: This is a test' ].
 
-	anthropic create: createMessageParams
-		then: [ :message | self onCreate: message ].
-!
-onCreate: message
-	| textBlock usage |
-
+	message := await anthropic create: createMessageParams.
 	self assert: [ message class = AnthropicMessage ].
 	self assert: [ message content length = 1 ].
 	self assert: [ message id startsWith: 'msg' ].

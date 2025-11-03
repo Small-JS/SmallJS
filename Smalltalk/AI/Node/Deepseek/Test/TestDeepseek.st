@@ -15,20 +15,14 @@ The class DeepseekClientOptions uses the Deepseek base URL and API key env vars 
 disabled
 	^ Deepseek available not.
 !
-test
-	| deepseek request |
+async test
+	| deepseek request chatCompletion choice message usage |
 
 	deepseek := Deepseek new.
-
 	request := OpenaiChatCompletionRequest new
 		model: deepseek model;
-		addRole: 'user' content: 'Say this is a test'.
-
-	deepseek createChatCompletion: request
-		then: [ :chatCompletion | self onChatCompletion: chatCompletion ].
-!
-onChatCompletion: chatCompletion
-	| choice message usage |
+		addRole: 'user' content: 'Say exactly: This is a test'.
+	chatCompletion := await deepseek createChatCompletion: request.
 
 	self assert: [ chatCompletion class = OpenaiChatCompletion ].
 	self assert: [ ( Date new toSeconds - chatCompletion created toSeconds ) < 60 ].

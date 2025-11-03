@@ -18,19 +18,18 @@ METHODS
 
 "Chat"
 
-chat: messages then: block
-	| request |
+async chat: messages
+	| request chatCompletion |
 	request := OpenaiChatCompletionRequest new
 		model: self model.
 	messages do: [ :message |
 		request addRole: 'user' content: message ].
 
-	self createChatCompletion: request then: [ :chatCompletion |
-		block value: chatCompletion choices first message content ].
+	chatCompletion := await self createChatCompletion: request.
+	^ chatCompletion choices first message content.
 !
-createChatCompletion: request then: block
-	INLINE 'this.js.chat.completions.create( request.js )
-			.then( chatCompletion => block.$value$( stOpenaiChatCompletion$class.$fromJs$( chatCompletion ) ) )'.
+async createChatCompletion: request
+	^ OpenaiChatCompletion fromJs: INLINE 'await this.js.chat.completions.create( request.js )'.
 !
 
 "Options set"

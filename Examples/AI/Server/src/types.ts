@@ -2,37 +2,34 @@
 // This is done to facilitate inspecting their TS types in VSCode.
 // This file is not used when running this app.
 
-// Files
-import * as fs$ from "fs";
-import * as path$ from "path";
-
-// HTTP
-import http from "http";
-import { createHttpTerminator } from "http-terminator";
-
-// Express
-import express from "express";
-import cors from "express";
-import session from "express-session";
-
 // AI - Ollama
-import { Ollama, ChatRequest, ChatResponse, Message as OllamaMessage } from 'ollama';
+import * as ollama from "ollama";
+let olOllama: ollama.Ollama;
+let olChatRequest: ollama.ChatRequest;
+let olChatResponse: ollama.ChatResponse;
+let olMessage: ollama.Message;
 
 // AI - OpenAI
-import OpenAI from "openai";
-import { ChatCompletion } from "openai/resources/chat/completions.js";
-type ChatCompletionChoice = ChatCompletion.Choice;
-import { ChatCompletionMessage } from "openai/resources/chat/completions.js";
-import { CompletionUsage } from "openai/resources/completions.js";
-let completionTokensDetails: CompletionUsage.CompletionTokensDetails;
-let promptTokensDetails: CompletionUsage.PromptTokensDetails;
+import Openai from "openai";
+let oaiChatCompletion: Openai.ChatCompletion;
+let oaiChatCompletionChoice: Openai.ChatCompletion.Choice;
+let oaiChatCompletionMessage: Openai.ChatCompletionMessage;
+let oaiChatCompletionUsage: Openai.CompletionUsage;
+let oaiCompletionTokensDetails: Openai.CompletionUsage.CompletionTokensDetails;
+let oaiPromptTokensDetails: Openai.CompletionUsage.PromptTokensDetails;
 
 // AI - Google AI
-import { GoogleGenerativeAI, ModelParams, GenerativeModel,
-	GenerateContentResult, GenerateContentResponse } from "@google/generative-ai";
+import * as googleai from "@google/generative-ai";
+let gaiGoogleAi: googleai.GoogleGenerativeAI;
+let gaiModelParams: googleai.ModelParams;
+let gaiGenerativeModel: googleai.GenerativeModel;
+let gaiGenerateContentResult: googleai.GenerateContentResult;
+let gaiGenerateContentResponse: googleai.GenerateContentResponse;
 
 // AI - Anthropic
-import { Anthropic, ClientOptions } from '@anthropic-ai/sdk';
+import * as anthropic from "@anthropic-ai/sdk";
+let antAnthropic: anthropic.Anthropic;
+let antClientOptions: anthropic.ClientOptions;
 import { MessageCreateParams } from '@anthropic-ai/sdk/resources/index.mjs';
-import { Message, TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';
-
+import { Message } from '@anthropic-ai/sdk/resources/index.mjs';
+import { TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';
