@@ -118,11 +118,12 @@ async testFullscreen
 	self assert: [ window fullscreen not ].
 !
 async testFocus
+	"Does not work right on MacOS and Linux."
+	Window isWindows ifFalse: [ ^ nil ].
+
 	window focus: false.
 	await Timer timeout: 500.
-	"Does not work right on MacOS and Linux."
-	Window isWindows ifTrue: [
-		self assert: [ window focus not ] ].
+	self assert: [ window focus not ].
 
 	window focus: true.
 	await Timer timeout: 500.
