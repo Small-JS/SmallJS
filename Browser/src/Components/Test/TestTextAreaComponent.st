@@ -13,12 +13,12 @@ test
 	self assert: [ textArea wrap = 'soft' ].
 	self assert: [ textArea value = 'aa\nbb' ].
 !
-testGui
+async testGui
 	| textAreaComponent |
 	textAreaComponent := MyBrowserApp default findComponent: TextAreaComponent.
 
 	textAreaComponent textArea value: 'cc\ndd'.
 	textAreaComponent outputButton click.
-	Timer timeout: 500 then: [
-		self assert: [ textAreaComponent outputParagraph textContent = 'cc\ndd' ] ].
+	await Timer timeout: 500.
+	self assert: [ textAreaComponent outputParagraph textContent = 'cc\ndd' ].
 !

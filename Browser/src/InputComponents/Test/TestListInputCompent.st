@@ -11,12 +11,12 @@ test
 	self assert: [ ( dataList indexOf: 'Second' ) = 1 ].
 	self assert: [ ( dataList indexOf: 'Missing' ) = -1 ].
 !
-testGui
+async testGui
 	| listInputComponent |
 	listInputComponent := MyBrowserApp default findComponent: ListInputComponent.
 
 	listInputComponent listInput value: listInputComponent dataList options last value.
 	listInputComponent listInput dispatchEvent: ( Event type: 'input' ).
-	Timer timeout: 500 then: [
-		self assert: [ listInputComponent outputParagraph textContent = 'Second' ] ]."
+	await Timer timeout: 500.
+	self assert: [ listInputComponent outputParagraph textContent = 'Second' ].
 !

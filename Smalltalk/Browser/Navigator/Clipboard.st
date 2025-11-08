@@ -2,11 +2,18 @@ CLASS Clipboard EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "TODO: Implement other methods"
 
-readTextThen: block
-	^ String fromJs: INLINE 'this.js.readText()
-		.then( text => block.$value$( stString$class.$fromJs$( text ) ) )'.
+CLASSMETHODS
+
+default
+	"Return the clipboard singleton."
+	^ Window default navigator clipboard.
 !
-writeText: text then: block
-	^ String fromJs: INLINE 'this.js.writeText( text.js )
-		.then( text => block.$value$( stString$class.$fromJs$( text ) ) )'.
+
+METHODS
+
+async readText
+	^ String fromJs: INLINE 'await this.js.readText()'.
+!
+async writeText: text
+	INLINE 'await this.js.writeText( text.js )'
 !

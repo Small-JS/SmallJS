@@ -5,7 +5,7 @@ CLASSMETHODS
 
 METHODS
 
-start
+async start
 	"These test class references are needed to force importing their full unit test modules."
 	TestObject.
 	TestCrypto.
@@ -17,5 +17,5 @@ start
 	Object myTest.
 
 	"Execute all test* methods on all Test* classes."
-	Test all.
+	await Test all.
 !

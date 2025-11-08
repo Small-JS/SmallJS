@@ -20,8 +20,8 @@ getReader
 pipeThrough: transformStream options: options
 	^ ReadableStream fromJs: INLINE 'this.js.pipeThrough( transformStream.js, options.js )'.
 !
-pipeTo: writeableStream options: options then: block
-	INLINE 'this.js.pipeTo( writeableStream.js, options.js ).then( block.js )'.
+async pipeTo: writeableStream options: options
+	INLINE 'await this.js.pipeTo( writeableStream.js, options.js )'.
 !
 tee
 	^ Array fromJs: INLINE 'this.js.tee()' elementClass: ReadableStream.

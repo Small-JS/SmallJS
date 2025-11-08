@@ -93,7 +93,7 @@ model: aModel
 
 "Chat"
 
-chat: messages then: block
+chat: messages
 	"Ask a question to this AI provider with the text strings in the messages array,
 	 and call the block with the response text."
 	self error: 'Subclass responsibility.'.

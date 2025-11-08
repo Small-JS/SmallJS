@@ -57,8 +57,9 @@ removeOriginAccessWhitelistEntry: sourceOrigin destinationProtocol: destinationP
 "Shortcuts"
 
 "Note:
-The NW.js class Shortcut is not implemented because
-it is only used in these 2 methods and complicates things unnecessarily."
+
+The NW.js class Shortcut is not implemented separately because
+it is only used in these 2 methods and would complicate things unnecessarily."
 
 registerGlobalHotKey: key then: block error: errorBlock
 	INLINE '
@@ -74,3 +75,4 @@ unregisterGlobalHotKey: key then: block error: errorBlock
 			"failed": function ( message ) { errorBlock.$value$( stString$class.$fromJs$( message ) ) } };
 		this.js.unregisterGlobalHotKey( new gui.Shortcut( shortcutOption ) )'.
 !
+

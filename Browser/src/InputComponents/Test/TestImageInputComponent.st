@@ -10,11 +10,11 @@ test
 	self assert: [ imageInput imageSize = ( 50 @ 50 ) ].
 	self assert: [ imageInput alt = 'SmallJS logo' ].
 !
-testGui
+async testGui
 	| imageInputComponent |
 	imageInputComponent := MyBrowserApp default findComponent: ImageInputComponent.
 
 	imageInputComponent imageInput click.
-	Timer timeout: 500 then: [
-			self assert: [ imageInputComponent outputParagraph textContent = 'Image clicked' ] ]."
+	await Timer timeout: 500.
+	self assert: [ imageInputComponent outputParagraph textContent = 'Image clicked' ].
 !

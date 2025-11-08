@@ -8,11 +8,11 @@ test
 	self assert: [ checkboxInput type = 'checkbox' ].
 	self assert: [ checkboxInput checked not ].
 !
-testGui
+async testGui
 	| checkboxInputComponent |
 	checkboxInputComponent := MyBrowserApp default findComponent: CheckboxInputComponent.
 
 	checkboxInputComponent checkboxInput click.
-	Timer timeout: 500 then: [
-			self assert: [ checkboxInputComponent outputParagraph textContent = 'Checked' ] ]."
+	await Timer timeout: 500.
+	self assert: [ checkboxInputComponent outputParagraph textContent = 'Checked' ].
 !

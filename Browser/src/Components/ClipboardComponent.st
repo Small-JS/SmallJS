@@ -18,15 +18,16 @@ bindElements
 
 	clipboardResultParagraph := Document getElementById: 'clipboardResultParagraph' class: HtmlParagraphElement.
 !
-onClipboardReadButton
+async onClipboardReadButton
+	| text |
 	"Note: This function cannot be GUI tested automatically
 		because it may require user permission first."
-	Window default navigator clipboard readTextThen:
-		[ :text | clipboardResultParagraph textContent: text ].
+	text := await Clipboard default readText.
+	clipboardResultParagraph textContent: text.
 !
-onClipboardWriteButton
+async onClipboardWriteButton
 	"Note: This function cannot be GUI tested automatically
 		because it may require user permission first."
-	Window default navigator clipboard writeText: clipboardInput value then:
-		[ :text | clipboardResultParagraph textContent: '[written]' ].
+	await Clipboard default writeText: clipboardInput value.
+	clipboardResultParagraph textContent: '[written]'.
 !

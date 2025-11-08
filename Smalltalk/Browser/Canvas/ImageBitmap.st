@@ -2,9 +2,8 @@ CLASS ImageBitmap EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
-create: image then: block
-	self fromJs: INLINE 'createImageBitmap( image.js )
-		.then( ( imageBitmap ) => block.$value$( stImageBitmap$class.$fromJs$( imageBitmap ) ) )'.
+async create: image
+	^ self fromJs: INLINE 'await createImageBitmap( image.js )'.
 !
 
 METHODS

@@ -16,11 +16,11 @@ test
 	self assert: [ radioInput2 value = 'radio2' ].
 	self assert: [ radioInput2 checked not ].
 !
-testGui
+async testGui
 	| radioInputComponent |
 	radioInputComponent := MyBrowserApp default findComponent: RadioInputComponent.
 
 	radioInputComponent radioInput2 click.
-	Timer timeout: 500 then: [
-			self assert: [ radioInputComponent outputParagraph textContent = 'Radio 2' ] ]."
+	await Timer timeout: 500.
+	self assert: [ radioInputComponent outputParagraph textContent = 'Radio 2' ].
 !

@@ -1,10 +1,19 @@
 CLASS TestTimer EXTENDS Test MODULE TestCore CLASSVARS '' VARS 'count'
 
 testTimeout
-	Timer timeout: 50 then: [ self onTimeout ].
+	| timer |
+	timer := Timer timeout: 10 then: [ self onTimeout: timer ].
 !
-onTimeout
-	self assert: [ true ].
+onTimeout: timer
+	self assert: [ timer id > 0 ].
+!
+async testAwaitTimeout
+	| timer |
+	timer := Timer new.
+	await timer timeout: 10.
+	self assert: [ timer id > 0 ].
+
+	await Timer timeout: 10.
 !
 testClearTimeout
 	| timer |
@@ -20,6 +29,7 @@ testInterval
 	timer := Timer interval: 10 then: [ self onInterval: timer ].
 !
 onInterval: timer
+	self assert: [ timer id > 0 ].
 	self assert: [ count < 2 ].
 	count increment >= 2 ifTrue: [
 		timer clearInterval ].

@@ -2,7 +2,6 @@ CLASS MyElectronApp EXTENDS ElectronApp MODULE MyElectronMain CLASSVARS ''
 	VARS 'browserWindow'
 
 start
-self log: 'Testmode: ', self testMode toString.
 	self whenReady: [ self start2 ].
 !
 start2
@@ -35,10 +34,10 @@ onPing: data
 	self log: 'MyElectronApp: Replying with result data: ', result.
 	^ result.
 !
-onQuit
+async onQuit
 	self log: 'MyElectronApp: Received quit request.'.
-	Timer timeout: 1000 then: [
-		self quit ].
+	await Timer timeout: 1000.
+	self quit.
 !
 
 "Menu"

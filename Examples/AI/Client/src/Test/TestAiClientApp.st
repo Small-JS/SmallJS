@@ -3,36 +3,35 @@ CLASS TestAiClientApp EXTENDS Object MODULE TestAiClientApp CLASSVARS '' VARS 'a
 "Tests the GUI of the AI client login page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aAiClientApp
+async test: aAiClientApp
 	aiClientApp := aAiClientApp.
 
 	"Reference unit test class to include the module."
 	TestAiProviders.
 	"Run sync and async tests of all imported Test* classes and log results."
-	Test allThen: [
-		self testGui ].
+	await Test all.
+	await self testGui.
+	self stop.
 !
-testGui
+async testGui
 	"Check if login fields are filled correctly and then press login button.
 	 Should navigate tot producs page then."
 
-	Timer timeout: 500
-		then: [ self testLoadedFields ].
+	await Timer timeout: 500.
+	self testLoadedFields.
+	await self testAskQuestion.
+
 !
 testLoadedFields
 	self assert: [ aiClientApp modelSelect value length > 0 ].
 	self assert: [ aiClientApp providerSelect value length > 0 ].
-
-	self testAskQuestion.
 !
-testAskQuestion
+async testAskQuestion
+	| conversationTable questionSpan answerSpan |
+
 	aiClientApp questionTextArea value: 'Say exactly: This is a test'.
 	aiClientApp questionAskButton click.
-	Timer timeout: 8000
-		then: [ self onTestAskQuestion ].
-!
-onTestAskQuestion
-	| conversationTable questionSpan answerSpan |
+	await Timer timeout: 8000.
 
 	conversationTable := aiClientApp conversationTable.
 	self assert: [ conversationTable rows length = 2 ].
@@ -45,15 +44,11 @@ onTestAskQuestion
 
 	self testClearConversation.
 !
-testClearConversation
+async testClearConversation
 	aiClientApp conversationClearButton click.
-	Timer timeout: 1000
-		then: [ self onTestClearConversation ].
-!
-onTestClearConversation
-	self assert: [ aiClientApp conversationTable rows length = 0 ].
+	await Timer timeout: 1000.
 
-	self stop.
+	self assert: [ aiClientApp conversationTable rows length = 0 ].
 !
 stop
 	aiClientApp stop.

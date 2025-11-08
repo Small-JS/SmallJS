@@ -44,25 +44,22 @@ clearBenchmarks
 runAllButtonClicked
 	self clearBenchmarks.
 	self setCursor: 'wait'.
-	"Wait 0.1 seconds before starting benchmarks
-	 to give browser time to update the HTML first."
-	Timer timeout: 100 then: [
-		self runBenchmarks ].
+	self runBenchmarks.
 !
 setCursor: value
 	Document default body style setProperty: 'cursor' value: value.
 	runAllButton style setProperty: 'cursor' value: value.
 	resultsTable style setProperty: 'cursor' value: value.
 !
-runBenchmarks
+async runBenchmarks
 	| benchmark row |
 
-	0 to: benchmarks length - 1 do: [ :index |
+	0 to: benchmarks length - 1 do: async [ :index |
 		"Pause shortly between benchmarks to allow async GUI updates."
-		Timer timeout: 100 then: [
-			benchmark := benchmarks at: index.
-			row := resultsTable rows at: index + 1.
-			self runBenchmark: benchmark row: row ] ].
+		await Timer timeout: 100.
+		benchmark := benchmarks at: index.
+		row := resultsTable rows at: index + 1.
+		self runBenchmark: benchmark row: row ].
 !
 runBenchmark: benchmark row: row
 		benchmark timeRunJs.

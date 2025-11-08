@@ -8,12 +8,12 @@ test
 	self assert: [ script id = 'script' ].
 	self assert: [ script src endsWith: 'ScriptFunction.js' ].
 !
-testGui
+async testGui
 	| scriptComponent  |
 	scriptComponent := MyBrowserApp default findComponent: ScriptComponent.
 
 	scriptComponent countSpan textContent: '0'.
 	scriptComponent runButton click.
-	Timer timeout: 500 then: [
-			self assert: [ scriptComponent countSpan textContent = '1' ]  ].
+	await Timer timeout: 500.
+	self assert: [ scriptComponent countSpan textContent = '1' ].
 !

@@ -3,9 +3,8 @@ CLASS SqliteDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
 "This class implements SQLite database functionality.
  Variable 'js' will contain an instance of the JS class sqlite.DatabaseSync.
 
- Database operations are synchronous.
- There optional wrapper functions with async 'then:' interfaces,
- to be compatible with the other databases from a single code base."
+ SQLite database operations are synchronous, but they can be awaited
+ to maintain the same interface as the other promise based database APIs."
 
 "Use the second import form, because it's compatible with NW.js."
 "INLINE 'import * as sqlite$ from 'node:sqlite';'"

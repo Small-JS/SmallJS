@@ -7,12 +7,9 @@ test
 
 	playground evaluate: '1 + 2'
 		onResult: [ :result | self onResult: result ]
-		onError: [ :error | self onError: error ].
+		onError: [ :error | error throw ].
 
 !
 onResult: result
 	self assert: [ result = 3 ].
-!
-onError: error
-	error throw.
 !

@@ -7,76 +7,69 @@ references
 	"Prevent minimizing of unit tests."
 	TestTask.
 !
-test: aTodoApp
+async test: aTodoApp
 	todoApp := aTodoApp.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	Test allThen: [
-		self testGui ].
+	await Test all.
+	await self testGui.
 !
-testGui
+async testGui
 	"Click increase counter button 2 times then click reset.
 	 For every click check if counter label is updated correctly.
 	 Exit if all tests succeed."
 
 	self testTasksLoaded.
-	self testAddNewTaskThen: [
-		self testCompleteTaskThen: [
-			self testDeleteTaskThen: [
-				self testSortTasksThen: [
-					self testLanguageThen: [
-						self stop ] ] ] ] ].
+	await self testAddNewTask.
+	await self testCompleteTask.
+	await self testDeleteTask.
+	await self testSortTasks.
+	await self testLanguage.
+
+	await self stop.
 !
 testTasksLoaded
 	self assert: [ todoApp taskTable tBody rows length = todoApp tasks length ].
 !
-testAddNewTaskThen: block
+async testAddNewTask
 	| expectedTaskCount |
 	expectedTaskCount := todoApp tasks length + 1.
 
 	todoApp newTaskAddButton click.
-	Timer timeout: 1000 then: [
-		self assert: [ todoApp tasks length = expectedTaskCount ].
-		self assert: [ todoApp taskTable tBody rows length = expectedTaskCount ].
-		self assert: [ ( todoApp taskTable tBody rows last cells at: 0 ) textContent = todoApp tasks last title ].
-
-		block value ].
+	await Timer timeout: 1000.
+	self assert: [ todoApp tasks length = expectedTaskCount ].
+	self assert: [ todoApp taskTable tBody rows length = expectedTaskCount ].
+	self assert: [ ( todoApp taskTable tBody rows last cells at: 0 ) textContent = todoApp tasks last title ].
 !
-testCompleteTaskThen: block
+async testCompleteTask
 	self assert: [ todoApp tasks last done not ].
 	self assert: [ ( todoApp taskTable tBody rows last cells at: 2 ) textContent = todoApp tasks last doneString ].
 
 	( todoApp taskTable tBody rows last cells at: 2 ) click.
-	Timer timeout: 1000 then: [
-		self assert: [ todoApp tasks last done ].
-		self assert: [ ( todoApp taskTable tBody rows last cells at: 2 ) textContent = todoApp tasks last doneString ].
-
-		block value ].
+	await Timer timeout: 1000.
+	self assert: [ todoApp tasks last done ].
+	self assert: [ ( todoApp taskTable tBody rows last cells at: 2 ) textContent = todoApp tasks last doneString ].
 !
-testDeleteTaskThen: block
+async testDeleteTask
 	| expectedTaskCount |
 	expectedTaskCount := todoApp tasks length - 1.
 
 	( todoApp taskTable tBody rows last cells at: 3 ) click.
-	Timer timeout: 1000 then: [
-		self assert: [ todoApp tasks length = expectedTaskCount ].
-		self assert: [ todoApp taskTable tBody rows length = expectedTaskCount ].
-
-		block value ].
+	await Timer timeout: 1000.
+	self assert: [ todoApp tasks length = expectedTaskCount ].
+	self assert: [ todoApp taskTable tBody rows length = expectedTaskCount ].
 !
-testSortTasksThen: block
+async testSortTasks
 	| lastTaskTitle |
 	lastTaskTitle := todoApp tasks last title.
 
 	( todoApp taskTable tHead rows at: 1 ) cells first click.
-	Timer timeout: 1000 then: [
-		self assert: [ todoApp tasks last title ~= lastTaskTitle ].
-		self assert: [ todoApp taskTable tBody rows last cells first textContent ~= lastTaskTitle ].
-		self assert: [ todoApp taskTable tBody rows last cells first textContent = todoApp tasks last title ].
-
-		block value ].
+	await Timer timeout: 1000.
+	self assert: [ todoApp tasks last title ~= lastTaskTitle ].
+	self assert: [ todoApp taskTable tBody rows last cells first textContent ~= lastTaskTitle ].
+	self assert: [ todoApp taskTable tBody rows last cells first textContent = todoApp tasks last title ].
 !
-testLanguageThen: block
+async testLanguage
 	"Select second language (Spanish) and check of GUI changed to it."
 
 	| changeEvent titleSpan |
@@ -85,12 +78,11 @@ testLanguageThen: block
 	changeEvent := Event type: 'change'.
 	todoApp languageSelect dispatchEvent: changeEvent.
 
-	Timer timeout: 1000 then: [
-		titleSpan := Document getElementById: 'titleSpan' class: HtmlSpanElement.
-		self assert: [ titleSpan textContent = 'Hacer' ].
-		block value ].
+	await Timer timeout: 1000.
+	titleSpan := Document getElementById: 'titleSpan' class: HtmlSpanElement.
+	self assert: [ titleSpan textContent = 'Hacer' ].
 !
-stop
-	Timer timeout: 1000 then: [
+async stop
+	await Timer timeout: 1000 then: [
 		todoApp stop ].
 !

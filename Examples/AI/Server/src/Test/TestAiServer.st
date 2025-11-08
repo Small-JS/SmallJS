@@ -3,21 +3,22 @@ CLASS TestAiServer EXTENDS Object MODULE TestAiServer CLASSVARS '' VARS 'aiServe
 "AiServer unit and API tests.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aAiServer
+async test: aAiServer
 	aiServer := aAiServer.
 
 	"Reference unit test class to include module"
 	TestAiProviders.
 	"Run sync and async unit tests of all imported Test* classes and log results."
-	Test allThen: [
-		self testApi ].
+	await Test all.
+	await self testApi.
 !
 async testApi
 	self log: 'TestAiServer: Starting API tests.'.
 
 	"Tests execution is chained to facilite debugging."
 	await self testProviders.
-	self testChat.
+	await self testChat.
+	await self stopServer.
 !
 async testProviders
 	| url object providers provider ai models |
@@ -34,13 +35,16 @@ async testProviders
 	models := providers modelsFor: provider.
 	self assert: [ models = ai class models ].
 !
-testChat
+async testChat
+	| aiCount |
 	chatReponseCount := 0.
 	aiServer aiMap values do: [ :ai |
 		self chatRequest: ai ].
 
-	Timer timeout: 10000 then: [
-		self checkChatCount ].
+	await Timer timeout: 10000.
+	aiCount := aiServer aiMap size.
+	chatReponseCount = aiCount ifFalse: [
+		self log: 'TestAiServer: Warning: Incorrect chat response count: ', chatReponseCount toString, ' expected: ', aiCount toString ].
 !
 async chatRequest: ai
 	| id chatRequest url object chatResponse |
@@ -61,18 +65,10 @@ async chatRequest: ai
 
 	chatReponseCount := chatReponseCount + 1.
 !
-checkChatCount
-	| aiCount |
-	aiCount := aiServer aiMap size.
-	chatReponseCount = aiCount ifFalse: [
-		self log: 'TestAiServer: Warning: Incorrect chat response count: ', chatReponseCount toString, ' expected: ', aiCount toString ].
-
-	self stopServer.
-!
-stopServer
+async stopServer
 	self log: 'TestAiServer: API tests successful.'.
 	self log: 'TestAiServer: Stopping server.'.
 
-	Timer timeout: 1000 then: [
-		aiServer stop ].
+	await Timer timeout: 1000.
+	aiServer stop.
 !

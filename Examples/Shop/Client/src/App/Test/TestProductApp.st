@@ -3,16 +3,17 @@ CLASS TestProductApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'pro
 "Tests the GUI of the Shop client Product page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aProductApp
+async test: aProductApp
 	productApp := aProductApp.
 
 	"Check if product fields are filled correctly.
 	 Then exit the application."
 
-	Timer timeout: 1000 then: [
-		self testProductFields.
-		Timer timeout: 1000 then: [
-			self navigateToOrders ] ].
+	await Timer timeout: 1000.
+	self testProductFields.
+
+	await Timer timeout: 1000.
+	self navigateToOrders.
 !
 testProductFields
 	| tBody cells |

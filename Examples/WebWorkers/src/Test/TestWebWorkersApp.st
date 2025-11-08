@@ -3,25 +3,27 @@ CLASS TestWebWorkersApp EXTENDS Object MODULE TestWebWorkers CLASSVARS '' VARS '
 "Test WebWorkersApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aWebWorkersApp
+async test: aWebWorkersApp
 	webWorkersApp := aWebWorkersApp.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	Test allThen: [
-		self testGui ].
+	await Test all.
+	await self testGui.
 !
-testGui
+async testGui
 	"Set work size to 100 and workers to 2.
 	 Then press start button and check results in the results table."
 
 	webWorkersApp workSizeInput value: '100'.
 	webWorkersApp workersInput value: '2'.
 
-	Timer timeout: 1000 then: [
-		webWorkersApp startButton click.
-		Timer timeout: 4000 then: [
-			self checkResults.
-			webWorkersApp stop ] ].
+	await Timer timeout: 1000.
+	webWorkersApp startButton click.
+
+	await Timer timeout: 4000.
+	self checkResults.
+
+	webWorkersApp stop.
 !
 checkResults
 	"Check if all benchmark results contain numbers."

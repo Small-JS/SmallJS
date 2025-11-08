@@ -29,8 +29,10 @@ initialize
 startMoving
 	| ballCount |
 
-	timer clearTimeout. 	"In case it was running."
+	"Stop timer in case it was running."
+	timer clearTimeout.
 
+	"Create balls."
 	balls := Array new.
 	ballCount := ballsInput value toInteger max: 1.
 	ballCount timesRepeat: [
@@ -41,6 +43,7 @@ startMoving
 !
 move
 	"Move balls and redraw canvas"
+
 	stopRequested ifTrue: [ ^ self ].
 
 	context clearRect: ( Rect origin: 0 @ 0 extent: canvas size ).

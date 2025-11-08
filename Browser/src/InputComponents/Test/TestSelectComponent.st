@@ -10,13 +10,13 @@ test
 	self assert: [ select options first value = 'option1' ].
 	self assert: [ select options last text = 'Option 2' ].
 !
-testGui
+async testGui
 	| selectComponent  |
 	selectComponent := MyBrowserApp default findComponent: SelectComponent.
 
 	selectComponent select selectedIndex: 1.
 	selectComponent select dispatchEvent: ( Event type: 'change' ).
-	Timer timeout: 500 then: [
-			self assert: [ selectComponent outputParagraph textContent = 'option2' ]  ].
+	await Timer timeout: 500.
+	self assert: [ selectComponent outputParagraph textContent = 'option2' ].
 !
 

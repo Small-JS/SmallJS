@@ -2,11 +2,11 @@ CLASS TestMyNwMenu EXTENDS Object MODULE TestMyNwApp CLASSVARS '' VARS 'app'
 
 "Tests menus in MyNwApp"
 
-test: aApp
+async test: aApp
 	app := aApp.
 
 	self testMenuBar.
-	self testContextMenu.
+	await self testContextMenu.
 !
 testMenuBar
 	| menuBar fileMenuItem fileMenu exitMenuItem |
@@ -29,7 +29,7 @@ testMenuBar
 	self assert: [ exitMenuItem class = NwMenuItem ].
 	self assert: [ exitMenuItem label = 'Exit' ].
 !
-testContextMenu
+async testContextMenu
 	| contextMenu greenMenuItem |
 
 	contextMenu := app contextMenu.
@@ -42,8 +42,6 @@ testContextMenu
 	self assert: [ greenMenuItem label = 'Green' ].
 
 	greenMenuItem click value.
-	Timer timeout: 500 then: [ self onContextMenuClicked ].
-!
-onContextMenuClicked
+	await Timer timeout: 500.
 	self assert: [ ( app body style getPropertyValue: 'background-color' ) = 'green' ].
 !

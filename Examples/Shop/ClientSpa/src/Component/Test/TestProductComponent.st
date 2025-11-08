@@ -3,16 +3,17 @@ CLASS TestProductComponent EXTENDS Object MODULE TestShopClient CLASSVARS '' VAR
 "Tests the GUI of the Shop client Product page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aProductComponent
+async test: aProductComponent
 	productComponent := aProductComponent.
 
 	"Check if product fields are filled correctly.
 	 Then exit the application."
 
-	Timer timeout: 1000 then: [
-		self testProductFields.
-		Timer timeout: 1000 then: [
-			self navigateToOrders ] ].
+	await Timer timeout: 1000.
+	self testProductFields.
+
+	await Timer timeout: 1000.
+	self navigateToOrders.
 !
 testProductFields
 	| tBody cells |
@@ -28,7 +29,6 @@ testProductFields
 !
 navigateToOrders
 	| ordersSpan |
-
 	ordersSpan := Document getElementById: 'navBarOrdersSpan' class: HtmlSpanElement.
 	ordersSpan click.
 !

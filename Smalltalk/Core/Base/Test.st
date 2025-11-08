@@ -9,10 +9,7 @@ CLASSMETHODS
 
 "Testing"
 
-all
-	self allThen: [].
-!
-allThen: block
+async all
 	| aClass |
 	"Invokes all test* methods on new instances of all Test* subclasses loaded.
 	 Returns the number of test passed.
@@ -20,21 +17,22 @@ allThen: block
 	 Evaluates block after async tests have run."
 
 	self log: 'Running unit tests...'.
-
-	Test resetAssertCount.
 	Test resetDisabledModuleCount.
 
+	"Sync tests"
+	Test resetAssertCount.
 	Class classes do: [ :aClass |
 		( aClass inheritsFrom: Test ) ifTrue: [
 			aClass new all ] ].
-
 	self log: 'Successfully run sync tests: ', Test globalAssertCount.
 
+	"Async tests"
 	Test resetAssertCount.
-	Timer timeout: 2000 then: [
-		self log: 'Successfully run async tests: ', Test globalAssertCount.
-		self log: 'Disabled test modules: ', Test disabledModuleCount.
-		block value ].
+	await Timer timeout: 2000.
+	self log: 'Successfully run async tests: ', Test globalAssertCount.
+
+	"Disabled modules"
+	self log: 'Disabled test modules: ', Test disabledModuleCount.
 !
 
 "Accessing"

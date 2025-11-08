@@ -30,12 +30,11 @@ testSelection
 	self assert: [ input selectionStart = 2 ].
 	self assert: [ input selectionEnd = 5 ].
 !
-testGui
+async testGui
 	| inputComponent  |
 	inputComponent := MyBrowserApp default findComponent: InputComponent.
 
 	inputComponent outputButton click.
-	Timer timeout: 500 then: [
-			self assert: [ inputComponent outputParagraph textContent = 'My input' ]  ].
+	await Timer timeout: 500.
+	self assert: [ inputComponent outputParagraph textContent = 'My input' ].
 !
-

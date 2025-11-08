@@ -3,7 +3,8 @@ CLASS MyNodeWorker EXTENDS Object MODULE TestNode CLASSVARS '' VARS ''
 METHODS
 
 start
-	NodeMessagePort parentPort on: 'message' class: String then: [ :message | self onMessage: message ].
+	NodeMessagePort parentPort on: 'message' class: String
+		then: [ :message | self onMessage: message ].
 
 	self assert: [ NodeMessagePort isMainThread not ].
 

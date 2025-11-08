@@ -6,9 +6,11 @@ CLASS CanvasComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
 htmlPath
 	^ 'Components/CanvasComponent.html'.
 !
-start
+async start
 	self bindElements.
 	self draw.
+	await self drawImage.
+	self drawPaths.
 !
 bindElements
 	canvas := Document getElementById: 'canvas' class: HtmlCanvasElement.
@@ -23,7 +25,7 @@ canvas
 "Drawing"
 
 draw
-	| context gradient imageData colorBlue colorWhite color imageBitmap path matrix |
+	| context gradient imageData colorBlue imageBitmap path matrix |
 	context := canvas getContext2d.
 	context reset.
 	context fillStyle: 'white'.
@@ -99,17 +101,6 @@ draw
 	context stroke.
 	context restore.	"Undo clipping."
 
-	"ImageData Create small blue square middle-lower"
-	colorBlue := #( 0 0 255 255 ).
-	colorWhite := #( 255 255 255 255 ).
-	imageData := context createImageData: 10 @ 10.
-	0 to: imageData width - 1 do: [ :x |
-		0 to: imageData height - 1 do: [ :y |
-			"Paint edges of square blue, rest white."
-			color := ( x = 0 ) | ( x = 9 ) | ( y = 0 ) | ( y = 9 )
-				ifTrue: [ colorBlue ] ifFalse: [ colorWhite ].
-			imageData atPixel: x @ y put: color ] ].
-
 	"Ellipse in top next column"
 	context beginPath.
 	context ellipse: 150 @ 20 radii: 10 @ 5  rotation: Float pi / 4 * 3 startAngle: 0 endAngle: Float pi * 2 counterclockwise: false.
@@ -172,8 +163,8 @@ draw
 	context setTransform: matrix.
 	context fillRect: ( Rect origin: 40 @ 85 extent: 10 @ 5 ).
 
-	"Additional transform, using same matrix values, so now x * 4
-	 is drawn in right-bottom."
+	"Additional transform, using same matrix values,
+	 so now x * 4 is drawn in right-bottom."
 	context transform: matrix.
 	context fillRect: ( Rect origin: 40 @ 85 extent: 10 @ 5 ).
 	context resetTransform.
@@ -198,16 +189,24 @@ draw
 	context lineWidth: 2.
 	context strokeRect: ( Rect origin: 170 @ 70 extent: 20 @ 10 ).
 	context lineWidth: 1.
-
-	"ImageBitmap is created async, alas."
-	ImageBitmap create: imageData then: [ :imageBitmap |
-		self drawImageBitmap: imageBitmap on: context ].
-
-	self drawPaths.
 !
+async drawImage
+	| context imageData colorBlue colorWhite color imageBitmap pattern |
+	context := canvas getContext2d.
 
-drawImageBitmap: imageBitmap on: context
-	| pattern |
+	"ImageData - Create small blue square middle-lower"
+	colorBlue := #( 0 0 255 255 ).
+	colorWhite := #( 255 255 255 255 ).
+	imageData := context createImageData: 10 @ 10.
+	0 to: imageData width - 1 do: [ :x |
+		0 to: imageData height - 1 do: [ :y |
+			"Paint edges of square blue, rest white."
+			color := ( x = 0 ) | ( x = 9 ) | ( y = 0 ) | ( y = 9 )
+				ifTrue: [ colorBlue ] ifFalse: [ colorWhite ].
+			imageData atPixel: x @ y put: color ] ].
+
+	imageBitmap := await ImageBitmap create: imageData.
+
 	"Draw image right top: regular, cut-out, scaled."
 	context drawImage: imageBitmap dest: 110 @ 10.
 	context drawImage: imageBitmap
@@ -224,7 +223,7 @@ drawImageBitmap: imageBitmap on: context
 !
 drawPaths
 	| context path path2 matrix
-		imageData pattern gradient attributes lineDash  textMetrics contextAttributes |
+		imageData pattern gradient attributes lineDash textMetrics contextAttributes |
 
 	context := canvas getContext2d.
 	self assert: [ context class = CanvasRenderingContext2d ].
@@ -304,5 +303,4 @@ drawPaths
 	path moveTo: 230 @ 90.
 	path quadraticCurveTo: 235 @ 80 end: 250 @ 90.
 	context strokePath: path.
-
 !

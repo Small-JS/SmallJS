@@ -3,33 +3,32 @@ CLASS TestPlaygroundApp EXTENDS Object MODULE TestPlayground CLASSVARS '' VARS '
 "Test PlaygroundApp units and GUI.
  This class is not a subclass of Test, so it's not called automatically with Test all."
 
-test: aPlaygroundApp
+async test: aPlaygroundApp
 	playgroundApp := aPlaygroundApp.
 
 	"Refer to one test class in a module to force importing all classes of that module."
 	TestPlayground.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	Test allThen: [
-		self testGui ].
+	await Test all.
+	await self testGui.
 !
-testGui
+async testGui
 	"Click evaluate the expression '10 factorial' and check for result '3628800'."
 
-	self testExpression: '10 factorial' result: '3628800' then: [
-		self testExpression: '1 + 2' result: '3' then: [
-			self stop ] ].
+	await self testExpression: '10 factorial' result: '3628800'.
+	await self testExpression: '1 + 2' result: '3'.
+	await self stop.
 !
-testExpression: expression result: result then: block
+async testExpression: expression result: result
 	playgroundApp expressionTextArea value: expression.
 	playgroundApp resultTextArea value: ''.
 
 	playgroundApp evaluateButton click.
-	Timer timeout: 1000 then: [
-		self assert: [ playgroundApp resultTextArea value = result ].
-		block value ].
+	await Timer timeout: 1000.
+	self assert: [ playgroundApp resultTextArea value = result ].
 !
-stop
-	Timer timeout: 1000 then: [
-		playgroundApp stop ].
+async stop
+	await Timer timeout: 1000.
+	playgroundApp stop.
 !

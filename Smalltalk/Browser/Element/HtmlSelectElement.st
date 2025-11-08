@@ -128,6 +128,5 @@ showPicker
 "Events"
 
 onChange: block
-	self addEventListener: 'change'
-		then: [ block value ].
+	self addEventListener: 'change' then: [ block value ].
 !

@@ -3,18 +3,19 @@ CLASS TestOrderApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'order
 "Tests the GUI of the Shop client Order page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aOrderApp
+async test: aOrderApp
 	orderApp := aOrderApp.
 
-	"Check if order fields are filled correctly.
-	 Then exit the application."
+	await Timer timeout: 1000.
+	self testOrderFields.
 
-	Timer timeout: 1000 then: [
-		self testOrderFields.
-		Timer timeout: 1000 then: [
-			orderApp stop ] ].
+	"This was the last test, close the app window."
+	await Timer timeout: 1000.
+	orderApp stop.
+
 !
 testOrderFields
+	"Check if order fields are filled correctly."
 	| tBody cells |
 
 	tBody := orderApp orderTable tBody.

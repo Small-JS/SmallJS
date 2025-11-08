@@ -3,16 +3,17 @@ CLASS TestOrderComponent EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 
 "Tests the GUI of the Shop client Order page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-test: aOrderComponent
+async test: aOrderComponent
 	orderComponent := aOrderComponent.
 
 	"Check if order fields are filled correctly.
 	 Then exit the application."
 
-	Timer timeout: 1000 then: [
-		self testOrderFields.
-		Timer timeout: 1000 then: [
-			orderComponent app stop ] ].
+	await Timer timeout: 1000.
+	self testOrderFields.
+
+	await Timer timeout: 1000.
+	orderComponent app stop.
 !
 testOrderFields
 	| tBody cells |

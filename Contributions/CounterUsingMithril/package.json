@@ -7,7 +7,7 @@
 		"counterusingmithril"
 	],
 	"dependencies": {
-		"mithril": "^2.3.7",
+		"mithril": "^2.3.8",
 		"tachyons": "^4.12.0"
 	}
 }

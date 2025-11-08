@@ -85,8 +85,8 @@ resizable: resizable
 fullscreen
 	^ Boolean fromJs: INLINE 'this.js.isFullscreen'.
 !
-fullscreen: fullScreen
-	fullScreen
+fullscreen: fullscreen
+	fullscreen
 		ifTrue: [ INLINE 'this.js.enterFullscreen()' ]
 		ifFalse: [ INLINE 'this.js.leaveFullscreen()' ]
 !

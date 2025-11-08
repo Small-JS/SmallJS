@@ -57,13 +57,13 @@ test
 		setBase: ( document getElementById: 'selectionInput' class: HtmlInputElement )
 		extent: ( document getElementById: 'selectionOutputParagraph' class: HtmlParagraphElement ).
 !
-testGui
+async testGui
 	| selectionComponent |
 	selectionComponent := MyBrowserApp default findComponent: SelectionComponent.
 
 	selectionComponent input value: 'Select text here'.
 	selectionComponent input focus setSelectionRange: 7 to: 11.
 	selectionComponent outputButton click.
-	Timer timeout: 500 then: [
-		self assert: [ selectionComponent outputParagraph textContent = 'text' ] ].
+	await Timer timeout: 500.
+	self assert: [ selectionComponent outputParagraph textContent = 'text' ].
 !
