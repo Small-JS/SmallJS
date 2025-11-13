@@ -64,6 +64,21 @@ or: block
 	^ self ifTrue: [ self ] ifFalse: [ block value ].
 !
 
+"Async - await"
+
+async ifTrueAwait: block
+	^ INLINE '( this.js ? await block.$valueAwait() : this )'.
+!
+async ifFalseAwait: block
+	^ INLINE '( this.js ? this : await block.$valueAwait() )'.
+!
+async ifTrueAwait: trueBlock ifFalseAwait: falseBlock
+	^ INLINE '( this.js ? await trueBlock.$valueAwait() : await falseBlock.$valueAwait() )'.
+!
+async ifFalseAwait: falseBlock ifTrueAwait: trueBlock
+	^ INLINE '( this.js ? await trueBlock.$valueAwait() : await falseBlock.$valueAwait() )'.
+!
+
 "Operations"
 
 not

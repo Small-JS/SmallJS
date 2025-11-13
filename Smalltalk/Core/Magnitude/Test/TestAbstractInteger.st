@@ -18,6 +18,27 @@ testIteration
 	3 timesRepeat: [ sum increment ].
 	self assert: [ sum = 3 ].
 !
+async testIterationAwait
+	| sum |
+
+	sum := 0.
+	await 1 to: 4 doAwait: async [ :num |
+		await Timer timeout: 1.
+		sum := sum + num ].
+	self assert: [ sum = 10 ].
+
+	sum := 0.
+	await 4 to: 1 by: -1 doAwait: async [ :num |
+		await Timer timeout: 1.
+		sum := await sum + num ].
+	self assert: [ sum = 10 ].
+
+	sum := 0.
+	await 3 timesRepeatAwait: async [
+		await Timer timeout: 1.
+		sum := sum + 1 ].
+	self assert: [ sum = 3 ].
+!
 testFunctions
 	self assert: [ 8 even ].
 	self assert: [ 7 odd ].

@@ -46,7 +46,7 @@ moduloFromFraction: fraction
 	^ fraction numerator % ( self * fraction denominator ) / fraction denominator.
 !
 
-"Iteration."
+"Iteration"
 
 to: max do: block
 	| index |
@@ -70,6 +70,33 @@ timesRepeat: block
 	count := self.
 	[ count > 0 ] whileTrue: [
 		block value.
+		count := count - 1 ].
+!
+
+"Iteration - Async"
+
+async to: max doAwait: asyncBlock
+	| index |
+	index := self.
+	await [ index <= max ] whileTrueAwait: async [
+		await asyncBlock value: index.
+		index := index + 1 ].
+!
+async to: limit by: by doAwait: asyncBlock
+	| index |
+	by = 0 ifTrue: [ self error: 'to:by:do: By is 0.'].
+
+	index := self.
+	await [ ( ( by > 0 ) & ( index <= limit ) ) |
+		( ( by < 0 ) & ( index >= limit ) ) ] whileTrueAwait: async [
+		await asyncBlock value: index.
+		index := index + by ].
+!
+async timesRepeatAwait: asyncBlock
+	| count |
+	count := self.
+	await [ count > 0 ] whileTrueAwait: async [
+		await asyncBlock value.
 		count := count - 1 ].
 !
 
