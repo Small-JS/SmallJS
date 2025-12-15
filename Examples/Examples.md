@@ -1,54 +1,51 @@
 # Examples
 
-SmallJS example projects.
+SmallJS example projects.\
+Click on the titles for more info.
 
-## Counter
+## [Counter](Counter/Counter.md)
 
-Control a simple counter in a browser.\
+Control a simple counter app in a browser.\
 Examine it to check out the SmallJS browser development environment.
 
->[Counter.md](./Counter/Counter.md)
-
-## Todo
+## [Todo](Todo/Todo.md)
 
 A small task manager application (browser only).\
 This is a somewhat more complex browser app using more types of HTML elements.
 
->[Todo.md](./Todo/Todo.md)
-
-## Shop
+## [Shop](Shop/Shop.md)
 
 The skeleton of a webshop app with users, products and orders.\
 Consists of a client (browser) and a server (NodeJS) part.
 
->[Shop.md](./Shop/Shop.md)
+## [AI](AI/AI.md)
 
-## Balls
+An AI server and client app that implements text chat to multiple AI providers and models.
+
+## [Balls](Balls/Balls.md)
 
 Bouncing colored balls on a HTML canvas.
 
->[Balls.md](./Balls/Balls.md)
-
-## Benchmark
+## [Benchmark](Benchmark/Benchmark.md)
 
 Some benchmarks comparing SmallJS performance to native JS implementations.
 
->[./Benchmark/Benchmark.md](./Benchmark/Benchmark.md)
-
-## Web Workers
+## [Web Workers](WebWorkers/WebWorkers.md)
 
 Run multiple SmallJS worker threads in the browser.
 
->[./WebWorkers/WebWorkers.md](./WebWorkers/WebWorkers.md)
+## Deskop apps
 
-## Electron
+For developing desktop apps, there are there 3 options:
 
-Electron example app in SmallJS.
+### [NW.js](Nwjs/NWjs.md)
 
->[Electron.md](./Electron/Electron.md)
+Lightweight GUI framework merging Node.JS and Chromium.
 
-## NodeGui
+### [Electron](Electron/Electron.md)
 
-Node.js app with a GUI by using the NodeGui library, based in Qt.
+App based on the full-featured Electron framework.
 
->[NodeGui.md](./NodeGui/NodeGui.md)
+### [NodeGui.md](NodeGui/NodeGui.md)
+
+App with a native GUI by using NodeGui, based on the Qt GUI library.

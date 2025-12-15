@@ -25,15 +25,6 @@ no optimization will be provided, and that choice will be documented here.
 - JS has 'null' and 'undefined' which is unnecessary and requires extra checking.
 	ST: Implement both as 'nil'.
 
-# JS async / await
-
-Unfortunately, JS only allows using 'await' in functions that are directly marked as 'sync'.
-There is no way around this with a library solution.
-Not having 'await' is very inconvenient for sequential operations on external resources,
-like database batch operations (it can result in  "callback hell").
-Therefore SmallJS implements the optional 'async' keyword preceding methods definitions
-and the 'await' keyword can be used before any object-message send.
-
 # DOM / HTML
 
 - Using different string type DOMString makes things complex.\

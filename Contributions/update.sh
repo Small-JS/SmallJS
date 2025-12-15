@@ -8,7 +8,8 @@ cd "$(dirname "$0")"
 
 cwd=$(pwd)
 
-echo "==== Contrubutions: CounterUsingMithril"
+echo "==== Contributions: CounterUsingMithril"
+
 cd $cwd/CounterUsingMithril
 npx npm-check-updates -u
 npm install

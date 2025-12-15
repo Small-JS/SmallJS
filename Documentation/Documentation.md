@@ -2,39 +2,55 @@
 
 Click on the headings to open further documentation.
 
-## [The Smalltalk language & SmallJS design](Language.md)
+## [Installing](Installing/Installing.md)
 
-A quick introduction to the Smalltalk language.
+How to install SmallJS.
 
-## [SmallJS design](Design.md)
+## [SmallJS language](Language/Language.md)
 
-Design choices for the SmallJS implementation.
+Design choices and tutorial for SmallJS.
 
-## Folders in this repo
+## Folders in the repo
 
-The SmallJS repo has the following subfolders:
+The repo has the following other subfolders in the root:
 
-### [./Smalltalk](../Smalltalk/Smalltalk.md)
+### [Smalltalk](../Smalltalk/Smalltalk.md)
 
-The main Smalltalk source code of the system, for browser and Node.js environments and classes shared by both.
+The main Smalltalk library source code of the system,\
+for browser and Node.js environments and classes shared by both.
 
-### [./Compiler](../Compiler/Compiler.md)
+### [Compiler](../Compiler/Compiler.md)
 
-The compiler (transpiler) compiles from ST to JS, running in Node.js.
+The compiler (transpiler) compiles from ST to JS, running in Node.js.\
 It is called from other projects, like ./Node and ./Browser.
 
-### [./Node](../Node/Node.md)
+### [Browser](../Browser/Browser.md)
+
+Test application for running SmallJS code in web browsers.
+
+### [Node](../Node/Node.md)
 
 Test application for running SmallJS code in Node.js.
 
-### [./Browser](../Browser/Browser.md)
-
-Test testing application for running SmallJS code in a web browser.
-
-### [./Database](../Database/Database.md)
+### [Database](../Database/Database.md)
 
 A guide to installing and using supported databases with SmallJS.
 
-### [./Examples](../Examples/Examples.md)
+### [Examples](../Examples/Examples.md)
 
 Example projects written in SmallJS: Counter, Todo and Shop.
+
+### [Extension](../Extension/Extension.md)
+
+The SmallJS language extension for syntax coloring and debugging in VSCode.
+
+### [Playground](../Playground/Playground.md)
+
+A playground app where you can evaluate arbitrary Smalltalk (ST) expressions.\
+The playground is available online too: [small-js.org/Playground](https://small-js.org/Playground)
+
+## [Contributions](../Contributions/Contributions.md)
+
+Contributions to SmallJS that are not part of the main system.
+but show interesting applications.
+

@@ -1,4 +1,4 @@
-# NW app
+# NW.js example app
 
 This project contains as NW.js application.
 
