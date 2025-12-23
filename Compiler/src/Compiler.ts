@@ -1,26 +1,28 @@
 ﻿import { ClassCompiler } from "./ClassCompiler.js";
 import { CompiledModule } from "./CompiledModule.js";
 import { CompiledClass } from "./CompiledClass.js";
-import { CompiledClassJson } from "./CompiledClassJson.js";
 import { CompiledMethod } from "./CompiledMethod.js";
+import { CompiledClassJson } from "./CompiledClassJson.js";
+import { DocumentedClassJson } from "./DocumentedClassJson.js";
 
 import { exit } from "process";
 import * as fs from "fs";
 
 export class Compiler
 {
-	static version = "1.8";
+	static version = "1.9";
 
 	classCompiler = new ClassCompiler();
 
 	modules: CompiledModule[] = [];
 	classes: CompiledClass[] = [];
 
-	sourceMaps: boolean = true;
-	skipTestFolders: boolean = false;
+	documentationMode = false;
+	sourceMaps = true;
+	skipTestFolders = false;
 
-	minimize: boolean = false;
-	minimizeStartClassName: string = '';
+	minimize = false;
+	minimizeStartClassName = '';
 	minimizedMethodCount = 0;
 
 	start()
@@ -30,15 +32,24 @@ export class Compiler
 		// Parse compiler opions
 
 		while( args.length > 0 ) {
-			if( args[ 0 ] == '-v' ) {
+			let option = args[ 0 ];
+			if( option == '-v' ) {
 				this.showVersion();
-				exit(0);
+				exit( 0 );
 			}
-			else if( args[ 0 ] == '-s' ) {
+			else if( option == '-d' ) {
+				this.documentationMode = true;
+				args.shift();
+			}
+			else if( option == '-s' ) {
 				this.sourceMaps = false;
 				args.shift();
 			}
-			else if( args[ 0 ] == '-m' ) {
+			else if( option == '-s' ) {
+				this.sourceMaps = false;
+				args.shift();
+			}
+			else if( option == '-m' ) {
 				this.minimize = true;
 				args.shift();
 				if( args.length < 1 )
@@ -61,11 +72,12 @@ export class Compiler
 	usage()
 	{
 		console.log(
-			"Usage: <compiler folder>/start.sh [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
+			"Usage: <compiler folder>/start.sh [-s] [-d] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>\n" +
 			"	-s : Don't generate source map files and remove existing ones.\n" +
 			"	-m : Minimize generated classes from specified starting class.\n" +
 			"	-t : Don't compile ./Test subfolders in following folders.\n" +
 			"	+t : Resume compiling ./Test subfolders in following folders.\n" +
+			"	-d : Only generate class documentation: DocumentedClasses.json.\n" +
 			"	-v : Show SmallJS version number and exit.\n" );
 
 		exit( 1 );
@@ -112,10 +124,14 @@ export class Compiler
 		console.log( "Successfully compiled modules: " + this.modules.length +
 			": classes: " + this.classes.length + " methods: " + this.classCompiler.methodCount );
 
-		this.minimizeClasses();
-		this.generateModules( outputFolder );
-		this.generateMetaData( outputFolder );
-		this.generateRuntime( outputFolder );
+		if( this.documentationMode )
+			this.generateDocumentation( outputFolder );
+		else {
+			this.minimizeClasses();
+			this.generateModules( outputFolder );
+			this.generateMetaData( outputFolder );
+			this.generateRuntime( outputFolder );
+		}
 	}
 
 	// Load *.st class input files from input folder and subfolders.
@@ -153,12 +169,12 @@ export class Compiler
 		let duplicateClass = this.classes.find( _class => _class.name == newClass.name );
 		if( duplicateClass )
 			this.error( "Duplicate class name: " + newClass.name,
-				newClass.fileName + " and: " + duplicateClass.fileName );
+				newClass.path + " and: " + duplicateClass.path );
 		this.classes.push( newClass );
 
 		// Add class to existing module or create new module for it.
 
-		if( ! this.modules.find( module => module.name == newClass.moduleName ) )
+		if( !this.modules.find( module => module.name == newClass.moduleName ) )
 			this.modules.push( new CompiledModule( newClass.moduleName ) );
 	}
 
@@ -195,7 +211,7 @@ export class Compiler
 
 			if( ++orderedClassesIndex >= orderedClasses.length ) {
 				let unorderedClass = unorderedClasses[ 0 ];
-				this.error( "Ordering classes failed for: " + unorderedClass.name + ". Check inheritance tree (EXTENDS).", unorderedClass.fileName );
+				this.error( "Ordering classes failed for: " + unorderedClass.name + ". Check inheritance tree (EXTENDS).", unorderedClass.path );
 			}
 
 			superClass = orderedClasses[ orderedClassesIndex ];
@@ -220,17 +236,17 @@ export class Compiler
 
 		// Minimize from the starting class plus some classes that are hardcoded into the compiler.
 
-		let startClassNames: string[] = [  this.minimizeStartClassName, "Array", "Block", "Boolean", "Class", "JsObject", "Nil", "Test" ];
+		let startClassNames: string[] = [ this.minimizeStartClassName, "Array", "Block", "Boolean", "Class", "JsObject", "Nil", "Test" ];
 		for( let className of startClassNames )
-			this.minimizeFromClassName( className )
+			this.minimizeFromClassName( className );
 
 		// Now remove all classes and methods where minimized is true.
 
 		let classesUsed: CompiledClass[] = [];
 		for( let _class of this.classes )
-			if( ! _class.minimized ) {
+			if( !_class.minimized ) {
 				classesUsed.push( _class );
-				_class.methods = _class.methods.filter( ( method ) => ! method.minimized );
+				_class.methods = _class.methods.filter( ( method ) => !method.minimized );
 			}
 		this.classes = classesUsed;
 
@@ -238,7 +254,7 @@ export class Compiler
 
 		let modulesUsed: CompiledModule[] = [];
 		for( let _class of this.classes )
-			if( ! modulesUsed.find( module => module.name == _class.moduleName ) )
+			if( !modulesUsed.find( module => module.name == _class.moduleName ) )
 				modulesUsed.push( new CompiledModule( _class.moduleName ) );
 		this.modules = modulesUsed;
 
@@ -273,7 +289,7 @@ export class Compiler
 
 	minimizeFromMethod( method: CompiledMethod )
 	{
-		if( ! method.minimized )
+		if( !method.minimized )
 			return;		// Already visited, stop recursion.
 
 		method.minimized = false;
@@ -285,7 +301,7 @@ export class Compiler
 			let _class = this.findClass( className );
 			while( _class != undefined && _class.minimized ) {
 				_class.minimized = false;
-				this.minimizeFromConstructor( _class )
+				this.minimizeFromConstructor( _class );
 				_class = _class.superclass;
 			}
 		}
@@ -309,7 +325,7 @@ export class Compiler
 
 	minimizeFromConstructor( _class: CompiledClass )
 	{
-		let constructor = _class.findMethodName( 'constructor' )
+		let constructor = _class.findMethodName( 'constructor' );
 		if( constructor )
 			this.minimizeFromMethod( constructor );
 	}
@@ -350,6 +366,19 @@ export class Compiler
 		let outputPath = outputFolder + "/Runtime.js";
 		fs.copyFileSync( runTimePath, outputPath );
 		fs.copyFileSync( runTimePath + ".map", outputPath + ".map" );
+	}
+
+	generateDocumentation( outputFolder: string )
+	{
+		let classesJson: DocumentedClassJson[] = [];
+
+		for( let _class of this.classes )
+			classesJson.push( DocumentedClassJson.fromCompiledClass( _class ) );
+
+		let json = JSON.stringify( classesJson, undefined, "\t" );
+		fs.writeFileSync( outputFolder + "/DocumentedClasses.json", json );
+
+		console.log( "Documentation generated.");
 	}
 
 	error( message: string, fileName?: string )

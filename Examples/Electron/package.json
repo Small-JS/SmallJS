@@ -4,6 +4,6 @@
 		"electron": "^39.2.7"
 	},
 	"devDependencies": {
-		"@types/node": "^25.0.2"
+		"@types/node": "^25.0.3"
 	}
 }

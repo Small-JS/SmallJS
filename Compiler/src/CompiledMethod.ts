@@ -19,6 +19,9 @@ export class CompiledMethod
 	methodReferences: string[] = [];
 	minimized: boolean = false;
 
+	category: string = "";
+	comment: string = "";
+
 	generate(): SourceNode
 	{
 		let node = new SourceNode( null, null, "", "", "method" );
@@ -26,7 +29,7 @@ export class CompiledMethod
 
 		// Generate optional async
 		if( this.isAsync )
-			node.add( 'async ' );
+			node.add( "async " );
 
 		// Generate name.
 		node.add( Naming.methodStToJs( this.name ) );

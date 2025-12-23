@@ -21,7 +21,7 @@ export class CompiledModule
 		this.name = name;
 	}
 
-	// In Playground replace the method generate(...) below with this
+	// For the Playground replace the method generate(...) below with this
 	/*
 	generate( allClasses: CompiledClass[] ): string
 	{

@@ -14,24 +14,26 @@ export class CompiledClass
 	superclassName: string = "";
 	superclass?: CompiledClass;
 
-	fileName: string;
+	path: string;
 	source: string;
 	bodyPosition!: Position;
 
-	vars: CompiledVariable[] = [];
 	classVars: CompiledVariable[] = [];
+	vars: CompiledVariable[] = [];
 
-	methods: CompiledMethod[] = [];
 	classMethods: CompiledMethod[] = [];
+	methods: CompiledMethod[] = [];
 
 	references: string[] = [ "Object", "Class", "String" ];
 	minimized: boolean = false;
 
 	classInline?: SourceNode;
 
+	comment: string = "";
+
 	constructor( filename: string, source: string )
 	{
-		this.fileName = filename;
+		this.path = filename;
 		this.source = source;
 	}
 

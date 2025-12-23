@@ -30,15 +30,13 @@
 			"postDebugTask": "Run Node tests"
 		},
 		{
-			"name": "Launch Compiler on Counter with minimize",
+			"name": "Launch Compiler in documentation mode",
 			"type": "node",
 			"request": "launch",
 			"skipFiles": [ "<node_internals>/**" ],
-			"cwd": "${workspaceFolder}/../Examples/Counter",
+			"cwd": "${workspaceFolder}",
 			"program": "${workspaceFolder}/out/main.js",
-			"args": [ "-m", "CounterApp", "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
-			// "args": [ "../../Smalltalk/Core", "../../Smalltalk/Browser", "src", "web/Script" ],
-			"envFile": "${workspaceFolder}/../Examples/Counter/.env"
+			"args": [ "-d", "../Smalltalk/Core", "doc" ]
 		}
 
 	]

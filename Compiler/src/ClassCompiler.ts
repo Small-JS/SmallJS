@@ -14,6 +14,7 @@ export class ClassCompiler
 	// Currently compiling class and method plus all classes.
 	class!: CompiledClass;
 	method!: CompiledMethod;
+	methodCategory = '';
 	allClasses: CompiledClass[] = [];
 	methodCount = 0;
 
@@ -46,6 +47,12 @@ export class ClassCompiler
 		this.parser.mustParseTerm( "VARS" );
 		this.class.vars = this.loadVariables();
 
+		if( this.parser.peekChar() == "\"" )
+		{
+			this.class.comment = this.parser.parseComment();
+			this.parser.skipWhitespace();
+		}
+
 		// Save current position in the class body source code for the compilation phase.
 		this.class.bodyPosition = this.parser.position.copy();
 
@@ -63,9 +70,9 @@ export class ClassCompiler
 
 		while( this.parser.peekChar() != "'" )
 			variables.push( new CompiledVariable( this.parser.parseVariableName() ) );
-
 		this.parser.nextChar();
-		this.parser.skipSpace();
+
+		this.parser.skipWhitespace();
 
 		return variables;
 	}
@@ -82,21 +89,43 @@ export class ClassCompiler
 	compileClass( _class: CompiledClass )
 	{
 		this.class = _class;
-		this.parser = new Parser( _class.fileName, _class.source );
+		this.parser = new Parser( _class.path, _class.source );
 		this.parser.setPosition( _class.bodyPosition );
 
 		// The default is compiling istance methods.
 		this.compilingClassMethods = false;
+		this.methodCategory = "";
+
+		// Save optional first comment after class comment as category comment.
+		this.parser.saveNextComment( true );
+		this.parser.skipSpace();
+		this.methodCategory = this.parser.savedComment;
 
 		while( !this.parser.atEnd() ) {
-			if( this.parser.tryParseTerm( "INLINE" ) )
+			// Save the optional next comment as the category comment.
+			this.parser.saveNextComment( true );
+			// this.parser.skipSpace();
+			// if( this.parser.atEnd() )
+			// 	break;
+
+			if( this.parser.tryParseTerm( "INLINE" ) ) {
 				this.compileClassInline();
-			else if( this.parser.tryParseTerm( "CLASSMETHODS" ) )
+				this.methodCategory = "";
+			}
+			else if( this.parser.tryParseTerm( "CLASSMETHODS" ) ) {
 				this.compilingClassMethods = true;
-			else if( this.parser.tryParseTerm( "METHODS" ) )
+				this.methodCategory = "";
+			}
+			else if( this.parser.tryParseTerm( "METHODS" ) ) {
 				this.compilingClassMethods = false;
+				this.methodCategory = "";
+			}
 			else
 				this.compileMethod();
+
+			// Save new category if it was set.
+			if( this.parser.savedComment != "" )
+				this.methodCategory = this.parser.savedComment;
 		}
 	}
 
@@ -115,6 +144,7 @@ export class ClassCompiler
 	private compileMethod()
 	{
 		this.method = new CompiledMethod();
+		this.method.category = this.methodCategory;
 		this.method.body = this.sourceNode( "", "method" );
 
 		this.compileMethodHeader();
@@ -124,6 +154,9 @@ export class ClassCompiler
 
 	compileMethodHeader()
 	{
+		// Save possible method comment
+		this.parser.saveNextComment( true );
+
 		if( this.parser.tryParseTerm( 'async' ) )
 			this.method.isAsync = true;
 
@@ -151,6 +184,9 @@ export class ClassCompiler
 			if( !this.class.addMethod( this.method ) )
 				this.error( "Duplicate method: " + this.method.name );
 		}
+
+		this.method.comment = this.parser.savedComment;
+		this.parser.saveNextComment( false );
 	}
 
 	compileMethodHeaderVariable()
@@ -166,7 +202,10 @@ export class ClassCompiler
 			this.compileLocalVariables();
 			this.compileStatements();
 		}
-		this.parser.tryParseTerm( "!" );
+
+		// Save the optional next comment as the category comment.
+		this.parser.saveNextComment( true );
+		this.parser.mustParseTerm( "!" );
 	}
 
 	private compileConstructor()
@@ -674,7 +713,7 @@ export class ClassCompiler
 
 	relativeFilename(): string
 	{
-		return this.relativeOutputPath() + this.class.fileName;
+		return this.relativeOutputPath() + this.class.path;
 	}
 
 	// Return relative path from output folder to workspace folder.

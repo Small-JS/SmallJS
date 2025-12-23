@@ -3,15 +3,15 @@ CLASS ElectronView EXTENDS JsObject MODULE ElectronRenderer CLASSVARS ''
 
 "Electron IPC API calls"
 
-"Call the Electron IPC API prepared by the exposeInMainWorld method,
- that added it to the global JS window object."
+"Calling"
 
 callApi: apiName method: methodName
-	""
+	"Call the Electron IPC API prepared by the exposeInMainWorld method,
+	 that added it to the global JS window object."
 	INLINE 'window[ apiName.js ][ methodName.js ]()'.
 !
 callApi: apiName method: methodName with: argument
-	""
+	"Like above, but with 1 argument."
 	INLINE 'window[ apiName.js ][ methodName.js ]( argument )'.
 !
 callApi: apiName method: methodName with: arg1 with: arg2

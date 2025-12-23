@@ -1,8 +1,12 @@
 CLASS Object EXTENDS nil MODULE Core CLASSVARS '' VARS ''
 
+"Base class for all classes."
+
 INLINE 'import { Naming } from "./Runtime.js";'
 
 CLASSMETHODS
+
+"Testing"
 
 async myTest
 	"This is the first method compiled.
@@ -139,6 +143,8 @@ isNil
 notNil
 	^ self isNil not.
 !
+
+"Comparing"
 
 "Default cases of (reverse) comparing number types compares to other objects."
 

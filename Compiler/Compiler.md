@@ -15,11 +15,15 @@ To test itself after changes, the compiler starts the ../Node project and runs i
 		-m : Minimize generated classes from specified starting class.
 		-t : Don't compile ./Test subfolders in following folders.
 		+t : Resume compiling ./Test subfolders in following folders.
+		-d : Only generate class documentation: DocumentedClasses.json.
+		-v : Show SmallJS version number and exit.
 
-The '-s' option is convienient if you want to debug purely in JS, and not a mix of ST and JS.\
-The '-t' and '+t' options can be used to skip compiling units tests for ST base libraries and for production deployment of your app.\
-The '-m' option with also strip any test classes that are one explicitly referenced.\
-For multi-page web applications you need to excplicitly reference the startup classes and methods for the startup classes of other web pages, or they will be minimized away. See Examples/Shop/Client/LoginApp.st for an example.
+- Option '-s' is convenient if you want to debug purely in JS, and not a mix of ST and JS.\
+- Options '-t' and '+t' can be used to skip compiling units tests for ST base libraries and for production deployment of your app.\
+- Option '-m' with also strip any test classes that are one explicitly referenced.\
+For multi-page web applications you need to excplicitly reference the startup classes and methods for the startup classes of other web pages, or they will be minimized away. \
+See `Examples/Shop/Client/LoginApp.st` for an example.
+- Option '-d' does not generate JS code.
 
 Example for Node projects:
 
