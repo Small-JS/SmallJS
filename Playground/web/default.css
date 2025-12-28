@@ -3,7 +3,7 @@
 	margin: 0px;
     font-family: system-ui;
     font-size: medium;
-    background-color: #F0F0F0;
+    background-color: #F8F8F8;
 }
 
 h1 {
@@ -51,7 +51,8 @@ h1 {
 }
 
 #evaluatorTable td {
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 #helpExamplesDiv {
@@ -59,7 +60,7 @@ h1 {
 }
 
 #expressionTextArea {
-	width: 100%;
+	width: 99%;
 }
 
 #evaluateButton {
@@ -70,7 +71,7 @@ h1 {
 }
 
 #resultTextArea {
-	width: 100%;
+	width: 99%;
 }
 
 .vertical-center

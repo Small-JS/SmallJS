@@ -7,6 +7,7 @@ import { CompiledMethod } from "./CompiledMethod.js";
 export class DocumentedMethodJson
 {
 	name = "";
+	header = "";
 	category = "";
 	comment = "";
 
@@ -14,6 +15,7 @@ export class DocumentedMethodJson
 	{
 		let json = new DocumentedMethodJson();
 		json.name = method.name;
+		json.header = method.header;
 		json.category = method.category;
 		json.comment = method.comment;
 

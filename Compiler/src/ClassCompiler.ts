@@ -159,8 +159,10 @@ export class ClassCompiler
 
 		if( this.parser.tryParseTerm( 'async' ) )
 			this.method.isAsync = true;
+		this.method.header = this.method.isAsync ? 'async ' : '';
 
 		this.method.name = this.parser.parseTerm();
+		this.method.header += this.method.name;
 
 		if( this.method.isUnary() ) { }
 		else if( this.method.isBinary() )
@@ -169,7 +171,9 @@ export class ClassCompiler
 			this.compileMethodHeaderVariable();
 			// Check for more selectors ending with ":" plus argument.
 			while( !this.parser.atEnd() && Naming.methodIsKeyword( this.parser.peekTerm() ) ) {
-				this.method.name += this.parser.parseTerm();
+				let selector = this.parser.parseTerm();
+				this.method.name += selector;
+				this.method.header += ' ' + selector;
 				this.compileMethodHeaderVariable();
 			}
 		}
@@ -193,6 +197,7 @@ export class ClassCompiler
 	{
 		let variableName = this.parser.parseVariableName();
 		this.method.args.push( new CompiledVariable( variableName ) );
+		this.method.header += ' ' + variableName;
 	}
 
 	compileMethodBody()

@@ -19,6 +19,7 @@ export class CompiledMethod
 	methodReferences: string[] = [];
 	minimized: boolean = false;
 
+	header: string = "";
 	category: string = "";
 	comment: string = "";
 
