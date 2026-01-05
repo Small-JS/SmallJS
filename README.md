@@ -7,25 +7,28 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - Tutorial for SmallJS in the making - 15-DEC-2025
+
+## News - SmallJS class Reference available - 23-DEC-2025
+
+The full class documentation is now available on the website: [small-js.org/Reference](https://small-js.org/Reference) .\
+
+## News - SmallJS Tutorial available (partial) - 13-DEC-2025
 
 The SmallJS website now has a tutorial page for learning SmallJS and Smalltalk.\
-It's still under construction, but the link is: [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
-The first part of the tutorial can be easily done online in the [Playground](https://small-js.org/Playground) .\
+It's not complete, but the link is: [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
+The first part of the tutorial can be easily done online using the [Playground](https://small-js.org/Playground) .
 If you have any feedback for wishes for the tutorial,\
-please add a comment to github [issue #58](https://github.com/Small-JS/SmallJS/issues/58)
+create an issue in the website repo: [github.com/Small-JS/Website/issues](https://github.com/Small-JS/Website/issues) ,\
 or mail to info at small-js.org.
 
 Happy learning!
 
-## News - Working on SmallJS v2.0 - 12-NOV-2025
+## News - SmallJS v1.9 committed - 13-NOV-2025
 
 The latest commits now give SmallJS full support for async, await and promises!\
 Almost async calls classes have been converted form callbacks to use promises,\
 making calling code cleaner, more concise and easier to debug.\
 Check out [Async.md](./Documentation/Language/Async.md) for usage instructions.
-
-Enjoy!
 
 ## Introducing SmallJS
 
