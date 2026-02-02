@@ -1,10 +1,18 @@
-CLASS Map EXTENDS Collection MODULE Core CLASSVARS '' VARS ''
+CLASS Map EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 	"Encapsulates the JS Map class, that is stored in the inherited 'js' variable.
 	 As in a JS Map, the keys must be strings.
 	 Otherwise use class Dictionary."
 
 
 CLASSMETHODS
+
+"Creating"
+
+new
+	^ self fromJs: INLINE 'new Map()'.
+!
+
+"Grouping"
 
 group: array by: block
 	| map |
@@ -18,8 +26,15 @@ group: array by: block
 
 METHODS
 
-constructor
-	js := INLINE 'new Map()'.
+"Converting"
+
+toString
+	| result |
+	result := 'Map( '.
+	self forEach: [ :key :value |
+		result := result, ( KeyValue key: key value: value ) toString, ' ' ].
+	result := result, ')'.
+	^ result.
 !
 
 "Properties"
@@ -31,7 +46,7 @@ size
 "Getting"
 
 get: key
-	^ INLINE 'this.js.get( key.js )'.
+	^ Nil fromJs: INLINE 'this.js.get( key.js )'.
 !
 
 "Setting"

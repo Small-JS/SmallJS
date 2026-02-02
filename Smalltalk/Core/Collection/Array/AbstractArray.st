@@ -1,4 +1,4 @@
-CLASS AbstractArray EXTENDS Collection MODULE Core CLASSVARS '' VARS ''
+CLASS AbstractArray EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 	"This abstract class contains the common functionality of classes Array and TypedArray."
 
 CLASSMETHODS

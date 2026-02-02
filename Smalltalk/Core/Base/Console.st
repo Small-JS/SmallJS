@@ -10,23 +10,23 @@ clear
 
 "Message types"
 
-assert: boolean message: message
-	INLINE 'console.assert( boolean.js, message.js )'.
+assert: boolean value: value
+	INLINE 'console.assert( boolean.js, value.$toString().js )'.
 !
-debug: message
-	INLINE 'console.debug( message.js )'.
+debug: value
+	INLINE 'console.debug( value.$toString().js )'.
 !
-error: message
-	INLINE 'console.error( message.js )'.
+error: value
+	INLINE 'console.error( value.$toString().js )'.
 !
-info: message
-	INLINE 'console.info( message.js )'.
+info: value
+	INLINE 'console.info( value.$toString().js )'.
 !
-log: message
-	INLINE 'console.log( message.js )'.
+log: value
+	INLINE 'console.log( value.$toString().js )'.
 !
-warn: message
-	INLINE 'console.warn( message.js )'.
+warn: value
+	INLINE 'console.warn( value.$toString().js )'.
 !
 
 "Counting"

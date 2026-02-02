@@ -1,34 +1,59 @@
-CLASS Dictionary EXTENDS Collection MODULE Core CLASSVARS '' VARS 'keyValues'
-	"Variable keyValuePairs contains an array of arrays of 2 elements; key and value.
-	 Note: Simple, low performance implementation now. Should use hashing.
-	 Use class Map when keys are strings."
+CLASS Dictionary EXTENDS Object MODULE Core CLASSVARS '' VARS 'keyValues'
+
+"Dictionary that can have arbitrary objects as keys.
+Note: Simple, low performance implementation.
+Use class Map when keys are strings."
 
 METHODS
+
+"Creating"
 
 constructor
 	keyValues := Array new.
 !
-at: key ifAbsent: block
+
+"Converting"
+
+toString
+	| result |
+	result := 'Dictionary( '.
 	keyValues do: [ :keyValue |
-		( keyValue at: 0 ) = key ifTrue: [ ^ keyValue at: 1 ] ].
+		result := result, keyValue toString, ' ' ].
+	result := result, ')'.
+	^ result.
+!
+at: key
+	"Return value at key, or thorw an error if the key is absent."
+	^ self at: key ifAbsent: [
+		Error throw: 'Key not found: ', key toString ]
+!
+at: key ifAbsent: block
+	"Return value at key, or the results of block if the key is absent."
+	keyValues do: [ :keyValue |
+		keyValue key = key ifTrue: [ ^ keyValue value ] ].
 	^ block value.
 !
 at: key put: value
-	| keyValue |
-	keyValue := self at: key ifAbsent: [
-		keyValue := Array new: 2.
-		keyValues add: keyValue.
-		keyValue at: 0 put: key ].
-	keyValue at: 1 put: value.
+	| newKeyValue |
+
+	"Check for existing key."
+	keyValues do: [ :keyValue |
+		keyValue key = key ifTrue: [
+			keyValue value: value. ^ self ] ].
+
+	"Otherwise add new key."
+	newKeyValue := KeyValue key: key value: value.
+	keyValues add: newKeyValue.
 !
 removeAt: key
 	| index |
-	index := keyValues findIndex: [ :keyValue | ( keyValue at: 0 ) = key ].
+	index := keyValues findIndex: [ :keyValue | keyValue key = key ].
 	index >= 0 ifTrue: [ keyValues removeAt: index ].
 !
 do: block
+	"Evaluate block with each key and value pair as argument."
 	keyValues do: [ :keyValue |
-		block value: ( keyValue at: 0 ) value: ( keyValue at: 1 ) ].
+		block value: keyValue key value: keyValue value ].
 !
 size
 	^ keyValues length.

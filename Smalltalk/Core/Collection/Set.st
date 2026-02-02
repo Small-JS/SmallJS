@@ -1,4 +1,4 @@
-CLASS Set EXTENDS Collection MODULE Core CLASSVARS '' VARS ''
+CLASS Set EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 "Note: This ST implementation of Set is much slower than the encapsulated JS set,
  because testing for equality of set values (basic types) must always be done through ST,

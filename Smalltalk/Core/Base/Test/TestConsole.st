@@ -15,9 +15,9 @@ noTest
 
 	Console log: 'This log message should be cleared.'.
 	Console clear.
-	Console assert: false message: 'This assert message should be shown.'.
-	Console assert: true message: 'This assert message should NOT be shown.'.
-	Console assert: true message: 'This assert message should NOT be shown.'.
+	Console assert: false value: 'This assert message should be shown.'.
+	Console assert: true value: 'This assert message should NOT be shown.'.
+	Console assert: true value: 'This assert message should NOT be shown.'.
 	Console debug: 'Debug mesage.'.
 	Console error: 'Error message.'.
 	Console info: 'Info message.'.

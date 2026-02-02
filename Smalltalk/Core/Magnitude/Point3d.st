@@ -1,5 +1,5 @@
 CLASS Point3d EXTENDS Point MODULE Core CLASSVARS '' VARS 'z'
-	"Encapsulates a 3D point3d with x, y, z coordinates."
+	"Encapsulates a 3D point with x, y, z coordinates."
 
 CLASSMETHODS
 

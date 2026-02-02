@@ -1,9 +1,9 @@
 # ./Smalltalk library (image) folder
 
-The main Smalltalk source code of the system, for both the Node.js and browser environments and classes shared by both.
+The source code of the SmallJS system library.
 
 Subfolders in this folder:
-- Core - Common ST classes for browser and Node environments
+- Core - Common ST classes for browser and Node.js environments
 - Browser - Browser specific classes, mainly the DOM.
 - Node - Node.js specific classes for, creating server apps.
 - AI - Classes for creating AI apps.

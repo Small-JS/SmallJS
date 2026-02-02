@@ -7,21 +7,21 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
+## News - SmallJS Tutorial core part complete - 2-FEB-2025
+
+The SmallJS website has a tutorial page for learning SmallJS and Smalltalk.\
+The link is: [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
+It is now complete for the core language and library classes.\
+The tutorial can done interactively by using the online [Playground](https://small-js.org/Playground) .\
+If you have any feedback for wishes for the tutorial,\
+please create an issue in the website repo: [github.com/Small-JS/Website/issues](https://github.com/Small-JS/Website/issues) ,\
+or mail to info at small-js.org.
+
+Happy learning and playing!
 
 ## News - SmallJS class Reference available - 23-DEC-2025
 
-The full class documentation is now available on the website: [small-js.org/Reference](https://small-js.org/Reference) .\
-
-## News - SmallJS Tutorial available (partial) - 13-DEC-2025
-
-The SmallJS website now has a tutorial page for learning SmallJS and Smalltalk.\
-It's not complete, but the link is: [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
-The first part of the tutorial can be easily done online using the [Playground](https://small-js.org/Playground) .
-If you have any feedback for wishes for the tutorial,\
-create an issue in the website repo: [github.com/Small-JS/Website/issues](https://github.com/Small-JS/Website/issues) ,\
-or mail to info at small-js.org.
-
-Happy learning!
+The full class documentation is now available on the website: [small-js.org/Reference](https://small-js.org/Reference) .
 
 ## News - SmallJS v1.9 committed - 13-NOV-2025
 

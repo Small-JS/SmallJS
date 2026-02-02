@@ -4,12 +4,17 @@ test
 	| map sum |
 
 	map := Map new.
+	self assert: [ map class = Map ].
+
 	map set: 'a' value: 1.
 	map set: 'b' value: 2.
+	map set: 'c' value: 9.
+	"Replace value at key 'c'"
 	map set: 'c' value: 3.
 
 	self assert: [ map size = 3 ].
 	self assert: [ ( map get: 'c' ) = 3 ].
+	self assert: [ ( map get: 'z' ) = nil ].
 	self assert: [ map has: 'b' ].
 	self assert: [ ( map has: 'd' ) not ].
 
