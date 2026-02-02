@@ -13,6 +13,8 @@ bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."
 
 	expressionTextArea := Document getElementById: 'expressionTextArea' class: HtmlTextAreaElement.
+	expressionTextArea addEventListener: 'input'
+		then: [ self oldResult ].
 
 	evaluateButton := Document getElementById: 'evaluateButton' class: HtmlButtonElement.
 	evaluateButton onClick: [ self evaluate ].
@@ -26,9 +28,11 @@ evaluate
 		onError: [ :error | self onError: error ].
 !
 onEvaluate: result
+	self newResult.
 	resultTextArea value: result toString.
 !
 onError: error
+	self newResult.
 	resultTextArea value: error toString.
 !
 
@@ -42,4 +46,12 @@ evaluateButton
 !
 resultTextArea
 	^ resultTextArea.
+!
+oldResult
+	"Result text to grey when expression has changed."
+	resultTextArea classList add: 'oldResult'.
+!
+newResult
+	"Result text to black on new result."
+	resultTextArea classList remove: 'oldResult'.
 !

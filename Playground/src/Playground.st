@@ -9,6 +9,8 @@ evaluate: expression onResult: aResultBlock onError: anErrorBlock
 	INLINE 'new Evaluator().evaluate( expression.js, this.$onResult$.bind( this ), this.$onError$.bind( this ) )'.
 !
 onResult: result
+	"Result might be JS undefined, convert it to nil then."
+	result := Nil fromJs: result.
 	resultBlock value: result.
 !
 onError: jsError

@@ -74,6 +74,10 @@ h1 {
 	width: 99%;
 }
 
+.oldResult {
+	color: grey;
+}
+
 .vertical-center
 {
 	display: flex;
