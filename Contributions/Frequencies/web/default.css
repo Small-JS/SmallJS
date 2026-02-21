@@ -1,0 +1,57 @@
+﻿body {
+    font-family: system-ui;
+    font-size: medium;
+    background-color: #F8F8F8;
+}
+
+#formTable {
+	width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	border: solid gray;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	background-color: lightblue;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	/* Vertically center items */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.subTitle {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+#inputTextArea {
+	width: 100%;
+	height: 50px;
+
+}
+
+#calculateButton {
+	font-weight: bold;
+}
+
+#frequenciesTable {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+}
+
+#frequenciesTable th, #frequenciesTable td {
+  border: 2px solid grey;
+  padding-left: 4px;
+  padding-right: 4px;
+}

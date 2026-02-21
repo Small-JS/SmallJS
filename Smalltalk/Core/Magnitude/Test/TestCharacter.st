@@ -9,6 +9,12 @@ testAcesssing
 !
 testConverting
 	self assert: [ $a toString = 'a' ].
+
+	self assert: [ $a toUpperCase = $A ].
+	self assert: [ $1 toUpperCase = $1 ].
+
+	self assert: [ $B toLowerCase = $b ].
+	self assert: [ $@ toUpperCase = $@ ].
 !
 testComparisons
 	self assert: [ $a = $a ].
@@ -17,8 +23,8 @@ testComparisons
 	self assert: [ $a <= $a ].
 !
 testTesting
-	self assert: [ $a isLowercase ].
-	self assert: [ $Z isUppercase ].
+	self assert: [ $a isLowerCase ].
+	self assert: [ $Z isUpperCase ].
 	self assert: [ $e isLetter ].
 	self assert: [ $. isLetter not ].
 !

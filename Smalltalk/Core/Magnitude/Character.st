@@ -23,6 +23,16 @@ code
 toString
 	^ String fromCharacter: self.
 !
+toUpperCase
+	^ self isLowerCase
+		ifTrue: [ Character fromCode: self code - 32 ]
+		ifFalse: [ self ].
+!
+toLowerCase
+	^ self isUpperCase
+		ifTrue: [ Character fromCode: self code + 32 ]
+		ifFalse: [ self ].
+!
 
 "Comparisons."
 
@@ -38,14 +48,14 @@ toString
 
 "Testing."
 
-isUppercase
+isUpperCase
 	^ Boolean fromJs: INLINE 'this.js >= 65 && this.js <= 90'.
 !
-isLowercase
+isLowerCase
 	^ Boolean fromJs: INLINE 'this.js >= 97 && this.js <= 122'.
 !
 isLetter
-	^ self isUppercase | self isLowercase.
+	^ self isUpperCase | self isLowerCase.
 !
 isDigit
 	^ Boolean fromJs: INLINE 'this.js >= 48 && this.js <= 57'.

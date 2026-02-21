@@ -12,6 +12,11 @@ test
 	self assert: [ dict toString = 'Dictionary( { a, aValue } { b, bValue } { c, cValue } )' ].
 
 	self assert: [ dict size = 3 ].
+	self assert: [ dict keyValues first key = 'a' ].
+
+	self assert: [ dict has: 'a' ].
+	self assert: [ ( dict find: 'a' ) key = 'a' ].
+
 	self assert: [ ( dict at: 'a' ) = 'aValue' ].
 	self assertError: [ dict at: 'z' ].
 	self assert: [ ( dict at: 'b' ifAbsent: [ nil ] ) = 'bValue' ].
@@ -24,4 +29,7 @@ test
 	dict do: [ :key :value |
 		string := string, key, value ].
 	self assert: [ string = 'aaValueccValue' ].
+
+	dict clear.
+	self assert: [ dict size = 0 ].
 !

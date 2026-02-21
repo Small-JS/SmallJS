@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Counter</title>
+	<link rel="stylesheet" href="default.css" type="text/css" />
+	<script src="Script/main.js"></script>
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td class="title">
+				<img id="logoImage" src="logo.png" height="40"></img>
+				<span id="titleMessage">&nbsp;&nbsp;Frequencies</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="subTitle">Input</div>
+				<textarea id="inputTextArea"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button id="calculateButton">Calculate</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="subTitle">Frequencies</div>
+				<table id="frequenciesTable">
+					<thead>
+						<tr>
+							<th>Letter</th>
+							<th>Frequency</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Rows will be replaced by the app -->
+						<tr>
+							<td>&nbsp</td>
+							<td>&nbsp</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

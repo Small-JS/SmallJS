@@ -62,9 +62,11 @@ let pgQueryResult: pg.QueryResult;
 let pgDatabaseError: pg.DatabaseError;
 
 // MariaDB
-import * as mariadb from "mariadb";
-import { createConnection as mdCreateConnection } from "mariadb";
-let mdConnection: mariadb.Connection;
+// Disabled for now, because of this issue with the MariaDB npm package:
+// https://github.com/mariadb-corporation/mariadb-connector-nodejs/issues/346
+// import * as mariadb from "mariadb";
+// import { createConnection as mdCreateConnection } from "mariadb";
+// let mdConnection: mariadb.Connection;
 // Query result 'OkPacket' has no TS type definition.
 
 import * as mysql from "mysql2";

@@ -22,6 +22,28 @@ toString
 	result := result, ')'.
 	^ result.
 !
+
+"Properties"
+
+size
+	^ keyValues length.
+!
+keyValues
+	^ keyValues.
+!
+
+"Testing"
+
+has: key
+	^ ( self find: key ) notNil.
+!
+find: key
+	"Return KeyValue with key or nil if not found."
+	^ keyValues find: [ :keyValue | keyValue key = key ]
+!
+
+"Accessing"
+
 at: key
 	"Return value at key, or thorw an error if the key is absent."
 	^ self at: key ifAbsent: [
@@ -29,32 +51,37 @@ at: key
 !
 at: key ifAbsent: block
 	"Return value at key, or the results of block if the key is absent."
-	keyValues do: [ :keyValue |
-		keyValue key = key ifTrue: [ ^ keyValue value ] ].
+	| keyValue |
+	keyValue := self find: key.
+	keyValue notNil ifTrue: [
+		^ keyValue value ].
 	^ block value.
 !
 at: key put: value
-	| newKeyValue |
+	| keyValue |
 
-	"Check for existing key."
-	keyValues do: [ :keyValue |
-		keyValue key = key ifTrue: [
-			keyValue value: value. ^ self ] ].
+	"If key not found, create and add a new KeyValue."
+	keyValue := self find: key.
+	keyValue ifNil: [
+		keyValue := KeyValue new key: key.
+		keyValues add: keyValue ].
 
-	"Otherwise add new key."
-	newKeyValue := KeyValue key: key value: value.
-	keyValues add: newKeyValue.
-!
-removeAt: key
-	| index |
-	index := keyValues findIndex: [ :keyValue | keyValue key = key ].
-	index >= 0 ifTrue: [ keyValues removeAt: index ].
+	keyValue value: value.
 !
 do: block
 	"Evaluate block with each key and value pair as argument."
 	keyValues do: [ :keyValue |
 		block value: keyValue key value: keyValue value ].
 !
-size
-	^ keyValues length.
+
+"Removing"
+
+removeAt: key
+	| index |
+	index := keyValues findIndex: [ :keyValue | keyValue key = key ].
+	index >= 0 ifTrue: [
+		keyValues removeAt: index ].
+!
+clear
+	keyValues := Array new.
 !

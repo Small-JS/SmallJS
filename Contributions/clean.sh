@@ -7,5 +7,6 @@ cd "$(dirname "$0")"
 
 echo "Removing compiled code from contributions..."
 
+./Frequencies/clean.sh
 ./CounterUsingMithril/clean.sh
 ./Pharo/clean.sh

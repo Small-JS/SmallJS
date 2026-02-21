@@ -1,9 +1,18 @@
 # Installing SmallJS
 
+## Copying the SmallJS repo
+
+First download a copy of the current repo: [SmallJS-main.zip](https://github.com/Small-JS/SmallJS/archive/refs/heads/main.zip)\
+and unzip it to a working folder on your system.
+
+You can also use your favorite Git tool to fork the repo.\
+Then you have version control and can even contributute to SmallJS development.\
+If you don't know Git yet, [GitHub Desktop](https://desktop.github.com/download/)
+is user friendly way to use its functionality.
+
 ## Installing Prerequisites
 
-To install all the prerequisite delopment tools, look at:
->[./Documentation/Prerequisites.md](./Documentation/Prerequisites.md)
+To install all the prerequisite delopment tools, look at: [Prerequisites.md](Prerequisites.md)
 
 ## Install npm modules
 
@@ -24,7 +33,6 @@ Run the bash script: `./build.sh`, that:
 
 Notes:
 - Browser GUI testing is disabled by default. To enable it, check out:
-  > [./Documentation/Building.md](./Documentation/Building.md)
+  > [Building.md](Building.md)
 
 Check if everything builds tests successfully before going to the next step.
-

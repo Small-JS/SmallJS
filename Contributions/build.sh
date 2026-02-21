@@ -8,6 +8,7 @@ cd "$(dirname "$0")"
 
 echo "==== Building SmallJS contributions"
 
+./Frequencies/build.sh
 ./CounterUsingMithril/build.sh
 ./Pharo/build.sh
 
