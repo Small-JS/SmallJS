@@ -7,28 +7,20 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - SmallJS Tutorial core part complete - 2-FEB-2025
+## News - SmallJS 2.0 released! - 21-FEB-2026
 
-The SmallJS website has a tutorial page for learning SmallJS and Smalltalk.\
-The link is: [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
-It is now complete for the core language and library classes.\
-The tutorial can done interactively by using the online [Playground](https://small-js.org/Playground) .\
-If you have any feedback for wishes for the tutorial,\
-please create an issue in the website repo: [github.com/Small-JS/Website/issues](https://github.com/Small-JS/Website/issues) ,\
-or mail to info at small-js.org.
+[SmallJS 2.0](https://small-js.org/News) now has full support for async, await and promises!\
+Almost all async calls classes have been converted form callbacks to promises,\
+making code cleaner, more concise and easier to debug.\
+Check out [Async.md](./Documentation/Language/Async.md) for usage instructions.\
+For other improvements, check out the website.
 
-Happy learning and playing!
+The SmallJS website now has a [tutorial page](https://small-js.org/Tutorial) for learning SmallJS and Smalltalk.\
+The Smalltalk language and core library classes are explained.\
+Examples can be done interactively using the online [Playground](https://small-js.org/Playground) .\
+(If you have any feedback on the tutorial, please create an issue in the [website repo](https://github.com/Small-JS/Website/issues) ).
 
-## News - SmallJS class Reference available - 23-DEC-2025
-
-The full class documentation is now available on the website: [small-js.org/Reference](https://small-js.org/Reference) .
-
-## News - SmallJS v1.9 committed - 13-NOV-2025
-
-The latest commits now give SmallJS full support for async, await and promises!\
-Almost async calls classes have been converted form callbacks to use promises,\
-making calling code cleaner, more concise and easier to debug.\
-Check out [Async.md](./Documentation/Language/Async.md) for usage instructions.
+The full [class reference](https://small-js.org/Reference) documentation is now also available on the website.
 
 ## Introducing SmallJS
 
@@ -46,7 +38,7 @@ For usability, ST class and method names are kept mostly equal to their familiar
 JS libraries already encapsulated in ST are:
 
 - Browsers: Document, Window, HTML elements, events, CSS, streams.
-- Node.js: HTTP server, Express, file mgmt, 3 databases, 5 AI providers.
+- Node.js: HTTP server, Express, file mgmt, 5 databases, 5 AI providers.
 - Desktop apps: NWjs, Electron, NodeGui.
 
 To get you started quickly, there are several example projects using the above.
@@ -78,7 +70,7 @@ The complete SmallJS documentation, including a tutorial, is located here:
 
 ## Contributions
 
-Contributions to SmallJS that are not part of the main system.
+Contributions to SmallJS that are not part of the main system,
 but show interesting applications:
 [Contributions.md](Contributions/Contributions.md)
 
