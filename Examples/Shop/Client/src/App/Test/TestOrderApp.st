@@ -3,8 +3,9 @@ CLASS TestOrderApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'order
 "Tests the GUI of the Shop client Order page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aOrderApp
-	orderApp := aOrderApp.
+async start
+	orderApp := OrderApp new.
+	await orderApp start.
 
 	await Timer timeout: 1000.
 	self testOrderFields.

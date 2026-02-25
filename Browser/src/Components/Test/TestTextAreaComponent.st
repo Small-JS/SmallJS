@@ -1,4 +1,4 @@
-CLASS TestTextAreaComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestTextAreaComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| textAreaComponent textArea |

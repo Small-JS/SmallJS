@@ -10,9 +10,6 @@ start
 	"For easy access :-)"
 	userNameInput value: 'John'.
 	passwordInput value: 'secret'.
-
-	self testMode ifTrue: [
-		TestLoginApp new test: self ].
 !
 references
 	"Prevent minimizing of apps for other HTML pages."

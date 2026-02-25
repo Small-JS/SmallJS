@@ -1,4 +1,4 @@
-CLASS CheckboxInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS CheckboxInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'checkboxInput outputParagraph'
 
 htmlPath

@@ -1,13 +1,10 @@
-CLASS BenchmarkApp EXTENDS BrowserApp MODULE Benchmark CLASSVARS ''
+CLASS BenchmarkApp EXTENDS BrowserApp MODULE BenchmarkApp CLASSVARS ''
 	VARS 'benchmarks size resultsTable runAllButton'
 
 start
 	self initializeBenchmarks: self benchmarkConfigs.
 	self bindElements.
 	self clearBenchmarks.
-
-	self testMode ifTrue: [
-		^ TestBenchmarkApp new test: self ].
 !
 initializeBenchmarks: configs
 	| benchmark |

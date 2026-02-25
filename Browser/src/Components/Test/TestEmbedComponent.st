@@ -1,4 +1,4 @@
-CLASS TestEmbedComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestEmbedComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| embedComponent embedElement |

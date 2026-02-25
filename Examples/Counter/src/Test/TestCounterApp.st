@@ -1,16 +1,14 @@
-CLASS TestCounterApp EXTENDS Object MODULE TestCounterApp CLASSVARS '' VARS 'counterApp'
+CLASS TestCounterApp EXTENDS Object MODULE TestCounterApp CLASSVARS ''
+	VARS 'counterApp'
 
 "Test CounterApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aCounterApp
-	counterApp := aCounterApp.
-
-	"Refer to one test class in a module to force importing all classes of that module."
-	TestCounter.
+async start
+	counterApp := CounterApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestCounter all.
 	await self testGui.
 !
 async testGui

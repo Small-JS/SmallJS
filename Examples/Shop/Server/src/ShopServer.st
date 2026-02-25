@@ -57,13 +57,8 @@ startServer
 !
 onListen: port
 	Console log: 'Server started on port: ', port toString.
+!
 
-	self testMode ifTrue: [
-		TestShopServer new test: self ].
-!
-testMode
-	^ Process argv length >= 3 and: [ ( Process argv at: 2 ) = '-test' ].
-!
 "Example login request:
 	localhost:3000/api/login?name=John&password=secret
  Example LoginResponse:

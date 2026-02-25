@@ -1,4 +1,4 @@
-CLASS TestScriptComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestScriptComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| script |

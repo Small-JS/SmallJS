@@ -1,5 +1,5 @@
 CLASS OrderComponent EXTENDS Component MODULE ShopClient CLASSVARS ''
-	VARS 'orderTable orderTableBody orders products'
+	VARS 'orders products navBar orderTable'
 
 METHODS
 
@@ -7,11 +7,11 @@ htmlPath
 	^ 'Order/Order.html'.
 !
 async start
+	navBar := NavBarComponent new app: self app.
+	await navBar loadIntoElement: 'orderNavBar'.
+
 	orderTable := Document getElementById: 'orderTable' class: HtmlTableElement.
 
-	await NavBarComponent new
-		app: self app;
-		loadIntoElement: 'orderNavBar'.
 	await self loadOrders.
 !
 async loadOrders
@@ -49,6 +49,9 @@ showOrders
 
 "Accessing (used by tests)"
 
+navBar
+	^ navBar.
+!
 orderTable
 	^ orderTable.
 !

@@ -14,3 +14,12 @@ bindElements
 	ordersSpan := Document getElementById: 'navBarOrdersSpan' class: HtmlSpanElement.
 	ordersSpan onClick: [ :event | self app loadComponent: OrderComponent ].
 !
+
+"Accessing - Used by tests"
+
+productsSpan
+	^ productsSpan.
+!
+ordersSpan
+	^ ordersSpan.
+!

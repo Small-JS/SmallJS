@@ -5,9 +5,6 @@ start
 	counter := Counter new.
 
 	Mithril mountViewBlock: [ self buildUi ] .
-
-	self testMode ifTrue: [
-		TestCounterUsingMithrilApp new test: self ].
 !
 
 buildUi

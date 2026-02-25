@@ -1,4 +1,4 @@
-CLASS RadioInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS RadioInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'radioInput1 radioInput2 outputParagraph'
 
 htmlPath

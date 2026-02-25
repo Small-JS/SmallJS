@@ -12,9 +12,6 @@ METHODS
 async start
 	self bindElements.
 	await self loadData.
-
-	self testMode ifTrue: [
-		TestAiClientApp new test: self ].
 !
 bindElements
 	providerSelect := Document getElementById: 'providerSelect' class: HtmlSelectElement.

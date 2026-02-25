@@ -3,11 +3,11 @@ CLASS TestBallsApp EXTENDS Object MODULE TestBallsApp CLASSVARS '' VARS 'ballsAp
 "Test BallsApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aBallsApp
-	ballsApp := aBallsApp.
+async start
+	ballsApp := BallsApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestBall all.
 	await self testGui.
 !
 async testGui

@@ -1,4 +1,4 @@
-CLASS ClipboardComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS ClipboardComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'clipboardInput clipboardWriteButton clipboardReadButton clipboardResultParagraph'
 
 htmlPath

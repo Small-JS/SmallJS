@@ -1,13 +1,10 @@
-CLASS PlaygroundApp EXTENDS BrowserApp MODULE Playground CLASSVARS ''
+CLASS PlaygroundApp EXTENDS BrowserApp MODULE PlaygroundApp CLASSVARS ''
 	VARS 'expressionTextArea evaluateButton resultTextArea'
 
 start
 	self bindElements.
 
 	expressionTextArea value: '10 factorial'.
-
-	self testMode ifTrue: [
-		TestPlaygroundApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."

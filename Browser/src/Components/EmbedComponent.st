@@ -1,4 +1,4 @@
-CLASS EmbedComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS EmbedComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'embedElement'
 
 htmlPath

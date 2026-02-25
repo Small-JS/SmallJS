@@ -3,13 +3,11 @@ CLASS TestCounterUsingMithrilApp EXTENDS Object MODULE TestCounterUsingMithrilAp
 "Test CounterUsingMithrilApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aCounterUsingMithrilApp
-	counterUsingMithrilApp := aCounterUsingMithrilApp.
+async start
+	counterUsingMithrilApp := CounterUsingMithrilApp new.
+	counterUsingMithrilApp start.
 
-	"Refer to one test class in a module to force importing all classes of that module."
-	TestCounter.
-
-	"Run sync and async tests of all imported Test* classes and log results."
+	"Run sync and async unit tests of all imported Test* classes and log results."
 	await Test all.
 	await self testGui.
 !

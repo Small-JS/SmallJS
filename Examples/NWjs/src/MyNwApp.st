@@ -9,9 +9,6 @@ start
 	self bindElements.
 	self setMenu.
 	self testLpad.
-
-	self testMode ifTrue: [
-		TestMyNwApp new test: self ].
 !
 
 "HTML Elements"

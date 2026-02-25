@@ -1,4 +1,4 @@
-CLASS TestInputComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| inputComponent input |

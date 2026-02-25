@@ -1,4 +1,4 @@
-CLASS TestCheckboxInputComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestCheckboxInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| checkboxInputComponent checkboxInput |

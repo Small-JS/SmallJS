@@ -5,9 +5,6 @@ start
 	counter := Counter new.
 	self bindElements.
 	self update.
-
-	self testMode ifTrue: [
-		TestCounterApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."

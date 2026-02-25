@@ -1,4 +1,4 @@
-CLASS TestFieldSetComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestFieldSetComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| fieldSetComponent fieldSetElement elements |

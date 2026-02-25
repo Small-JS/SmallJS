@@ -3,13 +3,12 @@ CLASS TestAiClientApp EXTENDS Object MODULE TestAiClientApp CLASSVARS '' VARS 'a
 "Tests the GUI of the AI client login page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aAiClientApp
-	aiClientApp := aAiClientApp.
+async start
+	aiClientApp := AiClientApp new.
+	await aiClientApp start.
 
-	"Reference unit test class to include the module."
-	TestAiProviders.
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestAiProviders all.
 	await self testGui.
 	self stop.
 !

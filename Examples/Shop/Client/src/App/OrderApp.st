@@ -23,9 +23,6 @@ async loadOrders
 		( products find: [ :product | product id = order product ] ) ].
 
 	self showOrders.
-
-	self testMode ifTrue: [
-		TestOrderApp new test: self ].
 !
 showOrders
 	| row priceString |

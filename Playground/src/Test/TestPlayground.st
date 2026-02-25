@@ -1,4 +1,4 @@
-CLASS TestPlayground EXTENDS Test MODULE TestPlayground CLASSVARS '' VARS ''
+CLASS TestPlayground EXTENDS Test MODULE TestPlaygroundApp CLASSVARS '' VARS ''
 
 test
 	| playground |

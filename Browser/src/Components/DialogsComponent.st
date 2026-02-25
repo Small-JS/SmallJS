@@ -1,4 +1,4 @@
-CLASS DialogsComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS DialogsComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'alertButton confirmButton promptButton printButton dialogResultParagraph'
 
 "Note: Testing these dialogs can only be done be done manually in the browser."

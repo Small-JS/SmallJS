@@ -1,4 +1,4 @@
-CLASS TestImageInputComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestImageInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| imageInputComponent imageInput |

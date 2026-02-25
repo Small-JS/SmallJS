@@ -1,4 +1,4 @@
-CLASS TestCssComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS 'cssComponent'
+CLASS TestCssComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS 'cssComponent'
 
 async testGui
 	cssComponent := MyBrowserApp default findComponent: CssComponent.

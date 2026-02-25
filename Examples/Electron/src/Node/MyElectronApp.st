@@ -10,9 +10,6 @@ start2
 	self createWindow.
 	self loadHtml.
 	self openDevTools.
-
-	self testMode ifTrue: [
-		TestMyElectronApp new test: self ].
 !
 
 "Listeners"

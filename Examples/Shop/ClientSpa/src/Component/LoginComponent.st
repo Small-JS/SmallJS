@@ -10,9 +10,6 @@ start
 	"For easy access :-)"
 	userNameInput value: 'John'.
 	passwordInput value: 'secret'.
-
-	self app testMode ifTrue: [
-		TestLoginComponent new test: self ].
 !
 bindElements
 	userNameInput := Document getElementById: 'userNameInput' class: HtmlInputElement.

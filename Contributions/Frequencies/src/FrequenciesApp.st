@@ -4,9 +4,6 @@ CLASS FrequenciesApp EXTENDS BrowserApp MODULE FrequenciesApp CLASSVARS ''
 start
 	frequencies := Frequencies new.
 	self bindElements.
-
-	self testMode ifTrue: [
-		TestFrequenciesApp new test: self ].
 !
 bindElements
 	inputTextArea := Document getElementById: 'inputTextArea' class: HtmlTextAreaElement.

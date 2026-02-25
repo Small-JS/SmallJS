@@ -1,8 +1,9 @@
 CLASS TestFrequenciesApp EXTENDS Object MODULE TestFrequenciesApp
 	CLASSVARS '' VARS 'frequenciesApp'
 
-async test: aFrequenciesApp
-	frequenciesApp := aFrequenciesApp.
+async start
+	frequenciesApp := FrequenciesApp new start.
+
 	await TestFrequencies all.
 	await self testGui.
 	frequenciesApp stop.
@@ -21,4 +22,3 @@ checkRow: rowIndex letter: letter frequency: frequency
 	self assert: [ ( row cells at: 0 ) textContent = letter toString ].
 	self assert: [ ( row cells at: 1 ) textContent = frequency toString ].
 !
-

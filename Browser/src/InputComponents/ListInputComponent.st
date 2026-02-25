@@ -1,4 +1,4 @@
-CLASS ListInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS ListInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'listInput dataList outputParagraph'
 
 htmlPath

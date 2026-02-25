@@ -1,10 +1,11 @@
-CLASS TestPharoClientApp EXTENDS Object MODULE TestPharoClientApp CLASSVARS '' VARS 'pharoClientApp'
+CLASS TestPharoClientApp EXTENDS Object MODULE TestPharoClientApp CLASSVARS ''
+	VARS 'pharoClientApp'
 
 "Test PharoClientApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aPharoClientApp
-	pharoClientApp := aPharoClientApp.
+async start
+	pharoClientApp := PharoClientApp new start.
 
 	await self testGui.
 !

@@ -1,13 +1,14 @@
-CLASS TestBenchmarkApp EXTENDS Object MODULE TestBenchmark CLASSVARS '' VARS 'benchmarkApp'
+CLASS TestBenchmarkApp EXTENDS Object MODULE TestBenchmarkApp CLASSVARS ''
+	VARS 'benchmarkApp'
 
 "Test BenchmarkApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aBenchmarkApp
-	benchmarkApp := aBenchmarkApp.
+async start
+	benchmarkApp := BenchmarkApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestBenchmark all.
 	await self testGui.
 	self stop.
 !

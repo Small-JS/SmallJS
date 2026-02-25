@@ -6,15 +6,15 @@ CLASSMETHODS
 METHODS
 
 async start
+	"Test the first method compiled. Used for testing compiler."
+	Object myTest.
+
 	"These test class references are needed to force importing their full unit test modules."
 	TestObject.
 	TestCrypto.
 	TestExpress.
 	TestProcess.
 	TestSqliteDatabaseSync.
-
-	"Test the first method compiled. Used for testing compiler."
-	Object myTest.
 
 	"Execute all test* methods on all Test* classes."
 	await Test all.

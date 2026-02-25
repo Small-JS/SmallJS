@@ -1,4 +1,4 @@
-CLASS TestRadioInputComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestRadioInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| radioInputComponent radioInput1 radioInput2 |

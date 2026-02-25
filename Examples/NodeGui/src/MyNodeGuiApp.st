@@ -9,9 +9,6 @@ start
 
 	window := self createWindow.
 	window show.
-
-	self testMode ifTrue: [
-		TestMyNodeGuiApp new test: self ].
 !
 createWindow
 	| window |

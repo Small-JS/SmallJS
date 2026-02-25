@@ -3,13 +3,12 @@ CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'sho
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aShopServer
-	shopServer := aShopServer.
+async start
+	shopServer := ShopServer new.
+	await shopServer start.
 
-	"Force import of unit tests shared module."
-	TestPerson.
 	"Run sync and async unit tests of all imported Test* classes and log results."
-	await Test all.
+	await TestPerson all.
 	await self testApi.
 !
 async testApi

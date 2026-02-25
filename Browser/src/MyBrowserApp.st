@@ -1,4 +1,4 @@
-CLASS MyBrowserApp EXTENDS BrowserApp MODULE BrowserApp CLASSVARS 'default' VARS 'components'
+CLASS MyBrowserApp EXTENDS BrowserApp MODULE MyBrowserApp CLASSVARS 'default' VARS 'components'
 
 CLASSMETHODS
 
@@ -12,9 +12,6 @@ start
 	default := self.
 
 	self bindElements.
-
-	self testMode ifTrue: [
-		TestMyBrowserApp new test: self ].
 !
 async bindElements
 	"Load components and add them to the components var."

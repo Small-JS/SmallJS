@@ -1,17 +1,13 @@
-CLASS TestTodoApp EXTENDS Object MODULE TestTodo CLASSVARS '' VARS 'todoApp'
+CLASS TestTodoApp EXTENDS Object MODULE TestTodoApp CLASSVARS '' VARS 'todoApp'
 
 "Test TodoApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-references
-	"Prevent minimizing of unit tests."
-	TestTask.
-!
-async test: aTodoApp
-	todoApp := aTodoApp.
+async start
+	todoApp := TodoApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestTask all.
 	await self testGui.
 !
 async testGui

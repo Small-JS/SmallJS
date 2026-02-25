@@ -1,4 +1,4 @@
-CLASS ScriptComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS ScriptComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'script runButton countSpan'
 
 htmlPath

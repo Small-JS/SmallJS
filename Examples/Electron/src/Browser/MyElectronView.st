@@ -6,9 +6,6 @@ CLASS MyElectronView EXTENDS ElectronView MODULE MyElectronRenderer CLASSVARS ''
 start
 	self log: 'MyView: Start'.
 	self bindElements.
-
-	self testMode ifTrue: [
-		TestMyElectronView new test: self ].
 !
 bindElements
 	colorTextButton := Document getElementById: 'colorTextButton' class: HtmlButtonElement.

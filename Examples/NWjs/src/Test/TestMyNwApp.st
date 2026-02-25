@@ -1,15 +1,13 @@
-CLASS TestMyNwApp EXTENDS Object MODULE TestMyNwApp CLASSVARS '' VARS 'app'
+CLASS TestMyNwApp EXTENDS Object MODULE TestMyNwApp CLASSVARS '' VARS 'myNwApp'
 
-async test: aApp
-	app := aApp.
-
-	"Refer to one test class in a module to force importing all classes of that module."
-	TestNwApp.
+async start
+	myNwApp := MyNwApp new start.
+	await Timer timeout: 1000.
 
 	"Run sync and async tests of all imported Test* classes and log results."
+	await TestNwApp all.
 
-	await Test all.
-	await TestMyNwMenu new test: app.
+	await TestMyNwMenu new test: myNwApp.
 	"TestMyWindow closes the window as the last test."
-	await TestMyNwWindow new test: app.
+	await TestMyNwWindow new test: myNwApp.
 !

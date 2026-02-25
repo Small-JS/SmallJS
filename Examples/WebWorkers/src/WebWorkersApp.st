@@ -1,13 +1,10 @@
 CLASS WebWorkersApp EXTENDS BrowserApp MODULE WebWorkersApp CLASSVARS ''
-	VARS 'workers workSizeInput workersInput startButton resultsTable
-		startTime'
+	VARS 'workers startTime
+		workSizeInput workersInput startButton resultsTable'
 
 start
 	workers := #().
 	self bindElements.
-
-	self testMode ifTrue: [
-		^ TestWebWorkersApp new test: self ].
 !
 bindElements
 	workSizeInput := Document getElementById: 'workSizeInput' class: HtmlInputElement.

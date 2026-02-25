@@ -3,8 +3,9 @@ CLASS TestProductApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'pro
 "Tests the GUI of the Shop client Product page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aProductApp
-	productApp := aProductApp.
+async start
+	productApp := ProductApp new.
+	await productApp start.
 
 	"Check if product fields are filled correctly.
 	 Then exit the application."

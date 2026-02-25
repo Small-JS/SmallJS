@@ -61,5 +61,5 @@ async loadIntoElement: elementId append: append
 		ifTrue: [ element insertAdjacentHtml: html position: 'beforeEnd' ]
 		ifFalse: [ element innerHtml: html ].
 
-	self start.
+	await self start.
 !

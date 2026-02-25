@@ -1,4 +1,4 @@
-CLASS TestSelectionComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestSelectionComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| document selectionComponent selectionInput selection text range |

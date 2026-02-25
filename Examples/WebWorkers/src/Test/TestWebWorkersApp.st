@@ -1,10 +1,10 @@
-CLASS TestWebWorkersApp EXTENDS Object MODULE TestWebWorkers CLASSVARS '' VARS 'webWorkersApp'
+CLASS TestWebWorkersApp EXTENDS Object MODULE TestWebWorkersApp CLASSVARS '' VARS 'webWorkersApp'
 
 "Test WebWorkersApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aWebWorkersApp
-	webWorkersApp := aWebWorkersApp.
+async start
+	webWorkersApp := WebWorkersApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
 	await Test all.

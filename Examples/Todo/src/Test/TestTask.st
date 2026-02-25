@@ -1,4 +1,4 @@
-CLASS TestTask EXTENDS Test MODULE TestTodo CLASSVARS '' VARS ''
+CLASS TestTask EXTENDS Test MODULE TestTodoApp CLASSVARS '' VARS ''
 
 test
 	| task title due |

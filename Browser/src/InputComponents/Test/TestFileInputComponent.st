@@ -1,4 +1,4 @@
-CLASS TestFileInputComponent EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestFileInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| fileInputComponent fileInput |

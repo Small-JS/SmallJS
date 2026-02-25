@@ -1,4 +1,4 @@
-CLASS CssComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS CssComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'applyButton removeButton resultParagraph'
 
 htmlPath

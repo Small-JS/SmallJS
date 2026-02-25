@@ -5,9 +5,6 @@ CLASS BallsApp EXTENDS BrowserApp MODULE BallsApp CLASSVARS ''
 start
 	self bindElements.
 	self initialize.
-
-	self testMode ifTrue: [
-		TestBallsApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."

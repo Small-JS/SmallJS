@@ -1,14 +1,15 @@
-CLASS TestMyBrowserApp EXTENDS Object MODULE TestBrowserApp CLASSVARS ''
+CLASS TestMyBrowserApp EXTENDS Object MODULE TestMyBrowserApp CLASSVARS ''
 	VARS 'myBrowserApp'
 
 "Test MyBrowserApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aMyBrowserApp
-	myBrowserApp := aMyBrowserApp.
-
+async start
+	myBrowserApp := MyBrowserApp new.
+	myBrowserApp start.
 	"Wait for app components to load"
-	await Timer timeout: 1000.
+	await Timer timeout: 2000.
+
 	"Run sync and async tests of all imported Test* classes and log results."
 	await self testUnits.
 	await self testGui.

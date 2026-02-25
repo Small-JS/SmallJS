@@ -1,4 +1,4 @@
-CLASS TestMyWindow EXTENDS Test MODULE TestBrowserApp CLASSVARS '' VARS ''
+CLASS TestMyWindow EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 METHODS
 

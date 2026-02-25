@@ -1,10 +1,11 @@
-CLASS TestMyElectronView EXTENDS Object MODULE TestElectonRenderer CLASSVARS '' VARS 'myElectronView'
+CLASS TestMyElectronView EXTENDS Object MODULE TestMyElectronRenderer CLASSVARS ''
+	VARS 'myElectronView'
 
 "Test MyElectronView units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aMyElectronView
-	myElectronView := aMyElectronView.
+async start
+	myElectronView := MyElectronView new start.
 	await Timer timeout: 2000.
 	Console log: 'TestMyElectronView: running GUI tests.'.
 

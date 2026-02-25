@@ -1,15 +1,14 @@
-CLASS TestAiServer EXTENDS Object MODULE TestAiServer CLASSVARS '' VARS 'aiServer chatReponseCount'
+CLASS TestAiServer EXTENDS Object MODULE TestAiServer CLASSVARS ''
+	VARS 'aiServer chatReponseCount'
 
 "AiServer unit and API tests.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aAiServer
-	aiServer := aAiServer.
+async start
+	aiServer := AiServer new start.
 
-	"Reference unit test class to include module"
-	TestAiProviders.
 	"Run sync and async unit tests of all imported Test* classes and log results."
-	await Test all.
+	await TestAi all.
 	await self testApi.
 !
 async testApi

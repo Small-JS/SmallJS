@@ -50,12 +50,6 @@ startServer
 !
 onListen
 	self log: 'Web server started'.
-
-	self testMode ifTrue: [
-		TestAiServer new test: self ].
-!
-testMode
-	^ Process argv length >= 3 and: [ ( Process argv at: 2 ) = '-test' ].
 !
 
 "Respond with an array of AI provides and their available models,

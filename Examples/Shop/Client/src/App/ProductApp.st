@@ -6,9 +6,6 @@ async start
 	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
 	await self loadProducts.
-
-	self testMode ifTrue: [
-		TestProductApp new test: self ].
 !
 
 "Loading"

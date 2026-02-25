@@ -1,4 +1,4 @@
-CLASS Playground EXTENDS Object MODULE Browser CLASSVARS ''
+CLASS Playground EXTENDS Object MODULE PlaygroundApp CLASSVARS ''
 	VARS 'resultBlock errorBlock'
 
 INLINE 'import { Evaluator } from "./Evaluator.js";'

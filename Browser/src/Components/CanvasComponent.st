@@ -1,4 +1,4 @@
-CLASS CanvasComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS CanvasComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'canvas'
 
 "Initialization"

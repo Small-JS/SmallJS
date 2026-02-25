@@ -1,4 +1,4 @@
-CLASS FieldSetComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS FieldSetComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'fieldSetElement'
 
 htmlPath

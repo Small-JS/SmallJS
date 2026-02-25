@@ -1,5 +1,14 @@
-// Entry point for application.
+// If in test mode, invoke the start method on a new ST *test* app instance.
+// otherwise invoke the start method on a new ST app instance.
 
-let moduleName: string = "./ShopClient.js";
-import( moduleName )
-	.then( module => { module.stShopApp$class.$new().$start() } );
+let testMode = window.location.search.toLowerCase() == '?test';
+if( testMode ) {
+	let moduleName = "./TestShopClient.js";
+	import( moduleName )
+		.then( module => { module.stTestShopApp$class.$new().$start(); } );
+} else {
+	let moduleName = "./ShopClient.js";
+	import( moduleName )
+		.then( module => { module.stShopApp$class.$new().$start(); } );
+}
+

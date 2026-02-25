@@ -3,11 +3,11 @@ CLASS TestLoginApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS 'login
 "Tests the GUI of the Shop client login page.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aLoginApp
-	loginApp := aLoginApp.
+async start
+	loginApp := LoginApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	await Test all.
+	await TestPerson all.
 
 	await Timer timeout: 500.
 	self testLoginFields.

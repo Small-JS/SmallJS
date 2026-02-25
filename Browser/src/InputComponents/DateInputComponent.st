@@ -1,4 +1,4 @@
-CLASS DateInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS DateInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'dateInput outputParagraph'
 
 htmlPath

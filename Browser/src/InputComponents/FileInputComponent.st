@@ -1,4 +1,4 @@
-CLASS FileInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS FileInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'fileInput outputParagraph'
 
 htmlPath

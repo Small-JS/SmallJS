@@ -1,4 +1,4 @@
-CLASS FormComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS FormComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'formElement'
 
 htmlPath

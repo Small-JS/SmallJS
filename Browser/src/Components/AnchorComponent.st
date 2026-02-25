@@ -1,4 +1,4 @@
-CLASS AnchorComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS AnchorComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'anchorElement'
 
 htmlPath

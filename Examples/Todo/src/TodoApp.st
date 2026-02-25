@@ -1,4 +1,4 @@
-CLASS TodoApp EXTENDS BrowserApp MODULE Todo CLASSVARS ''
+CLASS TodoApp EXTENDS BrowserApp MODULE TodoApp CLASSVARS ''
 	VARS 'language tasks
 		languageSelect
 		newTaskTitleInput newTaskDueInput newTaskAddButton
@@ -9,9 +9,6 @@ start
 	self loadDefaultLanguage.
 	self loadTasks.
 	self showTasks.
-
-	self testMode ifTrue: [
-		TestTodoApp new test: self ].
 !
 bindElements
 	"Bind HTML elements to vars, set defaults, set event listeners."

@@ -1,4 +1,4 @@
-CLASS ImageInputComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS ImageInputComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'imageInput outputParagraph'
 
 htmlPath

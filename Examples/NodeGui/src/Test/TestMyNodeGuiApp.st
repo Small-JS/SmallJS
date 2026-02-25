@@ -4,13 +4,10 @@ CLASS TestMyNodeGuiApp EXTENDS Object MODULE TestMyNodeGuiApp CLASSVARS ''
 "Test MyNodeguiApp units and GUI.
  This class is not a subclass of Test so is not called automatically with Test all."
 
-async test: aMyNodeguiApp
-	myNodeguiApp := aMyNodeguiApp.
-
-	"Import NodeGui unit tests."
-	TestQApplication.
-
-	await Test all.
+async start
+	myNodeguiApp := MyNodeGuiApp new start.
+	await Timer timeout: 1000.
+	await TestQApplication all.
  	await self testGui.
 !
 async testGui

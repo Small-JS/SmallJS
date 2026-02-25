@@ -1,4 +1,4 @@
-CLASS Task EXTENDS Object MODULE Todo CLASSVARS '' VARS 'title due done'
+CLASS Task EXTENDS Object MODULE TodoApp CLASSVARS '' VARS 'title due done'
 
 constructor
 	title := ''.

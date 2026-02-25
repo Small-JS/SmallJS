@@ -1,4 +1,4 @@
-CLASS TextAreaComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS TextAreaComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'textArea outputButton outputParagraph'
 
 htmlPath

@@ -1,5 +1,14 @@
-// @ts-ignore: This JS file does not exist yet at TS complile time
-import { stWebWorkersApp$class } from "./WebWorkersApp.js";
+// If in test mode, invoke the start method on a new ST *test* app instance.
+// otherwise invoke the start method on a new ST app instance.
 
-// Invoke the start method on a new WebWorkersApp ST object.
-stWebWorkersApp$class.$new().$start();
+let testMode = window.location.search.toLowerCase() == '?test';
+if( testMode ) {
+	let moduleName = "./TestWebWorkersApp.js";
+	import( moduleName )
+		.then( module => { module.stTestWebWorkersApp$class.$new().$start(); } );
+} else {
+	let moduleName = "./WebWorkersApp.js";
+	import( moduleName )
+		.then( module => { module.stWebWorkersApp$class.$new().$start(); } );
+}
+

@@ -1,14 +1,15 @@
-CLASS ProductComponent EXTENDS Component MODULE ShopClient CLASSVARS '' VARS 'productTable products'
+CLASS ProductComponent EXTENDS Component MODULE ShopClient CLASSVARS ''
+	VARS 'products navBar productTable'
 
 htmlPath
 	^ 'Product/Product.html'.
 !
 async start
+	navBar := NavBarComponent new app: self app.
+
+	await navBar loadIntoElement: 'productNavBar'.
 	productTable := Document getElementById: 'productTable' class: HtmlTableElement.
 
-	await NavBarComponent new
-		app: self app;
-		loadIntoElement: 'productNavBar'.
 	await self loadProducts.
 !
 
@@ -22,9 +23,6 @@ async loadProducts
 
 	products := objects map: [ :object | Product fromObject: object ].
 	self showProducts.
-
-	self app testMode ifTrue: [
-		TestProductComponent new test: self ].
 !
 
 "Showing"
@@ -42,6 +40,9 @@ async showProducts
 
 "Accessing (used by tests)"
 
+navBar
+	^ navBar.
+!
 productTable
 	^ productTable.
 !

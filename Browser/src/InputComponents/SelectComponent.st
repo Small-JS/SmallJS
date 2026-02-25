@@ -1,4 +1,4 @@
-CLASS SelectComponent EXTENDS Component MODULE BrowserApp CLASSVARS ''
+CLASS SelectComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 	VARS 'select outputParagraph'
 
 htmlPath
