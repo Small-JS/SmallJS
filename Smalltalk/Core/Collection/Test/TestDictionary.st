@@ -1,7 +1,7 @@
 CLASS TestDictionary EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
-	| dict string |
+	| dict string array |
 	dict := Dictionary new.
 	dict at: 'a' put: 'aValue'.
 	dict at: 'b' put: 'bValue'.
@@ -32,4 +32,13 @@ test
 
 	dict clear.
 	self assert: [ dict size = 0 ].
+
+	array := #( #( 'a' 1 ) #( 'b' 2 ) ).
+	dict := Dictionary fromArray: array.
+	self assert: [ dict size = 2 ].
+	self assert: [ ( dict at: 'a' ) = 1 ].
+	self assert: [ ( dict at: 'b' ) = 2 ].
+
+	array := dict toArray.
+	self assert: [  array = #( #( 'a' 1 ) #( 'b' 2 ) ) ]
 !

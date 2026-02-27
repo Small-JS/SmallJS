@@ -4,9 +4,29 @@ CLASS Dictionary EXTENDS Object MODULE Core CLASSVARS '' VARS 'keyValues'
 Note: Simple, low performance implementation.
 Use class Map when keys are strings."
 
-METHODS
+CLASSMETHODS
 
 "Creating"
+
+fromArray: array
+	"Create dictionary from array of arrays,
+	where the inner arrays have two elements: key and value."
+
+	| dictionary |
+	dictionary := self new.
+
+	array do: [ :keyValueArray |
+		( keyValueArray class = Array and: [
+			keyValueArray length = 2 ] ) ifFalse: [
+				Error throw: 'Inner elements must be arrays of size 2' ].
+		dictionary at: ( keyValueArray at: 0 ) put: ( keyValueArray at: 1 ) ].
+
+	^ dictionary.
+!
+
+METHODS
+
+"Initializing"
 
 constructor
 	keyValues := Array new.
@@ -21,6 +41,21 @@ toString
 		result := result, keyValue toString, ' ' ].
 	result := result, ')'.
 	^ result.
+!
+toArray
+	"Convert self to array of arrays,
+	where the inner arrays have two elements: key and value."
+
+	| array keyValueArray |
+	array := Array new.
+
+	self do: [ :key :value  |
+		keyValueArray := Array new: 2.
+		keyValueArray at: 0 put: key.
+		keyValueArray at: 1 put: value.
+		array add: keyValueArray ].
+
+	^ array.
 !
 
 "Properties"
