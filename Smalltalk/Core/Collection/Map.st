@@ -11,6 +11,23 @@ CLASSMETHODS
 new
 	^ self fromJs: INLINE 'new Map()'.
 !
+fromArray: array
+	"Create map from array of arrays,
+	where the inner arrays have two elements: key and value."
+
+	| map |
+	map := self new.
+
+	array do: [ :keyValueArray |
+		( keyValueArray class = Array and: [
+			keyValueArray length = 2 ] ) ifFalse: [
+				Error throw: 'Inner elements must be arrays of size 2' ].
+		( keyValueArray at: 0 ) class = String ifFalse: [
+						Error throw: 'Keys must be strings' ].
+		map set: ( keyValueArray at: 0 ) value: ( keyValueArray at: 1 ) ].
+
+	^ map.
+!
 
 "Grouping"
 
@@ -35,6 +52,12 @@ toString
 		result := result, ( KeyValue key: key value: value ) toString, ' ' ].
 	result := result, ')'.
 	^ result.
+!
+toArray
+	"Convert self to array of arrays,
+	where the inner arrays have two elements: key and value."
+
+	^ self entries.
 !
 
 "Properties"
@@ -86,5 +109,7 @@ forEach: block
 	"Note: The block must have :key and :value as the 1st and 2nd argument."
 	INLINE 'this.js.forEach( ( value, key ) => block.js( stString$class.$fromJs$( key ), value ) )'.
 !
-
-
+do: block
+	"Alias for 'forEach:'"
+	self forEach: block.
+!

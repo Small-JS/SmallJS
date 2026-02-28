@@ -1,7 +1,7 @@
 CLASS TestMap EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
-	| map sum |
+	| map sum count array |
 
 	map := Map new.
 	self assert: [ map class = Map ].
@@ -39,6 +39,20 @@ test
 		self assert: [ value > 0 ].
 		sum := sum + value ].
 	self assert: [ sum = 6 ].
+
+	count := 0.
+	map forEach: [ :key :value |
+		count := count + 1 ].
+	self assert: [ count = 3 ].
+
+	array := #( #( 'a' 1 ) #( 'b' 2 ) ).
+	map := Map fromArray: array.
+	self assert: [ map size = 2 ].
+	self assert: [ ( map get: 'a' ) = 1 ].
+	self assert: [ ( map get: 'b' ) = 2 ].
+
+	array := map toArray.
+	self assert: [  array = #( #( 'a' 1 ) #( 'b' 2 ) ) ].
 
 	map clear.
 	self assert: [ map size = 0 ].
