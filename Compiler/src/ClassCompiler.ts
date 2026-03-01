@@ -204,7 +204,7 @@ export class ClassCompiler
 	{
 		while( !this.parser.atMethodEnd() ) {
 			this.compileConstructor();
-			this.compileLocalVariables();
+			this.compileMethodVariables();
 			this.compileStatements();
 		}
 
@@ -222,16 +222,16 @@ export class ClassCompiler
 		this.method.body.add( node );
 	}
 
-	private compileLocalVariables()
+	private compileMethodVariables()
 	{
 		if( !this.parser.tryParseTerm( "|" ) )
 			return;
 
 		while( !this.parser.tryParseTerm( "|" ) )
-			this.compileLocalVariable();
+			this.compileVariable();
 	}
 
-	private compileLocalVariable()
+	private compileVariable(): SourceNode
 	{
 		let variableName: string = this.parser.parseVariableName();
 
@@ -248,7 +248,9 @@ export class ClassCompiler
 		compiledVariable.node = this.sourceNode( source, "variable" );
 
 		this.method.vars.push( compiledVariable );
+		return compiledVariable.node;
 	}
+
 
 	private compileStatements()
 	{
@@ -379,11 +381,14 @@ export class ClassCompiler
 		let node = this.sourceNode( "stBlock$class.$fromJs$( " + asyncString + "( ", "block" );
 
 		let oldArgs = this.method.args.slice();
+		let oldVars = this.method.vars.slice();
 
 		if( this.parser.peekTerm() == ":" )
 			this.compileBlockArguments( node );
 
 		node.add( " ) => {\n" );
+
+		this.compileBlockVariables( node );
 
 		while( ! this.parser.tryParseTerm( "]" ) )
 			node.add( this.compileBlockStatement() );
@@ -391,6 +396,7 @@ export class ClassCompiler
 		node.add( "\t\t\t} )" );
 
 		this.method.args = oldArgs;
+		this.method.vars = oldVars;
 
 		this.addClassReferenceToClassAndMethod( "Block" );
 
@@ -414,6 +420,19 @@ export class ClassCompiler
 		}
 
 		this.parser.mustParseTerm( "|" );
+	}
+
+	// Parse block local variables and add them to method variables (temporarily).
+
+	compileBlockVariables( node: SourceNode )
+	{
+		if( !this.parser.tryParseTerm( "|" ) )
+			return;
+
+		while( !this.parser.tryParseTerm( "|" ) ) {
+			node.add( "\t\t" );
+			node.add( this.compileVariable() );
+		}
 	}
 
 	// A block statement consists of an expression,

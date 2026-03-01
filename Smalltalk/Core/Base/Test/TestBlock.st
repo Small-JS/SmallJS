@@ -16,6 +16,9 @@ test
 	num := 0.
 	[ num < 3 ]	whileTrue: [ num := num + 1 ].
 	self assert: [ num = 3 ].
+
+	num := [ | a | a := 1. a + 1 ] value.
+	self assert: [ num = 2 ].
 !
 async testValueAwait
 	| result |
