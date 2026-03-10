@@ -17,6 +17,9 @@ let osConstants = os.constants;
 let cpus = os.cpus();
 let networkInterfaces = os.networkInterfaces();
 
+// Events
+import EventEmitter from "node:events";
+
 // Process
 import * as process from "node:process";
 let cpuUsage = process.cpuUsage();

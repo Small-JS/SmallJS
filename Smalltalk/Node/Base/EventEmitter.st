@@ -1,15 +1,38 @@
 CLASS EventEmitter EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 
+INLINE 'import EventEmitter from "node:events";'
+
+CLASSMETHODS
+
+new
+	^ self fromJs: INLINE 'new EventEmitter()'.
+!
+
+METHODS
+
 "Events"
 
-postMessage: value
-	INLINE 'this.js.postMessage( value.js )'.
-!
 emit: event
 	^ Boolean fromJs: INLINE 'this.js.emit( event.js )'.
 !
 emit: event value: value
 	^ Boolean fromJs: INLINE 'this.js.emit( event.js, value.js )'.
+!
+eventNames
+	^ Array fromJsStrings: INLINE 'this.js.eventNames()'.
+!
+maxListeners
+	^ Integer fromJs: INLINE 'this.js.getMaxListeners()'.
+!
+maxListeners: maxListeners
+	Integer fromJs: INLINE 'this.js.setMaxListeners( maxListeners.js )'.
+!
+listenerCount: event
+	^ Integer fromJs: INLINE 'this.js.listenerCount( event.js )'.
+!
+listeners: event
+	^ Array fromJs: INLINE 'this.js.listeners( event.js )'
+		elementConverter: [ :jsFunction | Block fromJs: jsFunction ].
 !
 
 "Listeners - Adding"
@@ -26,33 +49,24 @@ addListener: event then: block
 addListener: event class: aClass then: block
 	INLINE 'this.js.on( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
 !
-prependListener: event then: block
-	self prependListener: event class: JsObject then: block
-!
-prependListener: event class: aClass then: block
-	INLINE 'this.js.prependListener( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
-!
-
-"Listeners - Once"
-
 once: event then: block
 	self once: event class: JsObject then: block
 !
 once: event class: aClass then: block
 	INLINE 'this.js.once( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
 !
-prependOnceListener: event then: block
-	self prependOnceListener: event class: JsObject then: block
-!
-prependOnceListener: event class: aClass then: block
-	INLINE 'this.js.prependOnceListener( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
-!
 
 "Listeners - Removing"
 
-removeListener: event
-	INLINE 'this.js.removeListener( event.js )'.
+removeAllListeners: event
+	INLINE 'this.js.removeAllListeners( event.js )'.
 !
-off: event
-	self removeListener: event
-!
+
+"Note 1:
+NodeJS EventEmitter.prepend* methods are not implemented.
+One should not depend on the order of events fired.
+
+Note 2:
+Removing individual event listeners is not implemented,
+because ST blocks to not keep the function names constant,
+to be used as IDs."

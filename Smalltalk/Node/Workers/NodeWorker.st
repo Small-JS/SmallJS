@@ -10,6 +10,12 @@ new: fileName
 
 METHODS
 
+"Events"
+
+postMessage: value
+	INLINE 'this.js.postMessage( value.js )'.
+!
+
 "Properties"
 
 threadId

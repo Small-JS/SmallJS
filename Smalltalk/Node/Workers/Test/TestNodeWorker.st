@@ -4,7 +4,6 @@ METHODS
 
 test
 	worker := NodeWorker new: './out/worker.js'.
-
 	self assert: [ worker threadId >= 0 ].
 
 	worker on: 'message' class: String then: [ :message | self onMessage: message ].

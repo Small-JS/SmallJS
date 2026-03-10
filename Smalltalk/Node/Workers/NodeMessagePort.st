@@ -17,6 +17,14 @@ setEnvironmentData: key to: value
 
 METHODS
 
+"Events"
+
+postMessage: value
+	INLINE 'this.js.postMessage( value.js )'.
+!
+
+"Other"
+
 start
 	INLINE 'this.js.start()'.
 !
