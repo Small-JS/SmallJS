@@ -1,0 +1,13 @@
+{
+	"short_name": "EmojiMemory",
+	"name": "Emoji Memory PWA",
+	"icons": [
+		{
+			"src": "Icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone"
+}

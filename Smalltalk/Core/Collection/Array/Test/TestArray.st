@@ -118,3 +118,17 @@ testSort
 	self assert: [ ( #( 10 90 32 74 34 57 89 61 32 44 ) sortWith: reverseCompareBlock ) = #( 90 89 74 61 57 44 34 32 32 10 ) ].
 	self assert: [ ( #( 10 90 32 74 34 57 89 61 32 44 ) toSortedWith: reverseCompareBlock ) = #( 90 89 74 61 57 44 34 32 32 10 ) ].
 !
+testRandomize
+	| array randomArray sum |
+
+	array := Array new.
+	1 to: 30 do: [ :index |
+		array add: index ].
+
+	randomArray := array copy randomize.
+	"The chance of the arrays now being equal is 1E-32."
+	self assert: [ randomArray ~= array ].
+
+	sum := randomArray reduce: [ :element1 :element2 | element1 + element2 ].
+	self assert: [ sum = ( 31 * 30 / 2 ) ].
+!

@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>EmojiMemory</title>
+	<link rel="stylesheet" href="default.css" type="text/css" />
+	<script src="Script/main.js"></script>
+
+	<!-- ======================== PWA stuff ======================== -->
+
+	<link rel="manifest" href="pwa.webmanifest" />
+	<link rel="apple-touch-icon" sizes="180x180" href="Icons/apple-touch-icon.png">
+	<script>
+		// Check to make sure the browser supports service workers
+		if ( 'serviceWorker' in navigator )
+		{
+			navigator.serviceWorker
+				.register( 'ServiceWorker.js' )
+				.then( () => {
+					console.log( 'Service worker registered.' );
+				} )
+				.catch( err => {
+					console.log( 'Service worker registration failed: ' + err );
+				} );
+		}
+	</script>
+
+</head>
+
+<body>
+	<table id="formTable">
+		<tr>
+			<td class="title">
+				<div class="vertical-center">
+					<img id="logoImage" alt="Logo" src="logo.png" height="40"></img>
+					<span id="titleMessage">&nbsp;&nbsp;Emoji Memory</span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button id="startButton">Start</button>
+				with
+				<input id="columnsInput" class="sizeInput" type="number" min="2" max="9">
+				<label id="columnsLabel" for="columnsInput">columns,</label>
+				<input id="rowsInput" class="sizeInput" type="number" min="2" max="9">
+				<label id="rowsLabel" for="rowsInput">rows.</label>
+			</td>
+		</tr>
+		<tr id="deckRow">
+			<td>
+				<table id="deckTable">
+				</table>
+				<template id="winTemplate">
+		<tr>
+			<td>
+				🤩 You win! 😍
+			</td>
+		</tr>
+		</template>
+		</td>
+		</tr>
+		<tr id="turnsRow">
+			<td>
+				<label id="turnsLabel" for="turnsInput">Turns: </label>
+				<input id="turnsInput" class="countInput" size="4" readonly>
+				<label id="leftLabel" for="leftInput">Left: </label>
+				<input id="leftInput" class="countInput" size="4" readonly>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

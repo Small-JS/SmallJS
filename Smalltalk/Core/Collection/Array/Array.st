@@ -189,3 +189,15 @@ toSorted
 toSortedWith: block
 	^ self copy sortWith: block.
 !
+
+"Randomize"
+
+randomize
+	"Put internal elements in random order."
+	| randomIndex temp |
+	0 to: self length - 1 do: [ :index |
+		randomIndex := Integer randomFrom: 0 to: self length - 1.
+		temp := self at: index.
+		self at: index put: ( self at: randomIndex ).
+		self at: randomIndex put: temp ].
+!

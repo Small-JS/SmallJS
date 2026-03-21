@@ -7,6 +7,11 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
+## News - PWA example added - 21-MAR-2026
+
+PWA example game added: Emoji Memory :-).\
+Showcasing how to make a PWA with SmallJS.
+
 ## News - SmallJS 2.0 released! - 21-FEB-2026
 
 [SmallJS 2.0](https://small-js.org/News) now has full support for async, await and promises!\

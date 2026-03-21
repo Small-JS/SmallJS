@@ -1,0 +1,64 @@
+﻿body {
+	font-family: system-ui;
+	font-size: medium;
+	background-color: #F8F8F8;
+}
+
+#formTable {
+	width: 380;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	border: solid gray;
+	border-width: 2px;
+	border-spacing: 16px;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 10px 10px 5px grey;
+}
+
+.title {
+	font-size: X-Large;
+	font-weight: bold;
+	background-color: lightblue;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* ===================== Start */
+
+#startButton {
+	border-radius: 8px;
+	font-size: Large;
+	background-color: rgb(160, 255, 160);
+}
+
+.sizeInput {
+	width: 30px;
+}
+
+/* ===================== Card table */
+
+#deckTable {
+	margin: auto;
+}
+
+#deckTable td {
+	width: 70px;
+	height: 50px;
+	font-size: 45px;
+}
+
+/* ===================== Turns & left */
+
+.countInput {
+	border: none;
+}
+
+/* ==================== General */
+
+.vertical-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
