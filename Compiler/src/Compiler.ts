@@ -138,7 +138,13 @@ export class Compiler
 
 	loadClasses( inputFolder: string )
 	{
-		let inputFiles: string[] = fs.readdirSync( inputFolder );
+		let inputFiles: string[] = [];
+		try {
+			inputFiles = fs.readdirSync( inputFolder );
+		}
+		catch {
+			this.error( "Failed to read input folder: " + inputFolder );
+		}
 
 		if( this.skipTestFolders && inputFolder.toLocaleLowerCase().endsWith( "/test" ) )
 			return;
