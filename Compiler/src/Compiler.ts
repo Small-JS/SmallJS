@@ -242,7 +242,7 @@ export class Compiler
 
 		// Minimize from the starting class plus some classes that are hardcoded into the compiler.
 
-		let startClassNames: string[] = [ this.minimizeStartClassName, "Array", "Block", "Boolean", "Class", "JsObject", "Nil", "Test" ];
+		let startClassNames: string[] = [ this.minimizeStartClassName, "Array", "Block", "Boolean", "Class", "Error", "JsObject", "Nil", "Test" ];
 		for( let className of startClassNames )
 			this.minimizeFromClassName( className );
 
