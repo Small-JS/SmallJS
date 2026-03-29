@@ -30,7 +30,7 @@ source .env
 
 # Start web server
 
-webServer="npx http-server web --port 3000 -c-1 --silent"
+webServer="npx http-server web --port 3010 -c-1 --silent"
 echo "Starting web server: "$webServer
 $webServer &
 sleep 4
@@ -44,7 +44,7 @@ if
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
-	"$browserChrome" --log-level=3 http://localhost:3000/?test
+	"$browserChrome" --log-level=3 http://localhost:3010/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -54,7 +54,7 @@ if
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
-	"$browserEdge" --log-level=3 http://localhost:3000/?test
+	"$browserEdge" --log-level=3 http://localhost:3010/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -64,7 +64,7 @@ if
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2
-	"$browserFirefox" http://localhost:3000/?test
+	"$browserFirefox" http://localhost:3010/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -73,5 +73,5 @@ fi
 # Stop web server
 
 echo "Terminating web server"
-npx kill-port 3000
+npx kill-port 3010
 sleep 2

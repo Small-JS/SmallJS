@@ -11,12 +11,10 @@
 
 let testMode = window.location.search.endsWith( '?test' );
 if( testMode ) {
-	console.log( "Test mode");
 	let moduleName = "./TestPharoClientApp.js";
 	import( moduleName )
 		.then( module => { window.onload = module.stTestPharoClientApp$class.$new().$start(); } );
 } else {
-	console.log( "Normail mode");
 	let moduleName = "./PharoClientApp.js";
 	import( moduleName )
 		.then( module => { window.onload = module.stPharoClientApp$class.$new().$start(); } );

@@ -2,8 +2,10 @@
 	"compilerOptions": {
 		"target": "esNext",
 		"module": "esNext",
+		"rootDir": "src",
 		"outDir": "web/Script",
 		"strict": true,
-		"sourceMap": true
+		"sourceMap": true,
+		"forceConsistentCasingInFileNames": true
 	}
 }

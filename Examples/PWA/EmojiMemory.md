@@ -6,8 +6,12 @@ using emojis for the faces of the cards.
 
 ## Running
 
-First run `./startWebServer.sh`.
+First run `./startWebServer.sh`.\
 Then start the project in VSCode with `F5`.
+
+Note that the app is running on port 3010 (not 3000).\
+This is done to prevent PWA caching and the registered ServiceWorker\
+to be activated when testing other websites.
 
 ## Installing
 

@@ -14,6 +14,7 @@ function startApp()
 			.then( module => { module.stTestMyNwApp$class.$new().$start(); } );
 	} else {
 		let moduleName = "./MyNwApp.js";
+		// let moduleName = "./SimpleApp.js";
 		import( moduleName )
 			.then( module => { module.stMyNwApp$class.$new().$start(); } );
 	}

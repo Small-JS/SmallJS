@@ -1,9 +1,18 @@
 {
-  "compilerOptions": {
-    "target": "esNext",
-	"module": "nodeNext",
-	"outDir": "web/Script",
-	"strict": true,
-	"sourceMap": true
-  }
+	"compilerOptions": {
+		"target": "esNext",
+		"module": "NodeNext",
+		"types": [
+			"node"
+		],
+		"lib": [
+			"esNext",
+			"dom"
+		],
+		"rootDir": "src",
+		"outDir": "web/Script",
+		"strict": true,
+		"sourceMap": true,
+		"forceConsistentCasingInFileNames": true
+	}
 }

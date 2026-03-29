@@ -2,7 +2,6 @@
 // otherwise invoke the start method on a new ST app instance.
 
 let testMode = window.location.search.toLowerCase() == '?test';
-console.log("testmode:" + String( testMode ) );
 if( testMode ) {
 	let moduleName = "./TestBallsApp.js";
 	import( moduleName )

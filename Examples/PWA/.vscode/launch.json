@@ -8,7 +8,7 @@
 			"name": "Launch Chrome",
 			"request": "launch",
 			"type": "chrome",
-			"url": "http://localhost:3000",
+			"url": "http://localhost:3010",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk"
 		},
@@ -16,7 +16,7 @@
 			"name": "Launch Chrome test",
 			"request": "launch",
 			"type": "chrome",
-			"url": "http://localhost:3000/?test",
+			"url": "http://localhost:3010/?test",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk"
 		},
@@ -24,7 +24,7 @@
 			"name": "Launch Edge",
 			"request": "launch",
 			"type": "msedge",
-			"url": "http://localhost:3000",
+			"url": "http://localhost:3010",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk"
 		},
@@ -32,7 +32,7 @@
 			"name": "Launch Edge test",
 			"request": "launch",
 			"type": "msedge",
-			"url": "http://localhost:3000/?test",
+			"url": "http://localhost:3010/?test",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk"
 		},
@@ -41,16 +41,16 @@
 			"request": "launch",
 			"type": "firefox",
 			"reAttach": true,
-			"url": "http://localhost:3000",
+			"url": "http://localhost:3010",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk",
 			"pathMappings": [
 				{
-					"url": "http://localhost:3000/src",
+					"url": "http://localhost:3010/src",
 					"path": "${workspaceFolder}/src"
 				},
 				{
-					"url": "http://localhost:3000/Smalltalk",
+					"url": "http://localhost:3010/Smalltalk",
 					"path": "${workspaceFolder}/../../Smalltalk"
 				}
 			]
@@ -60,16 +60,16 @@
 			"request": "launch",
 			"type": "firefox",
 			"reAttach": true,
-			"url": "http://localhost:3000/?test",
+			"url": "http://localhost:3010/?test",
 			"webRoot": "${workspaceFolder}/web",
 			"preLaunchTask": "Compile Smalltalk",
 			"pathMappings": [
 				{
-					"url": "http://localhost:3000/src",
+					"url": "http://localhost:3010/src",
 					"path": "${workspaceFolder}/src"
 				},
 				{
-					"url": "http://localhost:3000/Smalltalk",
+					"url": "http://localhost:3010/Smalltalk",
 					"path": "${workspaceFolder}/../../Smalltalk"
 				}
 			]

@@ -1,10 +1,14 @@
 {
 	"compilerOptions": {
 		"target": "esNext",
-		"module": "nodeNext",
+		"module": "NodeNext",
+		"types": [
+			"node"
+		],
+		"rootDir": "src",
 		"outDir": "out",
 		"strict": true,
 		"sourceMap": true,
-		"skipLibCheck": true
+		"forceConsistentCasingInFileNames": true
 	}
 }

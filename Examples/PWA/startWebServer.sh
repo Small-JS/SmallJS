@@ -8,4 +8,6 @@ cd "$(dirname "$0")"
 
 echo -n "Starting web server in: "
 pwd
-npx http-server web -c-1 -p 3000
+# Start server on separate port 3010
+# to prevent caching conflicts with other websites.
+npx http-server web -c-1 -p 3010
