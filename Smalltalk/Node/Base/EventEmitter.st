@@ -1,11 +1,12 @@
 CLASS EventEmitter EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 
-INLINE 'import EventEmitter from "node:events";'
+"Must use NW.js compatible import."
+INLINE 'const events$ = await import( "node:events" );'
 
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new EventEmitter()'.
+	^ self fromJs: INLINE 'new events$.EventEmitter()'.
 !
 
 METHODS
