@@ -10,6 +10,6 @@
 		"@types/node": "^25.5.0"
 	},
 	"dependencies": {
-		"@nodegui/nodegui": "^0.74.0"
+		"@nodegui/nodegui": "^0.73.0"
 	}
 }
