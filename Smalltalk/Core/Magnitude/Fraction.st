@@ -76,7 +76,7 @@ toInteger
 	^ number argIsSmallerOrEqualToFraction: self.
 !
 
-"Comparisons with integer arguments."
+"Comparisons with Integer arguments."
 
 argIsEqualToInteger: integer
 	^ integer * denominator = numerator.
@@ -88,7 +88,7 @@ argIsSmallerOrEqualToInteger: integer
 	^ integer * denominator <= numerator.
 !
 
-"Comparisons with large integer arguments."
+"Comparisons with BigInt arguments."
 
 argIsEqualToBigInt: bigInt
 	^ bigInt * denominator = numerator.
@@ -100,7 +100,7 @@ argIsSmallerOrEqualToBigInt: bigInt
 	^ bigInt * denominator <= numerator.
 !
 
-"Comparisons with fraction arguments."
+"Comparisons with Fraction arguments."
 
 argIsEqualToFraction: fraction
 	^  ( fraction numerator * fraction denominator ) = ( numerator * denominator ).
@@ -112,7 +112,7 @@ argIsSmallerOrEqualToFraction: fraction
 	^ ( fraction numerator * denominator ) <= ( numerator * fraction denominator ).
 !
 
-"Comparisons with float arguments."
+"Comparisons with Float arguments."
 
 argIsEqualToFloat: float
 	^ float = self toFloat.
@@ -145,8 +145,11 @@ argIsSmallerOrEqualToFloat: float
 % number
 	^ number moduloFromFraction: self.
 !
+** number
+	^ number powerBaseFraction: self.
+!
 
-"Basic arithmatic with integer arguments."
+"Basic arithmatic with Integer arguments."
 
 addToInteger: integer
 	^ Fraction numerator: integer * denominator + numerator
@@ -170,6 +173,11 @@ integerDivideIntoInteger: integer
 moduloFromInteger: integer
 	^ ( integer * denominator ) % numerator / denominator.
 !
+powerBaseInteger: integer
+	^ integer toFloat ** self toFloat.
+!
+
+"Basic arithmatic with BigInt arguments."
 
 addToBigInt: bigInt
 	^ Fraction numerator: bigInt * denominator + numerator
@@ -193,8 +201,11 @@ integerDivideIntoBigInt: bigInt
 moduloFromBigInt: bigInt
 	^ ( bigInt * denominator ) % numerator / denominator.
 !
+powerBaseBigInt: bigInt
+	^ bigInt toFloat ** self toFloat.
+!
 
-"Basic arithmatic with fraction arguments."
+"Basic arithmatic with Fraction arguments."
 
 addToFraction: fraction
 	^ Fraction numerator: ( fraction numerator * denominator ) + ( numerator * fraction denominator )
@@ -220,8 +231,11 @@ moduloFromFraction: fraction
 	^ ( fraction numerator * denominator ) % ( numerator * fraction denominator ) /
 		( fraction denominator * denominator ).
 !
+powerBaseFraction: fraction
+	^ fraction toFloat ** self toFloat.
+!
 
-"Basic arithmatic with float arguments."
+"Basic arithmatic with Float arguments."
 
 addToFloat: float
 	^ float + self toFloat.
@@ -240,6 +254,9 @@ integerDivideIntoFloat: float
 !
 moduloFromFloat: float
 	^ float % self toFloat.
+!
+powerBaseFloat: float
+	^ float ** self toFloat.
 !
 
 "Basic arithmatic with points

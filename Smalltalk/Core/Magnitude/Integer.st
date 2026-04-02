@@ -62,10 +62,10 @@ argIsSmallerOrEqualToBigInt: bigInt
 	^ Boolean fromJs: INLINE 'bigInt.js <= BigInt( this.js )'.
 !
 
-"Comparisons with fractions
+"Comparisons with Fraction arguments
  are implementend in superclass AbstractInteger."
 
-"Comparisons with float arguments."
+"Comparisons with Float arguments."
 
 argIsEqualToFloat: float
 	^ Boolean fromJs: INLINE 'Math.abs( float.js - this.js ) < Number.EPSILON'.
@@ -77,7 +77,7 @@ argIsSmallerOrEqualToFloat: float
 	^ Boolean fromJs: INLINE 'float.js <= this.js'.
 !
 
-"Basic arithmatic with number subsclass arguments.
+"Basic arithmatic with Number subsclass arguments.
  Delegate to integer methods of argument."
 
 + number
@@ -97,6 +97,9 @@ argIsSmallerOrEqualToFloat: float
 !
 % number
 	^ number moduloFromInteger: self.
+!
+** number
+	^ number powerBaseInteger: self.
 !
 
 "Basic arithmatic with Integer arguments."
@@ -143,6 +146,13 @@ moduloFromInteger: integer
 			return stInteger$class.$fromJs$( jsResult )'.
 	self divisionByZeroError.
 !
+powerBaseInteger: integer
+	INLINE '
+		let jsResult = integer.js ** this.js ;
+		if( Number.isSafeInteger( jsResult ) )
+			return stInteger$class.$fromJs$( jsResult );
+		return stBigInt$class.$fromJs$( BigInt( integer.js ) ** BigInt( this.js ) )'.
+!
 
 "Basic arithmatic with BigInt arguments."
 
@@ -168,6 +178,9 @@ integerDivideIntoBigInt: bigInt
 moduloFromBigInt: bigInt
 	^ BigInt fromJs: INLINE 'bigInt.js % BigInt( this.js )'.
 !
+powerBaseBigInt: bigInt
+	^ BigInt fromJs: INLINE 'bigInt.js ** BigInt( this.js )'.
+!
 
 "Basic arithmatic with fractions
  is implementend in superclass AbstractInteger."
@@ -192,11 +205,14 @@ integerDivideIntoFloat: float
 moduloFromFloat: float
 	^ Float fromJs: INLINE 'float.js % this.js'.
 !
+powerBaseFloat: float
+	^ Float fromJs: INLINE 'float.js ** this.js'.
+!
 
 "Basic arithmatic with points
  is implementend in superclass Number."
 
-"Bit operations."
+"Bit operations"
 
 & number
 	^ Integer fromJs: INLINE 'this.js & number.js'.
@@ -214,6 +230,8 @@ xor: number
 	^ Integer fromJs: INLINE 'this.js << count.js'.
 !
 
+"gcd"
+
 gcd: number
 	"Answer greatest common denominator."
 	^ number gcdInteger: self
@@ -222,3 +240,4 @@ gcdInteger: number
 	"Private"
 	^ Integer fromJs: INLINE 'NumUtil.gcd( this.js, number.js )'.
 !
+

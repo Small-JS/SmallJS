@@ -51,33 +51,39 @@ testComparisons
 	self assert: [ 0.501 > fraction ].
 !
 testBasicMath
-	| bigInt fraction point |
+	| epsilon bigInt fraction point |
 
+	epsilon := 0.00001.
+
+	"Basic math with floats."
 	self assert: [ 2.0 + 3.0 = 5.0 ].
 	self assert: [ 2.1 - 3.0 = -0.9 ].
-	self assert: [ 4.1 * 3.0 - 12.3 < Float epsilon ].
+	self assert: [ 4.1 * 3.0 equals: 12.3 precision: epsilon ].
 	self assert: [ 7.0 / 2.0 = 3.5 ].
 	self assert: [ 7.0 // 2.0 = 3.0 ].
 	self assert: [ 7.0 % 2.0 = 1.0 ].
+	self assert: [ 7.0 ** 2.0 equals: 49.0 precision: epsilon ].
 
 	"Basic math with integers."
 	self assert: [ 2.0 + 3 = 5.0 ].
 	self assert: [ 2.1 - 3 = -0.9 ].
-	self assert: [ 4.1 * 3 - 12.3 < Float epsilon ].
+	self assert: [ 4.1 * 3 equals: 12.3 precision: epsilon ].
 	self assert: [ 7.0 / 2 = 3.5 ].
 	self assert: [ 7.0 // 2 = 3.0 ].
 	self assert: [ 7.0 % 2 = 1.0 ].
+	self assert: [ 7.0 ** 2  equals: 49.0 precision: epsilon ].
 
 	"Basic math with large integers."
 	bigInt := BigInt fromJs: INLINE '3n'.
 	self assert: [ bigInt class = BigInt ].
 	self assert: [ 2.0 + bigInt = 5.0 ].
 	self assert: [ 2.1 - bigInt = -0.9 ].
-	self assert: [ 4.1 * bigInt equals: 12.3 precision: 0.00001 ].
+	self assert: [ 4.1 * bigInt -12.3 < epsilon ].
 	bigInt := BigInt fromJs: INLINE '2n'.
 	self assert: [ 7.0 / bigInt = 3.5 ].
 	self assert: [ 7.0 // bigInt = 3.0 ].
 	self assert: [ 7.0 % bigInt = 1.0 ].
+	self assert: [ 7.0 ** bigInt equals: 49.0 precision: epsilon ].
 
 	"Basic math with fractions."
 	fraction := 1 / 2.
@@ -87,7 +93,8 @@ testBasicMath
 	self assert: [ 4.2 * fraction = 2.1 ].
 	self assert: [ 7.0 / fraction = 14.0 ].
 	self assert: [ 7.1 // fraction = 14.0 ].
-	self assert: [ 7.1 % fraction equals: 0.1 precision: 0.00001 ].
+	self assert: [ 7.1 % fraction equals: 0.1 precision: epsilon ].
+	self assert: [ 2.0 ** fraction equals: 2.0 sqrt precision: epsilon ].
 
 	"Basic math with points."
 	point := 2.5 @ 3.0.

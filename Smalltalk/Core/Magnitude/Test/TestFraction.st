@@ -42,12 +42,15 @@ testComparisons
 testBasicMath
 	| bigInt point |
 
+	"Basic math with fractions."
 	self assert: [ ( 1 / 3 ) + ( 1 / 6 ) = ( 1 / 2 ) ].
 	self assert: [ ( 1 / 3 ) - ( 1 / 6 ) = ( 1 / 6 ) ].
 	self assert: [ ( 1 / 3 ) * ( 2 / 3 ) = ( 2 / 9 ) ].
 	self assert: [ ( 1 / 3 ) / ( 2 / 3 ) = ( 1 / 2 ) ].
 	self assert: [ ( 7 / 3 ) // ( 1 / 2 ) = 4 ].
 	self assert: [ ( 7 / 3 ) % ( 1 / 2 ) = ( 1 / 3 ) ].
+	self assert: [ ( 7 / 3 ) % ( 1 / 2 ) = ( 1 / 3 ) ].
+	self assert: [ ( 1 / 2 ) ** ( 1 / 2 ) equals: 0.707 precision: 0.01 ].
 
 	"Basic math with integers."
 	self assert: [ ( 2 / 3 ) + 2 = ( 8 / 3 ) ].
@@ -56,6 +59,7 @@ testBasicMath
 	self assert: [ ( 4 / 3 ) / 2 = ( 2 / 3 ) ].
 	self assert: [ ( 8 / 3 ) // 2 = 1 ].
 	self assert: [ ( 8 / 3 ) % 2 = ( 2 / 3 ) ].
+	self assert: [ ( 1 / 2 ) ** 2 equals: 0.25 precision: 0.01 ].
 
 	"Basic math with points."
 	self assert: [ ( 1 / 3 ) + ( 2 @ 3 ) = ( ( 7 / 3 ) @ ( 10 / 3 ) ) ].

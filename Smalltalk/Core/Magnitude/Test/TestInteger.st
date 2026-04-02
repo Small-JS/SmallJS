@@ -39,12 +39,14 @@ testComparisons
 	self assert: [ 2 > 1.95 ].
 !
 testBasicArithmatic
+	"Basic arithmatic with integer arguments."
 	self assert: [ 3 + 4 = 7 ].
 	self assert: [ 4 - 3 = 1 ].
 	self assert: [ 3 * 4 = 12 ].
 	self assert: [ 4 / 3 = ( 4 / 3 ) ].
 	self assert: [ 7 // 3 = 2 ].
 	self assert: [ 7 % 3 = 1 ].
+	self assert: [ 7 ** 3 = 343 ].
 
 	"Basic arithmatic with large integer arguments."
 	self assert: [ 3 + 4 toBigInt = 7 ].
@@ -53,6 +55,7 @@ testBasicArithmatic
 	self assert: [ 4 / 3 toBigInt = ( 4 / 3 ) ].
 	self assert: [ 7 // 3 toBigInt = 2 ].
 	self assert: [ 7 % 3 toBigInt = 1 ].
+	self assert: [ 7 ** 3 toBigInt = 343 toBigInt ].
 
 	"Basic arithmatic with fractions."
 	self assert: [ 3 + ( 1 / 2 ) = ( 7 / 2 ) ].
@@ -61,6 +64,7 @@ testBasicArithmatic
 	self assert: [ 2 / ( 1 / 2 ) = 4 ].
 	self assert: [ 3 // ( 2 / 3 ) = 4 ].
 	self assert: [ 2 % ( 4 / 3 ) = ( 2 / 3 ) ].
+	self assert: [ 4 ** ( 1 / 2 ) equals: 2.00 precision: 0.01 ].
 
 	"Basic arithmatic with floats."
 	self assert: [ 3 + 0.5 = 3.5 ].
@@ -69,6 +73,7 @@ testBasicArithmatic
 	self assert: [ 2 / 0.5 = 4 ].
 	self assert: [ 3 // 0.8 = 3.0 ].
 	self assert: [ 2 % 0.8 = 0.4 ].
+	self assert: [ 2 ** 2.0 equals: 4.00 precision: 0.01 ].
 
 	"Basic arithmatic with points."
 	self assert: [ 3 + ( 1 @ 2 ) = ( 4 @ 5 ) ].

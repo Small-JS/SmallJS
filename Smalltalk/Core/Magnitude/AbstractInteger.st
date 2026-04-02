@@ -45,6 +45,9 @@ integerDivideIntoFraction: fraction
 moduloFromFraction: fraction
 	^ fraction numerator % ( self * fraction denominator ) / fraction denominator.
 !
+powerBaseFraction: fraction
+	^ fraction toFloat ** self toFloat.
+!
 
 "Iteration"
 

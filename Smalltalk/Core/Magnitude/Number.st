@@ -89,7 +89,6 @@ decrement
 	INLINE 'this.js--'.
 !
 
-
 "Errors."
 
 divisionByZeroError

@@ -20,7 +20,7 @@ toFloat
 !
 
 "Comparisons with number subsclass arguments.
- Delegate to large integer methods of argument."
+ Delegate to BigInt methods of argument."
 
 = number
 	^ number argIsEqualToBigInt: self.
@@ -32,7 +32,7 @@ toFloat
 	^ number argIsSmallerOrEqualToBigInt: self.
 !
 
-"Comparisons with integer arguments."
+"Comparisons with Integer arguments."
 
 argIsEqualToInteger: integer
 	^ Boolean fromJs: INLINE 'BigInt( integer.js ) == this.js'.
@@ -44,7 +44,7 @@ argIsSmallerOrEqualToInteger: integer
 	^ Boolean fromJs: INLINE 'BigInt( integer.js ) <= this.js'.
 !
 
-"Comparisons with large integer arguments."
+"Comparisons with BigInt arguments."
 
 argIsEqualToBigInt: bigInt
 	^ Boolean fromJs: INLINE 'bigInt.js == this.js'.
@@ -56,7 +56,7 @@ argIsSmallerOrEqualToBigInt: bigInt
 	^ Boolean fromJs: INLINE 'bigInt.js <= this.js'.
 !
 
-"Comparisons with float arguments."
+"Comparisons with Float arguments."
 
 argIsEqualToFloat: float
 	^ Boolean fromJs: INLINE 'float.js == this.js'.
@@ -91,8 +91,11 @@ argIsSmallerOrEqualToFloat: float
 % number
 	^ number moduloFromBigInt: self.
 !
+** number
+	^ number powerBaseBigInt: self.
+!
 
-"Basic arithmatic with integer arguments."
+"Basic arithmatic with Integer arguments."
 
 addToInteger: integer
 	^ BigInt fromJs: INLINE 'BigInt( integer.js ) + this.js'.
@@ -112,8 +115,11 @@ integerDivideIntoInteger: integer
 moduloFromInteger: integer
 	^ BigInt fromJs: INLINE 'BigInt( integer.js ) % this.js'.
 !
+powerBaseInteger: integer
+	^ BigInt fromJs: INLINE 'BigInt( integer.js ) ** this.js'.
+!
 
-"Basic arithmatic with large integer arguments."
+"Basic arithmatic with BigInt arguments."
 
 addToBigInt: bigInt
 	^ BigInt fromJs: INLINE 'bigInt.js + this.js'.
@@ -133,11 +139,14 @@ integerDivideIntoBigInt: bigInt
 moduloFromBigInt: bigInt
 	^ BigInt fromJs: INLINE 'bigInt.js % this.js'.
 !
+powerBaseBigInt: bigInt
+	^ BigInt fromJs: INLINE 'bigInt.js ** this.js'.
+!
 
 "Basic arithmatic with fraction arguments
  is implemented in superclass AbstractInteger."
 
-"Basic arithmatic with float arguments."
+"Basic arithmatic with Float arguments."
 
 addToFloat: float
 	^ Float fromJs: INLINE 'float.js + Number( this.js )'.
@@ -156,6 +165,9 @@ integerDivideIntoFloat: float
 !
 moduloFromFloat: float
 	^ Float fromJs: INLINE 'float.js % Number( this.js )'.
+!
+powerBaseFloat: float
+	^ Float fromJs: INLINE 'float.js ** Number( this.js )'.
 !
 
 "Bit operations."

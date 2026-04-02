@@ -37,12 +37,14 @@ testComparisons
 	self assert: [ 13 toBigInt > ( 25 / 2 ) ].
 !
 testBasicArithmatic
+	"Basic arithmatic with long integer arguments."
 	self assert: [ 3 toBigInt + 4 toBigInt = 7 toBigInt ].
 	self assert: [ 4 toBigInt - 3 toBigInt = 1 toBigInt ].
 	self assert: [ 3 toBigInt * 4 toBigInt = 12 toBigInt ].
 	self assert: [ 4 toBigInt / 3 toBigInt = ( 4 / 3 ) ].
 	self assert: [ 7 toBigInt // 3 toBigInt = 2 toBigInt ].
 	self assert: [ 7 toBigInt % 3 toBigInt = 1 toBigInt ].
+	self assert: [ 7 toBigInt ** 3 toBigInt = 343 toBigInt ].
 
 	"Basic arithmatic with integer arguments."
 	self assert: [ 3 toBigInt + 10 = 13 ].
@@ -51,6 +53,7 @@ testBasicArithmatic
 	self assert: [ 3 toBigInt / 4 = ( 3 / 4 ) ].
 	self assert: [ 7 toBigInt // 3 = 2 ].
 	self assert: [ 7 toBigInt % 3 = 1 ].
+	self assert: [ 7 toBigInt ** 3 = 343 toBigInt ].
 
 	"Basic arithmatic with fraction arguments."
 	self assert: [ 3 toBigInt + ( 1 / 2 ) = ( 7 / 2 ) ].
@@ -59,6 +62,7 @@ testBasicArithmatic
 	self assert: [ 2 toBigInt / ( 1 / 2 ) = 4 ].
 	self assert: [ 3 toBigInt // ( 2 / 3 ) = 4 ].
 	self assert: [ 2 toBigInt % ( 4 / 3 ) = ( 2 / 3 ) ].
+	self assert: [ 2 toBigInt ** ( 1 / 2 ) equals: 2 sqrt precision: 0.001 ].
 
 	"Basic arithmatic with float arguments."
 	self assert: [ 3 toBigInt + 10.0 = 13.0 ].
@@ -67,6 +71,7 @@ testBasicArithmatic
 	self assert: [ 3 toBigInt / 4.0 = 0.75 ].
 	self assert: [ 7 toBigInt // 3.0 = 2.0 ].
 	self assert: [ 7 toBigInt % 3.0 = 1.0 ].
+	self assert: [ 2 toBigInt ** 0.5 equals: 2 sqrt precision: 0.001 ].
 
 	"Basic arithmatic with points."
 	self assert: [ 3 toBigInt + ( 1 @ 2 ) = ( 4 @ 5 ) ].
