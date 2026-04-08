@@ -1,6 +1,7 @@
 CLASS TestNil EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 test
+	self assert: [ nil = nil ].
 	self assert: [ nil class = Nil ].
 	self assert: [ nil isNull ].
 	self assert: [ nil isNil ].
