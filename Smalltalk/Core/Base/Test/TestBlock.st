@@ -19,6 +19,13 @@ test
 
 	num := [ | a | a := 1. a + 1 ] value.
 	self assert: [ num = 2 ].
+
+	async [ await 1 ] value.
+	"The following 2 lines will generate compiler errors
+	about using 'await' outside an async method or block."
+	"await 1."
+	"[ await 1 ] value."
+
 !
 async testValueAwait
 	| result |

@@ -22,8 +22,12 @@ export class ClassCompiler
 	// Then it's possible to assign a value to it.
 	justCompiledVariable: boolean = false;
 
-	// True if compiple class methods, otherwise compiling instance methods.
+	// True if compiling class methods, otherwise compiling instance methods.
 	compilingClassMethods: boolean = false;
+
+	// True if compiling an async method or block
+	// so that 'await' is allowed to be used.
+	compilingAsyncMethodOrBlock = false;
 
 	loadClass( filename: string, source: string ): CompiledClass
 	{
@@ -104,9 +108,6 @@ export class ClassCompiler
 		while( !this.parser.atEnd() ) {
 			// Save the optional next comment as the category comment.
 			this.parser.saveNextComment( true );
-			// this.parser.skipSpace();
-			// if( this.parser.atEnd() )
-			// 	break;
 
 			if( this.parser.tryParseTerm( "INLINE" ) ) {
 				this.compileClassInline();
@@ -160,6 +161,7 @@ export class ClassCompiler
 		if( this.parser.tryParseTerm( 'async' ) )
 			this.method.isAsync = true;
 		this.method.header = this.method.isAsync ? 'async ' : '';
+		this.compilingAsyncMethodOrBlock = this.method.isAsync;
 
 		this.method.name = this.parser.parseTerm();
 		this.method.header += this.method.name;
@@ -352,8 +354,8 @@ export class ClassCompiler
 
 	private compileAwait(): SourceNode
 	{
-		if( ! this.method.isAsync )
-			this.error( '"await" can only be used in "async" methods.');
+		if( ! this.compilingAsyncMethodOrBlock )
+			this.error( '"await" can only be used in "async" methods or blocks.');
 
 		let node = this.sourceNode( "", "await" );
 		node.add( "await " );
@@ -377,6 +379,10 @@ export class ClassCompiler
 
 	private compileBlock( async: boolean ): SourceNode
 	{
+		// Save previous async state and set current async state
+		let previousCompilingAsyncMethodOrBlock = this.compilingAsyncMethodOrBlock;
+		this.compilingAsyncMethodOrBlock = async;
+
 		let asyncString = async ? "async " : "";
 		let node = this.sourceNode( "stBlock$class.$fromJs$( " + asyncString + "( ", "block" );
 
@@ -399,6 +405,9 @@ export class ClassCompiler
 		this.method.vars = oldVars;
 
 		this.addClassReferenceToClassAndMethod( "Block" );
+
+		// Restore previous async state
+		this.compilingAsyncMethodOrBlock = previousCompilingAsyncMethodOrBlock;
 
 		return node;
 	}
