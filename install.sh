@@ -1,8 +1,9 @@
 #!/bin/bash
-# This script
-# 	- checks SmallJS prerequisite applications
-# 	- Installs the SmallJS language extension in VSCode.
-#	- Installs npm dependencies
+# This script:
+# - checks SmallJS prerequisite applications
+# - Installs the SmallJS language extension in VSCode.
+# - Installs npm dependencies
+# - Creates databases
 
 # Exit script if a step fails
 set -e
@@ -57,5 +58,6 @@ echo "==== Installing core npm packages"
 ./Extension/install.sh
 ./Compiler/install.sh
 ./Node/install.sh
+./Database/install.sh
 
 echo "==== All core installs successful"

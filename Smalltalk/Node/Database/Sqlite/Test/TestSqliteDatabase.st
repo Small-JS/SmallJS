@@ -8,7 +8,7 @@ Also tests SqliteTable."
 
 disabled
 	"Disable these tests if database env var is not set."
-	^ ( Environment at: 'SMALLJS_SQLITE' ) isNil.
+	^ self path isNil.
 !
 test
 	self open.
@@ -25,12 +25,22 @@ test
 !
 open
 	| path |
-	path := Environment at: 'SMALLJS_SQLITE'.
+	path := self path.
 	SqliteDatabase checkExists: path.
 	database := SqliteDatabase new: path.
 	database checkValid.
 
 	typeTable := database connectTable: 'Type' rowClass: MyType.
+!
+path
+	| path defaultPath |
+	path := Environment at: 'SMALLJS_SQLITE'.
+	path ifNotNil: [ ^ path ].
+
+	defaultPath := '../Database/SQLite/smalljs.db'.
+	( Fs existsSync: defaultPath ) ifTrue: [ ^ defaultPath ].
+
+	^ nil.
 !
 deleteAll
 	typeTable deleteAll.

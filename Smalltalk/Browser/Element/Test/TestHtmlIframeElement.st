@@ -1,7 +1,7 @@
 CLASS TestHtmlIframeElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
-	| iframe expectedReferrerPolicy |
+	| iframe |
 
 	iframe := Document default createElement: 'iframe'.
 
@@ -19,9 +19,7 @@ test
 
 	self assert: [ iframe referrerPolicy = '' ].
 	iframe referrerPolicy: 'strict-origin'.
-	"For some reason, the field is now empty in Chromium browsers."
-	expectedReferrerPolicy := Window isChromium ifTrue: [ '' ] ifFalse: [ 'strict-origin' ].
-	self assert: [ iframe referrerPolicy = expectedReferrerPolicy ].
+	self assert: [ iframe referrerPolicy = 'strict-origin' ].
 
 	self assert: [ iframe sandbox entries isEmpty ].
 
