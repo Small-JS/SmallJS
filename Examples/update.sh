@@ -30,7 +30,5 @@ npm install
 
 echo "==== Examples: NodeGui"
 cd $cwd/NodeGui
-# Don't update NodeGui until this issue is fixed:
-# https://github.com/nodegui/nodegui/issues/1087
-# npx npm-check-updates -u
+npx npm-check-updates -u
 npm install
