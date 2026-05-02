@@ -13,6 +13,7 @@ export class CompiledClass
 	moduleName: string = "";
 	superclassName: string = "";
 	superclass?: CompiledClass;
+	isExtension: boolean = false;
 
 	path: string;
 	source: string;

@@ -21,3 +21,8 @@ test
 A:a b:b
 	^ true.
 !
+testClassExtension
+	"These will succeed if ObjectExtension.st was successfully compiled."
+	self assert: [ Object extensionClassMethod = 'extensionClassMethod' ].
+	self assert: [ Object new extensionMethod = 'extensionMethod' ].
+!

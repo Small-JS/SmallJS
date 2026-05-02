@@ -9,4 +9,10 @@ cd "$(dirname "$0")"
 echo "==== Extension"
 
 npx @vscode/vsce package
-code --install-extension smalljs-1.0.1.vsix
+code --install-extension smalljs-1.2.0.vsix
+
+# The command to publish the extension to the VSCode market place is:
+# 	npx @vscode/vsce publish minor
+# This should only be done by the maintainer.
+# Need to create an Azure DevOps Personal access token first.
+

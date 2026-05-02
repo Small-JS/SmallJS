@@ -34,27 +34,32 @@ export class ClassCompiler
 		this.parser = new Parser( filename, source );
 		this.class = new CompiledClass( filename, source );
 
-		this.parser.mustParseTerm( "CLASS" );
-		this.class.name = this.parser.parseClassName();
+		if( this.parser.tryParseTerm( "CLASSEXTENSION" ) ) {
+			this.class.isExtension = true;
+			this.class.name = this.parser.parseClassName();
+		}
+		else {
+			this.parser.mustParseTerm( "CLASS" );
+			this.class.name = this.parser.parseClassName();
 
-		this.parser.mustParseTerm( "EXTENDS" );
-		this.class.superclassName = this.parser.parseExtendsClassName();
-		if( this.class.superclassName != "nil" )
-			this.class.addReference( this.class.superclassName );
+			this.parser.mustParseTerm( "EXTENDS" );
+			this.class.superclassName = this.parser.parseExtendsClassName();
+			if( this.class.superclassName != "nil" )
+				this.class.addReference( this.class.superclassName );
 
-		this.parser.mustParseTerm( "MODULE" );
-		this.class.moduleName = this.parser.parseModuleName();
+			this.parser.mustParseTerm( "MODULE" );
+			this.class.moduleName = this.parser.parseModuleName();
 
-		this.parser.mustParseTerm( "CLASSVARS" );
-		this.class.classVars = this.loadVariables();
+			this.parser.mustParseTerm( "CLASSVARS" );
+			this.class.classVars = this.loadVariables();
 
-		this.parser.mustParseTerm( "VARS" );
-		this.class.vars = this.loadVariables();
+			this.parser.mustParseTerm( "VARS" );
+			this.class.vars = this.loadVariables();
 
-		if( this.parser.peekChar() == "\"" )
-		{
-			this.class.comment = this.parser.parseComment();
-			this.parser.skipWhitespace();
+			if( this.parser.peekChar() == "\"" ) {
+				this.class.comment = this.parser.parseComment();
+				this.parser.skipWhitespace();
+			}
 		}
 
 		// Save current position in the class body source code for the compilation phase.
@@ -92,10 +97,15 @@ export class ClassCompiler
 
 	compileClass( _class: CompiledClass )
 	{
-		this.class = _class;
 		this.parser = new Parser( _class.path, _class.source );
 		this.parser.setPosition( _class.bodyPosition );
+		this.class = _class;
 
+		this.compileClassOrExtension();
+	}
+
+	protected compileClassOrExtension()
+	{
 		// The default is compiling istance methods.
 		this.compilingClassMethods = false;
 		this.methodCategory = "";
@@ -128,6 +138,25 @@ export class ClassCompiler
 			if( this.parser.savedComment != "" )
 				this.methodCategory = this.parser.savedComment;
 		}
+	}
+
+	compileClassExtensions( classExtensions: CompiledClass[] )
+	{
+		for( let classExtension of classExtensions )
+			this.compileClassExtension( classExtension );
+	}
+
+	compileClassExtension( classExtension: CompiledClass )
+	{
+		this.parser = new Parser( classExtension.path, classExtension.source );
+		this.parser.setPosition( classExtension.bodyPosition );
+
+		let containingClass = <CompiledClass> this.allClasses.find( _class => _class.name == classExtension.name );
+		if( ! containingClass )
+			this.error( "Containing class not found for extension: " + classExtension.name );
+		this.class = containingClass;
+
+		this.compileClassOrExtension();
 	}
 
 	// JS inline statements at the class level can be used for imports.
@@ -354,8 +383,8 @@ export class ClassCompiler
 
 	private compileAwait(): SourceNode
 	{
-		if( ! this.compilingAsyncMethodOrBlock )
-			this.error( '"await" can only be used in "async" methods or blocks.');
+		if( !this.compilingAsyncMethodOrBlock )
+			this.error( '"await" can only be used in "async" methods or blocks.' );
 
 		let node = this.sourceNode( "", "await" );
 		node.add( "await " );
@@ -396,7 +425,7 @@ export class ClassCompiler
 
 		this.compileBlockVariables( node );
 
-		while( ! this.parser.tryParseTerm( "]" ) )
+		while( !this.parser.tryParseTerm( "]" ) )
 			node.add( this.compileBlockStatement() );
 
 		node.add( "\t\t\t} )" );

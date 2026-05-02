@@ -16,6 +16,7 @@ export class Compiler
 
 	modules: CompiledModule[] = [];
 	classes: CompiledClass[] = [];
+	classExtensions: CompiledClass[] = [];
 
 	documentationMode = false;
 	sourceMaps = true;
@@ -121,6 +122,7 @@ export class Compiler
 		this.orderClasses();
 
 		this.classCompiler.compileClasses( this.classes, outputFolder );
+		this.classCompiler.compileClassExtensions( this.classExtensions );
 		console.log( "Successfully compiled modules: " + this.modules.length +
 			": classes: " + this.classes.length + " methods: " + this.classCompiler.methodCount );
 
@@ -164,7 +166,10 @@ export class Compiler
 		let source: string = fs.readFileSync( fileName ).toString();
 		let newClass = new ClassCompiler().loadClass( fileName, source );
 
-		this.addClass( newClass );
+		if( newClass.isExtension )
+			this.classExtensions.push( newClass );
+		else
+			this.addClass( newClass );
 	}
 
 	// Add compiled class .

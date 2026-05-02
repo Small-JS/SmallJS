@@ -3,13 +3,13 @@
 	"displayName": "SmallJS",
 	"description": "SmallJS Smalltalk language support",
 	"publisher": "RichardRonteltap",
-	"version": "1.0.1",
+	"version": "1.2.0",
 	"icon": "SmallJS.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Small-JS/SmallJS/tree/main/Extension"
 	},
-	 "engines": {
+	"engines": {
 		"vscode": "^1.83.1"
 	},
 	"categories": [

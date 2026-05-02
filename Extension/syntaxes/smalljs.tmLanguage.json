@@ -14,7 +14,7 @@
 			"patterns": [
 				{
 					"name": "keyword.smalljs",
-					"match": "\\b(self|super|nil|true|false|CLASS|EXTENDS|MODULE|CLASSVARS|VARS|CLASSMETHODS|METHODS|INLINE|await|async)\\b"
+					"match": "\\b(self|super|nil|true|false|CLASS|CLASSEXTENSION|EXTENDS|MODULE|CLASSVARS|VARS|CLASSMETHODS|METHODS|INLINE|await|async)\\b"
 				},
 				{
 					"name": "keyword.control.smalljs",

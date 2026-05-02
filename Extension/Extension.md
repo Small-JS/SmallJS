@@ -11,7 +11,7 @@ This is how it looks in action:
 
 ## Requirements
 
-To enable the extension globally run the script: `deploy.sh`
+To enable the extension globally run the script: `install.sh`
 
 ## Extension Settings
 
