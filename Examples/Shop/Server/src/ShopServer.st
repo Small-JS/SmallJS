@@ -69,7 +69,7 @@ async login: request response: response
 
 	person := Person fromObject: request query.
 	person name notNil ifFalse: [
-		 ^ self sendLoginResponse: response success: false message: 'Login parameter "name" missing' ].
+		^ self sendLoginResponse: response success: false message: 'Login parameter "name" missing' ].
 	person password notNil ifFalse: [
 		^ self sendLoginResponse: response success: false message: 'Login parameter "password" missing' ].
 

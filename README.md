@@ -7,6 +7,11 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
+## News - Tutorial for making Node apps - 6-MAY-2026
+
+The new 'Node App' [Tutorial](https://small-js.org/Tutorial) section goes through the Example Shop Server app step by step,\
+showing how you can make your own Node.js server app in SmallJS.
+
 ## News - PWA example added - 21-MAR-2026
 
 PWA example game added: Emoji Memory :-).\
