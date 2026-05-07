@@ -2,7 +2,14 @@ CLASS SqlTable EXTENDS Object MODULE Database CLASSVARS '' VARS 'name database r
 
 "This class implements an abstract SQL Table.
 The table in the database should have an column named 'id' of type autonumber to manage peristance.
-Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
+Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table.
+
+SmallJS has common standard for specifying table namescolumn names and string in table queries:
+- Table and columns names are enclodes in back quotes.
+- Query parameters are always indicated with a question mark and are not numbered.
+	So the parameters must be supplied in the same order as they appear in the query.
+E.g.: SELECT * FROM `Person` WHERE `name` = ?
+For databases with different conventions, queries are modified before execution."
 
 CLASSMETHODS
 
@@ -36,13 +43,10 @@ rowClass: aRowClass
 
 "Quoting"
 
-quote
-	"Return character used for quoting table and column names as a strings."
-	self error: 'Subclass responsibility'.
-!
 quoted: aName
-	"Return argument name quoted using database quoting convention."
-	^ self quote, aName, self quote.
+	"Return argument name quoted using default quoting convention
+	 for table and column names."
+	^ '`', aName, '`'.
 !
 quotedName
 	"Return table name quoted."
@@ -64,39 +68,6 @@ columnListWithId
 	"Return my columns as comma separated list"
 	^ ( self quoted: 'id' ) + ', ' + self columnList.
 !
-
-"Parameters"
-
-parameter: index
-	"Return a SQL string for the parameter numbered by index"
-	self error: 'Subclass responsibility'.
-!
-insertValuesParameters
-	"Return a string suitable for e.g. the VALUES clause of an INSERT statement when using parameters, excluding the id column.
-	 E.g.: '$1, $2, $3' for a three column table, excluding the id column."
-
-	| result |
-	result := ''.
-
-	1 to: rowClass columns length do: [ :index |
-		result = '' ifFalse: [ result := result, ', ' ].
-		result := result, ( self parameter: index ) ].
-
-	^ result.
-!
-updateSetParameters
-	"Return a string suitable for e.g. the SET clause of an UPDATE argument when using parameters, excluding the id column.
-	 E.g.: ' col1 = $1, col2 = $2, col3 = $3' for a three column table, excluding the id column, but using quoted column names."
-
-	| result |
-
-	result := ''.
-	1 to: rowClass columns length do: [ :index |
-		result = '' ifFalse: [ result := result, ', ' ].
-		result := result, ( self quoted: ( rowClass columns at: index - 1 ) first ), ' = ', ( self parameter: index ) ].
-
-	^ result.
-!
 columnValues: sqlObject
 	"Return array with values of columns variables, excluding the id column.
 	 This method may be overloaded with database specific value converions needed,
@@ -104,4 +75,35 @@ columnValues: sqlObject
 
 	"The default is no conversions."
 	^ sqlObject columnValues.
+!
+
+"Parameters"
+
+insertValuesParameters
+	"Return a string suitable for the VALUES clause of an INSERT statement
+	using parameters, excluding the id column.
+	E.g. for a three column table: ?, ?, ? "
+
+	| result |
+	result := ''.
+
+	rowClass columns length timesRepeat: [
+		result = '' ifFalse: [ result := result, ', ' ].
+		result := result, '?' ].
+
+	^ result.
+!
+updateSetParameters
+	"Return a string suitable for e.g. the SET clause of an UPDATE argument
+	when using quoted column names, parameters, excluding the id column.
+	E.g. for a three column table: `col1` = ?, `col2` = ?, `col3` = ?' "
+
+	| result |
+
+	result := ''.
+	1 to: rowClass columns length do: [ :index |
+		result = '' ifFalse: [ result := result, ', ' ].
+		result := result, ( self quoted: ( rowClass columns at: index - 1 ) first ), ' = ?' ].
+
+	^ result.
 !

@@ -5,17 +5,6 @@ CLASS SqliteTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
  of which instances map to rows in this table,
  using an obigatory autonumber id column."
 
-"Quoting and parameters"
-
-quote
-	"Return character used for quoting table and column names."
-	^ '"'.
-!
-parameter: index
-	"Return a SQL string for the parameter numbered by index."
-	^ '?'.
-!
-
 columnValues: sqlObject
 	"Return array with values of columns variables, excluding the id column.
 	 with conversions needed for SQLite: Date, Boolean."
@@ -31,7 +20,7 @@ columnValues: sqlObject
 selectAll
 	| sql statement rows |
 
-	sql := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY "id"'.
+	sql := 'SELECT ', self columnListWithId, ' FROM ', self quotedName, ' ORDER BY `id`'.
 	statement := database prepare: sql.
 	rows := statement all: #().
 	^ rowClass fromRows: rows.
@@ -50,7 +39,7 @@ select: condition with: parameters
 selectId: id
 	"Return single SqlObject from row with argument id, otherwise nil."
 	| sqlObjects |
-	sqlObjects := self select: '"id" = ?' with: #( id ).
+	sqlObjects := self select: '`id` = ?' with: #( id ).
 	^ sqlObjects length = 0 ifTrue: [ nil ] ifFalse: [ sqlObjects first ].
 !
 run: sql with: parameters
@@ -88,7 +77,7 @@ update: sqlObject
 
 	| sql statement result |
 
-	sql := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE "id" = ?'.
+	sql := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE `id` = ?'.
 	statement := database prepare: sql.
 	result := statement run: ( ( self columnValues: sqlObject ) add: sqlObject id ).
 
@@ -103,7 +92,7 @@ delete: sqlObject
 
 	| sql statement result |
 
-	sql := 'DELETE FROM ', self quotedName, ' WHERE "id" = ?'.
+	sql := 'DELETE FROM ', self quotedName, ' WHERE `id` = ?'.
 	statement := database prepare: sql.
 	result := statement run: #( ( sqlObject id ) ).
 

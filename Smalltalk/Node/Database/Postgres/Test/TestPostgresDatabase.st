@@ -64,13 +64,13 @@ async tableSelectAll
 !
 async tableSelect
 	| selectedTypes |
-	selectedTypes := await typeTable select:  '"string" = \'Hi\''.
+	selectedTypes := await typeTable select:  '`string` = "Hi"'.
 	self assert: [ selectedTypes length = 1 ].
 	self assert: [ selectedTypes first = type ].
 !
 async tableSelectWith
 	| selectedTypes |
-	selectedTypes := await typeTable select: '"integer" = $1' with: #( 7 ).
+	selectedTypes := await typeTable select: '`integer` = ?' with: #( 7 ).
 	self assert: [ selectedTypes length = 1 ].
 	self assert: [ selectedTypes first = type ].
 !

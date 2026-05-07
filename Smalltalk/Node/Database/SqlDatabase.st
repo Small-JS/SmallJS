@@ -1,7 +1,10 @@
 CLASS SqlDatabase EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
-	"This class implements common database functionality.
-	 Note: The method 'end' should be called when you are done with the database connection
-	 	   to free up resources and be able to terminate your app."
+
+"This class implements common database functionality.
+
+Note 1:
+The method 'end' should be called when you are done with the database connection
+to free up resources and be able to terminate your app."
 
 CLASSMETHODS
 

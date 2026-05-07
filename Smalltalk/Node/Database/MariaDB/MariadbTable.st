@@ -1,16 +1,5 @@
 CLASS MariadbTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
 
-"Quoting and parameters"
-
-quote
-	"Return character used for quoting table and column names as a strings."
-	^ '`'.
-!
-parameter: index
-	"Return a SQL string for the parameter numbered by index"
-	^ '?'.
-!
-
 "Selecting"
 
 async selectAll

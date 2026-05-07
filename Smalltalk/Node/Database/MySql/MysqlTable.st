@@ -6,17 +6,6 @@ of which instances map to rows in this table."
 
 METHODS
 
-"Quoting and parameters"
-
-quote
-	"Return character used for quoting table and column names."
-	^ '`'.
-!
-parameter: index
-	"Return a SQL string for the parameter numbered by index"
-	^ '?'.
-!
-
 "Querying"
 
 async selectAll
@@ -74,7 +63,7 @@ async update: sqlObject
 
 "Deleting"
 
-async deleteAllThen: block catch: errorBlock
+async deleteAll
 	"Delete all rows from table."
 	| query |
 	query := 'DELETE FROM ', self quotedName.

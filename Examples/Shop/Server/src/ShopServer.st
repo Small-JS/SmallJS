@@ -65,7 +65,7 @@ onListen: port
  	{ success: true, message: 'Login succeeded' }"
 
 async login: request response: response
-	| person query dbPersons dbPerson |
+	| person dbPersons dbPerson |
 
 	person := Person fromObject: request query.
 	person name notNil ifFalse: [
@@ -73,8 +73,7 @@ async login: request response: response
 	person password notNil ifFalse: [
 		^ self sendLoginResponse: response success: false message: 'Login parameter "password" missing' ].
 
-	query := ( personTable quoted: 'name' ), ' = ', ( personTable parameter: 1 ).
-	dbPersons := await personTable select: query with: #( ( person name ) ).
+	dbPersons := await personTable select: '`name` = ?' with: #( ( person name ) ).
 	dbPersons length > 0 ifFalse: [
 		^ self sendLoginResponse: response success: false message: 'User not found: ', person name ].
 
@@ -136,12 +135,10 @@ async orders: request response: response
 	user := self getRequestUser: request response: response.
 	user isNil ifTrue: [ ^ nil ].
 
-	query := ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ).
 	userId := user id.
-	orders := await orderTable select: query with: #( userId ).
+	orders := await orderTable select: '`person` = ?' with: #( userId ).
 
-	query := 'id in ( select ', ( orderTable quoted: 'product' ), ' from ', orderTable quotedName,
-		' where ', ( orderTable quoted: 'person' ), ' = ', ( orderTable parameter: 1 ), ' )'.
+	query := '`id` in ( select `product` from `Order` where `person` = ? )'.
 	products := await productTable select: query with: #( userId ).
 
 	result := Object new

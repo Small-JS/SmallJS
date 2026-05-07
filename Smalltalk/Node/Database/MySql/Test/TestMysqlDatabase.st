@@ -33,8 +33,7 @@ async connect
 	typeTable := database connectTable: 'type' rowClass: MyType.
 !
 async tableDeleteAll
-	typeTable deleteAllThen: [ self tableInsert ]
-		catch: [ :error | error throw ].
+	await typeTable deleteAll.
 !
 async tableInsert
 	| binary |
