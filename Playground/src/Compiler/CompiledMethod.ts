@@ -1,8 +1,9 @@
 import { CompiledVariable } from "./CompiledVariable.js";
 import { Naming } from "./Runtime.js";
 
-// import { SourceNode } from "source-map";
+// Playground: Use local SourceNode class iso npm package.
 import { SourceNode } from "./SourceNode.js";
+// import { SourceNode } from "source-map";
 
 export class CompiledMethod
 {
@@ -18,16 +19,21 @@ export class CompiledMethod
 	methodReferences: string[] = [];
 	minimized: boolean = false;
 
+	header: string = "";
+	category: string = "";
+	comment: string = "";
+
 	generate(): SourceNode
 	{
 		let node = new SourceNode( null, null, "", "", "method" );
+		node.add( "\t" );
 
 		// Generate optional async
 		if( this.isAsync )
-			node.add( 'async ' );
+			node.add( "async " );
 
 		// Generate name.
-		node.add( "\t" + Naming.methodStToJs( this.name ) );
+		node.add( Naming.methodStToJs( this.name ) );
 
 		// Generate arguments.
 		node.add( "(" + this.generateArguments() + ")\n\t{\n" );

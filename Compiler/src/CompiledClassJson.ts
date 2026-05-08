@@ -21,4 +21,16 @@ export class CompiledClassJson
 		return json;
 	}
 
+	// Used by Playground, so leave it:
+
+	static toCompiledClass( json: CompiledClassJson ): CompiledClass
+	{
+		let _class = new CompiledClass( "", "" );
+		_class.name = json.name;
+		_class.superclassName = json.superClassName;
+		_class.moduleName = json.moduleName;
+
+		return _class;
+	}
+
 }

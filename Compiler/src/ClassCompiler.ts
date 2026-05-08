@@ -4,11 +4,13 @@ import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
 import { CharUtil, Naming } from "./Runtime.js";
 
+// Playground: Use local SourceNode class iso npm package.
+// import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
 
 export class ClassCompiler
 {
-	outputFolder!: string;
+	outputFolder = ".";
 	parser!: Parser;
 
 	// Currently compiling class and method plus all classes.
@@ -283,16 +285,35 @@ export class ClassCompiler
 	}
 
 
-	private compileStatements()
+	compileStatements()
 	{
+		let lastNode: SourceNode | undefined;
 		while( !this.parser.atMethodEnd() ) {
-			let node = this.compileStatement();
-			this.method.body.add( node );
+			lastNode = this.compileStatement();
+			this.method.body.add( lastNode );
 		}
+
+		// Playground: Generates code to return the value of the last statement iso self.
+		// In Playground uncomment next if() statement
+		// and comment out the if() statment after that.
+
+		// if( lastNode && !this.method.hasReturn )
+		// 	lastNode.prepend( "return " );
 
 		if( !this.method.hasReturn && !this.method.isConstructor() )
 			this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
 	}
+
+	// private compileStatements()
+	// {
+	// 	while( !this.parser.atMethodEnd() ) {
+	// 		let node = this.compileStatement();
+	// 		this.method.body.add( node );
+	// 	}
+
+	// 	if( !this.method.hasReturn && !this.method.isConstructor() )
+	// 		this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
+	// }
 
 	// A statement consists of an expression,
 	// possibly preceded by the return operator "^".

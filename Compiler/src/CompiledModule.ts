@@ -1,10 +1,11 @@
 import { CompiledClass } from "./CompiledClass.js";
 import { Naming } from "./Runtime.js";
 
-// Playground uses local SourceNode class
+// Playground: Use local SourceNode class iso npm package.
 // import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
 
+// In Playground disable this:
 import * as fs from "fs";
 
 export class CompiledModule
@@ -21,7 +22,7 @@ export class CompiledModule
 		this.name = name;
 	}
 
-	// For the Playground replace the method generate(...) below with this
+	// For the Playground replace the method generate(...) below with this:
 	/*
 	generate( allClasses: CompiledClass[] ): string
 	{
@@ -131,7 +132,7 @@ export class CompiledModule
 
 	// Playground evaluator always runs in the web root
 	// so we hardcode the location of the compiled Smalltalk folder
-	// if the moduile name is "Evaluator".
+	// if the module name is "Evaluator".
 
 	importBaseFolder(): string
 	{

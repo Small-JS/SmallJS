@@ -4,18 +4,19 @@ import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
 import { CharUtil, Naming } from "./Runtime.js";
 
-// Playground uses local SourceNode class
+// Playground: Use local SourceNode class iso npm package.
 import { SourceNode } from "./SourceNode.js";
 // import { SourceNode } from "source-map";
 
 export class ClassCompiler
 {
-	outputFolder: string = ".";
+	outputFolder = ".";
 	parser!: Parser;
 
 	// Currently compiling class and method plus all classes.
 	class!: CompiledClass;
 	method!: CompiledMethod;
+	methodCategory = '';
 	allClasses: CompiledClass[] = [];
 	methodCount = 0;
 
@@ -23,30 +24,45 @@ export class ClassCompiler
 	// Then it's possible to assign a value to it.
 	justCompiledVariable: boolean = false;
 
-	// True if compiple class methods, otherwise compiling instance methods.
+	// True if compiling class methods, otherwise compiling instance methods.
 	compilingClassMethods: boolean = false;
+
+	// True if compiling an async method or block
+	// so that 'await' is allowed to be used.
+	compilingAsyncMethodOrBlock = false;
 
 	loadClass( filename: string, source: string ): CompiledClass
 	{
 		this.parser = new Parser( filename, source );
 		this.class = new CompiledClass( filename, source );
 
-		this.parser.mustParseTerm( "CLASS" );
-		this.class.name = this.parser.parseClassName();
+		if( this.parser.tryParseTerm( "CLASSEXTENSION" ) ) {
+			this.class.isExtension = true;
+			this.class.name = this.parser.parseClassName();
+		}
+		else {
+			this.parser.mustParseTerm( "CLASS" );
+			this.class.name = this.parser.parseClassName();
 
-		this.parser.mustParseTerm( "EXTENDS" );
-		this.class.superclassName = this.parser.parseExtendsClassName();
-		if( this.class.superclassName != "nil" )
-			this.class.addReference( this.class.superclassName );
+			this.parser.mustParseTerm( "EXTENDS" );
+			this.class.superclassName = this.parser.parseExtendsClassName();
+			if( this.class.superclassName != "nil" )
+				this.class.addReference( this.class.superclassName );
 
-		this.parser.mustParseTerm( "MODULE" );
-		this.class.moduleName = this.parser.parseModuleName();
+			this.parser.mustParseTerm( "MODULE" );
+			this.class.moduleName = this.parser.parseModuleName();
 
-		this.parser.mustParseTerm( "CLASSVARS" );
-		this.class.classVars = this.loadVariables();
+			this.parser.mustParseTerm( "CLASSVARS" );
+			this.class.classVars = this.loadVariables();
 
-		this.parser.mustParseTerm( "VARS" );
-		this.class.vars = this.loadVariables();
+			this.parser.mustParseTerm( "VARS" );
+			this.class.vars = this.loadVariables();
+
+			if( this.parser.peekChar() == "\"" ) {
+				this.class.comment = this.parser.parseComment();
+				this.parser.skipWhitespace();
+			}
+		}
 
 		// Save current position in the class body source code for the compilation phase.
 		this.class.bodyPosition = this.parser.position.copy();
@@ -65,9 +81,9 @@ export class ClassCompiler
 
 		while( this.parser.peekChar() != "'" )
 			variables.push( new CompiledVariable( this.parser.parseVariableName() ) );
-
 		this.parser.nextChar();
-		this.parser.skipSpace();
+
+		this.parser.skipWhitespace();
 
 		return variables;
 	}
@@ -83,23 +99,66 @@ export class ClassCompiler
 
 	compileClass( _class: CompiledClass )
 	{
-		this.class = _class;
-		this.parser = new Parser( _class.fileName, _class.source );
+		this.parser = new Parser( _class.path, _class.source );
 		this.parser.setPosition( _class.bodyPosition );
+		this.class = _class;
 
+		this.compileClassOrExtension();
+	}
+
+	protected compileClassOrExtension()
+	{
 		// The default is compiling istance methods.
 		this.compilingClassMethods = false;
+		this.methodCategory = "";
+
+		// Save optional first comment after class comment as category comment.
+		this.parser.saveNextComment( true );
+		this.parser.skipSpace();
+		this.methodCategory = this.parser.savedComment;
 
 		while( !this.parser.atEnd() ) {
-			if( this.parser.tryParseTerm( "INLINE" ) )
+			// Save the optional next comment as the category comment.
+			this.parser.saveNextComment( true );
+
+			if( this.parser.tryParseTerm( "INLINE" ) ) {
 				this.compileClassInline();
-			else if( this.parser.tryParseTerm( "CLASSMETHODS" ) )
+				this.methodCategory = "";
+			}
+			else if( this.parser.tryParseTerm( "CLASSMETHODS" ) ) {
 				this.compilingClassMethods = true;
-			else if( this.parser.tryParseTerm( "METHODS" ) )
+				this.methodCategory = "";
+			}
+			else if( this.parser.tryParseTerm( "METHODS" ) ) {
 				this.compilingClassMethods = false;
+				this.methodCategory = "";
+			}
 			else
 				this.compileMethod();
+
+			// Save new category if it was set.
+			if( this.parser.savedComment != "" )
+				this.methodCategory = this.parser.savedComment;
 		}
+	}
+
+	compileClassExtensions( classExtensions: CompiledClass[] )
+	{
+		for( let classExtension of classExtensions )
+			this.compileClassExtension( classExtension );
+	}
+
+	compileClassExtension( classExtension: CompiledClass )
+	{
+		this.parser = new Parser( classExtension.path, classExtension.source );
+		this.parser.setPosition( classExtension.bodyPosition );
+
+		let containingClass = <CompiledClass> this.allClasses.find( _class => _class.name == classExtension.name );
+		if( ! containingClass )
+			this.error( "Containing class not found for extension: " + classExtension.name );
+		this.class = containingClass;
+
+		this.compileClassOrExtension();
 	}
 
 	// JS inline statements at the class level can be used for imports.
@@ -110,13 +169,14 @@ export class ClassCompiler
 		if( !this.class.classInline )
 			this.class.classInline = this.sourceNode( "", "classInline" );
 
-		let source = this.parser.parseStringValue() + "\n";
+		let source = this.parser.parseInline() + "\n";
 		this.class.classInline.add( source );
 	}
 
 	private compileMethod()
 	{
 		this.method = new CompiledMethod();
+		this.method.category = this.methodCategory;
 		this.method.body = this.sourceNode( "", "method" );
 
 		this.compileMethodHeader();
@@ -126,19 +186,27 @@ export class ClassCompiler
 
 	compileMethodHeader()
 	{
+		// Save possible method comment
+		this.parser.saveNextComment( true );
+
 		if( this.parser.tryParseTerm( 'async' ) )
 			this.method.isAsync = true;
+		this.method.header = this.method.isAsync ? 'async ' : '';
+		this.compilingAsyncMethodOrBlock = this.method.isAsync;
 
 		this.method.name = this.parser.parseTerm();
+		this.method.header += this.method.name;
 
-		if( this.method.isUnary() ) {}
+		if( this.method.isUnary() ) { }
 		else if( this.method.isBinary() )
 			this.compileMethodHeaderVariable();
 		else if( this.method.isKeywordSelector() ) {
 			this.compileMethodHeaderVariable();
 			// Check for more selectors ending with ":" plus argument.
 			while( !this.parser.atEnd() && Naming.methodIsKeyword( this.parser.peekTerm() ) ) {
-				this.method.name += this.parser.parseTerm();
+				let selector = this.parser.parseTerm();
+				this.method.name += selector;
+				this.method.header += ' ' + selector;
 				this.compileMethodHeaderVariable();
 			}
 		}
@@ -153,22 +221,29 @@ export class ClassCompiler
 			if( !this.class.addMethod( this.method ) )
 				this.error( "Duplicate method: " + this.method.name );
 		}
+
+		this.method.comment = this.parser.savedComment;
+		this.parser.saveNextComment( false );
 	}
 
 	compileMethodHeaderVariable()
 	{
 		let variableName = this.parser.parseVariableName();
 		this.method.args.push( new CompiledVariable( variableName ) );
+		this.method.header += ' ' + variableName;
 	}
 
 	compileMethodBody()
 	{
 		while( !this.parser.atMethodEnd() ) {
 			this.compileConstructor();
-			this.compileLocalVariables();
+			this.compileMethodVariables();
 			this.compileStatements();
 		}
-		this.parser.tryParseTerm( "!" );
+
+		// Save the optional next comment as the category comment.
+		this.parser.saveNextComment( true );
+		this.parser.mustParseTerm( "!" );
 	}
 
 	private compileConstructor()
@@ -180,16 +255,16 @@ export class ClassCompiler
 		this.method.body.add( node );
 	}
 
-	private compileLocalVariables()
+	private compileMethodVariables()
 	{
 		if( !this.parser.tryParseTerm( "|" ) )
 			return;
 
 		while( !this.parser.tryParseTerm( "|" ) )
-			this.compileLocalVariable();
+			this.compileVariable();
 	}
 
-	private compileLocalVariable()
+	private compileVariable(): SourceNode
 	{
 		let variableName: string = this.parser.parseVariableName();
 
@@ -197,13 +272,18 @@ export class ClassCompiler
 			this.error( "Local variable name is reserved word: " + variableName );
 
 		let compiledVariable = new CompiledVariable( variableName );
+		if( compiledVariable.includedIn( this.method.args ) )
+			this.error( "Local variable name already used as argument: " + variableName );
+		if( compiledVariable.includedIn( this.method.vars ) )
+			this.error( "Duplicate local variable: " + variableName );
+
 		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil;\n";
 		compiledVariable.node = this.sourceNode( source, "variable" );
 
 		this.method.vars.push( compiledVariable );
+		return compiledVariable.node;
 	}
 
-	// Playground: Generates code to return the value of the last statement iso self.
 
 	compileStatements()
 	{
@@ -213,12 +293,27 @@ export class ClassCompiler
 			this.method.body.add( lastNode );
 		}
 
+		// Playground: Generates code to return the value of the last statement iso self.
+		// In Playground uncomment next if() statement
+		// and comment out the if() statment after that.
+
 		if( lastNode && !this.method.hasReturn )
 			lastNode.prepend( "return " );
 
 		// if( !this.method.hasReturn && !this.method.isConstructor() )
 		// 	this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
 	}
+
+	// private compileStatements()
+	// {
+	// 	while( !this.parser.atMethodEnd() ) {
+	// 		let node = this.compileStatement();
+	// 		this.method.body.add( node );
+	// 	}
+
+	// 	if( !this.method.hasReturn && !this.method.isConstructor() )
+	// 		this.method.body.add( this.sourceNode( "\t\treturn this;\n", "return self" ) );
+	// }
 
 	// A statement consists of an expression,
 	// possibly preceded by the return operator "^".
@@ -227,8 +322,7 @@ export class ClassCompiler
 	{
 		let node = this.sourceNode( "\t\t", "statement" );
 
-		if( this.parser.tryParseTerm( "^" ) )
-		{
+		if( this.parser.tryParseTerm( "^" ) ) {
 			this.method.hasReturn = true;
 			node.add( "return " );
 		}
@@ -256,8 +350,8 @@ export class ClassCompiler
 		return this.compileAssignment();
 	}
 
-	// Compile variable assignment and before that,
-	// compile higher precedence message sends (all).
+	// Compile variable assignment,
+	// but first compile message sends, which have higher precedence.
 
 	private compileAssignment(): SourceNode
 	{
@@ -305,21 +399,17 @@ export class ClassCompiler
 
 	private compileInline(): SourceNode
 	{
-		return this.sourceNode( this.parser.parseStringValue(), "inline" );
+		return this.sourceNode( this.parser.parseInline(), "inline" );
 	}
 
 	private compileAwait(): SourceNode
 	{
+		if( !this.compilingAsyncMethodOrBlock )
+			this.error( '"await" can only be used in "async" methods or blocks.' );
+
 		let node = this.sourceNode( "", "await" );
-
-		let className = this.parser.parseTerm();
-		if( ! CharUtil.isUppercase( className ) )
-			this.error( "Failed to parse class name after await" );
-		node.add( this.compileClassReference( className ) + ".$fromJs$( " );
-
 		node.add( "await " );
 		node.add( this.compileExpression() );
-		node.add( ".js )" );
 
 		return node;
 	}
@@ -339,25 +429,35 @@ export class ClassCompiler
 
 	private compileBlock( async: boolean ): SourceNode
 	{
+		// Save previous async state and set current async state
+		let previousCompilingAsyncMethodOrBlock = this.compilingAsyncMethodOrBlock;
+		this.compilingAsyncMethodOrBlock = async;
+
 		let asyncString = async ? "async " : "";
 		let node = this.sourceNode( "stBlock$class.$fromJs$( " + asyncString + "( ", "block" );
 
 		let oldArgs = this.method.args.slice();
+		let oldVars = this.method.vars.slice();
 
 		if( this.parser.peekTerm() == ":" )
 			this.compileBlockArguments( node );
 
 		node.add( " ) => {\n" );
 
-		while( this.parser.peekChar() != "]" )
+		this.compileBlockVariables( node );
+
+		while( !this.parser.tryParseTerm( "]" ) )
 			node.add( this.compileBlockStatement() );
 
-		this.parser.mustParseTerm( "]" );
 		node.add( "\t\t\t} )" );
 
 		this.method.args = oldArgs;
+		this.method.vars = oldVars;
 
 		this.addClassReferenceToClassAndMethod( "Block" );
+
+		// Restore previous async state
+		this.compilingAsyncMethodOrBlock = previousCompilingAsyncMethodOrBlock;
 
 		return node;
 	}
@@ -367,8 +467,7 @@ export class ClassCompiler
 	compileBlockArguments( node: SourceNode )
 	{
 		let first = true;
-		while( this.parser.tryParseTerm( ":" ) )
-		{
+		while( this.parser.tryParseTerm( ":" ) ) {
 			if( first )
 				first = false;
 			else
@@ -380,6 +479,19 @@ export class ClassCompiler
 		}
 
 		this.parser.mustParseTerm( "|" );
+	}
+
+	// Parse block local variables and add them to method variables (temporarily).
+
+	compileBlockVariables( node: SourceNode )
+	{
+		if( !this.parser.tryParseTerm( "|" ) )
+			return;
+
+		while( !this.parser.tryParseTerm( "|" ) ) {
+			node.add( "\t\t" );
+			node.add( this.compileVariable() );
+		}
 	}
 
 	// A block statement consists of an expression,
@@ -421,7 +533,7 @@ export class ClassCompiler
 		return node;
 	}
 
-// Compile number or string or literal array
+	// Compile number or string or literal array
 
 	private compileLiteral( literal: string ): SourceNode
 	{
@@ -527,7 +639,8 @@ export class ClassCompiler
 		let jsName: string = '';
 		if( this.method.checkVariableReference( compiledVariable ) )
 			jsName = compiledVariable.jsName();
-		else if( this.class.checkVariableReference( compiledVariable ) )
+		else if( !this.compilingClassMethods &&
+			this.class.checkVariableReference( compiledVariable ) )
 			jsName = "this." + compiledVariable.jsName();
 		else if( this.class.checkClassVariableReference( compiledVariable ) ) {
 			let classAccess = this.compilingClassMethods ? "" : "$class().";
@@ -565,8 +678,11 @@ export class ClassCompiler
 		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
-		if( ! this.parser.tryParseTerm( ";" ) )
+		if( !this.parser.tryParseTerm( ";" ) )
 			return;
+
+		if( receiver.children.length <= 1 )
+			this.error( "Message expected before cascade" );
 
 		let lastMessage = <SourceNode> receiver.children.pop();
 		receiver.prepend( "( () => { let $object$ = " ).add( ";\n" );
@@ -595,7 +711,7 @@ export class ClassCompiler
 		this.compileBinaryMessages( receiver );
 
 		// Not a keyword message
-		if( ! Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
+		if( !Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
 			return;
 
 		let message = this.positionedSourceNode( "", "keywordMessage" );
@@ -659,7 +775,7 @@ export class ClassCompiler
 	}
 
 	// Generate a new source node that is not connected to any ST source,
-	// so does cannot have a breakpoint.
+	// so cannot have a breakpoint.
 
 	sourceNode( script: string, name: string ): SourceNode
 	{
@@ -680,7 +796,7 @@ export class ClassCompiler
 
 	relativeFilename(): string
 	{
-		return this.relativeOutputPath() + this.class.fileName;
+		return this.relativeOutputPath() + this.class.path;
 	}
 
 	// Return relative path from output folder to workspace folder.
@@ -699,10 +815,9 @@ export class ClassCompiler
 
 		let result = "";
 		let pos = 0;
-		while( pos < folder.length )
-		{
+		while( pos < folder.length ) {
 			result += "../";
-			pos = folder.indexOf( "/" , pos );
+			pos = folder.indexOf( "/", pos );
 			pos = pos < 0 ? folder.length : pos + 1;
 		}
 

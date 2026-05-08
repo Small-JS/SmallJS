@@ -1,6 +1,6 @@
 import { Naming } from "./Runtime.js";
 
-// Playground uses local SourceNode class
+// Playground: Use local SourceNode class iso npm package.
 // import { SourceNode } from "./SourceNode.js";
 import { SourceNode } from "source-map";
 

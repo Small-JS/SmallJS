@@ -6,6 +6,8 @@ export class Parser
 	filename: string;
 	source: string;
 	position: Position = new Position;
+	_saveNextComment = false;
+	savedComment = '';
 
 	constructor( filename: string, source: string )
 	{
@@ -88,18 +90,18 @@ export class Parser
 		return char;
 	}
 
-	// Parse a string and then remove the quotes
+	// Parse a string after keyword INLINE, allowing newlines.
 
-	parseStringValue(): string
+	parseInline(): string
 	{
-		let str: string = this.parseString();
+		let str: string = this.parseString( true );
 		return str.substring( 1, str.length - 1 );
 	}
 
 	// Parse string; i.e. text enclosed in argument delimiters, that should be the first char
 	// single or double quotes.
 
-	parseString(): string
+	parseString( allowControlChars : boolean = false ): string
 	{
 		this.skipSpace();
 
@@ -119,6 +121,10 @@ export class Parser
 
 				char += this.nextChar();
 			}
+
+			let charCode = char.charCodeAt( 0 );
+			if( ! allowControlChars && charCode < 32 )
+				this.error( "Illegal character in string with code: " + charCode );
 
 			str += char;
 		} while( char != delimiter );
@@ -265,7 +271,6 @@ export class Parser
 
 		let word = '';
 
-		// while( !this.atEnd() && !this.atSpace() )
 		while( !this.atEnd() && CharUtil.isIdentifierNext( this.peekChar() ) )
 			word += this.nextChar();
 
@@ -281,14 +286,38 @@ export class Parser
 		this.skipWhitespace();
 
 		// Skip, possibly multiple, comments.
-		let char: string;
-		while( !this.atEnd() && ( char = this.peekChar() ) == "\"" ) {
-			this.nextChar();
-			while( !this.atEnd() && ( char = this.nextChar() ) != "\"" )
-				;
+		while( !this.atEnd() && this.peekChar() == "\"" )
+				this.parseComment();
+	}
 
-			this.skipWhitespace();
+	saveNextComment( save: boolean )
+	{
+		this._saveNextComment = save;
+		this.savedComment = "";
+	}
+
+	parseComment(): string
+	{
+		if( this.nextChar() != "\"" )
+			this.error( "Failed to parse comment start" );
+
+		let comment = "";
+		while( !this.atEnd() ){
+			let char = this.nextChar();
+			if( char == "\"")
+				break;
+			comment += char;
 		}
+
+		// Save comment for class, method or category
+		if( this._saveNextComment ) {
+			this.savedComment = comment;
+			this._saveNextComment = false;
+		}
+
+		this.skipWhitespace();
+
+		return comment;
 	}
 
 	skipWhitespace()
@@ -377,11 +406,12 @@ export class Parser
 	{
 		let fullMessage: string =
 			"Compile error in file: " + this.filename +
-			", line: " + String( this.position.line ) + ", column: " + String( this.position.tabbedColumn ) +
+			", line " + String( this.position.line ) + ", column " + String( this.position.tabbedColumn ) +
 			": " + message;
 
-		console.error( fullMessage );
-		throw Error( fullMessage );
+		console.error( fullMessage )
+		// Playground: Cannot exit process in browser, so comment out next line.
+		// process.exit( 1 );
 	}
 
 }

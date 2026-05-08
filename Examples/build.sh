@@ -14,10 +14,10 @@ echo "==== Building SmallJS examples"
 ./Benchmark/build.sh
 ./WebWorkers/build.sh
 ./Shop/build.sh
-./AI/build.sh
 ./PWA/build.sh
 ./Electron/build.sh
 ./NodeGui/build.sh
 ./NWjs/build.sh
+./AI/build.sh
 
 echo "==== Example builds successful"

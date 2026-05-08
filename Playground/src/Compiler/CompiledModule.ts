@@ -1,9 +1,11 @@
 import { CompiledClass } from "./CompiledClass.js";
 import { Naming } from "./Runtime.js";
 
-// import { SourceNode } from "source-map";
+// Playground uses local SourceNode class
 import { SourceNode } from "./SourceNode.js";
+// import { SourceNode } from "source-map";
 
+// In Playground disable this:
 // import * as fs from "fs";
 
 export class CompiledModule
@@ -20,17 +22,7 @@ export class CompiledModule
 		this.name = name;
 	}
 
-	/* Disabled in Playground
-	generate( allClasses: CompiledClass[], outputFolder: string, sourceMaps: boolean )
-	{
-		this.classes = allClasses.filter( _class => _class.moduleName == this.name );
-		if( this.classes.length < 1 )
-			return;
-
-		let rootNode = this.generateSourceTree( allClasses );
-		this.generateFiles( rootNode, outputFolder, sourceMaps );
-	}
-	*/
+	// For the Playground replace the method generate(...) below with this:
 
 	generate( allClasses: CompiledClass[] ): string
 	{
@@ -41,6 +33,16 @@ export class CompiledModule
 		let rootNode = this.generateSourceTree( allClasses );
 		return rootNode.toString();
 	}
+
+	/* generate( allClasses: CompiledClass[], outputFolder: string, sourceMaps: boolean )
+	{
+		this.classes = allClasses.filter( _class => _class.moduleName == this.name );
+		if( this.classes.length < 1 )
+			return;
+
+		let rootNode = this.generateSourceTree( allClasses );
+		this.generateFiles( rootNode, outputFolder, sourceMaps );
+	} */
 
 	generateSourceTree( allClasses: CompiledClass[] ): SourceNode
 	{
@@ -53,8 +55,9 @@ export class CompiledModule
 			.add( this.generateClassesList() );
 	}
 
-	/* Disabled in Playground
-	generateFiles( rootNode: SourceNode, outputFolder: string, sourceMaps: boolean )
+	// In the Playground comment out this method:
+
+	/* generateFiles( rootNode: SourceNode, outputFolder: string, sourceMaps: boolean )
 	{
 		let codeFilename = this.name + CompiledModule.outputFileExtension;
 		let codePathname = outputFolder + "/" + codeFilename;
@@ -77,8 +80,7 @@ export class CompiledModule
 			fs.writeFileSync( mapPathname, codeWithSourceMap.map.toString() );
 		else
 			fs.unlink( mapPathname, ( error ) => { } );
-	}
-	*/
+	} */
 
 	// Generate combined imports for classes in module.
 
@@ -116,14 +118,6 @@ export class CompiledModule
 		return node;
 	}
 
-	// Playground evaluator always runs in the web root
-	// so we hardcode the location of the Script folder with compiled ST files.
-
-	importBaseFolder(): string
-	{
-		return this.name == "Evaluator" ? "./Script/" : "./";
-	}
-
 	generateDefaultImports(): SourceNode
 	{
 		let node = this.sourceNode( "defaultImports" );
@@ -133,6 +127,15 @@ export class CompiledModule
 			node.add( "import { stNil, stTrue, stFalse } from '" + this.importBaseFolder() + "Core.js';\n" );
 
 		return node;
+	}
+
+	// Playground evaluator always runs in the web root
+	// so we hardcode the location of the compiled Script folder
+	// if the module name is "Evaluator".
+
+	importBaseFolder(): string
+	{
+		return this.name == "Evaluator" ? "./Script/" : "./";
 	}
 
 	generateClasses(): SourceNode

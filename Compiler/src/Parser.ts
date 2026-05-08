@@ -410,6 +410,7 @@ export class Parser
 			": " + message;
 
 		console.error( fullMessage )
+		// Playground: Cannot exit process in browser, so comment out next line.
 		process.exit( 1 );
 	}
 

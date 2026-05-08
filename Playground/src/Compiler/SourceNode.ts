@@ -1,5 +1,5 @@
 // This is "fake" replacement for the SourceNode class in the npm package source-node
-// It works in a browser and has the functionlalities:
+// It works in a browser and has the functionalities:
 // add() source, prepend() source, generate source tree with toString().
 
 export class SourceNode

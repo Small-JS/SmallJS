@@ -109,7 +109,7 @@ export class Evaluator
 	{
 		let compiledClasses: CompiledClass[] = [];
 		for( let compiledClassJson of compiledClassesJson )
-			compiledClasses.push( CompiledClassJson.asCompiledClass( compiledClassJson ) );
+			compiledClasses.push( CompiledClassJson.toCompiledClass( compiledClassJson ) );
 
 		// Set superclass references found by class names.
 		for( let compiledClass of compiledClasses ) {
