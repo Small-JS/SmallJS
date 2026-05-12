@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 
+<html lang="en-GB">
+
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Security-Policy"
 		content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
 	<link rel="stylesheet" href="default.css" type="text/css" />
@@ -14,7 +17,7 @@
 		<tr>
 			<td class="title">
 				<div class="vertical-center">
-					<img id="electronImage" src="Electron.png" height="40"></img>
+					<img id="electronImage" src="Electron.png" height="40" alt="Electron logo"></img>
 					<span id="titleMessage">&nbsp;&nbsp;Electron</span>
 				</div>
 			</td>
@@ -23,7 +26,7 @@
 			<td>
 				<table id="actionTable">
 					<colgroup>
-						<col span="1" style="width: 40%;">
+						<!-- <col span="1" style="width: 40%;"> -->
 					</colgroup>
 					<tr>
 						<th>
@@ -43,10 +46,10 @@
 					</tr>
 					<tr>
 						<td>
-							<button id="modifyTitleButton">Modify Title</button>
+							<button id="setTitleButton">Modify Title</button>
 						</td>
 						<td>
-							<span id="modifyTitleResultSpan"></span>
+							<span id="setTitleResultSpan"></span>
 						</td>
 					</tr>
 					<tr>

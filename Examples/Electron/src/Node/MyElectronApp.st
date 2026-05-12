@@ -9,7 +9,9 @@ start2
 	self setMenu.
 	self createWindow.
 	self loadHtml.
-	self openDevTools.
+
+	"Uncomment this to open the devtools in the view."
+	"self openDevTools."
 !
 
 "Listeners"

@@ -1,6 +1,6 @@
 CLASS MyElectronView EXTENDS ElectronView MODULE MyElectronRenderer CLASSVARS ''
 	VARS 'colorTextButton colorTextResultSpan
-		modifyTitleButton modifyTitleResultSpan
+		setTitleButton setTitleResultSpan
 		pingButton pingResultSpan'
 
 start
@@ -12,9 +12,9 @@ bindElements
 	colorTextButton onClick: [ self colorText ].
 	colorTextResultSpan := Document getElementById: 'colorTextResultSpan' class: HtmlSpanElement.
 
-	modifyTitleButton := Document getElementById: 'modifyTitleButton' class: HtmlButtonElement.
-	modifyTitleButton onClick: [ self modifyTitle ].
-	modifyTitleResultSpan := Document getElementById: 'modifyTitleResultSpan' class: HtmlSpanElement.
+	setTitleButton := Document getElementById: 'setTitleButton' class: HtmlButtonElement.
+	setTitleButton onClick: [ self setTitle ].
+	setTitleResultSpan := Document getElementById: 'setTitleResultSpan' class: HtmlSpanElement.
 
 	pingButton := Document getElementById: 'pingButton' class: HtmlButtonElement.
 	pingButton onClick: [ self ping ].
@@ -25,12 +25,12 @@ colorText
 	colorTextResultSpan style setProperty: 'background' value: 'lightgreen'.
 	colorTextResultSpan textContent: 'Colored text'.
 !
-modifyTitle
+setTitle
 	| title |
 	self log: 'MyElectronView: Modify title button clicked.'.
 	title := 'Hello Electron! (modified title)'.
 	self callApi: 'myApi' method: 'setTitle' with: title.
-	modifyTitleResultSpan textContent: 'Title modified'.
+	setTitleResultSpan textContent: 'Title modified'.
 !
 ping
 	| data |
@@ -44,7 +44,6 @@ onPing: result
 	pingResultSpan textContent: result.
 !
 quit
-	| title |
 	self log: 'MyElectronView: Requesting app to quit.'.
 	self callApi: 'myApi' method: 'quit'.
 !
@@ -57,11 +56,11 @@ colorTextButton
 colorTextResultSpan
 	^ colorTextResultSpan.
 !
-modifyTitleButton
-	^ modifyTitleButton.
+setTitleButton
+	^ setTitleButton.
 !
-modifyTitleResultSpan
-	^ modifyTitleResultSpan.
+setTitleResultSpan
+	^ setTitleResultSpan.
 !
 pingButton
 	^ pingButton.

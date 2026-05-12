@@ -16,8 +16,8 @@ async start
 		resultSpan: myElectronView colorTextResultSpan
 		result: 'Colored text'.
 
-	await self testButton: myElectronView modifyTitleButton
-		resultSpan: myElectronView modifyTitleResultSpan
+	await self testButton: myElectronView setTitleButton
+		resultSpan: myElectronView setTitleResultSpan
 		result: 'Title modified'.
 
 	await self testButton: myElectronView pingButton

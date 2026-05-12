@@ -105,14 +105,13 @@ createFileTextArea
 	fileOutputCell replaceChildren: fileTextArea.
 !
 
-"Database"
+"Lpad"
 
 testLpad
 	"Test call to Lpad class, then encapsulates the npm package: lpad"
 	| padded |
-
-	padded := Lpad leftPad: 'abc' with: 'xx'.
-	self assert: [ padded = 'xxabc' ]
+	padded := Lpad leftPad: 'abc\ndef\n' with: 'x'.
+	self assert: [ padded = 'xabc\nxdef\n' ]
 !
 
 "Accessing (used by tests)"

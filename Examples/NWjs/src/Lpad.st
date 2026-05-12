@@ -12,3 +12,4 @@ CLASSMETHODS
 leftPad: string with: prefix
 	^ String fromJs: INLINE 'lpad$.default( string.js , prefix.js )'
 !
+

@@ -1,5 +1,4 @@
-CLASS MyElectronApi EXTENDS ElectronApi MODULE MyElectronPreload CLASSVARS ''
-	VARS 'browserWindow'
+CLASS MyElectronApi EXTENDS ElectronApi MODULE MyElectronPreload CLASSVARS '' VARS ''
 
 expose
 	self apiName: 'myApi'.
