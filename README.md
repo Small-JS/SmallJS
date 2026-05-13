@@ -7,30 +7,31 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - Tutorial for making Node apps - 6-MAY-2026
+## News - SmallJS 2.1 released ! - 13-MAY-2026
 
-The new 'Node App' [Tutorial](https://small-js.org/Tutorial) section goes through the Example Shop Server app step by step,\
-showing how you can make your own Node.js server app in SmallJS.
+### Compiler
 
-## News - PWA example added - 21-MAR-2026
+- New keyword `CLASSEXTENSION` for adding methods to (system) classes\
+  in separate source files.
+  The website Tutorial page Language/Syntax shows how to use it.
 
-PWA example game added: Emoji Memory :-).\
-Showcasing how to make a PWA with SmallJS.
+### Smalltalk
 
-## News - SmallJS 2.0 released! - 21-FEB-2026
+- Database: Standardized SQL syntax for simpler database independent queries.
 
-[SmallJS 2.0](https://small-js.org/News) now has full support for async, await and promises!\
-Almost all async calls classes have been converted form callbacks to promises,\
-making code cleaner, more concise and easier to debug.\
-Check out [Async.md](./Documentation/Language/Async.md) for usage instructions.\
-For other improvements, check out the website.
+### Examples
 
-The SmallJS website now has a [tutorial page](https://small-js.org/Tutorial) for learning SmallJS and Smalltalk.\
-The Smalltalk language and core library classes are explained.\
-Examples can be done interactively using the online [Playground](https://small-js.org/Playground) .\
-(If you have any feedback on the tutorial, please create an issue in the [website repo](https://github.com/Small-JS/Website/issues) ).
+- Added PWA example game: Emoji Memory :-).\
+  Also added this example app to this webite.
 
-The full [class reference](https://small-js.org/Reference) documentation is now also available on the website.
+### Website
+
+- New Tutorial section for making Node.js apps with SmallJS,\
+  plus new Tutorial section for making desktop apps with SmallJS\
+  using NW.js, Electron or NodeGui.
+- Reference page now supports searching classes and methods.
+- Added dark mode option, also for subsites Reference and Tutorial.
+- Updated Playground evaluator to current compiler.
 
 ## Introducing SmallJS
 
