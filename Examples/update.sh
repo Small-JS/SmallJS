@@ -9,26 +9,30 @@ cd "$(dirname "$0")"
 cwd=$(pwd)
 
 echo "==== Examples: Shop Server"
+
+# Installed packages must be at least a week old
+cooldown="--cooldown 7d"
+
 cd $cwd/Shop/Server
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 echo "==== Examples: AI Server"
 cd $cwd/AI/Server
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 echo "==== Examples: Electron"
 cd $cwd/Electron
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 echo "==== Examples: NWjs"
 cd $cwd/NWjs
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 echo "==== Examples: NodeGui"
 cd $cwd/NodeGui
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install

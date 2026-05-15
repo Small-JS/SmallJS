@@ -22,14 +22,17 @@ cwd=$(pwd)
 
 echo "Updating..."
 
+# Installed packages must be at least a week old
+cooldown="--cooldown 7d"
+
 echo "==== Compiler"
 cd $cwd/Compiler
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 echo "==== Node"
 cd $cwd/Node
-npx npm-check-updates -u
+npx npm-check-updates -u $cooldown
 npm install
 
 # Update examples
