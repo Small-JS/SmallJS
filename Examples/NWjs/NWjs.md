@@ -33,9 +33,9 @@ Note: The script build.sh uses the npm version of Nw.js,\
 
 ## MacOS ARM 64 support
 
-2025-08-30: Currently the NWjs version 0.103.0 downloaded from nwjs.io does not work on MacOS (Seqouia) ARM 64.
-This is because the app is not signed securely.
-The issue has been reported here: https://github.com/nwjs/nw.js/issues/8157
+The NWjs SDK downloaded from nwjs.io does not work on MacOS ARM 64 out of the box.\
+The reason is that the app is not signed securely.\
+To fix this ,go to the `./bin` folder and execute the command `xattr -rc nwjs.app` .
 
 # Running
 
