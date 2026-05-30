@@ -29,7 +29,10 @@ else
 fi
 
 nodeVersion=`$nodeBin -v`
-if [[ "$nodeVersion" != v25.* ]]
+nodeVersionMajor=${nodeVersion:1:2}
+# Convert string to number
+nodeVersionMajor=$(($nodeVersionMajor+0))
+if [[ $nodeVersionMajor -lt 25 ]]
 then
 	echo "Failed: SmallJS requires Node.js with minimum version: V25.0.0"
 	echo "You can download it from: https://nodejs.org/en/download/current"
