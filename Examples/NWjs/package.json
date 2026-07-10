@@ -1,11 +1,14 @@
 {
 	"type": "module",
 	"devDependencies": {
-		"@types/node": "^25.7.0",
+		"@types/node": "^26.1.0",
 		"@types/nw.gui": "^0.0.26"
 	},
 	"dependencies": {
 		"lpad": "^3.0.0",
-		"nw": "^0.111.2"
+		"nw": "^0.112.0"
+	},
+	"allowScripts": {
+		"nw@0.112.0": true
 	}
 }

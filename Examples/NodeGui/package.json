@@ -7,9 +7,13 @@
 		"nodegui"
 	],
 	"devDependencies": {
-		"@types/node": "^25.7.0"
+		"@types/node": "^26.1.0"
 	},
 	"dependencies": {
 		"@nodegui/nodegui": "^0.74.2"
+	},
+	"allowScripts": {
+		"@nodegui/nodegui@0.74.2": true,
+		"@nodegui/qode@24.12.0-rc19": true
 	}
 }

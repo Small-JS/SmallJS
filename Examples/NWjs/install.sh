@@ -7,4 +7,5 @@ set -e
 cd "$(dirname "$0")"
 
 echo "==== Installing npm packages for: Example NWjs"
+npm install-scripts approve nw
 npm install

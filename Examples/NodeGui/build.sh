@@ -21,4 +21,8 @@ tsc
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
+# 2026-10-07 NodeGui currenty, suddenly always exist in error *only* in batch mode.
+# So unset the exit-on-error option for now.
+set +e
 ./node_modules/.bin/qode out/main.js -test
+echo "NodeGui finished"

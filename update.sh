@@ -7,40 +7,22 @@ cd "$(dirname "$0")"
 
 # Ask confirmation
 
-echo "This script will update all dependencies of Node.js projects to the latest versions"
-read -p "To you want to continue? (y/N) " confirm
+echo "This script updates all dependencies of Node.js projects to the latest versions."
 if
-	[[ ! $confirm == [yY] ]]
+	[[ ! "$1" == "-y" ]]
 then
-	echo "Aborted."
+	echo "Script must be called with argument '-y' to update."
+	echo "Aborting."
 	exit 1
 fi
 
 # Perform updates
 
-cwd=$(pwd)
-
 echo "Updating..."
 
-# Installed packages must be at least a week old
-cooldown="--cooldown 7d"
-
-echo "==== Compiler"
-cd $cwd/Compiler
-npx npm-check-updates -u $cooldown
-npm install
-
-echo "==== Node"
-cd $cwd/Node
-npx npm-check-updates -u $cooldown
-npm install
-
-# Update examples
-
-cd $cwd
-./Examples/update.sh
-
-# Ending messages
+./Compiler/update.sh -y
+./Node/update.sh -y
+./Examples/update.sh -y
 
 echo "==== Updates successful"
 echo "To update all global npm dependencies type: npm -g update"

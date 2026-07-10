@@ -15,8 +15,6 @@ then
 	exit 1
 fi
 
-./Shop/Server/update.sh -y
-./AI/Server/update.sh -y
-./Electron/update.sh -y
-./NWjs/update.sh -y
-./NodeGui/update.sh -y
+echo "==== Electron"
+npx npm-check-updates -u --cooldown 7d
+./install.sh
