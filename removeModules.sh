@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "This script will remove installed npm dependencies (node_modules folders)."
-read -p "To you want to continue? (y/N) " confirm
 if
-	[[ ! $confirm == [yY] ]]
+	[[ ! "$1" == "-y" ]]
 then
-	echo "Aborted."
+	echo "Script must be called with argument '-y' to update."
+	echo "Aborting."
 	exit 1
 fi
 
@@ -18,4 +18,4 @@ rm -fr Node/node_modules
 
 ./Examples/removeModules.sh -y
 
-echo "To reinstall modules run: ./install.sh"
+echo "To reinstall modules run: ./installAll.sh"

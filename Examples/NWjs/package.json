@@ -6,9 +6,9 @@
 	},
 	"dependencies": {
 		"lpad": "^3.0.0",
-		"nw": "^0.112.0"
+		"nw": "^0.113.0"
 	},
 	"allowScripts": {
-		"nw@0.112.0": true
+		"nw@0.113.0": true
 	}
 }

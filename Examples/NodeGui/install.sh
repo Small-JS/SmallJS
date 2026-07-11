@@ -7,5 +7,7 @@ set -e
 cd "$(dirname "$0")"
 
 echo "==== Installing npm packages for: Example NodeGui"
+npm install
 npm install-scripts approve @nodegui/qode
+# Run install a second time to ensure install scripts are run.
 npm install

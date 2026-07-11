@@ -7,5 +7,5 @@ set -e
 cd "$(dirname "$0")"
 
 echo "==== Updating: CounterUsingMithril"
-npx npm-check-updates -u
+npx npm-check-updates -u --cooldown 7d
 ./install.sh

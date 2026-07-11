@@ -10,6 +10,10 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
+# Set execute bits on all bash scripts on Linux or MacOS:
+# (Not set on new scripts that are committed through Windows)
+find . -name "*.sh" -exec chmod +x {} \;
+
 echo "==== Detecting prerequisite applications"
 echo "Note: For installing prerequisite apps, see: Documentation/Prerequisites.md."
 
@@ -43,10 +47,11 @@ echo -n "Detecting npm: "
 npm -v
 
 # TypeScript must be installed globally to work from VSCode.
+
 echo -n "Detecting TypeScript: "
 tsc -v
 
-# Check npx dependencies here to force first-time installation
+# Check npx dependencies here to force first-time installation/.
 
 echo "Detecting http-server: "
 npx http-server --version
