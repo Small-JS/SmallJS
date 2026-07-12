@@ -7,6 +7,11 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
+## AI coding assistant for SmallJS - 12-JUL-2026
+
+Now you can use an **AI assistant** to help code in SmallJS!\
+See the [Tutorial](https://small-js.org/Tutorial) home page for setting it up.
+
 ## News - SmallJS 2.1 released ! - 13-MAY-2026
 
 ### Compiler
