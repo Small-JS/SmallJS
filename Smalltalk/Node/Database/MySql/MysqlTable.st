@@ -1,4 +1,4 @@
-CLASS MysqlTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
+CLASS MysqlTable EXTENDS SqlTable MODULE DatabaseMysql CLASSVARS '' VARS ''
 
 "This class implements an abstract SQL Table.
 Variable rowClass should refer to a subsclass of SqlObject,

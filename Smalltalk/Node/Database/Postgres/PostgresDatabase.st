@@ -1,4 +1,4 @@
-CLASS PostgresDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
+CLASS PostgresDatabase EXTENDS SqlDatabase MODULE DatabasePostgres CLASSVARS '' VARS ''
 
 "This class implements Postgres database functionality.
  Variable 'js' will contain an instance of 'pg.Client'.

@@ -1,4 +1,4 @@
-CLASS SqliteStatementResultingChanges EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS SqliteStatementResultingChanges EXTENDS JsObject MODULE DatabaseSqlite CLASSVARS '' VARS ''
 
 changes
 	^ Integer fromJs: INLINE 'this.js.changes'.

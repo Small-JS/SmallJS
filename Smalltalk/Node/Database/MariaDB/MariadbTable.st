@@ -1,4 +1,4 @@
-CLASS MariadbTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
+CLASS MariadbTable EXTENDS SqlTable MODULE DatabaseMariadb CLASSVARS '' VARS ''
 
 "Selecting"
 

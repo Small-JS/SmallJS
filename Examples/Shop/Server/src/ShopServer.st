@@ -18,7 +18,7 @@ async connectDatabase
 	connectionString isNil ifTrue: [
 		Error throw: 'Environment variable "SHOP_DATABASE" not set.' ].
 
-	database := SqlDatabase newFor: connectionString.
+	database := SqlDatabaseFactory newFor: connectionString.
 	Console log: 'Connecting to database type: ', database class name.
 	await database connect: connectionString.
 

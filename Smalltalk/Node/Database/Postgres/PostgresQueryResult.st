@@ -1,4 +1,4 @@
-CLASS PostgresQueryResult EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS PostgresQueryResult EXTENDS JsObject MODULE DatabasePostgres CLASSVARS '' VARS ''
 
 "This class implements a Postgres SqlQueryResult."
 

@@ -14,7 +14,7 @@ async start
 	TestCrypto.
 	TestExpress.
 	TestProcess.
-	TestSqliteDatabaseSync.
+	TestSqlDatabaseFactory.
 
 	"Execute all test* methods on all Test* classes."
 	await Test all.

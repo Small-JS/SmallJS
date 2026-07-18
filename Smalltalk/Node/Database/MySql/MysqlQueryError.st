@@ -1,4 +1,4 @@
-CLASS MysqlQueryError EXTENDS Error MODULE Database CLASSVARS '' VARS ''
+CLASS MysqlQueryError EXTENDS Error MODULE DatabaseMysql CLASSVARS '' VARS ''
 
 code
 	^ String fromJs: INLINE 'this.js.code'.

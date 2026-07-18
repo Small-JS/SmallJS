@@ -1,4 +1,4 @@
-CLASS MysqlDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
+CLASS MysqlDatabase EXTENDS SqlDatabase MODULE DatabaseMysql CLASSVARS '' VARS ''
 
 "This class implements MySQL database functionality.
 Variable 'js' will contain an instance of 'mysql2.Client'.

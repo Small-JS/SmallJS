@@ -1,4 +1,4 @@
-CLASS MariadbQueryResult EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS MariadbQueryResult EXTENDS JsObject MODULE DatabaseMariadb CLASSVARS '' VARS ''
 
 "Implements Mariadb JS class: OkPacket"
 

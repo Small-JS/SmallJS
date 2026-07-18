@@ -1,4 +1,4 @@
-CLASS MysqlResultSetHeader EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS MysqlResultSetHeader EXTENDS JsObject MODULE DatabaseMysql CLASSVARS '' VARS ''
 
 affectedRows
 	^ Integer fromJs: INLINE 'this.js.affectedRows'.

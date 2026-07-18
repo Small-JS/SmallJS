@@ -1,4 +1,4 @@
-CLASS SqliteDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
+CLASS SqliteDatabase EXTENDS SqlDatabase MODULE DatabaseSqlite CLASSVARS '' VARS ''
 
 "This class implements SQLite database functionality.
  Variable 'js' will contain an instance of the JS class sqlite.DatabaseSync.

@@ -1,4 +1,4 @@
-CLASS MariadbDatabase EXTENDS SqlDatabase MODULE Database CLASSVARS '' VARS ''
+CLASS MariadbDatabase EXTENDS SqlDatabase MODULE DatabaseMariadb CLASSVARS '' VARS ''
 
 "This class implements MariaDB database functionality.
 Variable 'js' will contain an instance of 'mariadb.Connection'.

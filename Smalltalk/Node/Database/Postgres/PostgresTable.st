@@ -1,4 +1,4 @@
-CLASS PostgresTable EXTENDS SqlTable MODULE Database CLASSVARS '' VARS ''
+CLASS PostgresTable EXTENDS SqlTable MODULE DatabasePostgres CLASSVARS '' VARS ''
 	"This class implements an abstract SQL Table.
 	 Variable rowClass should refer to a subsclass of SqlObject, of which instances map to rows in this table."
 

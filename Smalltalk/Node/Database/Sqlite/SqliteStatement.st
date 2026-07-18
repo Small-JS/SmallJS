@@ -1,4 +1,4 @@
-CLASS SqliteStatement EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS SqliteStatement EXTENDS JsObject MODULE DatabaseSqlite CLASSVARS '' VARS ''
 
 "Executing"
 

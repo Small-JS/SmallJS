@@ -1,4 +1,4 @@
-CLASS SqliteDatabaseOptions EXTENDS JsObject MODULE Database CLASSVARS '' VARS ''
+CLASS SqliteDatabaseOptions EXTENDS JsObject MODULE DatabaseSqlite CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
