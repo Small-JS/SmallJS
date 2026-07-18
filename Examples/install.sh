@@ -7,8 +7,8 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-./AI/Server/install.sh
+./AI/install.sh
 ./Electron/install.sh
 ./NodeGui/install.sh
 ./NWjs/install.sh
-./Shop/Server/install.sh
+./Shop/install.sh

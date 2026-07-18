@@ -4,6 +4,6 @@
 		"source-map": "^0.7.6"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.0"
+		"@types/node": "^26.1.1"
 	}
 }

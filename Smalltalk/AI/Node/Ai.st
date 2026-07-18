@@ -1,4 +1,4 @@
-CLASS Ai EXTENDS JsObject MODULE Ai CLASSVARS '' VARS 'model id'
+CLASS Ai EXTENDS JsObject MODULE Ai CLASSVARS '' VARS 'model embeddingModel id'
 
 "Base class with functionality common to all AI providers.
  Specific AI providers extend this class."
@@ -50,9 +50,17 @@ baseUrl
 	^ Environment at: variableName.
 !
 models
-	"Return list of model names set in varable <classname>_MODELS, e.g.: OPENAI_MODELS"
+	"Return list of model names set in variable <classname>_MODELS, e.g.: OPENAI_MODELS"
+	^ self modelsFor: '_MODELS'.
+!
+embeddingModels
+	"Return list of embedding model names set in variable <classname>_EMBEDDING_MODELS, e.g.: OPENAI_MODELS"
+	^ self modelsFor: '_EMBEDDING_MODELS'.
+!
+modelsFor: extension
+	"Return list of embedding model names set in variable"
 	| variableName modelsString |
-	variableName := self name toUpperCase, '_MODELS'.
+	variableName := self name toUpperCase, extension.
 	modelsString := Environment at: variableName.
 	^ modelsString split: ' '.
 !
@@ -89,6 +97,14 @@ model
 !
 model: aModel
 	model := aModel.
+!
+embeddingModel
+	embeddingModel ifNil: [
+		embeddingModel := self class embeddingModels first ].
+	^ embeddingModel.
+!
+embeddingModel: aEmbeddingModel
+	embeddingModel := aEmbeddingModel.
 !
 
 "Chat"

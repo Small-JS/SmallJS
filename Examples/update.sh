@@ -15,8 +15,8 @@ then
 	exit 1
 fi
 
-./Shop/Server/update.sh -y
-./AI/Server/update.sh -y
+./AI/update.sh -y
 ./Electron/update.sh -y
-./NWjs/update.sh -y
 ./NodeGui/update.sh -y
+./NWjs/update.sh -y
+./Shop/update.sh -y

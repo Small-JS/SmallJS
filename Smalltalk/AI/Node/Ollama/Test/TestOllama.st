@@ -31,3 +31,19 @@ async test
 	self assert: [ message role = 'assistant' ].
 	self assert: [ message content toLowerCase includes: 'test' ].
 !
+async testEmbedding
+	| ollama request response message |
+
+	ollama := Ollama new.
+	request := OllamaEmbedRequest new
+		model: ollama embeddingModel;
+		input: 'Shall we play a game?'.
+
+	response := await ollama embed: request.
+	self assert: [ response class = OllamaEmbedResponse ].
+	self assert: [ response model = ollama embeddingModel ].
+	self assert: [ response embedding length = 768 ].
+	self assert: [ response promptEvalCount > 0 ].
+	self assert: [ response loadDuration > 1000 ].
+	self assert: [ response totalDuration > 1000 ].
+!

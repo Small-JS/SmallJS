@@ -5,14 +5,14 @@
 		"express-session": "^1.19.0",
 		"http-terminator": "^3.2.0",
 		"mariadb": "^3.5.3",
-		"mysql2": "^3.22.5",
+		"mysql2": "^3.22.6",
 		"pg": "^8.22.0"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.6",
 		"@types/express-session": "^1.19.0",
 		"@types/geojson": "^7946.0.16",
-		"@types/node": "^26.1.0",
+		"@types/node": "^26.1.1",
 		"@types/pg": "^8.20.0"
 	}
 }

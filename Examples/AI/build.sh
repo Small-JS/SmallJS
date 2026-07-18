@@ -8,3 +8,4 @@ cd "$(dirname "$0")"
 
 ./Server/build.sh
 ./Client/build.sh
+./RAG/build.sh

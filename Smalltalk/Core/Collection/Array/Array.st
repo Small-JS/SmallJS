@@ -119,6 +119,11 @@ do: block
 forEach: block
 	INLINE 'this.js.forEach( block.js )'.
 !
+async doAwait: asyncBlock
+	INLINE '
+		for( let element of this.js ) {
+			await asyncBlock.js( element ) }'.
+!
 every: block
 	^ Boolean fromJs: INLINE 'this.js.every( ( element ) => block.js( element ).js )'.
 !

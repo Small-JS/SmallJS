@@ -8,6 +8,8 @@ let olOllama: ollama.Ollama;
 let olChatRequest: ollama.ChatRequest;
 let olChatResponse: ollama.ChatResponse;
 let olMessage: ollama.Message;
+let olEmbedRequest: ollama.EmbedRequest;
+let olEmbedResponse: ollama.EmbedResponse;
 
 // AI - OpenAI
 import Openai from "openai";

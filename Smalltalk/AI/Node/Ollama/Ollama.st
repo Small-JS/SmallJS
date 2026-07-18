@@ -5,7 +5,7 @@ INLINE 'import { Ollama } from "ollama";'
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new Ollama()'.
+	^ self new: OllamaConfig new.
 !
 new: config
 	^ self fromJs: INLINE 'new Ollama( config.js )'.
@@ -27,6 +27,12 @@ async chat: messages
 !
 async chatRequest: request
 	^ OllamaChatResponse fromJs: INLINE 'await this.js.chat( request.js )'.
+!
+
+"Embedding"
+
+async embed: request
+	^ OllamaEmbedResponse fromJs: INLINE 'await this.js.embed( request.js )'.
 !
 
 "Accessing"
