@@ -1,4 +1,4 @@
-CLASS Anthropic EXTENDS Ai MODULE Ai CLASSVARS '' VARS ''
+CLASS Anthropic EXTENDS Ai MODULE AiAnthropic CLASSVARS '' VARS ''
 
 "This class also implements JS class Anthropic.Messages"
 

@@ -1,4 +1,4 @@
-CLASS Ollama EXTENDS Ai MODULE Ai CLASSVARS '' VARS ''
+CLASS Ollama EXTENDS Ai MODULE AiOllama CLASSVARS '' VARS ''
 
 INLINE 'import { Ollama } from "ollama";'
 

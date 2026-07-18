@@ -1,4 +1,4 @@
-CLASS OpenaiCompletionUsage EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OpenaiCompletionUsage EXTENDS JsObject MODULE AiOpenai CLASSVARS '' VARS ''
 
 "This class also implements TS interfaces:
  CompletionTokensDetails, PromptTokensDetails"

@@ -1,4 +1,4 @@
-CLASS TestAiProviders EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
+CLASS TestAiProviders EXTENDS Test MODULE TestAiShared CLASSVARS '' VARS ''
 
 test
 	| providers providers2 |

@@ -1,4 +1,4 @@
-CLASS OllamaMessage EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OllamaMessage EXTENDS JsObject MODULE AiOllama CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

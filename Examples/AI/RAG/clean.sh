@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "==== Cleaning: Example AI RAG"
+echo "Cleaning: Example AI RAG"
 
 rm -fr ./out

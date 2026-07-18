@@ -1,4 +1,4 @@
-CLASS TestAiChatResponse EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
+CLASS TestAiChatResponse EXTENDS Test MODULE TestAiShared CLASSVARS '' VARS ''
 
 test
 	| response object |

@@ -1,4 +1,4 @@
-CLASS OpenaiChatCompletionRequest EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OpenaiChatCompletionRequest EXTENDS JsObject MODULE AiOpenai CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

@@ -1,4 +1,4 @@
-CLASS DeepseekClientOptions EXTENDS OpenaiClientOptions MODULE Ai CLASSVARS '' VARS ''
+CLASS DeepseekClientOptions EXTENDS OpenaiClientOptions MODULE AiOpenai CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

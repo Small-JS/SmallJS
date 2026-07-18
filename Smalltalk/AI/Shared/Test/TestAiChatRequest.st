@@ -1,4 +1,4 @@
-CLASS TestAiChatRequest EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
+CLASS TestAiChatRequest EXTENDS Test MODULE TestAiShared CLASSVARS '' VARS ''
 
 test
 	| request object |

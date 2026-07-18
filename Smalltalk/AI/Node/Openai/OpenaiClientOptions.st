@@ -1,4 +1,4 @@
-CLASS OpenaiClientOptions EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OpenaiClientOptions EXTENDS JsObject MODULE AiOpenai CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

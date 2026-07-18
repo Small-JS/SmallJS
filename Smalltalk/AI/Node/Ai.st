@@ -1,4 +1,5 @@
-CLASS Ai EXTENDS JsObject MODULE Ai CLASSVARS '' VARS 'model embeddingModel id'
+CLASS Ai EXTENDS JsObject MODULE Ai CLASSVARS ''
+	VARS 'model embeddingModel id'
 
 "Base class with functionality common to all AI providers.
  Specific AI providers extend this class."
@@ -9,36 +10,6 @@ CLASSMETHODS
 
 new
 	self error: 'Subclass responsibility.'.
-!
-new: name
-	^ ( self classNamed: name ) new.
-!
-
-"Providers"
-
-aiClasses
-	^ #( Ollama Openai Deepseek Googleai Anthropic ).
-!
-classNamed: name
-	| class |
-	name := name toLowerCase.
-	class := self aiClasses find: [ :aClass | aClass name toLowerCase = name ].
-	class ifNil: [
-		self error: 'Unknown AI class name: ', name ].
-	^ class.
-!
-providers
-	"Return available AI providers as an instance of AiProviders,
-	 loaded from environment variables."
-	| providers |
-
-	providers := AiProviders new.
-
-	self aiClasses do: [ :class |
-		class available ifTrue: [
-			providers setProvider: class name toLowerCase models: class models  ] ].
-
-	^ providers.
 !
 
 "Configuration"
@@ -73,10 +44,6 @@ apiKey
 available
 	"Return true if the base URL key is set for this AI."
 	^ self baseUrl notNil.
-!
-available: name
-	"Return true if the API key is set for the named AI."
-	^ ( self classNamed: name ) available.
 !
 
 METHODS

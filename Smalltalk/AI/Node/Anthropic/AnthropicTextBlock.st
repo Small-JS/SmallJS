@@ -1,4 +1,4 @@
-CLASS AnthropicTextBlock EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicTextBlock EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 text
  	^ String fromJs: INLINE 'this.js.text'.

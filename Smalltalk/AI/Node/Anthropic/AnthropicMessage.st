@@ -1,4 +1,4 @@
-CLASS AnthropicMessage EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicMessage EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 "This is the *result* message form an Anthropic.create: call"
 

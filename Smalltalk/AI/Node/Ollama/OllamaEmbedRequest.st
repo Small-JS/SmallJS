@@ -1,4 +1,4 @@
-CLASS OllamaEmbedRequest EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OllamaEmbedRequest EXTENDS JsObject MODULE AiOllama CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

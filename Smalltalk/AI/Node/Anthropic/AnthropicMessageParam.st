@@ -1,4 +1,4 @@
-CLASS AnthropicMessageParam EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicMessageParam EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

@@ -8,7 +8,9 @@ async start
 	aiServer := AiServer new start.
 
 	"Run sync and async unit tests of all imported Test* classes and log results."
-	await TestAi all.
+	TestAiFactory.
+	TestAiProviders.
+	await Test all.
 	await self testApi.
 !
 async testApi

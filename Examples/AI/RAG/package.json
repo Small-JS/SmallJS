@@ -1,10 +1,7 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@anthropic-ai/sdk": "^0.111.0",
-		"@google/generative-ai": "^0.24.1",
 		"ollama": "^0.6.3",
-		"openai": "^6.46.0",
 		"pg": "^8.22.0"
 	},
 	"devDependencies": {

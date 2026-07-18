@@ -1,4 +1,4 @@
-CLASS GoogleaiModel EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS GoogleaiModel EXTENDS JsObject MODULE AiGoogleai CLASSVARS '' VARS ''
 
 "Implements JS class: GenerativeModel"
 

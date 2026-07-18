@@ -2,18 +2,9 @@ CLASS TestRagApp EXTENDS Object MODULE TestRagApp CLASSVARS ''
 	VARS 'ragApp'
 
 "AiServer unit and API tests.
- This class is not a subclass of Test so is not called automatically with Test all."
+This class is not a subclass of Test so is not called automatically with Test all."
 
 async start
-	await self testUnits.
-	await self testApp.
-!
-async testUnits
-	"Refer to one class per module to impport it."
-	TestAi.
-	await Test all.
-!
-async testApp
 	| answer |
 
 	ragApp := RagApp new.

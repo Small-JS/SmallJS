@@ -1,4 +1,4 @@
-CLASS OpenaiChatCompletion EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OpenaiChatCompletion EXTENDS JsObject MODULE AiOpenai CLASSVARS '' VARS ''
 
 id
 	^ String fromJs: INLINE 'this.js.id'.

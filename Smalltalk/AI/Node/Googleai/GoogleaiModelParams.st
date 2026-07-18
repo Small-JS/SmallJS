@@ -1,4 +1,4 @@
-CLASS GoogleaiModelParams EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS GoogleaiModelParams EXTENDS JsObject MODULE AiGoogleai CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

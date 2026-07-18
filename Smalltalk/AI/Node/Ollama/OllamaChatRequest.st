@@ -1,4 +1,4 @@
-CLASS OllamaChatRequest EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OllamaChatRequest EXTENDS JsObject MODULE AiOllama CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

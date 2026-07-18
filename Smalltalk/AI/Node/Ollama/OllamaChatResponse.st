@@ -1,4 +1,4 @@
-CLASS OllamaChatResponse EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS OllamaChatResponse EXTENDS JsObject MODULE AiOllama CLASSVARS '' VARS ''
 
 model
 	^ String fromJs: INLINE 'this.js.model'.

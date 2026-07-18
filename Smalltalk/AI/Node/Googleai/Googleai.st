@@ -1,4 +1,4 @@
-CLASS Googleai EXTENDS Ai MODULE Ai CLASSVARS '' VARS ''
+CLASS Googleai EXTENDS Ai MODULE AiGoogleai CLASSVARS '' VARS ''
 
 "This class implements the JS class GoogleGenerativeAI"
 

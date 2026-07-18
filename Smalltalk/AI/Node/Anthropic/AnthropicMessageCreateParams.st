@@ -1,4 +1,4 @@
-CLASS AnthropicCreateMessageParams EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicCreateMessageParams EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 "This class implements JS interfaces: MessageCreateParamsNonStreaming, MessageCreateParamsStreaming"
 

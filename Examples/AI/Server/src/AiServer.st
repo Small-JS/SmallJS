@@ -10,14 +10,14 @@ CLASS AiServer EXTENDS Object MODULE AiServer CLASSVARS '' VARS 'express server 
 METHODS
 
 start
-	self log: 'AI example server starting'.
+	self log: 'Starting AI server.'.
 	self connectAis.
 	self startServer.
 !
 connectAis
 	| aiName |
 	aiMap := Map new.
-	Ai aiClasses do: [ :aiClass |
+	AiFactory aiClasses do: [ :aiClass |
 		aiClass available ifTrue: [
 			aiName := aiClass name toLowerCase.
 			self log: 'Enabling: ', aiName.
@@ -49,7 +49,7 @@ startServer
 		then: [ self onListen ].
 !
 onListen
-	self log: 'Web server started'.
+	self log: 'Web server started.'.
 !
 
 "Respond with an array of AI provides and their available models,
@@ -63,11 +63,10 @@ For an example result see class AiProviders."
 
 onProviders: request response: response
 	| providers |
-	providers := Ai providers.
+	providers := AiFactory providers.
 	response send: providers toObject.
 	self log: 'AiServer: Sent providers: ', providers toString.
 !
-
 
 "For the text AI chat request answer a text reponse from the selected AI.
 

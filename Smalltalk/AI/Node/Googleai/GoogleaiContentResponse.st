@@ -1,4 +1,4 @@
-CLASS GoogleaiContentResponse EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS GoogleaiContentResponse EXTENDS JsObject MODULE AiGoogleai CLASSVARS '' VARS ''
 
 "Implements JS classes: GenerateContentResponse, EnhancedGenerateContentResponse"
 

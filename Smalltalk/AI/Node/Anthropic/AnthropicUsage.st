@@ -1,4 +1,4 @@
-CLASS AnthropicUsage EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicUsage EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 cacheCreationInputTokens
  	^ Integer fromJs: INLINE 'this.js.cache_creation_input_tokens'.

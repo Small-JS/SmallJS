@@ -1,4 +1,4 @@
-CLASS AnthropicClientOptions EXTENDS JsObject MODULE Ai CLASSVARS '' VARS ''
+CLASS AnthropicClientOptions EXTENDS JsObject MODULE AiAnthropic CLASSVARS '' VARS ''
 
 CLASSMETHODS
 

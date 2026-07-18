@@ -1,4 +1,4 @@
-CLASS Openai EXTENDS Ai MODULE Ai CLASSVARS '' VARS ''
+CLASS Openai EXTENDS Ai MODULE AiOpenai CLASSVARS '' VARS ''
 
 "This class also implements the almost-empty OpenAI JS classes:
  OpenAI.Chat and OpenAI.Chat.Completions."
