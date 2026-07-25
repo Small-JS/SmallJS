@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Pharo Client"
+echo "==== Building: Contribution Pharo Client"
 
 # Compile TypeScript
 

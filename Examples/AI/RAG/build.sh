@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== AI RAG"
+echo "==== Building: Example AI RAG"
 
 # Compile TypeScript
 
@@ -26,6 +26,17 @@ then
 	echo "Skipping tests."
 	exit 0
 fi
+
+# Start Ollama
+# Note Ollama must be started before setting the environment variables
+# because Ollama uses the same variables, but in a different way.
+
+echo "Starting Ollama server"
+ollama serve > ollama.log 2>&1  &
+sleep 6
+
+# Set and export environment variables variables.
+
 set -o allexport
 source .env
 set +o allexport
@@ -33,3 +44,9 @@ set +o allexport
 # Run tests
 
 node out/main.js -test
+
+# Terminate Ollama
+
+echo "Terminating Ollama"
+npx kill-port 11434
+sleep 4

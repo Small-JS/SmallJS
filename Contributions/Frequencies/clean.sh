@@ -3,5 +3,5 @@
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Frequencies"
+echo "==== Cleaning: Frequencies"
 rm -fr ./web/Script

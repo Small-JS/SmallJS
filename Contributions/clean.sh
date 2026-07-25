@@ -9,4 +9,5 @@ echo "Removing compiled code from contributions..."
 
 ./Frequencies/clean.sh
 ./CounterUsingMithril/clean.sh
+./ReactCounter/clean.sh
 ./Pharo/clean.sh

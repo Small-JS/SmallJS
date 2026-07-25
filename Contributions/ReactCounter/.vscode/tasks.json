@@ -1,0 +1,31 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "vite",
+			"type": "npm",
+			"script": "vite",
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
+		{
+			"label": "npm: build",
+			"type": "npm",
+			"script": "build",
+			"problemMatcher": [],
+			"dependsOn": "Compile Smalltalk"
+		},
+		{
+			"label": "Compile Smalltalk",
+			"type": "shell",
+			"command": "node",
+			"args": [  "../../Compiler/out/main.js", "-t", "../../Smalltalk/Core", "../../Smalltalk/Browser", "+t", "src", "st" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+	]
+}

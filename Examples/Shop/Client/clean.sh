@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example Shop Client"
+echo "==== Cleaning: Example Shop Client"
 
 rm -fr ./web/Script

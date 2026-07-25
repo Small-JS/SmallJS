@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example Electron"
+echo "==== Cleaning: Example Electron"
 
 rm -fr ./out

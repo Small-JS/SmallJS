@@ -4,7 +4,7 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Playground"
+echo "==== Cleaning: Playground"
 
 rm -fr ./web/Compiler
 rm -fr ./web/Script

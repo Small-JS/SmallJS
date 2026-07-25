@@ -7,7 +7,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Building SmallJS core components"
+echo "==== Building: Core components"
 
 ./Compiler/build.sh
 ./Node/build.sh

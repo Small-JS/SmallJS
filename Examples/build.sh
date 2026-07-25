@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Building SmallJS examples"
+echo "==== Building: Examples"
 
 ./Counter/build.sh
 ./Todo/build.sh
@@ -20,4 +20,4 @@ echo "==== Building SmallJS examples"
 ./NWjs/build.sh
 ./AI/build.sh
 
-echo "==== Example builds successful"
+echo "==== Examples built successfully"

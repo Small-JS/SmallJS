@@ -7,3 +7,4 @@ set -e
 cd "$(dirname "$0")"
 
 ./CounterUsingMithril/install.sh
+./ReactCounter/install.sh

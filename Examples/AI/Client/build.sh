@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== AI Client"
+echo "==== Building: Example AI Client"
 
 # Compile TypeScript
 
@@ -83,7 +83,7 @@ then
 	sleep 10
 fi
 
-# Stop web server
+# Terminate web server
 
 echo "Terminating web server"
 npx kill-port 3000

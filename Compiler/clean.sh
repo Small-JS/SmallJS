@@ -4,6 +4,6 @@
 # Chage to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Compiler"
+echo "==== Cleaning: Compiler"
 
 rm -fr ./out

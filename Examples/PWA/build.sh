@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== PWA"
+echo "==== Building: Example PWA"
 
 # Compile TypeScript
 

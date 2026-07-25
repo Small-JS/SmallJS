@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Node"
+echo "==== Building: Node"
 
 # Compile TypeScript
 echo "tsc Node"

@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example Counter"
+echo "==== Cleaning: Example Counter"
 
 rm -fr ./web/Script

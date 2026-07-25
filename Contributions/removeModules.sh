@@ -14,3 +14,4 @@ cd "$(dirname "$0")"
 echo "Removing modules for contributions..."
 
 rm -fr CounterUsingMithril/node_modules
+rm -fr ReactCounter/node_modules

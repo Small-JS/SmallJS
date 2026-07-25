@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Browser"
+echo "==== Cleaning: Browser"
 
 rm -fr ./web/Script

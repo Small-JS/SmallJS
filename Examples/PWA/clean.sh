@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example PWA"
+echo "==== Cleaning: Example PWA"
 
 rm -fr ./web/Script

@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example Pharo Client"
+echo "==== Cleaning: Example Pharo Client"
 
 rm -fr ./web/Script

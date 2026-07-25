@@ -18,7 +18,7 @@ fi
 
 # Perform updates
 
-echo "Updating..."
+echo "==== Updating..."
 
 ./Compiler/update.sh -y
 ./Node/update.sh -y

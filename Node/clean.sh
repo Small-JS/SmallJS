@@ -4,7 +4,7 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Node"
+echo "==== Cleaning: Node"
 
 rm -fr ./out
 rm -f *.tmp

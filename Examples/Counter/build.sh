@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Counter"
+echo "==== Building: Example Counter"
 
 # Compile TypeScript
 

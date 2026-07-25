@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example Todo"
+echo "==== Cleaning: Example Todo"
 
 rm -fr ./web/Script

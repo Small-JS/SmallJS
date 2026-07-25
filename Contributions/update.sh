@@ -6,4 +6,5 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-./CounterUsingMithril/update.sh
+./CounterUsingMithril/update.sh -y
+./ReactCounter/update.sh -y

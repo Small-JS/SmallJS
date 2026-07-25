@@ -6,10 +6,11 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Building SmallJS contributions"
+echo "==== Building: Contributions"
 
 ./Frequencies/build.sh
 ./CounterUsingMithril/build.sh
+./ReactCounter/build.sh
 ./Pharo/build.sh
 
-echo "==== Contribution builds successful"
+echo "==== Contributions built successfully"

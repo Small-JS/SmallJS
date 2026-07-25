@@ -6,7 +6,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-echo "==== Browser"
+echo "==== Building: Browser"
 
 # Compile TypeScript
 

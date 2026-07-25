@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "Cleaning: Example AI Client"
+echo "==== Cleaning: Example AI Client"
 
 rm -fr ./web/Script
