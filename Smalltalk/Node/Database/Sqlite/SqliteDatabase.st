@@ -37,7 +37,7 @@ connect: path
 	self connect: path options: SqliteDatabaseOptions new.
 !
 connect: path options: options
-	"This should be called when the class was created with 'new', wothout a path.
+	"This should be called when the class was created with 'new', without a path.
 	 The database file must exist and be a valid SQLite database."
 	self isNull ifFalse: [
 		self error: 'SQLite database already connected.' ].

@@ -1,12 +1,13 @@
 #!/bin/bash
-# This script installs npm dependencies of this project.
+# This script creates the SQLite example database
 
 # Exit script if a step fails
 set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== Installing: Example AI RAG"
+echo "==== SQLite vector database"
+
 npm install
 
-./Database/install.sh
+node createSqliteDatabase.js

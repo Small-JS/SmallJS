@@ -17,9 +17,6 @@ fi
 
 # Perform update
 
-echo "==== Updating: Example AI RAG"
+echo "==== Updating: Example AI RAG SQLite database"
 npx npm-check-updates -u --cooldown 7d
 ./install.sh
-
-# Update database
-./Database/update.sh -y

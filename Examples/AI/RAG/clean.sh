@@ -7,3 +7,6 @@ cd "$(dirname "$0")"
 echo "==== Cleaning: Example AI RAG"
 
 rm -fr ./out
+
+# Clean the database
+./Database/clean.sh

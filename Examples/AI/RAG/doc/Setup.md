@@ -25,7 +25,10 @@ The SQLite database is included in Node.js, it does not need to be installed sep
 An SQLite extension to enable vector storage.\
 The binary of the actual extension is included in the npm package,\
 in the folder `node_modules/sqlite-vec-<platform>`.\
-The app loads in automatically.
+The app loads it automatically.
+
+The `install.sh` script for this app creates the SQLite `vector.db` database automatically.\
+So the manual steps below are not necessary to run the app.
 
 ### DB Brower for SQLite
 
@@ -40,6 +43,10 @@ Open DB Browser and activate the vector extension through the menu:
 `Tools | Load extension | ./node_modules/sqlite-vec-<platform>/vec0*`
 Then open the SQL script `Database/createSqlite.sql` .\
 Run it to table `documents` also containing embedding vectors.
+
+2026-08-06: MacOS note.\
+This step currently fails on MacOS 26.6 on Intel (ARM not tested).\
+Use the install script to create the datebase on MacOS.
 
 ## Postgres with vectors
 
