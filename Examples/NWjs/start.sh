@@ -5,5 +5,5 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-# ./bin/nw web
-./node_modules/.bin/nw web
+# ./bin/nw web --enable-features=NWESM,NWChainImportNode
+./node_modules/.bin/nw web --enable-features=NWESM,NWChainImportNode

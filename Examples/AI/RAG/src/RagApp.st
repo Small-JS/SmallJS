@@ -11,12 +11,19 @@ async start
 	self end.
 !
 async createRag
-	| connectionString store |
-	connectionString := self getEnv: 'SMALLJS_POSTGRES'.
-	store := await PostgresRagStore new connect: connectionString.
+	| store |
+	store := await self connectStore.
 	rag := OllamaRag store: store.
 !
+async connectStore
+	| config store |
+	config := self getEnv: 'STORE_CONFIG'.
+	( config toLowerCase startsWith: 'postgres:' )
+		ifTrue: [ store := PostgresRagStore new ]
+		ifFalse: [ store := SqliteRagStore new ].
 
+	^ await store connect: config.
+!
 getEnv: variable
 	"Return environment variable value or throw error if not found."
 	| value |
@@ -24,7 +31,6 @@ getEnv: variable
 		Error throw: 'Environment variable not set: ', variable ].
 	^ value.
 !
-
 async indexDocuments
 	| json documents |
 
@@ -46,7 +52,6 @@ async queryRag: question
 
 	^ answer.
 !
-
 async end
 	await rag end.
 !

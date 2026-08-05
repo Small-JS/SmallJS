@@ -1,14 +1,7 @@
-CLASS PostgresRagStore EXTENDS Object MODULE RagApp CLASSVARS ''
-	VARS 'database'
+CLASS PostgresRagStore EXTENDS RagStore MODULE RagApp CLASSVARS '' VARS ''
 
 async connect: connectionString
 	database := await PostgresDatabase new connect: connectionString.
-!
-async disconnect
-	database end.
-!
-async deleteDocuments
-	await database query: 'DELETE FROM documents'.
 !
 async insertDocument: content embedding: embedding
 	await database
@@ -26,4 +19,3 @@ async search: embedding limit: limit
 
 	^ result rows.
 !
-

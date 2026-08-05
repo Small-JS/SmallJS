@@ -11,8 +11,6 @@ CLASSMETHODS
 async myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	| result |
-	result := [ | a | a := 1. a + 1 ] value.
 !
 
 "Creating"

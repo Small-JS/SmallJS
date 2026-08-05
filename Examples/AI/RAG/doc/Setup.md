@@ -14,9 +14,37 @@ After Ollama is installed, open a terminal and install 2 models with:\
 
 You could use other models, but these are tested to work.
 
-## Postgres
+## SQLite with vectors
 
-Node.js can be downloaded here:\
+You can use either SQLite or Postgres to store vectors,\
+but SQLite is the easiest to setup.\
+The SQLite database is included in Node.js, it does not need to be installed separately.
+
+### sqlite-vec
+
+An SQLite extension to enable vector storage.\
+The binary of the actual extension is included in the npm package,\
+in the folder `node_modules/sqlite-vec-<platform>`.\
+The app loads in automatically.
+
+### DB Brower for SQLite
+
+'DB Browser for SQLite' is a GUI front-end for SQLite.\
+We'll need it to create the vector table conveniently.\
+It can be downloaded here:\
+[sqlitebrowser.org/dl](https://sqlitebrowser.org/dl)
+
+### Create vector table
+
+Open DB Browser and activate the vector extension through the menu:
+`Tools | Load extension | ./node_modules/sqlite-vec-<platform>/vec0*`
+Then open the SQL script `Database/createSqlite.sql` .\
+Run it to table `documents` also containing embedding vectors.
+
+## Postgres with vectors
+
+An alternative to SQLite, you can use Postgres.
+It can be downloaded here:\
 [https://www.postgresql.org/download](https://www.postgresql.org/download)
 
 ### pgvector
@@ -32,13 +60,13 @@ If you are on Windows, then you can download the pre-built extension here:\
 ### pgAdmin
 
 pgAdmin is a GUI front-end to Postgres.\
-We'll need it to create the vector table conveniently and check results.\
+We'll need it to create the vector table conveniently.\
 pgAdmin can be downloaded here:\
 [https://www.pgadmin.org/download/](https://www.pgadmin.org/download/)
 
 ### Create vector table
 
-Open pgAdmin and open the SQL script `Database/postgresCreate.sql` .\
+Open pgAdmin and open the SQL script `Database/createPostgres.sql` .\
 Then run it to activate the vector extension,\
 and to create the table `documents` containing embedding vectors.
 
@@ -46,10 +74,10 @@ and to create the table `documents` containing embedding vectors.
 
 Copy the file `env.example` to `.env` and update that to match your configuration.\
 Maybe update the ollama models to which were installed.\
-Update the Postgres connect string with the correct user, password and database.
+Select the database you want to use by uncommenting its `STORE_CONFIG` variable.
 
 ## Next: Running the app
 
 Phew, the tooling setup us done.\
-Now we can setup run the app: [running.md](running.md) .
+Now we can setup run the app: [Running.md](Running.md) .
 

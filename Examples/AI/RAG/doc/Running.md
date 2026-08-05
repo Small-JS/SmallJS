@@ -32,4 +32,4 @@ If all went well the debug console should show the messages:.\
 
 ## Next step
 
-Now that everything is working, let's check out the [code.md](code.md)
+Now that everything is working, let's check out the [Code.md](Code.md)

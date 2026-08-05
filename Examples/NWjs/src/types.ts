@@ -24,5 +24,8 @@ let window = gui.Window.get();
 let menu = new gui.Menu();
 let menuItemConfig: gui.MenuItemConfig = {};
 let menuItem = new gui.MenuItem( menuItemConfig );
-let shortcutOption: gui.ShortcutOption = { key: '', active: function active() {} , failed: function failed( message: string ) {} };
+let shortcutOption: gui.ShortcutOption =
+	{ key: '',
+		active: function active() { },
+		failed: function failed( message: string ) { } };
 let shortcut = new gui.Shortcut( shortcutOption );

@@ -101,7 +101,7 @@ export class Parser
 	// Parse string; i.e. text enclosed in argument delimiters, that should be the first char
 	// single or double quotes.
 
-	parseString( allowControlChars : boolean = false ): string
+	parseString( allowControlChars: boolean = false ): string
 	{
 		this.skipSpace();
 
