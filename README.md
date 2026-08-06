@@ -7,36 +7,37 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## AI coding assistant for SmallJS - 12-JUL-2026
+## News - SmallJS 2.2 released ! - 6-AUG-2026
 
-Now you can use an **AI assistant** to help code in SmallJS!\
-See the [Tutorial](https://small-js.org/Tutorial) home page for setting it up.
 
-## News - SmallJS 2.1 released ! - 13-MAY-2026
+### AI assistant
 
-### Compiler
-
-- New keyword `CLASSEXTENSION` for adding methods to (system) classes\
-  in separate source files.
-  The website Tutorial page Language/Syntax shows how to use it.
-
-### Smalltalk
-
-- Database: Standardized SQL syntax for simpler database independent queries.
+- Now you can use an **AI assistant** to code in SmallJS!\
+  See the [Tutorial](https://small-js.org/Tutorial) home page for setting it up.
 
 ### Examples
 
-- Added PWA example game: Emoji Memory :-).\
-  Also added this example app to this webite.
+- Added example app **RAG** showing AI use with **Research Augmented Generation**.\
+  Everyting runs locally with models in Ollama, using SQLite or Postgres as vector stores.
 
-### Website
+### Contributions
 
-- New Tutorial section for making Node.js apps with SmallJS,\
-  plus new Tutorial section for making desktop apps with SmallJS\
-  using NW.js, Electron or NodeGui.
-- Reference page now supports searching classes and methods.
-- Added dark mode option, also for subsites Reference and Tutorial.
-- Updated Playground evaluator to current compiler.
+- Added app **React Counter** to contributions, to show to use SmallJS in **React** projects.
+
+### Smalltalk library
+
+- Added embedding functionality to AI class Ollama.
+- Added `doAwait:` method to class `Array` to await iterating over an async block.
+- Made subsystems `Database` and `AI` more modular,
+  allowing projects to just install npm packages of implementations they use.
+
+### Build
+
+- All projects now support **TypeScript 7** builds.
+- Made build scripts more modular for example projects.
+  Every project now has their own scripts for: install, build, update and clean.
+- Installed package updates must be at least 7 days old, for security.
+
 
 ## Introducing SmallJS
 

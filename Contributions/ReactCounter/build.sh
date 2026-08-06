@@ -42,7 +42,7 @@ if
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
-	"$browserChrome" --log-level=3 http://localhost:5173/?test
+	"$browserChrome" --log-level=3 http://localhost:4173/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -52,7 +52,7 @@ if
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
-	"$browserEdge" --log-level=3 http://localhost:5173/?test
+	"$browserEdge" --log-level=3 http://localhost:4173/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -62,7 +62,7 @@ if
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2
-	"$browserFirefox" http://localhost:5173/?test
+	"$browserFirefox" http://localhost:4173/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 6
@@ -73,3 +73,4 @@ fi
 echo "Terminating web server"
 npx kill-port 5173
 sleep 2
+

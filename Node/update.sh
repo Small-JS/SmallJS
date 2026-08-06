@@ -5,7 +5,7 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-# Ask confirmation
+# Check confirmation argumnet
 
 if
 	[[ ! "$1" == "-y" ]]
