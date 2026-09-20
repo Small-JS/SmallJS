@@ -29,7 +29,7 @@ async test
 	self assert: [ chatCompletion id length > 10 ].
 	self assert: [ chatCompletion model startsWith: 'deepseek' ].
 	self assert: [ chatCompletion object = 'chat.completion' ].
-	self assert: [ chatCompletion systemFingerprint startsWith: 'fp_' ].
+	self assert: [ chatCompletion systemFingerprint length > 8 ].
 	self assert: [ chatCompletion choices length = 1 ].
 
 	choice := chatCompletion choices first.

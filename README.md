@@ -10,7 +10,7 @@
 ## News - SmallJS 2.2 released ! - 6-AUG-2026
 
 
-### AI assistant
+### AI coding assistant
 
 - Now you can use an **AI assistant** to code in SmallJS!\
   See the [Tutorial](https://small-js.org/Tutorial) home page for setting it up.

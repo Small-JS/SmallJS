@@ -2,11 +2,11 @@
 	"type": "module",
 	"dependencies": {
 		"ollama": "^0.6.3",
-		"pg": "^8.22.0",
+		"pg": "^8.23.0",
 		"sqlite-vec": "^0.1.9"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.2",
-		"@types/pg": "^8.20.0"
+		"@types/node": "^26.5.1",
+		"@types/pg": "^8.23.1"
 	}
 }
