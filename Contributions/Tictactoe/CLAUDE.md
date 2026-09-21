@@ -3,9 +3,6 @@ This project is mainly written in the programming language SmallJS, a Smalltalk 
 SmallJS source files have the extension: .st
 Examples of SmallJS code are in the file: ./smalljs.txt
 
-This is for converting the app to a Tic-tac-toe game,
-replace it of you want somethign else:
-
 This app implements the game of Tic-Tac-Toe.
 A human player plays against a computer.
 It has a web browser interface.

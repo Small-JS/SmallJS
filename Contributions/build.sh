@@ -10,6 +10,7 @@ echo "==== Building: Contributions"
 
 ./Frequencies/build.sh
 ./CounterUsingMithril/build.sh
+./Tictactoe/build.sh
 ./ReactCounter/build.sh
 ./Pharo/build.sh
 

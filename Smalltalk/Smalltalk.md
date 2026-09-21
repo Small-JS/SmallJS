@@ -1,4 +1,4 @@
-# ./Smalltalk library (image) folder
+# Smalltalk library (image) folder
 
 The source code of the SmallJS system library.
 
