@@ -358,9 +358,9 @@ export class ClassCompiler
 	{
 		this.justCompiledVariable = false;
 
-		// Remember the position of the variable on the left side of the
-		// assignment, in case this turns out to be one, so the generated
-		// "lhs = rhs" can be given a single breakpointable mapping below.
+		// Remember the start position of the expression, in case it needs a
+		// fallback breakpointable mapping below (assignment, or a bare
+		// receiver with no message send).
 		this.parser.skipSpace();
 		let position = this.parser.position.copy();
 
@@ -380,10 +380,31 @@ export class ClassCompiler
 			receiver = this.positionedSourceNodeAt(
 				position, receiver.toString() + " = " + value.toString(), "assignment" );
 		}
-		else
+		else {
 			this.compileCascadedMessages( receiver );
 
+			// A bare receiver with no message send (e.g. a statement that is
+			// just "Console." or "42.") generates no method call at all, so
+			// nothing in it is mapped and the line has no breakable location
+			// a debugger can bind to. Map the whole thing to its start.
+			if( !this.nodeHasMapping( receiver ) )
+				receiver = this.positionedSourceNodeAt( position, receiver.toString(), "expression" );
+		}
+
 		return receiver;
+	}
+
+	// Whether this node, or any node nested within it, has a mapping to a
+	// SmallJS source position (as opposed to being purely generated JS with
+	// no debug info, e.g. a plain identifier or literal reference).
+
+	private nodeHasMapping( node: SourceNode ): boolean
+	{
+		if( node.line !== null )
+			return true;
+
+		return node.children.some( child =>
+			child instanceof SourceNode && this.nodeHasMapping( child ) );
 	}
 
 	// ======================================== Compile receiver objects

@@ -11,9 +11,9 @@ CLASSMETHODS
 async myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	| a |
-	a := 'aa'.
-	Console log: a.
+	42.
+	Console.
+	Console log: 'h1'.
 !
 
 "Creating"
