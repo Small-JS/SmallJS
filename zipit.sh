@@ -14,3 +14,5 @@ zipfile="../${folder}.zip"
 echo "Zipping to: "$zipfile
 rm -f $zipfile
 zip -r $zipfile . -x "*/node_modules/*" "*/bin/*"
+
+sleep 2

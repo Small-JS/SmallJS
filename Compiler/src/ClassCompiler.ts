@@ -1,4 +1,5 @@
 ﻿import { Parser } from "./Parser.js";
+import { Position } from "./Position.js";
 import { CompiledClass } from "./CompiledClass.js";
 import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
@@ -357,12 +358,27 @@ export class ClassCompiler
 	{
 		this.justCompiledVariable = false;
 
+		// Remember the position of the variable on the left side of the
+		// assignment, in case this turns out to be one, so the generated
+		// "lhs = rhs" can be given a single breakpointable mapping below.
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		let receiver = this.compileReceiver();
 
 		if( this.parser.tryParseTerm( ":=" ) ) {
 			if( !this.justCompiledVariable )
 				this.error( "Left side of assignment is not a variable." );
-			receiver.add( " = " ).add( this.compileAssignment() );
+			let value = this.compileAssignment();
+
+			// Generate "lhs = rhs" as a single mapped node, rather than mapping
+			// only the " = " token: V8 only stops at certain "breakable"
+			// locations (e.g. the start of the statement, or a call expression),
+			// which may fall outside a narrower mapping and leave the breakpoint
+			// without a source position, so the debugger shows the compiled
+			// JavaScript instead of the SmallJS source.
+			receiver = this.positionedSourceNodeAt(
+				position, receiver.toString() + " = " + value.toString(), "assignment" );
 		}
 		else
 			this.compileCascadedMessages( receiver );
@@ -787,8 +803,16 @@ export class ClassCompiler
 
 	positionedSourceNode( script: string, name: string ): SourceNode
 	{
+		return this.positionedSourceNodeAt( this.parser.position, script, name );
+	}
+
+	// Same as positionedSourceNode(), but for an earlier, explicitly saved
+	// parser position rather than the current one.
+
+	positionedSourceNodeAt( position: Position, script: string, name: string ): SourceNode
+	{
 		return new SourceNode(
-			this.parser.position.line, this.parser.position.column - 1,
+			position.line, position.column - 1,
 			this.relativeFilename(), script, name );
 	}
 
