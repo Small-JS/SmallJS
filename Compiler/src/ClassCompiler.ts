@@ -321,6 +321,9 @@ export class ClassCompiler
 
 	private compileStatement(): SourceNode
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		let node = this.sourceNode( "\t\t", "statement" );
 
 		if( this.parser.tryParseTerm( "^" ) ) {
@@ -337,7 +340,48 @@ export class ClassCompiler
 
 		this.parser.tryParseTerm( "." );
 
+		this.mapFirstLine( node, position );
+
 		return node;
+	}
+
+	// Map all generated JS on the first line of a statement that has no
+	// mapping of its own to the start of the statement.
+	// A breakpoint on a line makes V8 pause at the location on it that is
+	// executed first, which is usually not the statement start or the message
+	// send, but e.g. the creation of a literal or block argument. If that
+	// location is unmapped, the debugger shows the compiled JS iso the ST source.
+	// Stops at the first newline, so e.g. statements inside a block argument
+	// keep their own mappings.
+	// Returns true if the end of the first line has been reached.
+
+	private mapFirstLine( node: SourceNode, position: Position ): boolean
+	{
+		// Children are typed as SourceNode[], but can also be strings.
+		let children = node.children as ( SourceNode | string )[];
+		for( let index = 0; index < children.length; ++index ) {
+			let child = children[ index ];
+			if( child instanceof SourceNode ) {
+				if( this.mapFirstLine( child, position ) )
+					return true;
+				continue;
+			}
+
+			let newline = child.indexOf( "\n" );
+			if( node.line === null && child.length > 0 ) {
+				// Only map the part up to the newline, leave the rest unmapped.
+				let end = newline < 0 ? child.length : newline + 1;
+				let mapped = this.positionedSourceNodeAt( position, child.substring( 0, end ), "firstLine" );
+				children.splice( index, 1, mapped );
+				if( end < child.length )
+					children.splice( index + 1, 0, child.substring( end ) );
+			}
+
+			if( newline >= 0 )
+				return true;
+		}
+
+		return false;
 	}
 
 	// An expression is a singe object or the result of messages sent to one,
@@ -358,53 +402,19 @@ export class ClassCompiler
 	{
 		this.justCompiledVariable = false;
 
-		// Remember the start position of the expression, in case it needs a
-		// fallback breakpointable mapping below (assignment, or a bare
-		// receiver with no message send).
-		this.parser.skipSpace();
-		let position = this.parser.position.copy();
-
 		let receiver = this.compileReceiver();
 
 		if( this.parser.tryParseTerm( ":=" ) ) {
 			if( !this.justCompiledVariable )
 				this.error( "Left side of assignment is not a variable." );
-			let value = this.compileAssignment();
 
-			// Generate "lhs = rhs" as a single mapped node, rather than mapping
-			// only the " = " token: V8 only stops at certain "breakable"
-			// locations (e.g. the start of the statement, or a call expression),
-			// which may fall outside a narrower mapping and leave the breakpoint
-			// without a source position, so the debugger shows the compiled
-			// JavaScript instead of the SmallJS source.
-			receiver = this.positionedSourceNodeAt(
-				position, receiver.toString() + " = " + value.toString(), "assignment" );
+			// Breakpoint mapping of the whole line is done in mapFirstLine().
+			receiver.add( " = " ).add( this.compileAssignment() );
 		}
-		else {
+		else
 			this.compileCascadedMessages( receiver );
 
-			// A bare receiver with no message send (e.g. a statement that is
-			// just "Console." or "42.") generates no method call at all, so
-			// nothing in it is mapped and the line has no breakable location
-			// a debugger can bind to. Map the whole thing to its start.
-			if( !this.nodeHasMapping( receiver ) )
-				receiver = this.positionedSourceNodeAt( position, receiver.toString(), "expression" );
-		}
-
 		return receiver;
-	}
-
-	// Whether this node, or any node nested within it, has a mapping to a
-	// SmallJS source position (as opposed to being purely generated JS with
-	// no debug info, e.g. a plain identifier or literal reference).
-
-	private nodeHasMapping( node: SourceNode ): boolean
-	{
-		if( node.line !== null )
-			return true;
-
-		return node.children.some( child =>
-			child instanceof SourceNode && this.nodeHasMapping( child ) );
 	}
 
 	// ======================================== Compile receiver objects
@@ -536,6 +546,9 @@ export class ClassCompiler
 
 	private compileBlockStatement(): SourceNode
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		let node = this.sourceNode( "\t\t\t\t", "blockStatement" );
 		let hasReturn = this.parser.tryParseTerm( "^" );
 		let expression = this.compileExpression();
@@ -551,6 +564,8 @@ export class ClassCompiler
 				node.add( "return " );
 			node.add( expression ).add( ";\n" );
 		}
+
+		this.mapFirstLine( node, position );
 
 		return node;
 	}
@@ -712,6 +727,9 @@ export class ClassCompiler
 
 	private compileCascadedMessages( receiver: SourceNode )
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
@@ -721,11 +739,18 @@ export class ClassCompiler
 		if( receiver.children.length <= 1 )
 			this.error( "Message expected before cascade" );
 
+		// Each cascaded message is generated on its own JS line,
+		// so map them for breakpoints like statements, see mapFirstLine().
 		let lastMessage = <SourceNode> receiver.children.pop();
 		receiver.prepend( "( () => { let $object$ = " ).add( ";\n" );
-		receiver.add( '\t\t\t$object$' ).add( lastMessage ).add( ";\n" );
+		let line = this.sourceNode( "\t\t\t$object$", "cascadedLine" ).add( lastMessage ).add( ";\n" );
+		this.mapFirstLine( line, position );
+		receiver.add( line );
 
 		do {
+			this.parser.skipSpace();
+			position = this.parser.position.copy();
+
 			let cascadedReceiver = this.sourceNode( "$object$", "cascadedReceiver" );
 			this.compileKeywordMessage( cascadedReceiver );
 			if( cascadedReceiver.toString() == '$object$' )
@@ -734,7 +759,9 @@ export class ClassCompiler
 			// Result of last cascaded message sent is return value
 			let returnString = this.parser.peekTerm() == ";" ? "" : "return ";
 
-			receiver.add( "\t\t\t" + returnString ).add( cascadedReceiver ).add( ";\n" );
+			line = this.sourceNode( "\t\t\t" + returnString, "cascadedLine" ).add( cascadedReceiver ).add( ";\n" );
+			this.mapFirstLine( line, position );
+			receiver.add( line );
 		} while( this.parser.tryParseTerm( ";" ) );
 
 		receiver.add( "\t\t} ) ()" );
@@ -751,7 +778,7 @@ export class ClassCompiler
 		if( !Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
 			return;
 
-		let message = this.positionedSourceNode( "", "keywordMessage" );
+		let position = this.parser.position.copy();
 
 		// Parse keywords and arguments
 		let args: SourceNode[] = [];
@@ -766,10 +793,20 @@ export class ClassCompiler
 		// Save method reference for minimizing
 		this.method.addMethodReference( methodName );
 
-		// Generate JS
-		message.add( "." + Naming.methodStToJs( methodName ) + "( " + args[ 0 ] );
+		// Generate JS.
+		// Add arguments as nodes, not concatenated strings: stringifying them
+		// would discard their own source mappings, e.g. breakpoints on
+		// statements inside a block argument like "ifTrue: [ ... ]".
+		// Only map the ".selector( " part: the rest may end up on later JS
+		// lines (after a multi-line block argument), and a mapping there would
+		// give this ST line a second breakpoint location, which V8 moves on
+		// to the next (unmapped) statement, showing the compiled JS instead.
+		let message = this.sourceNode( "", "keywordMessage" );
+		message.add( this.positionedSourceNodeAt( position,
+			"." + Naming.methodStToJs( methodName ) + "( ", "keywordSelector" ) );
+		message.add( args[ 0 ] );
 		for( let index = 1; index < args.length; ++index )
-			message.add( ", " + args[ index ] );
+			message.add( ", " ).add( args[ index ] );
 		message.add( " )" );
 
 		receiver.add( message );
@@ -787,8 +824,10 @@ export class ClassCompiler
 			// Save method reference for minimizing
 			this.method.addMethodReference( methodName );
 
-			let message = this.positionedSourceNode( "", "binaryMessage" );
-			message.add( "." + Naming.methodStToJs( methodName ) + "( " );
+			// Only map the ".selector( " part, see compileKeywordMessage().
+			let message = this.sourceNode( "", "binaryMessage" );
+			message.add( this.positionedSourceNode(
+				"." + Naming.methodStToJs( methodName ) + "( ", "binarySelector" ) );
 			let arg = this.compileReceiver();
 			this.compileUnaryMessages( arg );
 			message.add( arg ).add( " )" );
@@ -841,7 +880,14 @@ export class ClassCompiler
 
 	relativeFilename(): string
 	{
-		return this.relativeOutputPath() + this.class.path;
+		// Use the file the parser is currently reading, not this.class.path:
+		// for a CLASSEXTENSION, this.class is the class being extended (so
+		// e.g. errors are reported against it), but its methods are defined
+		// in the extension's own .st file, which is what source maps need to
+		// point breakpoints at. Using this.class.path here would label every
+		// extension method's mappings with the base class's file instead,
+		// silently colliding with same-numbered lines there.
+		return this.relativeOutputPath() + this.parser.filename;
 	}
 
 	// Return relative path from output folder to workspace folder.

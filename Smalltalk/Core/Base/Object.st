@@ -8,12 +8,9 @@ CLASSMETHODS
 
 "Testing"
 
-async myTest
+myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	42.
-	Console.
-	Console log: 'h1'.
 !
 
 "Creating"
