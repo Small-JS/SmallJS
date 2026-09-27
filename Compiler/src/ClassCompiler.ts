@@ -871,9 +871,33 @@ export class ClassCompiler
 
 	positionedSourceNodeAt( position: Position, script: string, name: string ): SourceNode
 	{
+		if( this.disableBreakpoints() )
+			return this.sourceNode( script, name );
+
 		return new SourceNode(
 			position.line, position.column - 1,
 			this.relativeFilename(), script, name );
+	}
+
+	// Often-used conversion methods are generated without any source mappings,
+	// so they cannot have breakpoints and the debugger's smart stepping
+	// skips over them on step-into (F11) iso stepping into their ST source.
+
+	// Breakpoints are disabled for all methods 'fromJs:' and 'js:'
+	// and for common core classes: Block, Boolean, Integer, String.
+
+	disableBreakpoints(): boolean
+	{
+		if( ! this.class || ! this.method )
+			return true;
+
+		if( [ "fromJs:", "js:" ].includes( this.method.name ) )
+			return true;
+
+		if( [ "Block", "Boolean", "Integer", "String" ].includes( this.class.name ) )
+			return true;
+
+		return false;
 	}
 
 	// Source file names in source maps should be referenced relative to the output folder

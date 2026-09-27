@@ -33,10 +33,9 @@ testBreakpoints
 	Breakpoints should be possible on:
 	- Lines with a single constant (e.g: a Class name to force import)
 	- Assignments.
-	- Unary, binary and keyword method calls.
-	- Within blocks!"
+	- Unary, binary and keyword method calls."
 
-	| string num block |
+	| string integer boolean block |
 
 	42.
 	String.
@@ -44,6 +43,16 @@ testBreakpoints
 	string := 'ABC' toLowerCase.
 	string := 'ab', 'cd'.
 	string := 'def' substring: 1.
+
+	"Breakpoints / step-into are disabled for:
+	- All methods: 'fromJs:', 'js:'
+	- Classes: Block, Boolean, Integer, String"
+
+	boolean := [ true ] value.
+	boolean := true | false.
+	integer := 1 + 2.
+
+	"Breakpoints should be possible on within blocks."
 
 	true ifTrue: [
 		self assert: [ string = 'ef'] ].
