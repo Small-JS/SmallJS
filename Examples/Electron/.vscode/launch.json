@@ -8,6 +8,7 @@
 			"name": "Electron: Main",
 			"type": "node", // Use the node debugger that comes with VS Code
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceFolder}/out",
 			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
 			"args": [
@@ -26,6 +27,7 @@
 			"name": "Electron: Main test",
 			"type": "node", // Use the node debugger that comes with VS Code
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceFolder}/out",
 			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
 			"args": [
@@ -45,6 +47,7 @@
 			"name": "Electron: Renderer",
 			"type": "chrome",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceFolder}/out",
 			"sourceMaps": true,
 			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
@@ -62,6 +65,7 @@
 			"name": "Electron: Renderer test",
 			"type": "chrome",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceFolder}/out",
 			"sourceMaps": true,
 			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",

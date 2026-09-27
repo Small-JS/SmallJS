@@ -9,7 +9,8 @@
 			"type": "node",
 			"request": "launch",
 			"skipFiles": [
-				"<node_internals>/**"
+				"<node_internals>/**",
+				"**/Runtime.js"
 			],
 			"program": "${workspaceFolder}/out/main.js",
 			"cwd": "${workspaceFolder}",

@@ -366,6 +366,10 @@ export class Compiler
 	}
 
 	// Copy Runtime.js to output folder.
+	// Its source map is not copied, because it references "../src/Runtime.ts"
+	// relative to the compiler's output folder, which does not exist relative
+	// to the project's output folder. The debugger would then try to open it.
+	// Projects skip Runtime.js on step-into using "skipFiles" in launch.json.
 
 	generateRuntime( outputFolder: string )
 	{
@@ -375,8 +379,11 @@ export class Compiler
 
 		let runTimePath = compilerFolder + "/Runtime.js";
 		let outputPath = outputFolder + "/Runtime.js";
-		fs.copyFileSync( runTimePath, outputPath );
-		fs.copyFileSync( runTimePath + ".map", outputPath + ".map" );
+		let script = fs.readFileSync( runTimePath, "utf8" );
+		script = script.replace( /^\/\/# sourceMappingURL=.*$/m, "" );
+		fs.writeFileSync( outputPath, script );
+		// Remove a source map copied by earlier compiler versions.
+		fs.rmSync( outputPath + ".map", { force: true } );
 	}
 
 	generateDocumentation( outputFolder: string )

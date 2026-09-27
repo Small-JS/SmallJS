@@ -60,4 +60,12 @@ testBreakpoints
 	block :=
 		[ self assert: [ string = 'ef'] ].
 	block value.
+
+	boolean := self blockReturn.
+	self assert: [ boolean ].
+!
+blockReturn
+	"This return-from-block should not debug step-into the file Runtime.js,
+	Since it was excluded with 'skipFiles:' in 'launch.json"
+	[ ^ true ] value.
 !

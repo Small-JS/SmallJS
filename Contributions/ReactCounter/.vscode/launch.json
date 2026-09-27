@@ -8,6 +8,7 @@
 			"name": "Launch Chrome",
 			"type": "chrome",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"url": "http://localhost:4173",
 			"webRoot": "${workspaceFolder}/dist",
 			"preLaunchTask": "npm: build"
@@ -16,6 +17,7 @@
 			"name": "Launch Chrome test",
 			"type": "chrome",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"url": "http://localhost:4173?test",
 			"webRoot": "${workspaceFolder}/dist",
 			"preLaunchTask": "npm: build"

@@ -5,6 +5,7 @@
 			"name": "Qode",
 			"type": "node",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceRoot}",
 			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode",
 			"windows": {
@@ -20,6 +21,7 @@
 			"name": "Qode test",
 			"type": "node",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"cwd": "${workspaceRoot}",
 			"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/qode",
 			"windows": {

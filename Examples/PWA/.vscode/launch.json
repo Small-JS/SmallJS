@@ -7,6 +7,7 @@
 		{
 			"name": "Launch Chrome",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "chrome",
 			"url": "http://localhost:3010",
 			"webRoot": "${workspaceFolder}/web",
@@ -15,6 +16,7 @@
 		{
 			"name": "Launch Chrome test",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "chrome",
 			"url": "http://localhost:3010/?test",
 			"webRoot": "${workspaceFolder}/web",
@@ -23,6 +25,7 @@
 		{
 			"name": "Launch Edge",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "msedge",
 			"url": "http://localhost:3010",
 			"webRoot": "${workspaceFolder}/web",
@@ -31,6 +34,7 @@
 		{
 			"name": "Launch Edge test",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "msedge",
 			"url": "http://localhost:3010/?test",
 			"webRoot": "${workspaceFolder}/web",
@@ -39,6 +43,7 @@
 		{
 			"name": "Launch Firefox",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "firefox",
 			"reAttach": true,
 			"url": "http://localhost:3010",
@@ -58,6 +63,7 @@
 		{
 			"name": "Launch Firefox test",
 			"request": "launch",
+			"skipFiles": [ "**/Runtime.js" ],
 			"type": "firefox",
 			"reAttach": true,
 			"url": "http://localhost:3010/?test",

@@ -15,7 +15,8 @@
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
 			"skipFiles": [
-				"<node_internals>/**"
+				"<node_internals>/**",
+				"**/Runtime.js"
 			],
 			"preLaunchTask": "Compile server"
 		},
@@ -28,7 +29,8 @@
 			"cwd": "${workspaceFolder}",
 			"envFile": "${workspaceFolder}/.env",
 			"skipFiles": [
-				"<node_internals>/**"
+				"<node_internals>/**",
+				"**/Runtime.js"
 			],
 			"preLaunchTask": "Compile server"
 		}
