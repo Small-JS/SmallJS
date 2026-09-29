@@ -1,16 +1,14 @@
 CLASS ElectronMenu EXTENDS JsObject MODULE ElectronMain CLASSVARS '' VARS ''
 
-"Note: Platform specific funcionality is not implemented, keeing it standard."
-
-INLINE 'import { Menu } from "electron";'
+"Note: Platform specific funcionality is not implemented, keeping it standard."
 
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new Menu()'.
+	^ self fromJs: INLINE 'new electron$.Menu()'.
 !
 setApplicationMenu: menu
-	INLINE 'Menu.setApplicationMenu( menu.js )'.
+	INLINE 'electron$.Menu.setApplicationMenu( menu.js )'.
 !
 
 METHODS
@@ -19,11 +17,11 @@ METHODS
 
 append: menuItemOptions
 	"Note: The first argument is an *options* object, not a MenuItem object."
-	INLINE 'this.js.append( new MenuItem( menuItemOptions.js ) )'.
+	INLINE 'this.js.append( new electron$.MenuItem( menuItemOptions.js ) )'.
 !
 insert: menuItemOptions position: position
 	"Note: The first argument is an *options* object, not a MenuItem object."
-	INLINE 'this.js.insert( new MenuItem( menuItemOptions.js ), position.js )'.
+	INLINE 'this.js.insert( new electron$.MenuItem( menuItemOptions.js ), position.js )'.
 !
 
 "Popup"

@@ -7,6 +7,9 @@ CLASS TestMyElectronApp EXTENDS Object MODULE TestMyElectronMain CLASSVARS ''
 start
 	myElectronApp := MyElectronApp new start.
 
-	"Run sync and async unit tests of all imported Test* classes and log results."
-	TestWebPreferences all.
+	"For import of ElectromMain module."
+	TestElectronApp.
+
+	"The method 'all' will test all imported test classes, so only need to run it once."
+	Test all.
 !

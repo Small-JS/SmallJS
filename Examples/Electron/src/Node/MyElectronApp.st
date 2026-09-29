@@ -23,7 +23,7 @@ setListeners
 !
 onSetTitle: title
 	self log: 'MyElectronApp: Received new title: ', title.
-	browserWindow setTitle: title.
+	browserWindow title: title.
 !
 onPing: data
 	| result |
@@ -74,7 +74,7 @@ createWindow
 		height: 800;
 		webPreferences: webPreferences.
 
-	browserWindow := BrowserWindow new: options.
+	browserWindow := ElectronBrowserWindow new: options.
 !
 
 "HTML"

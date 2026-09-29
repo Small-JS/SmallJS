@@ -10,6 +10,10 @@ x: x  y: y
 jsX: jsX jsY: jsY
 	^ self x: ( Integer fromJs: jsX ) y: ( Integer fromJs: jsY ).
 !
+fromJsArray: jsArray
+	"Converts a JS array [ x, y ] to a Point."
+	^ self jsX: INLINE 'jsArray[ 0 ]' jsY: INLINE 'jsArray[ 1 ]'.
+!
 
 METHODS
 

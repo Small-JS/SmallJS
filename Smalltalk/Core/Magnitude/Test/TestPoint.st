@@ -3,6 +3,7 @@ CLASS TestPoint EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 testCreation
 	self assert: [ ( Point x: 1 y: 2 ) = ( 1 @ 2 ) ].
 	self assert: [ ( Point jsX: ( 1 js ) jsY: ( 2 js ) ) = ( 1 @ 2 ) ].
+	self assert: [ ( Point fromJsArray: INLINE '[ 1, 2 ]' ) = ( 1 @ 2 ) ].
 !
 testConversion
 	self assert: [ ( 1 @ 2 ) toString = '( 1 @ 2 )' ].
