@@ -9,5 +9,6 @@
 .DS_Store
 **/node_modules
 **/out
+**/smalljs.txt
 todo.txt
-Private
+./Private
