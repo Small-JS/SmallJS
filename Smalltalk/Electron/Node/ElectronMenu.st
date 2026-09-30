@@ -7,7 +7,7 @@ CLASSMETHODS
 new
 	^ self fromJs: INLINE 'new electron$.Menu()'.
 !
-setApplicationMenu: menu
+applicationMenu: menu
 	INLINE 'electron$.Menu.setApplicationMenu( menu.js )'.
 !
 
@@ -21,7 +21,7 @@ append: menuItemOptions
 !
 insert: menuItemOptions position: position
 	"Note: The first argument is an *options* object, not a MenuItem object."
-	INLINE 'this.js.insert( new electron$.MenuItem( menuItemOptions.js ), position.js )'.
+	INLINE 'this.js.insert( position.js, new electron$.MenuItem( menuItemOptions.js ) )'.
 !
 
 "Popup"
@@ -35,6 +35,7 @@ closePopup
 
 "Accessing"
 
-getMenuItemById: id
-	ElectronMenuItem fromJs: INLINE 'this.js.getMenuItemById( id.js )'.
+menuItemById: id
+	"Returns nil if no item with the id exists."
+	^ ElectronMenuItem fromJs: INLINE 'this.js.getMenuItemById( id.js )'.
 !

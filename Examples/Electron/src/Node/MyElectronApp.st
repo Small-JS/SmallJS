@@ -54,7 +54,7 @@ setMenu
 	mainMenu := ElectronMenu new.
 	mainMenu append: mainFileMenuItem.
 
-	ElectronMenu setApplicationMenu: mainMenu.
+	ElectronMenu applicationMenu: mainMenu.
 !
 onFileExit
 	self quit.
