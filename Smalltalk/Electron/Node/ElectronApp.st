@@ -16,10 +16,10 @@ new
 METHODS
 "Starting & stopping"
 
-whenReady: block
-	INLINE 'this.js.whenReady().then( () => block.$value() )'.
+async whenReady
+	INLINE 'await this.js.whenReady()'.
 !
-isReady
+ready
 	^ Boolean fromJs: INLINE 'this.js.isReady()'.
 !
 quit
@@ -52,36 +52,30 @@ onceAppEvent: event then: block
 
 "Information"
 
-getName
-	^ String fromJs: INLINE 'this.js.getName()'.
-!
-setName: name
-	INLINE 'this.js.setName( name.js )'.
-!
 name
 	^ String fromJs: INLINE 'this.js.name'.
 !
 name: name
 	INLINE 'this.js.name = name.js'.
 !
-getVersion
+version
 	^ String fromJs: INLINE 'this.js.getVersion()'.
 !
-getLocale
+locale
 	"Note: Only valid after the app is ready."
 	^ String fromJs: INLINE 'this.js.getLocale()'.
 !
-getLocaleCountryCode
+localeCountryCode
 	^ String fromJs: INLINE 'this.js.getLocaleCountryCode()'.
 !
-getSystemLocale
+systemLocale
 	"Note: Only valid after the app is ready."
 	^ String fromJs: INLINE 'this.js.getSystemLocale()'.
 !
-getPreferredSystemLanguages
+preferredSystemLanguages
 	^ Array fromJsStrings: INLINE 'this.js.getPreferredSystemLanguages()'.
 !
-getApplicationNameForProtocol: url
+applicationNameForProtocol: url
 	^ String fromJs: INLINE 'this.js.getApplicationNameForProtocol( url.js )'.
 !
 userAgentFallback
@@ -93,21 +87,21 @@ userAgentFallback: userAgent
 
 "Paths"
 
-getAppPath
+appPath
 	^ String fromJs: INLINE 'this.js.getAppPath()'.
 !
-getPath: name
+path: name
 	"Name is one of: 'home', 'appData', 'assets', 'userData', 'sessionData', 'temp', 'exe', 'module',
 	 'desktop', 'documents', 'downloads', 'music', 'pictures', 'videos', 'recent', 'logs', 'crashDumps'."
 	^ String fromJs: INLINE 'this.js.getPath( name.js )'.
 !
-setPath: name path: path
+path: name path: path
 	INLINE 'this.js.setPath( name.js, path.js )'.
 !
-setAppLogsPath
+appLogsPath
 	INLINE 'this.js.setAppLogsPath()'.
 !
-setAppLogsPath: path
+appLogsPath: path
 	INLINE 'this.js.setAppLogsPath( path.js )'.
 !
 
@@ -129,7 +123,7 @@ disableHardwareAcceleration
 	"Note: Can only be called before the app is ready."
 	INLINE 'this.js.disableHardwareAcceleration()'.
 !
-isHardwareAccelerationEnabled
+hardwareAccelerationEnabled
 	^ Boolean fromJs: INLINE 'this.js.isHardwareAccelerationEnabled()'.
 !
 enableSandbox
@@ -139,10 +133,8 @@ enableSandbox
 
 "Network"
 
-resolveProxy: url then: block error: errorBlock
-	INLINE 'this.js.resolveProxy( url.js )
-		.then( ( proxy ) => block.$value$( stString$class.$fromJs$( proxy ) ) )
-		.catch( ( error ) => errorBlock.$value$( stError$class.$fromJs$( error ) ) )'.
+async resolveProxy: url
+	^ String fromJs: INLINE 'await this.js.resolveProxy( url.js )'.
 !
 
 "IPC"

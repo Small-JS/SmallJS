@@ -6,7 +6,8 @@ CLASS TestMyElectronView EXTENDS Object MODULE TestMyElectronRenderer CLASSVARS 
 
 async start
 	myElectronView := MyElectronView new start.
-	await Timer timeout: 2000.
+	"Give app tests time to finish."
+	await Timer timeout: 4000.
 	Console log: 'TestMyElectronView: running GUI tests.'.
 
 	"Click on the buttons 'Color Text', 'Modify Title' and 'Ping'

@@ -12,7 +12,7 @@ testClassMethods
 !
 testNewBeforeReady
 	"Electron does not allow creating windows before the app is ready."
-	ElectronApp new isReady ifFalse: [
+	ElectronApp new ready ifFalse: [
 		self assertError: [ ElectronBrowserWindow new ].
 		self assertError: [ ElectronBrowserWindow new: BrowserWindowOptions new ] ].
 !

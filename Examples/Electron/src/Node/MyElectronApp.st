@@ -1,17 +1,15 @@
 CLASS MyElectronApp EXTENDS ElectronApp MODULE MyElectronMain CLASSVARS ''
 	VARS 'browserWindow'
 
-start
-	self whenReady: [ self start2 ].
-!
-start2
+async start
+	await self whenReady.
 	self setListeners.
 	self setMenu.
 	self createWindow.
 	self loadHtml.
 
 	"Uncomment this to open the devtools in the view."
-	"self openDevTools."
+	"self browserWindow openDevTools."
 !
 
 "Listeners"
@@ -42,13 +40,19 @@ async onQuit
 "Menu"
 
 setMenu
-	| fileMenu mainMenu |
+	| mainMenu mainFileMenuItem fileMenu fileExitMenuItem |
 
+	fileExitMenuItem := ElectronMenuItemOptions new
+		label: 'Exit';
+		click: [ self onFileExit ].
 	fileMenu := ElectronMenu new.
-	fileMenu append: ( ElectronMenuItemOptions new label: 'Exit'; click: [ self onFileExit ] ).
+	fileMenu append: fileExitMenuItem.
 
+	mainFileMenuItem := ElectronMenuItemOptions new
+		label: 'File';
+		submenu: fileMenu.
 	mainMenu := ElectronMenu new.
-	mainMenu append: ( ElectronMenuItemOptions new label: 'File'; submenu: fileMenu ).
+	mainMenu append: mainFileMenuItem.
 
 	ElectronMenu setApplicationMenu: mainMenu.
 !
@@ -91,10 +95,3 @@ loadOptions
 		options search: '?test' ].
 	^ options.
 !
-
-"Testing"
-
-openDevTools
-	browserWindow openDevTools.
-!
-
