@@ -1,8 +1,6 @@
 CLASS ElectronApp EXTENDS JsObject MODULE ElectronMain CLASSVARS '' VARS ''
 
-"INLINE 'import { app, BrowserWindow, ipcMain } from 'electron';'"
 INLINE 'import * as electron$ from "electron";'
-
 
 "Implements Electron JS object: app.
  Note: Platform specific funcionality is not implemented, keeping it standard."

@@ -4,8 +4,17 @@
 
 import * as Electron from "electron";
 
+// App
 let app: Electron.App;
+let shell: Electron.Shell;
+
+// Window
 let baseWindow: Electron.BaseWindow;
 let browserWindow: Electron.BrowserWindow;
-let ipcMain: Electron.IpcMain;
 let rectangle: Electron.Rectangle;
+let webContents: Electron.WebContents;
+
+// IPC
+let ipcMain: Electron.IpcMain;
+let ipcRenderer: Electron.IpcRenderer;
+let contextBridge: Electron.ContextBridge;

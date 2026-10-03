@@ -61,11 +61,14 @@ blurWebView
 	INLINE 'this.js.blurWebView()'.
 !
 
+"Web contents"
+
+webContents
+	^ ElectronWebContents fromJs: INLINE 'this.js.webContents'.
+!
+
 "Developer tools"
 
 openDevTools
-	"2024-09-01:
-	 This request currently produces this error on the rendering console: 'Request Autofill.enable failed.'
-	 This is an Electron issue that is reported here: https://github.com/electron/electron/issues/41614"
 	INLINE 'this.js.webContents.openDevTools()'.
 !

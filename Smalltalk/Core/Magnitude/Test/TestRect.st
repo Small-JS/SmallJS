@@ -2,7 +2,8 @@ CLASS TestRectangle EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 testCreatiing
 	self assert: [ ( Rect origin: ( 1 @ 2 ) extent: ( 3 @ 4 ) ) class = Rect ].
-	"Method fromJs: jsDOMRect can only be tested in a browser environment."
+	"Any JS object with DOMRect properties works, so fromJs: can be tested outside a browser."
+	self assert: [ ( Rect fromJs: ( INLINE '{ x: 1, y: 2, width: 3, height: 4 }' ) ) = ( Rect origin: ( 1 @ 2 ) extent: ( 3 @ 4 ) ) ].
 !
 testConverting
 	self assert: [ ( Rect origin: ( 1 @ 2 ) extent: ( 3 @ 4 ) ) toString = 'Rect( ( 1 @ 2 ) , ( 3 @ 4 ) )' ].

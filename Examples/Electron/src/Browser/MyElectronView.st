@@ -1,11 +1,23 @@
 CLASS MyElectronView EXTENDS ElectronView MODULE MyElectronRenderer CLASSVARS ''
 	VARS 'colorTextButton colorTextResultSpan
 		setTitleButton setTitleResultSpan
-		pingButton pingResultSpan'
+		pingButton pingResultSpan
+		windowEventSpan windowEventCount'
 
 start
 	self log: 'MyView: Start'.
 	self bindElements.
+	self listenForWindowEvents.
+!
+listenForWindowEvents
+	"The main process sends the window events it receives, e.g. 'resize' or 'focus'."
+	windowEventCount := 0.
+	self callApi: 'myApi' method: 'onWindowEvent'
+		withCallback: [ :name | self onWindowEvent: ( String fromJs: name ) ].
+!
+onWindowEvent: name
+	windowEventCount := windowEventCount + 1.
+	windowEventSpan textContent: name, ' (', windowEventCount toString, ')'.
 !
 bindElements
 	colorTextButton := Document getElementById: 'colorTextButton' class: HtmlButtonElement.
@@ -19,6 +31,8 @@ bindElements
 	pingButton := Document getElementById: 'pingButton' class: HtmlButtonElement.
 	pingButton onClick: [ self ping ].
 	pingResultSpan := Document getElementById: 'pingResultSpan' class: HtmlSpanElement.
+
+	windowEventSpan := Document getElementById: 'windowEventSpan' class: HtmlSpanElement.
 !
 colorText
 	self log: 'MyElectronView: Color text button clicked.'.
@@ -32,12 +46,12 @@ setTitle
 	self callApi: 'myApi' method: 'setTitle' with: title.
 	setTitleResultSpan textContent: 'Title modified'.
 !
-ping
-	| data |
+async ping
+	| data result |
  	self log: 'MyElectronView: Ping button clicked.'.
 	data := 'Ping'.
-	self callApi: 'myApi' method: 'ping' with: data
-		then: [ :result | self onPing: result ].
+	result := await self callApi: 'myApi' method: 'ping' with: data.
+	self onPing: result.
 !
 onPing: result
 	self log: 'MyElectronView: Received result from API: ', result.
@@ -67,4 +81,7 @@ pingButton
 !
 pingResultSpan
 	^ pingResultSpan.
+!
+windowEventSpan
+	^ windowEventSpan.
 !
