@@ -5,5 +5,6 @@ set -e
 # Set working directory to script directory.
 cd "$(dirname "$0")"
 
-# ./bin/nw web --enable-features=NWESM,NWChainImportNode
-./node_modules/.bin/nw web --enable-features=NWESM,NWChainImportNode
+# Use the downloaded version if the packaged version does not work:
+./bin/nw web --enable-features=NWESM,NWChainImportNode
+# ./node_modules/.bin/nw web --enable-features=NWESM,NWChainImportNode

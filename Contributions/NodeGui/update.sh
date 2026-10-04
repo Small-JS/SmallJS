@@ -15,6 +15,7 @@ then
 	exit 1
 fi
 
-echo "==== NodeGui"
+echo "==== Updating: Contribution NodeGui"
+
 npx npm-check-updates -u --cooldown 7d
 ./install.sh

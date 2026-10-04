@@ -4,6 +4,6 @@
 # Change to script folder.
 cd "$(dirname "$0")"
 
-echo "==== Cleaning: Example NodeGui"
+echo "==== Cleaning: Contribution NodeGui"
 
 rm -fr ./out

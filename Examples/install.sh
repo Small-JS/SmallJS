@@ -9,6 +9,5 @@ cd "$(dirname "$0")"
 
 ./AI/install.sh
 ./Electron/install.sh
-./NodeGui/install.sh
 ./NWjs/install.sh
 ./Shop/install.sh

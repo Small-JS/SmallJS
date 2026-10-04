@@ -12,6 +12,7 @@ echo "==== Building: Contributions"
 ./CounterUsingMithril/build.sh
 ./Tictactoe/build.sh
 ./ReactCounter/build.sh
+./NodeGui/build.sh
 ./Pharo/build.sh
 
 echo "==== Contributions built successfully"

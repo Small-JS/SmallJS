@@ -8,3 +8,4 @@ cd "$(dirname "$0")"
 
 ./CounterUsingMithril/update.sh -y
 ./ReactCounter/update.sh -y
+./NodeGui/update.sh -y

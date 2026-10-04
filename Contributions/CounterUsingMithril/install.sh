@@ -6,7 +6,8 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== Installing npm packages for: CounterUsingMithril"
+echo "==== Installing: Contribution CounterUsingMithril"
+
 npm install
 
 echo "Copy Mithril and Tachyons files from npm packages to web/resources-from-npm"

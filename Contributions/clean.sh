@@ -11,4 +11,5 @@ echo "Removing compiled code from contributions..."
 ./CounterUsingMithril/clean.sh
 ./Tictactoe/clean.sh
 ./ReactCounter/clean.sh
+./NodeGui/clean.sh
 ./Pharo/clean.sh

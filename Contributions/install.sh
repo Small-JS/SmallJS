@@ -8,3 +8,4 @@ cd "$(dirname "$0")"
 
 ./CounterUsingMithril/install.sh
 ./ReactCounter/install.sh
+./NodeGui/install.sh

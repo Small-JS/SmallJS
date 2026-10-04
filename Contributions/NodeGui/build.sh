@@ -6,11 +6,11 @@ set -e
 # Set working directory to script directory
 cd "$(dirname "$0")"
 
-echo "==== Building: Example NodeGui"
+echo "==== Building: Contribution NodeGui"
 
 # Compile TypeScript
 
-echo "tsc Example NodeGui"
+echo "tsc Contribution NodeGui"
 tsc
 
 # Compile Smalltalk
@@ -21,8 +21,8 @@ tsc
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
-# 2026-10-07 NodeGui currenty, suddenly always exist in error *only* in batch mode.
-# So unset the exit-on-error option for now.
+# 2026-09-07 NodeGui currenty, suddenly always exist in error *only* in batch mode.
+# So unset the bash exit-on-error option for now.
 set +e
 ./node_modules/.bin/qode out/main.js -test
 echo "NodeGui finished"

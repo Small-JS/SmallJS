@@ -12,7 +12,6 @@ echo "Removing compiled code from examples..."
 ./Benchmark/clean.sh
 ./Counter/clean.sh
 ./Electron/clean.sh
-./NodeGui/clean.sh
 ./NWjs/clean.sh
 ./PWA/clean.sh
 ./Shop/clean.sh

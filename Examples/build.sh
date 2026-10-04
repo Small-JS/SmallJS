@@ -16,7 +16,6 @@ echo "==== Building: Examples"
 ./Shop/build.sh
 ./PWA/build.sh
 ./Electron/build.sh
-./NodeGui/build.sh
 ./NWjs/build.sh
 ./AI/build.sh
 
