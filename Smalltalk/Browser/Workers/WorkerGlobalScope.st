@@ -6,5 +6,3 @@ default
 	^ self fromJs: INLINE 'self'.
 !
 
-METHODS
-

@@ -1,6 +1,6 @@
 CLASS MessageEvent  EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
-"Encapsulates the JS object of creaeting a Worker instance."
+"Encapsulates the JS object of creating a Worker instance."
 
 CLASSMETHODS
 
@@ -23,7 +23,7 @@ origin
 	^ String fromJs: INLINE 'this.js.origin'.
 !
 ports
-	^ Array fromJs: INLINE 'this.js.ports' elemenClass: MessagePort.
+	^ Array fromJs: INLINE 'this.js.ports' elementClass: MessagePort.
 !
 source
 	"TODO: Implement WindowProxy and ServiceWorker"

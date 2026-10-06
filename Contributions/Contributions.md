@@ -6,30 +6,26 @@ and may require updating to run.
 
 Contact the creator of a contribution if you have any questions about them.
 
-## Frequencies
+## [Frequencies](./Frequencies/Frequencies.md)
 
 The letter frequency app that is the result of the SmallJS browser Tutorial.
 
->[Frequencies.md](./Frequencies/Frequencies.md)
-
-## CounterUsingMithril
+## [CounterUsingMithril](./CounterUsingMithril/CounterUsingMithril.md)
 
 This is another implementation of the Counter example\
 that uses the Mithril HTML UI library and the Tachyons CSS stylesheet.
 
->[CounterUsingMithril.md](./CounterUsingMithril/CounterUsingMithril.md)
-
-## Pharo Smalltalk app server with SmallJS client
+## [Pharo](./Pharo/Pharo.md)
 
 Small Pharo Smalltalk web app server communicating with a SmallJS client\
 through a web API using Pharo Zinc framework.
 
->[Pharo.md](./Pharo/Pharo.md)
-
-## ReactCounter
+## [ReactCounter](./ReactCounter/ReactCounter.md)
 
 This is the Counter example implemented in the React framework using Vite.\
 It shows how to use SmallJS in React projects.
 
->[ReactCounter.md](./ReactCounter/ReactCounter.md)
+## [NodeGui](NodeGui/NodeGui.md)
+
+Desktop app with a native GUI by using NodeGui, based on the Qt GUI library.
 

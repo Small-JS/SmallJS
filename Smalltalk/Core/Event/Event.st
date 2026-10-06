@@ -18,6 +18,7 @@ fromJsSubEvent: jsEvent
 	jsClassName = 'UiEvent' ifTrue: [ ^ UiEvent fromJs: jsEvent ].
 	jsClassName = 'MouseEvent' ifTrue: [ ^ MouseEvent fromJs: jsEvent ].
 	jsClassName = 'PointerEvent' ifTrue: [ ^ PointerEvent fromJs: jsEvent ].
+	jsClassName = 'ErrorEvent' ifTrue: [ ^ ErrorEvent fromJs: jsEvent ].
 
 	^ self fromJs: jsEvent.
 !

@@ -1,4 +1,4 @@
-CLASS Worker EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
+CLASS Worker EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 
 CLASSMETHODS
 
@@ -14,9 +14,25 @@ METHODS
 postMessage: object
 	INLINE 'this.js.postMessage( object.$toJs() )'.
 !
+postMessage: object transfer: transferables
+	"Transferables is an Array of transferable objects, like MessagePort,
+	 whose ownership is transferred to the worker."
+	INLINE 'this.js.postMessage( object.$toJs(), transferables.$toJs() )'.
+!
 terminate
 	INLINE 'this.js.terminate()'.
 !
 onMessage: block
 	INLINE 'this.js.onmessage = ( jsMessageEvent ) => block.$value$( stMessageEvent$class.$fromJs$( jsMessageEvent ) )'.
+!
+onMessageError: block
+	"Called when a message is received that cannot be deserialized."
+	INLINE 'this.js.onmessageerror = ( jsMessageEvent ) => block.$value$( stMessageEvent$class.$fromJs$( jsMessageEvent ) )'.
+!
+onError: block
+	"Called when an error occurs in the worker script, including failing to load it.
+	 Block argument is an ErrorEvent, or an Event if the browser does not provide details."
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( Event fromJsSubEvent: jsEvent ) ].
+	INLINE 'this.js.onerror = jsBlock.js'.
 !
