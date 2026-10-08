@@ -20,6 +20,9 @@ fromJsSubEvent: jsEvent
 
 	jsClassName := String fromJs: INLINE 'jsEvent.constructor.name'.
 	jsClassName = 'ErrorEvent' ifTrue: [ ^ ErrorEvent fromJs: jsEvent ].
+	jsClassName = 'MessageEvent' ifTrue: [ ^ MessageEvent fromJs: jsEvent ].
+	jsClassName = 'CustomEvent' ifTrue: [ ^ CustomEvent fromJs: jsEvent ].
+	jsClassName = 'CloseEvent' ifTrue: [ ^ CloseEvent fromJs: jsEvent ].
 
 	^ self fromJs: jsEvent.
 !

@@ -10,7 +10,7 @@ start
 		onMessage: [ :event | self onMessage: event ].
 !
 onMessage: event
-	| message |
+	| message port |
 	message := String fromJs: event data js.
 
 	message = 'Hello, worker!' ifTrue: [
@@ -18,8 +18,9 @@ onMessage: event
 
 	"Reply on the port transferred with the message."
 	message = 'Port' ifTrue: [
-		event ports first postMessage: 'Hello, port!'.
-		event ports first close ].
+		port := ( event portsAs: MessagePort ) first.
+		port postMessage: 'Hello, port!'.
+		port close ].
 
 	"Uncaught errors in the worker trigger the error event on the Worker in the main thread."
 	message = 'Throw' ifTrue: [

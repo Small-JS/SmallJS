@@ -11,7 +11,7 @@ start
 !
 onConnect: event
 	| port |
-	port := event ports first.
+	port := ( event portsAs: MessagePort ) first.
 	port onMessage: [ :messageEvent | self onMessage: messageEvent port: port ].
 !
 onMessage: event port: port

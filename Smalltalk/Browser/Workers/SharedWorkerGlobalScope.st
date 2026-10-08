@@ -15,5 +15,7 @@ close
 onConnect: block
 	"Called when a new SharedWorker connects to this worker.
 	 Block argument is a MessageEvent, whose first port is used to communicate with the new SharedWorker."
-	INLINE 'this.js.onconnect = ( messageEvent ) => block.$value$( stMessageEvent$class.$fromJs$( messageEvent ) )'.
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( MessageEvent fromJs: jsEvent ) ].
+	INLINE 'this.js.onconnect = jsBlock.js'.
 !

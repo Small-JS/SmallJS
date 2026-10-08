@@ -23,11 +23,15 @@ terminate
 	INLINE 'this.js.terminate()'.
 !
 onMessage: block
-	INLINE 'this.js.onmessage = ( jsMessageEvent ) => block.$value$( stMessageEvent$class.$fromJs$( jsMessageEvent ) )'.
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( MessageEvent fromJs: jsEvent ) ].
+	INLINE 'this.js.onmessage = jsBlock.js'.
 !
 onMessageError: block
 	"Called when a message is received that cannot be deserialized."
-	INLINE 'this.js.onmessageerror = ( jsMessageEvent ) => block.$value$( stMessageEvent$class.$fromJs$( jsMessageEvent ) )'.
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( MessageEvent fromJs: jsEvent ) ].
+	INLINE 'this.js.onmessageerror = jsBlock.js'.
 !
 onError: block
 	"Called when an error occurs in the worker script, including failing to load it.
