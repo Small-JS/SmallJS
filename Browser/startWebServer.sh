@@ -9,3 +9,4 @@ cd "$(dirname "$0")"
 echo -n "Starting web server in: "
 pwd
 npx http-server web -c-1 -p 3000
+pause 2

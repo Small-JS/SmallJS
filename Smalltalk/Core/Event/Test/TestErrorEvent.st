@@ -1,4 +1,4 @@
-CLASS TestErrorEvent EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestErrorEvent EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 METHODS
 

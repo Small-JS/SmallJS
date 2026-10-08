@@ -6,18 +6,19 @@ CLASSMETHODS
 type: type
 	^ self fromJs: INLINE 'new Event( type.js )'.
 !
+type: type options: options
+	"Options is an EventOptions instance."
+	^ self fromJs: INLINE 'new Event( type.js, options.js )'.
+!
 fromJsSubEvent: jsEvent
 	"Create ST Event subclass object from JS Event subclass object.
-	 Defaults to Event."
+	 Only creates subclasses in Core. Defaults to Event."
 
 	| jsClassName |
 
 	INLINE 'if( jsEvent == null ) return stNil'.
 
 	jsClassName := String fromJs: INLINE 'jsEvent.constructor.name'.
-	jsClassName = 'UiEvent' ifTrue: [ ^ UiEvent fromJs: jsEvent ].
-	jsClassName = 'MouseEvent' ifTrue: [ ^ MouseEvent fromJs: jsEvent ].
-	jsClassName = 'PointerEvent' ifTrue: [ ^ PointerEvent fromJs: jsEvent ].
 	jsClassName = 'ErrorEvent' ifTrue: [ ^ ErrorEvent fromJs: jsEvent ].
 
 	^ self fromJs: jsEvent.
