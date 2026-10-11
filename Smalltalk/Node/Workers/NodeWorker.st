@@ -7,6 +7,10 @@ CLASSMETHODS
 new: fileName
 	^ self fromJs: INLINE 'new workerThreads$.Worker( fileName.js )'.
 !
+new: fileName workerData: data
+	"Data is cloned and available in the worker as: NodeMessagePort workerData."
+	^ self fromJs: INLINE 'new workerThreads$.Worker( fileName.js, { workerData: data.$toJs() } )'.
+!
 
 METHODS
 
@@ -33,3 +37,10 @@ unref
 terminate
 	INLINE 'this.js.terminate()'.
 !
+
+"TODO: These less common Worker features are not yet implemented:
+	new Worker() options: argv, env (incl. workerThreads.SHARE_ENV), eval, execArgv,
+		name, resourceLimits, stdin, stdout, stderr, trackUnmanagedFds, transferList
+	worker.resourceLimits, workerThreads.resourceLimits
+	worker.getHeapSnapshot(), worker.performance, worker.stdin/stdout/stderr
+"

@@ -91,7 +91,6 @@ async testMinimizeMaximize
 	await Timer timeout: 1000.
 	self assert: [ Document default hidden not ].
 
-	"TODO: Is this necessary for any platform?"
 	window resizeTo: oldSize.
 	await Timer timeout: 500.
 !

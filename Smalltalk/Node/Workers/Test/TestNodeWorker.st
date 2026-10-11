@@ -3,7 +3,7 @@ CLASS TestNodeWorker EXTENDS Test MODULE TestNode CLASSVARS '' VARS 'worker'
 METHODS
 
 test
-	worker := NodeWorker new: './out/worker.js'.
+	worker := NodeWorker new: './out/worker.js' workerData: 'Worker data'.
 	self assert: [ worker threadId >= 0 ].
 
 	worker on: 'message' class: String then: [ :message | self onMessage: message ].
