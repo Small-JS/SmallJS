@@ -18,7 +18,7 @@ onMessage: event
 
 	"Reply on the port transferred with the message."
 	message = 'Port' ifTrue: [
-		port := ( event portsAs: MessagePort ) first.
+		port := event ports first.
 		port postMessage: 'Hello, port!'.
 		port close ].
 

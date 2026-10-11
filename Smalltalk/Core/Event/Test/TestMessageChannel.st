@@ -1,4 +1,4 @@
-CLASS TestMessageChannel EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestMessageChannel EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 METHODS
 

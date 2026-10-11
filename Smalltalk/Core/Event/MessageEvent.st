@@ -24,12 +24,8 @@ origin
 	^ String fromJs: INLINE 'this.js.origin'.
 !
 ports
-	"The ports are MessagePorts of the platform (Browser or Node).
-	 Use portsAs: to get them as instances of a specific ST class."
-	^ self portsAs: EventTarget.
-!
-portsAs: elementClass
-	^ Array fromJs: INLINE 'this.js.ports' elementClass: elementClass.
+	"The MessagePorts transferred with the message."
+	^ Array fromJs: INLINE 'this.js.ports' elementClass: MessagePort.
 !
 source
 	"A MessagePort, WindowProxy or ServiceWorker, or nil."

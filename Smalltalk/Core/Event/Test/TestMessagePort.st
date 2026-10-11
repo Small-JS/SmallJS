@@ -1,4 +1,4 @@
-CLASS TestMessagePort EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestMessagePort EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 
 "Most MessagePort tests are async: the asserts run in the message handlers."
 

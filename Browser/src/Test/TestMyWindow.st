@@ -18,9 +18,20 @@ onCanceledCallback
 	self assert: [ false ].
 !
 testAnimation
-	"Todo: Test this with Animation class:
-		requestAnimationFrame: callback
-		cancelAnimationFrame: requestId"
+	| window requestId |
+	window := Window default.
+	requestId := window requestAnimationFrame: [ :time | self onAnimationFrame: time ].
+	self assert: [ requestId class = Integer ].
+	requestId := window requestAnimationFrame: [ :time | self onCanceledAnimationFrame: time ].
+	"Cancel previous request before it executes."
+	window cancelAnimationFrame: requestId.
+!
+onAnimationFrame: time
+	self assert: [ ( time class = Float ) & ( time > 0 ) ].
+!
+onCanceledAnimationFrame: time
+	"This method should not get called."
+	self assert: [ false ].
 !
 testOtherMethods
 	| window element |

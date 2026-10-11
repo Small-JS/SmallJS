@@ -1,4 +1,4 @@
-CLASS MessagePort EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
+CLASS MessagePort EXTENDS EventTarget MODULE Core CLASSVARS '' VARS ''
 
 "Implements JS MessagePort: one of the two ports of a MessageChannel."
 

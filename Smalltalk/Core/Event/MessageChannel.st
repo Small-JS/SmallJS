@@ -1,4 +1,4 @@
-CLASS MessageChannel EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
+CLASS MessageChannel EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 "Implements JS MessageChannel: a channel with 2 entangled MessagePorts.
  A message posted on one port is received on the other port."

@@ -174,7 +174,11 @@ cancelIdleCallback: handle
 "Animation."
 
 requestAnimationFrame: callback
-	INLINE 'this.js.requestAnimationFrame( callback.js )'.
+	"Callback should have 1 argument: the frame timestamp in milliseconds.
+	 Returns the request id, to be used with cancelAnimationFrame:."
+	| jsCallback |
+	jsCallback := [ :jsTime | callback value: ( Float fromJs: jsTime ) ].
+	^ Integer fromJs: INLINE 'this.js.requestAnimationFrame( jsCallback.js )'.
 !
 cancelAnimationFrame: requestId
 	INLINE 'this.js.cancelAnimationFrame( requestId.js )'.
