@@ -162,7 +162,7 @@ directory
 	self assert: [ fileNames length = 2 ].
 	dir closeSync.
 
-	self end.
+	self links.
 !
 dirent: dirent
 	self assert: [ dirent parentPath = tempDirName ].
@@ -179,6 +179,93 @@ dirent: dirent
 	self assert: [ dirent isSymbolicLink not ].
 	self assert: [ dirent isFifo not ].
 	self assert: [ dirent isSocket not ].
+!
+links
+	| linkPath junctionPath stats |
+
+	"Hard link"
+	linkPath := Path join: tempDirName with: 'hardlink.tmp'.
+	Fs linkSync: tempFilePath to: linkPath.
+	self assert: [ ( Fs statSync: tempFilePath options: nil ) nlink = 2 ].
+	Fs unlinkSync: linkPath.
+	self assert: [ ( Fs statSync: tempFilePath options: nil ) nlink = 1 ].
+
+	"Symbolic link. Type junction doesn't need extra privileges on Windows,
+	 and is ignored on other platforms."
+	junctionPath := Path join: tempDirName with: 'junction'.
+	Fs symlinkSync: subDirName path: junctionPath type: 'junction'.
+	stats := Fs lstatSync: junctionPath options: nil.
+	self assert: [ stats isSymbolicLink ].
+	self assert: [ ( Fs statSync: junctionPath options: nil ) isDirectory ].
+	self assert: [ ( Fs readlinkSync: junctionPath options: nil ) includes: 'sub2' ].
+
+	"Real path resolves the link to the target."
+	self assert: [ ( Fs realpathSync: junctionPath options: nil )
+		= ( Fs realpathSync: subDirName options: nil ) ].
+	self assert: [ ( Fs realpathNativeSync: junctionPath options: nil )
+		= ( Fs realpathNativeSync: subDirName options: nil ) ].
+	self assert: [ ( Fs realpathSync: ( Path join: subDirName with: '..' ) options: nil )
+		= ( Fs realpathSync: ( Path join: tempDirName with: 'sub1' ) options: nil ) ].
+
+	Fs lutimesSync: junctionPath atime: 2 mtime: 1.
+	stats := Fs lstatSync: junctionPath options: nil.
+	self assert: [ stats mtimeMs = 1000 ].
+	"lchown does nothing on Windows. lchmod is only implemented on macOS."
+	Fs lchownSync: junctionPath uid: stats uid gid: stats gid.
+	Os isMacos ifTrue: [
+		Fs lchmodSync: junctionPath mode: stats mode ].
+
+	Fs unlinkSync: junctionPath.
+	self assert: [ ( Fs existsSync: junctionPath ) not ].
+	self assert: [ Fs existsSync: subDirName ].
+
+	self vectors.
+!
+vectors
+	| buffers bytes readBuffers |
+
+	tempFileFd := Fs openSync: tempFilePath flags: 'w+' mode: nil.
+	buffers := Array with: ( Buffer from: 'ab' ) with: ( Buffer from: 'cde' ).
+	bytes := Fs writevSync: tempFileFd buffers: buffers position: nil.
+	self assert: [ bytes = 5 ].
+	bytes := Fs writevSync: tempFileFd buffers: ( Array with: ( Buffer from: 'X' ) ) position: 0.
+	self assert: [ bytes = 1 ].
+	Fs closeSync: tempFileFd.
+	self assert: [ ( Fs readFileSync: tempFilePath ) toString = 'Xbcde' ].
+
+	tempFileFd := Fs openSync: tempFilePath flags: 'r' mode: nil.
+	readBuffers := Array with: ( Buffer new: 3 ) with: ( Buffer new: 3 ).
+	bytes := Fs readvSync: tempFileFd buffers: readBuffers position: nil.
+	self assert: [ bytes = 5 ].
+	self assert: [ readBuffers first toString = 'Xbc' ].
+	self assert: [ ( readBuffers last subarray: 0 to: 2 ) toString = 'de' ].
+	bytes := Fs readvSync: tempFileFd buffers: ( Array with: ( Buffer new: 2 ) ) position: 3.
+	self assert: [ bytes = 2 ].
+	Fs closeSync: tempFileFd.
+
+	self statfs.
+!
+statfs
+	| stats |
+	stats := Fs statfsSync: tempDirName options: nil.
+	self assert: [ stats class = FileStatFs ].
+	self assert: [ stats bsize > 0 ].
+	self assert: [ stats blocks > 0 ].
+	self assert: [ stats bavail <= stats blocks ].
+
+	self tempDisposable.
+!
+tempDisposable
+	| tempDir |
+	tempDir := Fs mkdtempDisposableSync: ( Path join: Os tmpDir with: 'smalljs-tfsd-' ) options: nil.
+	self assert: [ tempDir class = DisposableTempDir ].
+	self assert: [ tempDir path includes: 'smalljs-tfsd-' ].
+	self assert: [ Fs existsSync: tempDir path ].
+	Fs writeFileSync: ( Path join: tempDir path with: 'file.tmp' ) data: 'Data' options: nil.
+	tempDir remove.
+	self assert: [ ( Fs existsSync: tempDir path ) not ].
+
+	self end.
 !
 end
 	"Remove everything."

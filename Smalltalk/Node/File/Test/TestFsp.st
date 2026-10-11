@@ -6,9 +6,14 @@ CLASS TestFsp EXTENDS Test MODULE TestNode CLASSVARS ''
 async test
 	await self makeTemp.
 	await self openClose.
+	await self writeRead.
 	await self renameCopyRemove.
 	await self properties.
 	await self directories.
+	await self links.
+	await self statfs.
+	await self watch.
+	await self tempDisposable.
 	await self remove.
 !
 async makeTemp
@@ -126,6 +131,92 @@ checkDirent: dirent
 	self assert: [ dirent isSymbolicLink not ].
 	self assert: [ dirent isFifo not ].
 	self assert: [ dirent isSocket not ].
+!
+async links
+	| linkPath junctionPath stats target |
+
+	"Hard link"
+	linkPath := Path join: tempDirName with: 'hardlink.tmp'.
+	await Fsp link: tempFilePath to: linkPath.
+	stats := await Fsp stat: tempFilePath options: nil.
+	self assert: [ stats nlink = 2 ].
+	self assert: [ stats isFile ].
+	await Fsp unlink: linkPath.
+	stats := await Fsp stat: tempFilePath options: nil.
+	self assert: [ stats nlink = 1 ].
+
+	"Symbolic link. Type junction doesn't need extra privileges on Windows,
+	 and is ignored on other platforms."
+	junctionPath := Path join: tempDirName with: 'junction'.
+	await Fsp symlink: subDirName path: junctionPath type: 'junction'.
+	stats := await Fsp lstat: junctionPath options: nil.
+	self assert: [ stats isSymbolicLink ].
+	self assert: [ stats isDirectory not ].
+	stats := await Fsp stat: junctionPath options: nil.
+	self assert: [ stats isSymbolicLink not ].
+	self assert: [ stats isDirectory ].
+	target := await Fsp readlink: junctionPath options: nil.
+	self assert: [ target includes: 'sub2' ].
+
+	await Fsp lutimes: junctionPath atime: 2 mtime: 1.
+	stats := await Fsp lstat: junctionPath options: nil.
+	self assert: [ stats mtimeMs = 1000 ].
+	"lchown does nothing on Windows."
+	await Fsp lchown: junctionPath uid: stats uid gid: stats gid.
+	await self lchmod: junctionPath mode: stats mode.
+
+	await Fsp unlink: junctionPath.
+	self assert: [ ( Fs existsSync: junctionPath ) not ].
+	self assert: [ Fs existsSync: subDirName ].
+!
+async lchmod: path mode: mode
+	"lchmod is only implemented on macOS."
+	Os isMacos ifFalse: [ ^ nil ].
+	await Fsp lchmod: path mode: mode.
+!
+async statfs
+	| stats |
+	stats := await Fsp statfs: tempDirName options: nil.
+	self assert: [ stats class = FileStatFs ].
+	self assert: [ stats type >= 0 ].
+	self assert: [ stats bsize > 0 ].
+	self assert: [ stats frsize > 0 ].
+	self assert: [ stats blocks > 0 ].
+	self assert: [ stats bfree <= stats blocks ].
+	self assert: [ stats bavail <= stats blocks ].
+	self assert: [ stats files >= 0 ].
+	self assert: [ stats ffree >= 0 ].
+!
+async watch
+	| controller options fileNames watching filePath |
+	controller := AbortController new.
+	options := FileWatchOptions new.
+	options signal: controller signal.
+	fileNames := #().
+	watching := Fsp watch: tempDirName options: options iterate: [ :eventType :fileName |
+		self assert: [ #( 'rename' 'change' ) includes: eventType ].
+		fileNames add: fileName.
+		controller abort ].
+	"Stop watching after a while, also if no events arrive."
+	Timer timeout: 5000 then: [ controller abort ].
+
+	"Give the watcher time to start."
+	await Timer timeout: 100.
+	filePath := Path join: tempDirName with: 'watched.tmp'.
+	await Fsp writeFile: filePath data: 'Watched' options: nil.
+	await watching.
+	self assert: [ fileNames includes: 'watched.tmp' ].
+	await Fsp unlink: filePath.
+!
+async tempDisposable
+	| tempDir |
+	tempDir := await Fsp mkdtempDisposable: ( Path join: Os tmpDir with: 'smalljs-tfspd-' ) options: nil.
+	self assert: [ tempDir class = DisposableTempDir ].
+	self assert: [ tempDir path includes: 'smalljs-tfspd-' ].
+	self assert: [ Fs existsSync: tempDir path ].
+	await Fsp writeFile: ( Path join: tempDir path with: 'file.tmp' ) data: 'Data' options: nil.
+	await tempDir remove.
+	self assert: [ ( Fs existsSync: tempDir path ) not ].
 !
 async remove
 	| options |

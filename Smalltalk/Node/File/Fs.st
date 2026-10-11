@@ -46,6 +46,12 @@ readSync: fd buffer: buffer options: options
 	^ Integer fromJs:
 		INLINE 'fs$.readSync( fd.js, buffer.js, options.js )'.
 !
+readvSync: fd buffers: buffers position: position
+	"Read into an Array of Buffers sequentially. Return the total number of bytes read.
+	 If position is nil, read from the current position."
+	^ Integer fromJs:
+		INLINE 'fs$.readvSync( fd.js, buffers.$toJs(), position.js )'.
+!
 readSync: fd buffer: buffer offset: offset length: length position: position
 	^ Integer fromJs:
 		INLINE 'fs$.readSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
@@ -64,6 +70,12 @@ appendFileSync: path data: data options: options
 writeSync: fd buffer: buffer options: options
 	^ Buffer fromJs:
 		INLINE 'fs$.writeSync( fd.js, buffer.js, options.js )'.
+!
+writevSync: fd buffers: buffers position: position
+	"Write an Array of Buffers sequentially. Return the total number of bytes written.
+	 If position is nil, write at the current position."
+	^ Integer fromJs:
+		INLINE 'fs$.writevSync( fd.js, buffers.$toJs(), position.js )'.
 !
 writeSync: fd buffer: buffer offset: offset length: length position: position
 	^ Buffer fromJs:
@@ -125,6 +137,56 @@ fstatSync: fd options: options
 	^ FileStats fromJs:
 		INLINE 'fs$.fstatSync( fd.js, ( options.js ? options.js : undefined ) )'.
 !
+statfsSync: path options: options
+	"Return information about the file system containing path."
+	^ FileStatFs fromJs:
+		INLINE 'fs$.statfsSync( path.js, ( options.js ? options.js : undefined ) )'.
+!
+realpathSync: path options: options
+	"Return the canonical absolute path, resolving ., .. and symbolic links."
+	^ String fromJs:
+		INLINE 'fs$.realpathSync( path.js, ( options.js ? options.js : undefined ) )'.
+!
+realpathNativeSync: path options: options
+	"Like realpathSync:options:, but uses the native OS function."
+	^ String fromJs:
+		INLINE 'fs$.realpathSync.native( path.js, ( options.js ? options.js : undefined ) )'.
+!
+
+"Links
+ The l* methods operate on a symbolic link itself, instead of on its target."
+
+linkSync: existingPath to: newPath
+	"Create a hard link."
+	INLINE 'fs$.linkSync( existingPath.js, newPath.js )'.
+!
+symlinkSync: target path: path
+	INLINE 'fs$.symlinkSync( target.js, path.js )'.
+!
+symlinkSync: target path: path type: type
+	"Type is only used on Windows: 'file', 'dir' or 'junction'.
+	 Junctions are for directories only, but don't require extra privileges."
+	INLINE 'fs$.symlinkSync( target.js, path.js, type.js )'.
+!
+readlinkSync: path options: options
+	"Return the target of the symbolic link."
+	^ String fromJs:
+		INLINE 'fs$.readlinkSync( path.js, ( options.js ? options.js : undefined ) )'.
+!
+lstatSync: path options: options
+	^ FileStats fromJs:
+		INLINE 'fs$.lstatSync( path.js, ( options.js ? options.js : undefined ) )'.
+!
+lchmodSync: path mode: mode
+	"Only implemented on macOS."
+	INLINE 'fs$.lchmodSync( path.js, mode.js )'.
+!
+lchownSync: path uid: uid gid: gid
+	INLINE 'fs$.lchownSync( path.js, uid.js, gid.js )'.
+!
+lutimesSync: path atime: atime mtime: mtime
+	INLINE 'fs$.lutimesSync( path.js, atime.js, mtime.js )'.
+!
 
 "Directories"
 
@@ -135,6 +197,11 @@ mkdirSync: path options: options
 mkdtempSync: prefix options: options
 	^ String fromJs:
 		INLINE 'fs$.mkdtempSync( prefix.js, options.js )'.
+!
+mkdtempDisposableSync: prefix options: options
+	"Like mkdtempSync:options:, but return a DisposableTempDir that can remove itself."
+	^ DisposableTempDir fromJs:
+		INLINE 'fs$.mkdtempDisposableSync( prefix.js, ( options.js ? options.js : undefined ) )'.
 !
 opendirSync: path options: options
 	^ Dir fromJs:
@@ -151,20 +218,3 @@ globSync: pattern options: options
 rmdirSync: path
 	INLINE 'fs$.rmdirSync( path.js )'.
 !
-
-"TODO:
-Implement symbolic link operations.
-	fs.lchownSync(path, uid, gid)
-	fs.lutimesSync(path, atime, mtime)
-	fs.linkSync(existingPath, newPath)
-	fs.lstatSync(path[, options])
-	fs.readlinkSync(path[, options])
-	fs.realpathSync(path[, options])
-	fs.realpathSync.native(path[, options])
-	fs.symlinkSync(target, path[, type])
-
-And implement:
-	fs.readvSync(fd, buffers[, position])
-	fs.writevSync(fd, buffers[, position])
-	fs.mkdtempDisposableSync(prefix[, options])
-"

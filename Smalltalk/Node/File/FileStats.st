@@ -36,6 +36,31 @@ blksize
 	^ Integer fromJs: INLINE 'this.js.blksize'.
 !
 
+"Type"
+
+isFile
+	^ Boolean fromJs: INLINE 'this.js.isFile()'.
+!
+isDirectory
+	^ Boolean fromJs: INLINE 'this.js.isDirectory()'.
+!
+isSymbolicLink
+	"Only true for stats from: lstat."
+	^ Boolean fromJs: INLINE 'this.js.isSymbolicLink()'.
+!
+isBlockDevice
+	^ Boolean fromJs: INLINE 'this.js.isBlockDevice()'.
+!
+isCharacterDevice
+	^ Boolean fromJs: INLINE 'this.js.isCharacterDevice()'.
+!
+isFifo
+	^ Boolean fromJs: INLINE 'this.js.isFIFO()'.
+!
+isSocket
+	^ Boolean fromJs: INLINE 'this.js.isSocket()'.
+!
+
 "Times as milliseconds"
 
 atimeMs

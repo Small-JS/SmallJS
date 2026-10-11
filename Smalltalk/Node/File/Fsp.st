@@ -34,6 +34,11 @@ async stat: path options: options
 	^ FileStats fromJs:
 		INLINE 'await fsp$.stat( path.js, ( options.js ? options.js : undefined ) )'.
 !
+async statfs: path options: options
+	"Return information about the file system containing path."
+	^ FileStatFs fromJs:
+		INLINE 'await fsp$.statfs( path.js, ( options.js ? options.js : undefined ) )'.
+!
 
 "Reading"
 
@@ -86,6 +91,41 @@ async utimes: path atime: atime mtime: mtime
 	INLINE 'await fsp$.utimes( path.js, atime.js, mtime.js )'.
 !
 
+"Links
+ The l* methods operate on a symbolic link itself, instead of on its target."
+
+async link: existingPath to: newPath
+	"Create a hard link."
+	INLINE 'await fsp$.link( existingPath.js, newPath.js )'.
+!
+async symlink: target path: path
+	INLINE 'await fsp$.symlink( target.js, path.js )'.
+!
+async symlink: target path: path type: type
+	"Type is only used on Windows: 'file', 'dir' or 'junction'.
+	 Junctions are for directories only, but don't require extra privileges."
+	INLINE 'await fsp$.symlink( target.js, path.js, type.js )'.
+!
+async readlink: path options: options
+	"Return the target of the symbolic link."
+	^ String fromJs:
+		INLINE 'await fsp$.readlink( path.js, ( options.js ? options.js : undefined ) )'.
+!
+async lstat: path options: options
+	^ FileStats fromJs:
+		INLINE 'await fsp$.lstat( path.js, ( options.js ? options.js : undefined ) )'.
+!
+async lchmod: path mode: mode
+	"Only implemented on macOS."
+	INLINE 'await fsp$.lchmod( path.js, mode.js )'.
+!
+async lchown: path uid: uid gid: gid
+	INLINE 'await fsp$.lchown( path.js, uid.js, gid.js )'.
+!
+async lutimes: path atime: atime mtime: mtime
+	INLINE 'await fsp$.lutimes( path.js, atime.js, mtime.js )'.
+!
+
 "Directories"
 
 async opendir: path options: options
@@ -110,25 +150,28 @@ async mkdtemp: prefix
 		INLINE 'await fsp$.mkdtemp( prefix.js )'.
 !
 async mkdtempDisposable: prefix options: options
-	^ String fromJs:
-		INLINE 'await fsp$.mkdtempDisposable( prefix.js, options.js )'.
+	"Like mkdtemp:, but return a DisposableTempDir that can remove itself."
+	^ DisposableTempDir fromJs:
+		INLINE 'await fsp$.mkdtempDisposable( prefix.js, ( options.js ? options.js : undefined ) )'.
 !
 async rmdir: path options: options
 	INLINE 'await fsp$.rmdir( path.js, ( options.js ? options.js : undefined ) )'.
 !
 
-"TODO:
-Implement symbolic link operations:
-	fsPromises.lchmod(path, mode)
-	fsPromises.lchown(path, uid, gid)
-	fsPromises.lutimes(path, atime, mtime)
-	fsPromises.link(existingPath, newPath)
-	fsPromises.lstat(path[, options])
-	fsPromises.readlink(path[, options])
-	fsPromises.symlink(target, path[, type])
+"Watching"
 
-And also:
-	fsPromises.statfs(path[, options])
-	fsPromises.watch(filename[, options])
-"
-
+async watch: fileName options: options iterate: iterateBlock
+	"Watch a file or directory for changes, until the options signal is aborted.
+	 Options is a FileWatchOptions or nil (watch forever).
+	 IterateBlock is called with 2 arguments for each change:
+	 the event type ('rename' or 'change') and the file name (can be nil)."
+	INLINE '
+		try {
+			const asyncIterator = fsp$.watch( fileName.js, ( options.js ? options.js : undefined ) );
+			for await ( const event of asyncIterator ) {
+				iterateBlock.$value$value$(
+					stString$class.$fromJs$( event.eventType ),
+					( event.filename == null ? stNil : stString$class.$fromJs$( event.filename ) ) ) }
+		} catch( error ) {
+			if( error.name !== "AbortError" ) throw error; }'.
+!

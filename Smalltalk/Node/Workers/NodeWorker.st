@@ -1,7 +1,13 @@
 CLASS NodeWorker EXTENDS EventEmitter MODULE Node1 CLASSVARS '' VARS ''
 
-"Implements Node.js worker_threads Worker.
- Events: 'online', 'message', 'messageerror', 'error', 'exit'."
+"Implements Node.js worker_threads Worker."
+
+"Note: These Worker features are not yet implemented,
+ because they need ST classes for Node.js streams:
+	worker.stdin, worker.stdout, worker.stderr
+	worker.getHeapSnapshot()
+ These very new profiling functions are also not yet implemented:
+	worker.startCpuProfile(), worker.startHeapProfile()"
 
 INLINE 'const workerThreads$ = await import( "worker_threads" );'
 
@@ -80,10 +86,3 @@ async terminate
 	^ Integer fromJs: INLINE 'await this.js.terminate()'.
 !
 
-"TODO: These Worker features are not yet implemented,
- because they need ST classes for Node.js streams:
-	worker.stdin, worker.stdout, worker.stderr
-	worker.getHeapSnapshot()
- These very new profiling functions are also not yet implemented:
-	worker.startCpuProfile(), worker.startHeapProfile()
-"
