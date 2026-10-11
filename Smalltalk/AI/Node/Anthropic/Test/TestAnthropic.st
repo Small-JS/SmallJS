@@ -1,6 +1,6 @@
 CLASS TestAnthropic EXTENDS Test MODULE TestAi CLASSVARS '' VARS 'anthropic'
 
-"Also tests classes: AnthropicCreateMessageParams, AnthropicMessage."
+"Also tests classes: AnthropicMessageCreateParams, AnthropicMessage."
 
 disabled
 	^ Anthropic available not.
@@ -21,7 +21,7 @@ async test
 	self assert: [ messageParam role = 'user' ].
 	self assert: [ messageParam content = 'Say exactly: This is a test' ].
 
-	createMessageParams := AnthropicCreateMessageParams new
+	createMessageParams := AnthropicMessageCreateParams new
 		model: anthropic model;
 		maxTokens: 1024;
 		messages: ( Array with: messageParam ).

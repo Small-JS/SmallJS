@@ -3,7 +3,7 @@ CLASS TestAiFactory EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 "Tests the common chat interface of all AI provivers."
 
 test
-	#( 'ollama' "'openai' 'deepseek' 'googleai' 'anthropic'" )
+	#( 'ollama' 'openai' 'deepseek' 'googleai' 'anthropic' )
 		do: [ :name | self testAi: name ]
 !
 async testAi: name

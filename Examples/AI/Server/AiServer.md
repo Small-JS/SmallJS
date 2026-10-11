@@ -6,13 +6,16 @@ This server can route chat requests to supported AI providers in a unified manne
 
 ## Running
 
-First install npm dependencies by running `npm install` in a terminal.
+First install npm dependencies by running `./install.sh` (or `npm install`) in a terminal.
 
-Before running the server you need to set the AI providers to user.\
-Copy the file `./env.example` to `.env` and uncomment the AI providers you want to use.\
+Before running the server you need to set the AI providers to use.\
+Copy the file `.env.example` to `.env` and uncomment the AI providers you want to use.\
 You will have to put in your own secret API keys to be able to connect to paid models.
 
-Start the AI Client to access them from that application, see:
+Build the server and run its tests with `./build.sh`.\
+Start the server with `./start.sh`.
+
+Start the AI Client to access the server from that application, see:
 [../Client/AiClient.md](../Client/AiClient.md)
 
 ## Using
@@ -33,8 +36,8 @@ This request does not have any arguments.
 
 #### Example response
 
-`[ { "provider": "openai", "models": [ "gpt-4o", "gpt-4.1" ] } ,`\
-`{ "provider": "deepseek", "models": [ "deepseek-chat", "deepseek-reasoner" ] } ]`
+`[ { "provider": "openai", "models": [ "gpt-5.6-luna", "gpt-5.6-terra" ] },`\
+`{ "provider": "deepseek", "models": [ "deepseek-flash", "deepseek-pro" ] } ]`
 
 The response is implemented in the ST class: `AiProviders`
 
@@ -42,18 +45,24 @@ The response is implemented in the ST class: `AiProviders`
 
 #### Description
 
-Calls the specified AI provider and model with a single text question (prompt)\
+Calls the specified AI provider and model with text messages (prompts)\
 and returns the single text answer.
+
+#### Arguments
+
+- `provider`: the name of the AI provider, as returned by `api/providers`.
+- `model`: the name of the model.
+- `messages`: a JSON array of text messages.
 
 #### Example call
 
-`http://localhost:3000/api/chat/?text=Say+this+is+a+test`
+`http://localhost:3000/api/chat?provider=openai&model=gpt-5.6-luna&messages=["Say this is a test"]`
 
 The request is implemented in the ST class: `AiChatRequest`
 
 #### Example response
 
-`{ "success": true, "text": "This is a test. How can I assist you further?" }`
+`{ "success": true, "text": "This is a test." }`
 
 The response is implemented in the ST class: `AiChatResponse`
 
@@ -65,25 +74,20 @@ The following AI providers are supported:
 
 With Ollama you can run models locally, so you don't need API keys and buy tokens.\
 The Ollama server software can be downloaded here: [ollama.com/download](https://ollama.com/download)\
-Ollama supports open source models. A small 2 GB starter model is Llama 3.2.\
-You can download, install and run it with: `ollama run llama3.2`
+Ollama supports open source models. A small starter model is Llama 3.2 1B.\
+You can download, install and run it with: `ollama run llama3.2:1b`\
+Start the Ollama server with `./startOllama.sh`.
 
-### OpenAI with models GTP*,  O*
+### OpenAI with models GPT*
 
 A popular AI provider, also powering ChatGPT.
 
 You can create an account here: [auth.openai.com/create-account](https://auth.openai.com/create-account)
 
-### Deepseek with models R*
+### Deepseek with models V*, R*
 
-An opensource, free AI provider, rivaling OpenAI.
-
-You can create an account here: [platform.deepseek.com/sign_up](https://platform.deepseek.com/sign_up)
-
-### Deepseek with models R*
-
-An opensource, free AI provider, rivaling OpenAI.\
-It's API is compatible with that of OpenAI.
+An open source AI provider, rivaling OpenAI.\
+Its API is compatible with that of OpenAI.
 
 You can create an account here: [platform.deepseek.com/sign_up](https://platform.deepseek.com/sign_up)
 

@@ -1,7 +1,7 @@
 CLASS TestAnthropicClientOptions EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
 
 test
-	| anthropic options |
+	| anthropic options headers query |
 
 	options := AnthropicClientOptions new.
 	self assert: [ options class = AnthropicClientOptions ].
@@ -21,10 +21,40 @@ test
 	options timeout: 5000.
 	self assert: [ options timeout = 5000 ].
 
+	options authToken: 'myAuthToken'.
+	self assert: [ options authToken = 'myAuthToken' ].
+
+	options webhookKey: 'myWebhookKey'.
+	self assert: [ options webhookKey = 'myWebhookKey' ].
+
+	headers := Headers new.
+	headers set: 'X-My-Header' value: 'myValue'.
+	options defaultHeaders: headers.
+	self assert: [ options defaultHeaders class = Headers ].
+	self assert: [ ( options defaultHeaders get: 'X-My-Header' ) = 'myValue' ].
+
+	query := Object new.
+	query atProperty: 'myParam' put: 'myValue'.
+	options defaultQuery: query.
+	self assert: [ ( options defaultQuery atProperty: 'myParam' ) = 'myValue' ].
+
+	options dangerouslyAllowBrowser: true.
+	self assert: [ options dangerouslyAllowBrowser ].
+
+	options logLevel: 'error'.
+	self assert: [ options logLevel = 'error' ].
+
+	"An explicit API key takes precedence, so the profile is not loaded."
+	options profile: 'myProfile'.
+	self assert: [ options profile = 'myProfile' ].
+
 	anthropic := Anthropic new: options.
 	self assert: [ anthropic class = Anthropic ].
 	self assert: [ anthropic baseUrl = options baseUrl ].
 	self assert: [ anthropic apiKey = options apiKey ].
 	self assert: [ anthropic maxRetries = options maxRetries ].
 	self assert: [ anthropic timeout = options timeout ].
+	self assert: [ anthropic authToken = options authToken ].
+	self assert: [ anthropic webhookKey = options webhookKey ].
+	self assert: [ anthropic logLevel = options logLevel ].
 !

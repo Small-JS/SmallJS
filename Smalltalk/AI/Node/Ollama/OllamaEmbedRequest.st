@@ -1,5 +1,7 @@
 CLASS OllamaEmbedRequest EXTENDS JsObject MODULE AiOllama CLASSVARS '' VARS ''
 
+"Note: options are not implemented yet."
+
 CLASSMETHODS
 
 new
@@ -23,6 +25,4 @@ keep_alive: keep_alive
 dimensions: dimensions
 	INLINE 'this.js.dimensions = dimensions.js'.
 !
-
-"TODO: Implement options"
 

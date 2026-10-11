@@ -34,7 +34,7 @@ async chat: messages
 			role: 'user';
 			content: message ].
 
-	createMessageParams := AnthropicCreateMessageParams new
+	createMessageParams := AnthropicMessageCreateParams new
 		model: self model;
 		maxTokens: 1024;
 		messages: messageParams.
@@ -56,6 +56,12 @@ authToken
 !
 baseUrl
 	^ String fromJs: INLINE 'this.js.baseURL'.
+!
+webhookKey
+	^ String fromJs: INLINE 'this.js.webhookKey'.
+!
+logLevel
+	^ String fromJs: INLINE 'this.js.logLevel'.
 !
 maxRetries
 	^ Integer fromJs: INLINE 'this.js.maxRetries'.

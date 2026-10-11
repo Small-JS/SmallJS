@@ -3,35 +3,36 @@
 // This file is not used when running this app.
 
 // AI - Ollama
-import * as ollama from "ollama";
-let olOllama: ollama.Ollama;
-let olChatRequest: ollama.ChatRequest;
-let olChatResponse: ollama.ChatResponse;
-let olMessage: ollama.Message;
-let olEmbedRequest: ollama.EmbedRequest;
-let olEmbedResponse: ollama.EmbedResponse;
+import * as Ollama from "ollama";
+let ollamaOllama: Ollama.Ollama;
+let ollamaChatRequest: Ollama.ChatRequest;
+let ollamaChatResponse: Ollama.ChatResponse;
+let ollamaMessage: Ollama.Message;
+let ollamaEmbedRequest: Ollama.EmbedRequest;
+let ollamaEmbedResponse: Ollama.EmbedResponse;
 
 // AI - OpenAI
 import Openai from "openai";
-let oaiChatCompletion: Openai.ChatCompletion;
-let oaiChatCompletionChoice: Openai.ChatCompletion.Choice;
-let oaiChatCompletionMessage: Openai.ChatCompletionMessage;
-let oaiChatCompletionUsage: Openai.CompletionUsage;
-let oaiCompletionTokensDetails: Openai.CompletionUsage.CompletionTokensDetails;
-let oaiPromptTokensDetails: Openai.CompletionUsage.PromptTokensDetails;
+let openaiChatCompletion: Openai.ChatCompletion;
+let openaiChatCompletionChoice: Openai.ChatCompletion.Choice;
+let openaiChatCompletionMessage: Openai.ChatCompletionMessage;
+let openaiChatCompletionUsage: Openai.CompletionUsage;
+let openaiCompletionTokensDetails: Openai.CompletionUsage.CompletionTokensDetails;
+let openaiPromptTokensDetails: Openai.CompletionUsage.PromptTokensDetails;
 
 // AI - Google AI
-import * as googleai from "@google/generative-ai";
-let gaiGoogleAi: googleai.GoogleGenerativeAI;
-let gaiModelParams: googleai.ModelParams;
-let gaiGenerativeModel: googleai.GenerativeModel;
-let gaiGenerateContentResult: googleai.GenerateContentResult;
-let gaiGenerateContentResponse: googleai.GenerateContentResponse;
+import * as Googleai from "@google/generative-ai";
+let googleaiGoogleAi: Googleai.GoogleGenerativeAI;
+let googleaiGenerativeModel: Googleai.GenerativeModel;
+let googleaiModelParams: Googleai.ModelParams;
+let googleaiGenerateContentResult: Googleai.GenerateContentResult;
+let googleaiGenerateContentResponse: Googleai.GenerateContentResponse;
+let googleaiEnhancedGenerateContentResponse: Googleai.EnhancedGenerateContentResponse;
 
 // AI - Anthropic
-import * as anthropic from "@anthropic-ai/sdk";
-let antAnthropic: anthropic.Anthropic;
-let antClientOptions: anthropic.ClientOptions;
+import * as Anthropic from "@anthropic-ai/sdk";
+let anthropicAnthropic: Anthropic.Anthropic;
+let anthropicClientOptions: Anthropic.ClientOptions;
 import { MessageCreateParams } from '@anthropic-ai/sdk/resources/index.mjs';
 import { Message } from '@anthropic-ai/sdk/resources/index.mjs';
 import { TextBlock } from '@anthropic-ai/sdk/resources/index.mjs';
