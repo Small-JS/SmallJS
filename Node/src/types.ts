@@ -31,9 +31,9 @@ let env = process.env;
 let config = process.config;
 
 // Workers
-import * as workerThreads from "node:worker_threads";
-let worker = new workerThreads.Worker( "worker.js" );
-let parentPort = workerThreads.parentPort;
+import * as WorkerThreads from "node:worker_threads";
+let worker = new WorkerThreads.Worker( "worker.js" );
+let parentPort = WorkerThreads.parentPort;
 
 // Crypto
 import crypto from "node:crypto";
