@@ -10,6 +10,7 @@ import * as fsp from "fs/promises";
 let fileHandle: fsp.FileHandle;
 let fsConstants = fs.constants;
 import * as path$ from "path";
+let buffer: Buffer;
 
 // OS
 import * as os from "node:os";
