@@ -7,7 +7,7 @@ test
 
 	self assert: [ imageInput type = 'image' ].
 	self assert: [ imageInput src endsWith: 'SmallJS.png' ].
-	self assert: [ imageInput imageSize = ( 50 @ 50 ) ].
+	self assert: [ imageInput imageSize = ( 48 @ 48 ) ].
 	self assert: [ imageInput alt = 'SmallJS logo' ].
 !
 async testGui
