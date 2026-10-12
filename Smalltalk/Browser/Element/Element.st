@@ -262,12 +262,6 @@ replaceChildren: nodes
 replaceWith: node
 	INLINE 'this.js.replaceWith( node.js )'.
 !
-requestFullscreen: block onError: errorBlock navigationUi: navigationUi
-	INLINE '
-		this.js.requestFullscreen( navigationUi.js )
-		.then( block.func() )
-		.catch( errorBlock.func() )'.
-!
 requestPointerLock
 	INLINE 'this.js.requestPointerLock()'.
 !

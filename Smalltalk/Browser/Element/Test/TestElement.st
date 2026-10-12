@@ -64,10 +64,6 @@ testProperties
 !
 testMethods
 	"Method attachShadow: is tested in TestShadowRoot."
-	"Todo: Test dispatchEvent: in class Event class"
-	"Todo: Test these in class PointerEvents:
-		hasPointerCapture, releasePointerCapture, setPointerCapture, requestPointerLock "
-	"Todo: Test requestFullscreen:... in interactive mode."
 
 	| document div p1 p2 rect0 |
 	document := Document new.
@@ -167,6 +163,27 @@ testMethods2
 
 	div removeChildren.
 	self assert: [ div children length = 0 ].
+!
+testPointerMethods
+	"Without a real pointer device interaction, only the error cases can be tested.
+	 Pointer id 12345 is assumed to be not active."
+	| div errorBlock |
+	div := ( Document default createElement: 'div' ) id: 'pointerDiv'.
+	Document default body appendChild: div.
+
+	"No pointer is captured."
+	self assert: [ ( div hasPointerCapture: 1 ) not ].
+	self assert: [ ( div hasPointerCapture: 12345 ) not ].
+
+	"Capturing or releasing an inactive pointer throws a NotFoundError."
+	self assertError: [ div setPointerCapture: 12345 ].
+	self assertError: [ div releasePointerCapture: 12345 ].
+	self assert: [ ( div hasPointerCapture: 12345 ) not ].
+
+	"Pointer lock requires a user gesture, so it fails without one and
+	 does not lock the pointer, so it is not tested here."
+
+	div remove.
 !
 testCreation
 	| document element |
