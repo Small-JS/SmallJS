@@ -3,6 +3,12 @@ CLASS EventTarget EXTENDS JsObject MODULE Core CLASSVARS '' VARS 'eventIds'
 	 Variable value holds the JS object associated ST objects of subsclasses,
 	 so is unrelated to EventTargert functionality."
 
+CLASSMETHODS
+
+new
+	^ self fromJs: INLINE 'new EventTarget()'.
+!
+
 METHODS
 
 = eventTarget
