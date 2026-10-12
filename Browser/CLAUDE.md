@@ -16,6 +16,7 @@ https://developer.mozilla.org/en-US/docs/Web/API
 - `MyBrowserApp.st`: the main app (loads the UI components and binds their elements).
 - `Components/`, `InputComponents/`: UI components, each with tests in its own `Test/` folder.
 - `worker.ts`, `sharedWorker.ts`: worker scripts used by the library's Worker and SharedWorker tests.
+- `canvasWorker.ts`: worker script for `OffscreenCanvasComponent`, runs `Components/MyCanvasWorker.st`.
 - `types.ts`: imports npm modules only to inspect their TS types in VSCode; not used at runtime.
 - `Test/TestMyBrowserApp.st`, `Test/TestMyWindow.st`: tests for this app.
 
