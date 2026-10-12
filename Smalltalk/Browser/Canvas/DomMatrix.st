@@ -171,14 +171,14 @@ rotateAxis: degrees3d angle: angle
 rotate: angle
 	^ DomMatrix fromJs: INLINE 'this.js.rotate( angle.js )'.
 !
-rotateFromVector: point3d
-	^ DomMatrix fromJs: INLINE 'this.js.rotate( point3d.x.js, point3d.y.js, point3d.z.js )'.
+rotateFromVector: point
+	^ DomMatrix fromJs: INLINE 'this.js.rotateFromVector( point.x.js, point.y.js )'.
 !
 scale: scale3d
-	^ DomMatrix fromJs: INLINE 'this.js.rotate( scale3d.x.js, scale3d.y.js, scale3d.z.js )'.
+	^ DomMatrix fromJs: INLINE 'this.js.scale( scale3d.x.js, scale3d.y.js, scale3d.z.js )'.
 !
 scale: scale3d origin: origin3d
-	^ DomMatrix fromJs: INLINE 'this.js.rotate( scale3d.x.js, scale3d.y.js, scale3d.z.js, origin3d.x.js, origin3d.y.js, origin3d.z.js  )'.
+	^ DomMatrix fromJs: INLINE 'this.js.scale( scale3d.x.js, scale3d.y.js, scale3d.z.js, origin3d.x.js, origin3d.y.js, origin3d.z.js )'.
 !
 transformPoint: point3d
 	| domPoint result |
