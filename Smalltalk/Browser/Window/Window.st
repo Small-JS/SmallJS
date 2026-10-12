@@ -143,9 +143,6 @@ self
 sessionStorage
 	^ Storage fromJs: INLINE 'this.js.sessionStorage'.
 !
-speechSynthesis
-	^ SpeechSynthesis fromJs: INLINE 'this.js.speechSynthesis'.
-!
 statusBarVisible
 	^ Boolean fromJs: INLINE 'this.js.statusbar.visible'.
 !

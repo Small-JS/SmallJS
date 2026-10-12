@@ -41,7 +41,6 @@ testProperties
 	self assert:[ window scrollY >= 0 ].
 	self assert:[ window self class = Window ].
 	self assert:[ window sessionStorage class = Storage ].
-	self assert:[ window speechSynthesis class = SpeechSynthesis ].
 	self assert:[ window statusBarVisible | true ].
 	self assert:[ window toolBarVisible | true ].
 	self assert:[ window top = window ].
