@@ -2,10 +2,17 @@ CLASS TestStorage EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 
+test
+	self assert: [ Storage local class = Storage ].
+	self assert: [ Storage local = Window default localStorage ].
+	self assert: [ Storage session class = Storage ].
+	self assert: [ Storage session = Window default sessionStorage ].
+	self assert: [ Storage local ~= Storage session ].
+!
 testLocalStorage
 	"Only use test keys, don't clear localStorage because it persists for the whole site."
 	| storage length |
-	storage := Window default localStorage.
+	storage := Storage local.
 	storage removeItem: 'testLocalKey'.
 	length := storage length.
 	self assert: [ ( storage item: 'testLocalKey' ) isNil ].
@@ -21,7 +28,7 @@ testLocalStorage
 !
 testSessionStorage
 	| storage |
-	storage := Window default sessionStorage.
+	storage := Storage session.
 	storage clear.
 	self assert: [ storage length = 0 ].
 	self assert: [ storage keys isEmpty ].

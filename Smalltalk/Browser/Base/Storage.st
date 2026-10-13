@@ -1,8 +1,19 @@
 CLASS Storage EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "This class encasulates the JS class: Storage.
- Instances are obtained with: Window default localStorage / sessionStorage.
+ Instances are obtained with: Storage local / session.
  Keys and values are strings."
+
+CLASSMETHODS
+
+local
+	"Return the localStorage singleton, which persists across browser sessions."
+	^ Window default localStorage.
+!
+session
+	"Return the sessionStorage singleton, which persists for the current page session only."
+	^ Window default sessionStorage.
+!
 
 METHODS
 

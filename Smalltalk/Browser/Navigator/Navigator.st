@@ -37,9 +37,6 @@ permissions
 platform
 	^ String fromJs: INLINE 'this.js.platform'.
 !
-serviceWorker
-	^ ServiceWorkerContainer fromJs: INLINE 'this.js.serviceWorker'.
-!
 storage
 	^ StorageManager fromJs: INLINE 'this.js.storage'.
 !

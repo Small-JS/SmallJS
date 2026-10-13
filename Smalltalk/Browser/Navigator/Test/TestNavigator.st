@@ -16,7 +16,6 @@ test
 	self assert: [ navigator pdfViewerEnabled class = Boolean ].
 	self assert: [ navigator platform class = String ].
 	self assert: [ navigator permissions class = Permissions ].
-	self assert: [ navigator serviceWorker class = ServiceWorkerContainer ].
 	self assert: [ navigator storage class = StorageManager ].
 	self assert: [ navigator userAgent includes: 'Mozilla' ].
 
