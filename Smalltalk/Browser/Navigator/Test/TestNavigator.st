@@ -11,11 +11,7 @@ test
 	self assert: [ navigator hardwareConcurrency >= 1 ].
 	self assert: [ navigator language  includes: '-' ].
 	self assert: [ navigator languages length >= 1 ].
-	self assert: [ navigator locks class = LockManager ].
 	self assert: [ navigator maxTouchPoints >= 0 ].
-	self assert: [ navigator mediaCapabilities class = MediaCapabilities ].
-	self assert: [ navigator mediaDevices class = MediaDevices ].
-	self assert: [ navigator mediaSession class = MediaSession ].
 	self assert: [ navigator onLine class = Boolean ].
 	self assert: [ navigator pdfViewerEnabled class = Boolean ].
 	self assert: [ navigator platform class = String ].

@@ -10,7 +10,7 @@ CLASS NodeMessagePort EXTENDS MessagePort MODULE Node1 CLASSVARS '' VARS ''
 	workerThreads.moveMessagePortToContext(port, contextifiedSandbox)
 	workerThreads.postMessageToThread(threadId, value[, transferList][, timeout])
 	workerThreads.isInternalThread
-	workerThreads.locks (needs a LockManager class in Core; the Browser one is a stub)
+	workerThreads.locks (needs a LockManager class in Core)
 	workerThreads.BroadcastChannel (same as the global; belongs in Core)
 "
 

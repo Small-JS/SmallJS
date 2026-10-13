@@ -22,20 +22,8 @@ language
 languages
 	^ Array fromJs: INLINE 'this.js.languages' elementClass: String.
 !
-locks
-	^ LockManager fromJs: INLINE 'this.js.locks'.
-!
 maxTouchPoints
 	^ Integer fromJs: INLINE 'this.js.maxTouchPoints'.
-!
-mediaCapabilities
-	^ MediaCapabilities fromJs: INLINE 'this.js.mediaCapabilities'.
-!
-mediaDevices
-	^ MediaDevices fromJs: INLINE 'this.js.mediaDevices'.
-!
-mediaSession
-	^ MediaSession fromJs: INLINE 'this.js.mediaSession'.
 !
 onLine
 	^ Boolean fromJs: INLINE 'this.js.onLine'.
