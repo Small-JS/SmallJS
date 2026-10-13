@@ -1,8 +1,9 @@
 CLASS ClipboardItem EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encapsulates the JS class: ClipboardItem.
-	 It holds the data of one clipboard item in one or more representations,
-	 each with its own MIME type, e.g. 'text/plain' and 'text/html'.
-	 Data of a representation is a String or a Blob."
+
+"This class encapsulates the JS class: ClipboardItem.
+ It holds the data of one clipboard item in one or more representations,
+ each with its own MIME type, e.g. 'text/plain' and 'text/html'.
+ Data of a representation is a String or a Blob."
 
 CLASSMETHODS
 

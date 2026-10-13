@@ -1,6 +1,7 @@
 CLASS Clipboard EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encapsulates the JS class: Clipboard.
-	 Reading and writing may require user permission and a focused document."
+
+"This class encapsulates the JS class: Clipboard.
+ Reading and writing may require user permission and a focused document."
 
 CLASSMETHODS
 

@@ -10,9 +10,6 @@ clipboard
 cookieEnabled
 	^ Boolean fromJs: INLINE 'this.js.cookieEnabled'.
 !
-credentials
-	^ CredentialsContainer fromJs: INLINE 'this.js.credentials'.
-!
 geolocation
 	^ Geolocation fromJs: INLINE 'this.js.geolocation'.
 !
