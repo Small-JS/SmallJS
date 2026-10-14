@@ -14,7 +14,7 @@ test
 testOptions
 	| options event |
 	options := CloseEventOptions new
-		code: 1000; reason: 'Done'; wasClean: true; yourself.
+		code: 1000; reason: 'Done'; wasClean: true.
 	event := CloseEvent type: 'close' options: options.
 	self assert: [ event class = CloseEvent ].
 	self assert: [ event code = 1000 ].

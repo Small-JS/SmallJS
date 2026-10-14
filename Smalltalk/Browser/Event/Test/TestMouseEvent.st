@@ -28,8 +28,7 @@ testOptions
 		screenX: 110; screenY: 120;
 		movementX: 1; movementY: -2;
 		relatedTarget: Window default;
-		detail: 1; bubbles: true;
-		yourself.
+		detail: 1; bubbles: true.
 	event := MouseEvent type: 'mousedown' options: options.
 	self assert: [ event class = MouseEvent ].
 	self assert: [ event type = 'mousedown' ].

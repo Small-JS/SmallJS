@@ -39,3 +39,10 @@ https://developer.mozilla.org/en-US/docs/Web/API
 
 - Implement and test more libraries, but on specific requests only.
 - Follow the structure and testing style of the other examples and of the library's own `Test` folders.
+
+## Coding style
+
+- Do not end cascades with `yourself` when it is not necessary.
+  In SmallJS a method without an explicit `^` return returns `self`,
+  so a cascade ending with such a method (e.g. a setter) already returns the receiver.
+  Only use `yourself` when the last message of the cascade returns another object.

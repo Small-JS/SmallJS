@@ -15,7 +15,7 @@ test
 	options view: Window default.
 	self assert: [ options view = Window default ].
 
-	options := UiEventOptions new detail: 1; view: Window default; cancelable: true; yourself.
+	options := UiEventOptions new detail: 1; view: Window default; cancelable: true.
 	self assert: [ options detail = 1 ].
 	self assert: [ options view = Window default ].
 	self assert: [ options cancelable ].

@@ -17,7 +17,7 @@ test
 	options composed: true.
 	self assert: [ options composed ].
 
-	options := EventOptions new bubbles: false; cancelable: true; composed: false; yourself.
+	options := EventOptions new bubbles: false; cancelable: true; composed: false.
 	self assert: [ options bubbles not ].
 	self assert: [ options cancelable ].
 	self assert: [ options composed not ].
@@ -30,14 +30,14 @@ testEvent
 	self assert: [ event cancelable not ].
 	self assert: [ event composed not ].
 
-	event := Event type: 'custom' options: ( EventOptions new bubbles: true; cancelable: true; composed: true; yourself ).
+	event := Event type: 'custom' options: ( EventOptions new bubbles: true; cancelable: true; composed: true ).
 	self assert: [ event class = Event ].
 	self assert: [ event type = 'custom' ].
 	self assert: [ event bubbles ].
 	self assert: [ event cancelable ].
 	self assert: [ event composed ].
 
-	event := Event type: 'custom' options: ( EventOptions new cancelable: true; yourself ).
+	event := Event type: 'custom' options: ( EventOptions new cancelable: true ).
 	self assert: [ event bubbles not ].
 	self assert: [ event cancelable ].
 	event preventDefault.

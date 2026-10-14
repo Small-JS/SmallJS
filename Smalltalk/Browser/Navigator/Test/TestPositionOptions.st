@@ -17,7 +17,7 @@ test
 	options timeout: 5000.
 	self assert: [ options timeout = 5000 ].
 
-	options := PositionOptions new enableHighAccuracy: false; maximumAge: 0; timeout: 100; yourself.
+	options := PositionOptions new enableHighAccuracy: false; maximumAge: 0; timeout: 100.
 	self assert: [ options enableHighAccuracy not ].
 	self assert: [ options maximumAge = 0 ].
 	self assert: [ options timeout = 100 ].

@@ -9,7 +9,7 @@ new
 	^ self newEmpty.
 !
 message: message
-	^ self new message: message; yourself.
+	^ self new message: message.
 !
 
 METHODS

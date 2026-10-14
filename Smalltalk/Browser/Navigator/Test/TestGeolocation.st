@@ -36,7 +36,7 @@ testCurrentPositionError
 	geolocation
 		currentPositionThen: [ :aPosition | position := aPosition ]
 		error: [ :anError | error := anError ]
-		options: ( PositionOptions new timeout: 0; yourself ).
+		options: ( PositionOptions new timeout: 0 ).
 	self assert: [ position isNil ].
 	self assert: [ error class = GeolocationPositionError ].
 	self assert: [ error code = 3 ].
@@ -48,7 +48,7 @@ testCurrentPositionError
 testCurrentPositionOptions
 	| geolocation position options |
 	geolocation := self mockGeolocation.
-	options := PositionOptions new enableHighAccuracy: true; maximumAge: 500; timeout: 2000; yourself.
+	options := PositionOptions new enableHighAccuracy: true; maximumAge: 500; timeout: 2000.
 	geolocation
 		currentPositionThen: [ :aPosition | position := aPosition ]
 		error: [ :anError | ]
@@ -72,7 +72,7 @@ testWatchPositionError
 	| geolocation error watchId |
 	geolocation := self mockGeolocation.
 	watchId := geolocation
-		watchPositionOptions: ( PositionOptions new timeout: 0; yourself )
+		watchPositionOptions: ( PositionOptions new timeout: 0 )
 		then: [ :aPosition | ]
 		error: [ :anError | error := anError ].
 	self assert: [ watchId = 42 ].

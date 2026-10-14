@@ -13,7 +13,7 @@ test
 testOptions
 	| options event |
 	options := CustomEventOptions new
-		detail: 'Hello'; bubbles: true; cancelable: true; yourself.
+		detail: 'Hello'; bubbles: true; cancelable: true.
 	event := CustomEvent type: 'custom' options: options.
 	self assert: [ event class = CustomEvent ].
 	self assert: [ ( String fromJs: event detail js ) = 'Hello' ].
@@ -31,7 +31,7 @@ testDispatch
 	target := EventTarget fromJs: INLINE 'new EventTarget()'.
 	target addEventListener: 'custom' then: [ :event | received := event ].
 	target dispatchEvent: ( CustomEvent type: 'custom'
-		options: ( CustomEventOptions new detail: 'Hello'; yourself ) ).
+		options: ( CustomEventOptions new detail: 'Hello' ) ).
 	self assert: [ received class = CustomEvent ].
 	self assert: [ ( String fromJs: received detail js ) = 'Hello' ].
 !

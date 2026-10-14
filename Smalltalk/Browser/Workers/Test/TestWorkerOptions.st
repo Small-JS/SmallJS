@@ -17,7 +17,7 @@ test
 	options credentials: 'same-origin'.
 	self assert: [ options credentials = 'same-origin' ].
 
-	options := WorkerOptions new name: 'myWorker'; type: 'classic'; credentials: 'omit'; yourself.
+	options := WorkerOptions new name: 'myWorker'; type: 'classic'; credentials: 'omit'.
 	self assert: [ options name = 'myWorker' ].
 	self assert: [ options type = 'classic' ].
 	self assert: [ options credentials = 'omit' ].

@@ -12,7 +12,7 @@ testNew
 !
 testOptions
 	| event options |
-	options := UiEventOptions new detail: 2; view: Window default; bubbles: true; yourself.
+	options := UiEventOptions new detail: 2; view: Window default; bubbles: true.
 	event := UiEvent type: 'click' options: options.
 	self assert: [ event class = UiEvent ].
 	self assert: [ event type = 'click' ].

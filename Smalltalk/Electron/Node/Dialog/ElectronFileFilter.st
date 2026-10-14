@@ -9,7 +9,7 @@ new
 	^ self newEmpty.
 !
 name: name extensions: extensions
-	^ self new name: name; extensions: extensions; yourself.
+	^ self new name: name; extensions: extensions.
 !
 
 METHODS

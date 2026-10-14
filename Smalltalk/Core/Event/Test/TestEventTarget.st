@@ -102,7 +102,7 @@ testDispatchEvent
 
 	"Return false only if a listener cancels a cancelable event."
 	target addEventListener: 'test' then: [ :anEvent | anEvent preventDefault ].
-	event := Event type: 'test' options: ( EventOptions new cancelable: true; yourself ).
+	event := Event type: 'test' options: ( EventOptions new cancelable: true ).
 	self assert: [ ( target dispatchEvent: event ) not ].
 	self assert: [ event defaultPrevented ].
 

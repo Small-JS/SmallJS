@@ -8,7 +8,7 @@ CLASS TestSharedWorker EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 METHODS
 
 newSharedWorker: name
-	^ SharedWorker new: 'Script/sharedWorker.js' options: ( WorkerOptions new name: name; type: 'module'; yourself ).
+	^ SharedWorker new: 'Script/sharedWorker.js' options: ( WorkerOptions new name: name; type: 'module' ).
 !
 testClose
 	"After a shared worker closes, a new SharedWorker with the same url and name
