@@ -38,7 +38,6 @@ sleep 4
 # Test in enabled browsers.
 # Browsers will close automatically if all tests succeed.
 # Otherwise you can inspect the error with the browser dev tools [F12].
-# Enable popups for windows creation tests to succeed.
 
 if
 	[ ! -z "$browserChrome" ]

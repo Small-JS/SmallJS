@@ -34,7 +34,3 @@ After all tests have completed succesfuly, brouwsers should close automatically
 If a browser stays open, check out what went wrong with [F12] dev tools.
 Alternatively, for better debugging options, you can open `Browser.code-workspace` with VSCode,
 select the test configuration for that browser, e.g. `Launch Chrome test`, and run the project with [F5] .
-
-Note:\
-Testing with a new browser will probably fail initially, because popups need to be allowed.\
-Change this setting manually once for "localhost:3000" and then re-run tests.

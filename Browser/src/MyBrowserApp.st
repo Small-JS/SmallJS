@@ -39,6 +39,6 @@ findComponent: componentClass
 	 Raise error if not found."
 	| result |
 	result := components find: [ :component | component class = componentClass ].
-	result isNil ifTrue: [ Error throw: 'Component class not found: ', componentClass className ].
+	result isNil ifTrue: [ Error throw: 'Component class not found: ', componentClass name ].
 	^ result.
 !

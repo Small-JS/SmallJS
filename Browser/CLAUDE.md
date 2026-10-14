@@ -46,3 +46,10 @@ https://developer.mozilla.org/en-US/docs/Web/API
   In SmallJS a method without an explicit `^` return returns `self`,
   so a cascade ending with such a method (e.g. a setter) already returns the receiver.
   Only use `yourself` when the last message of the cascade returns another object.
+
+## Testing
+
+- Unit tests must not rely on user interaction, like allowing popups or permission prompts.
+  Test such APIs with a mock JS object instead (see `TestGeolocation`, `TestHistory`).
+- Unit tests must not add entries to the session history of the test page (e.g. `pushState`),
+  also not from an iframe, because then the test page cannot close itself after the tests.

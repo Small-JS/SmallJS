@@ -70,3 +70,29 @@ testInput
 	self assert: [ input formNoValidate not ].
 	self assert: [ input formTarget = '' ].
 !
+testFormData
+	"Test creating FormData from the named controls of a form."
+	| form name unnamed button formData |
+
+	form := Document default createElement: 'form'.
+	name := Document default createElement: 'input'.
+	name name: 'name'; value: 'Alice'.
+	form appendChild: name.
+	unnamed := Document default createElement: 'input'.
+	unnamed value: 'Ignored'.
+	form appendChild: unnamed.
+	button := Document default createElement: 'button'.
+	button type: 'submit'; name: 'action'; value: 'save'.
+	form appendChild: button.
+
+	"Controls without a name, and buttons, are not included."
+	formData := FormData form: form.
+	self assert: [ formData class = FormData ].
+	self assert: [ formData keys = #( 'name' ) ].
+	self assert: [ ( formData get: 'name' ) = 'Alice' ].
+
+	"The submitter button is included."
+	formData := FormData form: form submitter: button.
+	self assert: [ formData keys = #( 'name' 'action' ) ].
+	self assert: [ ( formData get: 'action' ) = 'save' ].
+!
