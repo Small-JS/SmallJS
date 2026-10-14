@@ -46,12 +46,3 @@ userAgent
 webdriver
 	^ Boolean fromJs: INLINE 'this.js.webdriver'.
 !
-
-"Methods"
-
-sendBeacon: url data: data
-	^ Boolean fromJs: INLINE 'this.js.sendBeacon( url.js, data.js )'.
-!
-vibrate: pattern
-	^ Boolean fromJs: INLINE 'this.js.vibrate( pattern.$toJs() )'.
-!

@@ -18,14 +18,4 @@ test
 	self assert: [ navigator permissions class = Permissions ].
 	self assert: [ navigator storage class = StorageManager ].
 	self assert: [ navigator userAgent includes: 'Mozilla' ].
-
-	"2024-05-18: This currently results in error 405: Method not allowed"
-	"self assert: [ navigator sendBeacon: '/' data: 'ping' ]."
 !
-
-
-" TODO:
-vibrate: pattern
-	^ Boolean fromJs: INLINE 'this.js.vibrate( pattern.$toJs() )'.
-!
-"

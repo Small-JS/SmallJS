@@ -174,6 +174,12 @@ tagName
 after: node
 	INLINE 'this.js.after( node.js )'.
 !
+animate: keyframes options: options
+	"Start and return a new Animation on this element.
+	 Keyframes is an Array of JsObjects with CSS properties, like: opacity, and optional: offset, easing.
+	 Options is a duration in milliseconds, or a JsObject with JS KeyframeAnimationOptions."
+	^ Animation fromJs: INLINE 'this.js.animate( keyframes.$toJs(), options.$toJs() )'.
+!
 attachShadow: aMode delegatesFocus: aDelegatesFocus
 	INLINE 'let options = { mode: aMode.js, delegatesFocus: aDelegatesFocus.js }'.
 	^ ShadowRoot fromJs: INLINE 'this.js.attachShadow( options )'.
@@ -186,6 +192,10 @@ before: node
 !
 closest: selector
 	^ Element fromJsSubElement: INLINE 'this.js.closest( selector.js )'.
+!
+getAnimations
+	"Return the Animations that affect this element."
+	^ Array fromJs: INLINE 'this.js.getAnimations()' elementClass: Animation.
 !
 getAttribute: name
 	^ String fromJs: INLINE 'this.js.getAttribute( name.js )'.

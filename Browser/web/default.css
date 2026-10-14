@@ -73,3 +73,15 @@ th, td {
 	font-style: italic;
 	font-weight: bold;
 }
+
+
+.animationTrack {
+	width: 240px;
+	padding: 4px 0px;
+}
+
+.animationBox {
+	width: 30px;
+	height: 30px;
+	background-color: blue;
+}

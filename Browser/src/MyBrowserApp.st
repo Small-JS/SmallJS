@@ -25,7 +25,7 @@ async bindElements
 "Accessing"
 
 componentClasses
-	^ #( AnchorComponent CanvasComponent OffscreenCanvasComponent ClipboardComponent ClipboardImageComponent CssComponent DialogsComponent EmbedComponent
+	^ #( AnchorComponent AnimationComponent CanvasComponent OffscreenCanvasComponent ClipboardComponent ClipboardImageComponent CssComponent DialogsComponent EmbedComponent
 		FieldSetComponent FormComponent GeolocationComponent
 		InputComponent ListInputComponent SelectComponent RadioInputComponent CheckboxInputComponent
 		ImageInputComponent FileInputComponent DateInputComponent SelectionComponent
