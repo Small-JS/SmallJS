@@ -86,6 +86,9 @@ testRemoveEventListener
 	target removeEventListener: 'unknown' then: block2.
 	self assert: [ target eventIds length = 2 ].
 
+	"Removing a listener from a target that never had one does nothing."
+	EventTarget new removeEventListener: 'test' then: block1.
+
 	target removeEventListener: 'test' then: block2.
 	target removeEventListener: 'other' then: block1.
 	self assert: [ target eventIds length = 0 ].

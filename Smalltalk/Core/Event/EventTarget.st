@@ -31,7 +31,7 @@ addEventListener: type then: block
 !
 removeEventListener: type then: block
 	| eventId |
-	eventIds length -1 to: 0 by: -1 do: [ :index |
+	self eventIds length -1 to: 0 by: -1 do: [ :index |
 		eventId := eventIds at: index.
 		( eventId type = type ) & ( eventId block = block ) ifTrue: [
 			INLINE 'this.js.removeEventListener( eventId.type.js, eventId.jsBlock.js )'.
