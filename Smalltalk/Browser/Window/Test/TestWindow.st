@@ -47,3 +47,17 @@ testProperties
 	self assert:[ window visualViewport class = VisualViewport ].
 	self assert:[ window window = window ].
 !
+testIframe
+	"Test the relation between a window in an iframe and its parent window."
+	| iframe frameWindow |
+	iframe := Document default createElement: 'iframe'.
+	Document default body appendChild: iframe.
+	frameWindow := iframe contentWindow.
+	self assert:[ frameWindow class = Window ].
+	self assert:[ frameWindow parent = Window default ].
+	self assert:[ frameWindow top = Window default ].
+	self assert:[ frameWindow frameElement class = HtmlIframeElement ].
+	self assert:[ frameWindow frameElement = iframe ].
+	self assert:[ Window default frameElement isNil ].
+	iframe remove.
+!

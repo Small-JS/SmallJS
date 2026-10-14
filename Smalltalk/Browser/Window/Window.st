@@ -104,7 +104,8 @@ pageYOffset
 	^ self scrollY.
 !
 parent
-	"Todo: Also implement iFrame result."
+	"Return the parent Window, or self if this is the top window.
+	 Note: For a window in an iframe, the iframe element itself is returned by: frameElement."
 	^ Window fromJs: INLINE 'this.js.parent'.
 !
 personalBarVisible
