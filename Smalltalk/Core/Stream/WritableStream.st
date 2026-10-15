@@ -10,9 +10,12 @@ locked
 
 "Methods"
 
-abort
-	^ ReadableStreamDefaultReader fromJs: INLINE 'this.js.abort()'.
+async abort
+	INLINE 'await this.js.abort()'.
+!
+async abort: reason
+	INLINE 'await this.js.abort( reason.js )'.
 !
 getWriter
-	^ ReadableStreamDefaultWriter fromJs: INLINE 'this.js.getWriter()'.
+	^ WritableStreamDefaultWriter fromJs: INLINE 'this.js.getWriter()'.
 !

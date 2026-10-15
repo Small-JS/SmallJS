@@ -2,6 +2,22 @@
 // This is done to facilitate inspecting their TS types using VSCode.
 // This file is not used when running this project.
 
+// ==== File
+
+let file: File;
+let fileOptions: FilePropertyBag;
+
+// ==== Blob
+
+let blob: Blob;
+let blobOptions: BlobPropertyBag;
+
+// ==== Stream
+
+let readableStream: ReadableStream;
+let readableStreamDefaultReader: ReadableStreamDefaultReader;
+let writableStream: WritableStream;
+let writableStreamDefaultWriter: WritableStreamDefaultWriter;
 
 // ==== Crypto
 

@@ -4,17 +4,20 @@ METHODS
 
 "Properties"
 
-closedThen: block
-	^ Boolean fromJs: INLINE 'this.js.closed().then( block.js )'.
+async closed
+	"Returns when the stream is closed."
+	INLINE 'await this.js.closed'.
 !
 
 "Methods"
 
-cancelThen: block
-	INLINE 'this.js.cancel().then( block.js )'.
+async cancel
+	INLINE 'await this.js.cancel()'.
 !
-readThen: block
-	"Block should have 2 arguments: value (Arraybuffer) and done (Boolean)."
-	INLINE 'this.js.read().then(
-		( { value, done } ) => block.js( stArrayBuffer.$fromJs$( value ), stBoolean$class.$fromJs$( done ) ) )'.
+async cancel: reason
+	INLINE 'await this.js.cancel( reason.js )'.
+!
+async read
+	"Returns the next chunk of the stream as a ReadableStreamReadResult."
+	^ ReadableStreamReadResult fromJs: INLINE 'await this.js.read()'.
 !
