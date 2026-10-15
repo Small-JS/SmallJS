@@ -29,7 +29,7 @@ increment
 	self update.
 !
 reset
-	"Increase the counter and update the view."
+	"Reset the counter and update the view."
 
 	counter reset.
 	self update.
