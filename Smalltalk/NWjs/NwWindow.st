@@ -8,8 +8,11 @@ get
 get: domWindow
 	^ NwWindow fromJs: INLINE 'gui.Window.get( domWindow.js )'.
 !
-open: url options: options
-	^ NwWindow fromJs: INLINE 'gui.Window.open( url.js, options.js )'.
+async open: url options: options
+	"Since NW.js 0.13 Window.open returns undefined,
+	 the new window is passed to the callback instead."
+	^ NwWindow fromJs: INLINE 'await new Promise(
+		resolve => gui.Window.open( url.js, options.js, resolve ) )'.
 !
 
 METHODS

@@ -5,7 +5,9 @@ async test: aApp
 	app := aApp.
 
 	self testWindow.
+	self testEval.
 	await self testFileOpen.
+	await self testOpen.
 	await self testSize.
 	await self testMinimizeMaximize.
 	await self testMove.
@@ -28,6 +30,30 @@ testWindow
 
 	domWindow := Window default.
 	self assert: [ ( NwWindow get: domWindow ) window = domWindow ].
+!
+testEval
+	"A nil frame evaluates the script in the main frame of the window."
+	window eval: 'window.testEvalResult = 6 * 7;' frame: nil.
+	self assert: [ ( window window atJsProperty: 'testEvalResult' ) = 42 ].
+!
+async testOpen
+	| options childWindow |
+
+	options := JsObject newEmpty.
+	options atJsProperty: 'width' put: 300.
+	options atJsProperty: 'height' put: 200.
+	childWindow := await NwWindow open: 'child.html' options: options.
+	self assert: [ childWindow class = NwWindow ].
+
+	"Wait for the child page to load."
+	await Timer timeout: 1000.
+	self assert: [ childWindow title = 'My NW.js Child Window' ].
+	self assert: [ childWindow size >= ( 300 @ 200 ) ].
+	self assert: [ childWindow size < ( 400 @ 300 ) ].
+
+	childWindow close.
+	window focus: true.
+	await Timer timeout: 500.
 !
 async testFileOpen
 	app fileOpenButton click.
@@ -182,6 +208,3 @@ devTools
 	"Only called in manual test, because the dev tools window cannot be closed (NW.js bug)."
 	window devTools: true.
 !
-
-"TODO: Test: open: url options: options"
-"TODO: test: eval: script frame: frame"
