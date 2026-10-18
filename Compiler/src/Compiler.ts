@@ -10,7 +10,7 @@ import * as fs from "fs";
 
 export class Compiler
 {
-	static version = "2.2";
+	static version = "2.3";
 
 	classCompiler = new ClassCompiler();
 

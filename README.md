@@ -7,37 +7,47 @@
 	<a href="https://small-js.org" style="font-weight: bold;">small-js.org</a>
 </p>
 
-## News - SmallJS 2.2 released ! - 6-AUG-2026
+## News - SmallJS 2.3 released - 18-OCT-2026
 
+New features are:
 
-### AI coding assistant
+### Compiler
 
-- Now you can use an **AI assistant** to code in SmallJS!\
-  See the [Tutorial](https://small-js.org/Tutorial) home page for setting it up.
-
-### Examples
-
-- Added example app **RAG** showing AI use with **Research Augmented Generation**.\
-  Everyting runs locally with models in Ollama, using SQLite or Postgres as vector stores.
-
-### Contributions
-
-- Added app **React Counter** to contributions, to show to use SmallJS in **React** projects.
+- Debugging: Enhanced debugging in SmallJS by allowing breakpoints in more places:\
+  In assignments, constant statements and especially with blocks!\
+  Step-into debugging is now disabled for common classes like Integer and String,\
+  giving a nice, streamlined debugging experience.\
 
 ### Smalltalk library
 
-- Added embedding functionality to AI class Ollama.
-- Added `doAwait:` method to class `Array` to await iterating over an async block.
-- Made subsystems `Database` and `AI` more modular,
-  allowing projects to just install npm packages of implementations they use.
+- Electron: Added full support for core Electron JS base classes.\
+  Updated the Electron example app to show it off.\
+  The example app NodeGui has been moved to contributions,\
+  leaving NW.js and Electron as fully supported desktop options.
 
-### Build
+- Browser: Added functionality and tests to classes:\
+  Animation, FromData, History, Iframe, Permissions, Storage, WebWorker,\
+  Canvas, DomMatrix, Geolocation, Clipboard, MediaQuery.
 
-- All projects now support **TypeScript 7** builds.
-- Made build scripts more modular for example projects.
-  Every project now has their own scripts for: install, build, update and clean.
-- Installed package updates must be at least 7 days old, for security.
+- Node: Added functionality and tests to classes:\
+  Fs, Fsp, NodeWorker, Buffer, NodeMessagePort.
 
+- Core: Added functionality and tests to classes:\
+  Event types, File, streams.
+
+- AI: Expanded option support for Anthropic.
+
+### Tutorial
+
+- AI: Tutorial video to create a Tic-tac-toe game in SmallJS using Claude AI!\
+  See the Tutorial home page for the link.\
+  Claude writes the SmallJS code, which is well structured and maintainable.
+
+### Disclaimer
+
+The code in this release was partially built with AI (Claude).\
+Great care was taken ensure that every generated line of code\
+conforms to the code quality standards of the existing project.
 
 ## Introducing SmallJS
 

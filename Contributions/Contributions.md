@@ -6,14 +6,18 @@ and may require updating to run.
 
 Contact the creator of a contribution if you have any questions about them.
 
-## [Frequencies](./Frequencies/Frequencies.md)
-
-The letter frequency app that is the result of the SmallJS browser Tutorial.
-
 ## [CounterUsingMithril](./CounterUsingMithril/CounterUsingMithril.md)
 
 This is another implementation of the Counter example\
 that uses the Mithril HTML UI library and the Tachyons CSS stylesheet.
+
+## [Frequencies](./Frequencies/Frequencies.md)
+
+The letter frequency app that is the result of the SmallJS browser Tutorial.
+
+## [NodeGui](NodeGui/NodeGui.md)
+
+Desktop app with a native GUI by using NodeGui, based on the Qt GUI library.
 
 ## [Pharo](./Pharo/Pharo.md)
 
@@ -25,7 +29,8 @@ through a web API using Pharo Zinc framework.
 This is the Counter example implemented in the React framework using Vite.\
 It shows how to use SmallJS in React projects.
 
-## [NodeGui](NodeGui/NodeGui.md)
+## [Tictactoe](./Tictactoe/Tictactoe.md)
 
-Desktop app with a native GUI by using NodeGui, based on the Qt GUI library.
+Tic-Tac-Toe browser game, a human player against a computer opponent.\
+Created by Claude AI as a conversion from the Counter example.
 
