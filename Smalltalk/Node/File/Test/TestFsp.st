@@ -196,7 +196,8 @@ async watch
 	watching := Fsp watch: tempDirName options: options iterate: [ :eventType :fileName |
 		self assert: [ #( 'rename' 'change' ) includes: eventType ].
 		fileNames add: fileName.
-		controller abort ].
+		"On macOS, FSEvents may first report earlier changes in the directory."
+		fileName = 'watched.tmp' ifTrue: [ controller abort ] ].
 	"Stop watching after a while, also if no events arrive."
 	Timer timeout: 5000 then: [ controller abort ].
 
