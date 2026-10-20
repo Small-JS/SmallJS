@@ -230,17 +230,24 @@ export class ClassCompiler
 	compileMethodHeaderVariable()
 	{
 		let variableName = this.parser.parseVariableName();
-		this.method.args.push( new CompiledVariable( variableName ) );
+		this.checkReservedWord( variableName, "Argument" );
+
+		let compiledVariable = new CompiledVariable( variableName );
+		if( compiledVariable.includedIn( this.method.args ) )
+			this.error( "Duplicate argument: " + variableName );
+
+		this.method.args.push( compiledVariable );
 		this.method.header += ' ' + variableName;
 	}
 
+	// Always compile all parts, also for an empty method body,
+	// so that a constructor calls super() and other methods return self.
+
 	compileMethodBody()
 	{
-		while( !this.parser.atMethodEnd() ) {
-			this.compileConstructor();
-			this.compileMethodVariables();
-			this.compileStatements();
-		}
+		this.compileConstructor();
+		this.compileMethodVariables();
+		this.compileStatements();
 
 		// Save the optional next comment as the category comment.
 		this.parser.saveNextComment( true );
@@ -268,9 +275,7 @@ export class ClassCompiler
 	private compileVariable(): SourceNode
 	{
 		let variableName: string = this.parser.parseVariableName();
-
-		if( [ 'true', 'false', 'nil', 'self', 'super', 'await' ].includes( variableName ) )
-			this.error( "Local variable name is reserved word: " + variableName );
+		this.checkReservedWord( variableName, "Local variable" );
 
 		let compiledVariable = new CompiledVariable( variableName );
 		if( compiledVariable.includedIn( this.method.args ) )
@@ -437,9 +442,13 @@ export class ClassCompiler
 		else if( term == "(" )
 			node = this.compileParenthesis();
 		else if( CharUtil.isIdentifierStart( term ) && ![ "nil", "true", "false" ].includes( term ) )
-			node = this.compileIdentifier( term );
+			return this.compileIdentifier( term );
 		else
 			node = this.compileLiteral( term );
+
+		// Only a plain variable can be assigned to, not e.g. a variable
+		// within parentheses, a block or a literal array.
+		this.justCompiledVariable = false;
 
 		return node;
 	}
@@ -493,8 +502,15 @@ export class ClassCompiler
 
 		this.compileBlockVariables( node );
 
-		while( !this.parser.tryParseTerm( "]" ) )
+		// An empty block returns nil.
+		if( this.parser.peekTerm() == "]" )
+			node.add( "\t\t\t\treturn stNil;\n" );
+
+		while( !this.parser.tryParseTerm( "]" ) ) {
+			if( this.parser.atMethodEnd() )
+				this.error( "Missing \"]\" at end of block." );
 			node.add( this.compileBlockStatement() );
+		}
 
 		node.add( "\t\t\t} )" );
 
@@ -513,14 +529,19 @@ export class ClassCompiler
 
 	compileBlockArguments( node: SourceNode )
 	{
-		let first = true;
+		let blockArgs: CompiledVariable[] = [];
 		while( this.parser.tryParseTerm( ":" ) ) {
-			if( first )
-				first = false;
-			else
+			if( blockArgs.length > 0 )
 				node.add( ", " );
 
-			let arg = new CompiledVariable( this.parser.parseIdentifier() );
+			let variableName = this.parser.parseVariableName();
+			this.checkReservedWord( variableName, "Block argument" );
+
+			let arg = new CompiledVariable( variableName );
+			if( arg.includedIn( blockArgs ) )
+				this.error( "Duplicate block argument: " + variableName );
+			blockArgs.push( arg );
+
 			node.add( arg.jsName() );
 			this.method.args.push( arg );
 		}
@@ -556,7 +577,7 @@ export class ClassCompiler
 
 		if( hasReturn ) {
 			this.method.hasReturnFromBlock = true;
-			node.add( "throw new BlockReturn( " ).add( expression ).add( " );\n" );
+			node.add( "throw new BlockReturn( " ).add( expression ).add( ", $home$ );\n" );
 		}
 		else {
 			// Last expression in block is return value.
@@ -626,6 +647,11 @@ export class ClassCompiler
 		if( !CharUtil.isDigit( num ) )
 			this.error( "Illegal number: " + negate + num );
 
+		// Remove leading zeros, because JS strict mode does not allow them.
+		// Keep one zero if no other digit follows, e.g. for "0" and "0.5".
+		while( num.length > 1 && num[ 0 ] == "0" && CharUtil.isDigit( num[ 1 ] ) )
+			num = num.substring( 1 );
+
 		let stClass: string;
 		if( num.indexOf( "." ) >= 0 )
 			stClass = "Float";
@@ -645,8 +671,11 @@ export class ClassCompiler
 		this.parser.mustParseTerm( "(" );
 
 		let node = this.sourceNode( "stArray$class.$new()", "array" );
-		while( !this.parser.tryParseTerm( ")" ) )
+		while( !this.parser.tryParseTerm( ")" ) ) {
+			if( this.parser.atMethodEnd() )
+				this.error( "Missing \")\" at end of literal array." );
 			node.add( ".$add$( " ).add( this.compileReceiver() ).add( " )" );
+		}
 
 		this.addClassReferenceToClassAndMethod( "Array" );
 
@@ -659,8 +688,13 @@ export class ClassCompiler
 
 		if( name == "self" )
 			node.add( "this" );
-		else if( name == "super" )
+		else if( name == "super" ) {
+			// In JS, "super" can only be used to call a method, not as a value.
+			let next = this.parser.peekTerm();
+			if( !Naming.methodIsUnary( next ) && !Naming.methodIsBinary( next ) && !Naming.methodIsKeywordSelector( next ) )
+				this.error( "Message expected after \"super\"." );
 			node.add( "super" );
+		}
 		else if( CharUtil.isUppercase( name ) )
 			node.add( this.compileClassReference( name ) );
 		else if( CharUtil.isLowercase( name ) )
@@ -730,18 +764,24 @@ export class ClassCompiler
 		this.parser.skipSpace();
 		let position = this.parser.position.copy();
 
+		let childCount = receiver.children.length;
 		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
 		if( !this.parser.tryParseTerm( ";" ) )
 			return;
 
-		if( receiver.children.length <= 1 )
+		// Each message send adds one child to the receiver.
+		if( receiver.children.length == childCount )
 			this.error( "Message expected before cascade" );
 
 		// Each cascaded message is generated on its own JS line,
 		// so map them for breakpoints like statements, see mapFirstLine().
 		let lastMessage = <SourceNode> receiver.children.pop();
+
+		// In JS, "super" cannot be stored in a variable.
+		if( receiver.toString() == "super" )
+			this.error( "Cannot cascade messages to \"super\"." );
 		receiver.prepend( "( () => { let $object$ = " ).add( ";\n" );
 		let line = this.sourceNode( "\t\t\t$object$", "cascadedLine" ).add( lastMessage ).add( ";\n" );
 		this.mapFirstLine( line, position );
@@ -937,6 +977,14 @@ export class ClassCompiler
 		}
 
 		return result;
+	}
+
+	// Report an error if an argument or local variable name is a reserved word.
+
+	checkReservedWord( name: string, kind: string )
+	{
+		if( [ 'true', 'false', 'nil', 'self', 'super', 'async', 'await' ].includes( name ) )
+			this.error( kind + " name is reserved word: " + name );
 	}
 
 	error( message: string )

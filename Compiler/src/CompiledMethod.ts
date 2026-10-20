@@ -45,12 +45,15 @@ export class CompiledMethod
 		// If the method has a return from a (nested) block,
 		// the exception BlockReturn needs to be caught
 		// and its value returned from the method.
+		// Only catch returns from blocks of this method invocation, identified by $home$.
+		// Returns from blocks of other methods must pass through to their own method.
 		if( this.hasReturnFromBlock )
-			node.add( "\t\ttry {\n" )
+			node.add( "\t\tconst $home$ = {};\n" )
+				.add( "\t\ttry {\n" )
 				.add( this.body )
 				.add( "\t\t}\n" )
 				.add( "\t\tcatch( exception ) {\n" +
-					"\t\t\tif( exception.constructor === BlockReturn )\n" +
+					"\t\t\tif( exception.constructor === BlockReturn && exception.home === $home$ )\n" +
 					"\t\t\t\treturn exception.value;\n" +
 					"\t\t\tthrow exception;\n\t\t}\n" );
 		else

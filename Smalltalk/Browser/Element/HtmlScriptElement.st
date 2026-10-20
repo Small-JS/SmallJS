@@ -27,8 +27,8 @@ src: src
 isAsync
 	^ Boolean fromJs: INLINE 'this.js.async'.
 !
-isAsync: async
-	INLINE 'this.js.async = async.js'.
+isAsync: isAsync
+	INLINE 'this.js.async = isAsync.js'.
 !
 defer
 	^ Boolean fromJs: INLINE 'this.js.defer'.
