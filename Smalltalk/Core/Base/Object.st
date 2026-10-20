@@ -11,8 +11,6 @@ CLASSMETHODS
 myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
-	| r |
-	r :=  [ ] value.
 !
 
 "Creating"
