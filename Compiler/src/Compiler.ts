@@ -46,10 +46,6 @@ export class Compiler
 				this.sourceMaps = false;
 				args.shift();
 			}
-			else if( option == '-s' ) {
-				this.sourceMaps = false;
-				args.shift();
-			}
 			else if( option == '-m' ) {
 				this.minimize = true;
 				args.shift();

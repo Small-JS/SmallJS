@@ -16,7 +16,7 @@ New features are:
 - Debugging: Enhanced debugging in SmallJS by allowing breakpoints in more places:\
   In assignments, constant statements and especially with blocks!\
   Step-into debugging is now disabled for common classes like Integer and String,\
-  giving a nice, streamlined debugging experience.\
+  giving a nice, streamlined debugging experience.
 
 ### Smalltalk library
 

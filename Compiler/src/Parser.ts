@@ -402,12 +402,17 @@ export class Parser
 		this.position = position.copy();
 	}
 
+	// Report the error as "<path>:<line>:<column>: ..."
+	// so that VSCode shows it as a link to the error position.
+	// The path is relative to the current folder, so the link only works
+	// if the terminal is in the same folder as the compiler was started from.
+	// The column is in characters, not tabbed, as VSCode expects.
+
 	error( message: string )
 	{
 		let fullMessage: string =
-			"Compile error in file: " + this.filename +
-			", line " + String( this.position.line ) + ", column " + String( this.position.tabbedColumn ) +
-			": " + message;
+			this.filename + ":" + this.position.line + ":" + this.position.column +
+			": Compile error: " + message;
 
 		console.error( fullMessage )
 		// Playground: Cannot exit process in browser, so comment out next line.

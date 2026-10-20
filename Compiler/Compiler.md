@@ -10,7 +10,7 @@ To test itself after changes, the compiler starts the ../Node project and runs i
 
 ## Usage
 
-	node ./out/App.js [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>
+	../Compiler/start.sh [-s] [-m <start class>] [-t] <ST source folders> [+t <ST source folders>] <JS output folder>
 		-s : Don't generate source map files and remove existing ones.
 		-m : Minimize generated classes from specified starting class.
 		-t : Don't compile ./Test subfolders in following folders.
@@ -27,11 +27,11 @@ See `Examples/Shop/Client/LoginApp.st` for an example.
 
 Example for Node projects:
 
-	node ./out/App.js -t ../Smalltalk/Core ../Smalltalk/Node +t src out
+	../Compiler/start.sh -t ../Smalltalk/Core ../Smalltalk/Node +t src out
 
 Example for browser projects:
 
-	node ./out/App.js -s -t ../Smalltalk/Core ../Smalltalk/Browser +t src web
+	../Compiler/start.sh -s -t ../Smalltalk/Core ../Smalltalk/Browser +t src web
 
 Note that for Node and browser projects, different parts of the ST image should compiled, otherwise runtime errors will occur in the compiled code.
 
