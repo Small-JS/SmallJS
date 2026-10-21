@@ -1,5 +1,5 @@
 // This class contains a subset of fields of CompiledClass
-// that are stored in file ClassDocumentation.json.
+// that are stored in file DocumentedClasses.json.
 // That file contains class information with first comments.
 
 // This class may only have static methods to remain exportable to JSON.
@@ -29,25 +29,11 @@ export class DocumentedClassJson
 		json.comment = _class.comment;
 		json.path = _class.path;
 
-		json.classVars = "";
-		for( let classVar of _class.classVars )
-			json.classVars += classVar.name + " ";
-		json.classVars = json.classVars.trim();
+		json.classVars = _class.classVars.map( classVar => classVar.name ).join( " " );
+		json.vars = _class.vars.map( _var => _var.name ).join( " " );
 
-		json.vars = "";
-		for( let _var of _class.vars )
-			json.vars += _var.name + " ";
-		json.vars = json.vars.trim();
-
-		json.classMethods = [];
-		for( let classMethod of _class.classMethods )
-			json.classMethods.push(
-				DocumentedMethodJson.fromCompiledMethod( classMethod ) );
-
-		json.methods = [];
-		for( let method of _class.methods )
-			json.methods.push(
-				DocumentedMethodJson.fromCompiledMethod( method ) );
+		json.classMethods = _class.classMethods.map( classMethod => DocumentedMethodJson.fromCompiledMethod( classMethod ) );
+		json.methods = _class.methods.map( method => DocumentedMethodJson.fromCompiledMethod( method ) );
 
 		return json;
 	}

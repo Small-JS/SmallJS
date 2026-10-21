@@ -390,8 +390,14 @@ export class Parser
 		return line;
 	}
 
+	// Return the next char and advance the position.
+	// At the end, return an empty string and stay at the end, like peekChar().
+
 	nextChar(): string
 	{
+		if( this.atEnd() )
+			return '';
+
 		let char = this.source[ this.position.index ];
 		this.position.increment( char );
 		return char;

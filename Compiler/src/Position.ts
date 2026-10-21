@@ -10,11 +10,11 @@ export class Position
 
 	static tabSize = 4;
 
-	// Return shalow copy of this.
+	// Return shallow copy of this.
 
 	copy(): Position
 	{
-		let result = new Position
+		let result = new Position();
 
 		result.index = this.index;
 		result.line = this.line;
@@ -37,8 +37,9 @@ export class Position
 		}
 		else {
 			this.column++;
+			// A tab advances to the next tab stop.
 			if( char == "\t" )
-				this.tabbedColumn += Position.tabSize;
+				this.tabbedColumn += Position.tabSize - ( this.tabbedColumn - 1 ) % Position.tabSize;
 			else
 				this.tabbedColumn++;
 		}
