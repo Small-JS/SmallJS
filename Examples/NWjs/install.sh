@@ -8,6 +8,5 @@ cd "$(dirname "$0")"
 
 echo "==== Installing npm packages for: Example NWjs"
 npm install
-npm install-scripts approve nw
-# Run install a second time to ensure install scripts are run.
-npm install
+npm install-scripts approve --no-allow-scripts-pin nw
+npm rebuild nw
