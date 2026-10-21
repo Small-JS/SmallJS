@@ -283,7 +283,7 @@ export class ClassCompiler
 		if( compiledVariable.includedIn( this.method.vars ) )
 			this.error( "Duplicate local variable: " + variableName );
 
-		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil;\n";
+		let source = "\t\tlet " + compiledVariable.jsName() + " = stNil$;\n";
 		compiledVariable.node = this.sourceNode( source, "variable" );
 
 		this.method.vars.push( compiledVariable );
@@ -504,7 +504,7 @@ export class ClassCompiler
 
 		// An empty block returns nil.
 		if( this.parser.peekTerm() == "]" )
-			node.add( "\t\t\t\treturn stNil;\n" );
+			node.add( "\t\t\t\treturn stNil$;\n" );
 
 		while( !this.parser.tryParseTerm( "]" ) ) {
 			if( this.parser.atMethodEnd() )
@@ -613,11 +613,11 @@ export class ClassCompiler
 		let node = this.sourceNode( "", "literal" );
 
 		if( literal == "nil" )
-			node.add( "stNil" );
+			node.add( "stNil$" );
 		else if( literal == "true" )
-			node.add( "stTrue" );
+			node.add( "stTrue$" );
 		else if( literal == "false" )
-			node.add( "stFalse" );
+			node.add( "stFalse$" );
 		else if( CharUtil.isDigit( literal ) || literal == "-" )
 			node.add( this.compileNumber( literal ) );
 		else if( literal.charAt( 0 ) == "'" ) {

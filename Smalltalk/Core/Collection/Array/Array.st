@@ -9,7 +9,7 @@ new
 	^ self basicNew js: INLINE '[]'.
 !
 new: length
-	INLINE 'let array = new StArray(); array.js = Array.from( { length: length.js }, ( value, index ) => stNil ); return array'.
+	INLINE 'let array = new StArray(); array.js = Array.from( { length: length.js }, ( value, index ) => stNil$ ); return array'.
 !
 fromJs: jsArray elementClass: aClass
 	"Create ST array from JS array, with ST elements of class aClass.
@@ -20,7 +20,7 @@ fromJs: jsArray elementClass: aClass
 fromJs: jsArray elementConverter: block
 	"Create ST array from JS array, with ST elements renerated by block."
 	| array |
-	INLINE 'if( jsArray == null ) return stNil'.
+	INLINE 'if( jsArray == null ) return stNil$'.
 	array := Array new.
 	INLINE '
 		for( let jsObject of jsArray )

@@ -36,7 +36,7 @@ Defined in `Naming` in `Runtime.ts`:
 - Class `Foo` becomes JS class `StFoo`, its metaclass `StFoo$class` and the metaclass singleton `stFoo$class`.
 - Unary method `foo` becomes `$foo`. Keyword method `at:put:` becomes `$at$put$`. Binary operators are mapped by `operatorMap`.
 - A variable named like a JS reserved word gets a `$` appended.
-- The singletons `stNil`, `stTrue` and `stFalse` are exported from module `Core`.
+- The singletons `stNil$`, `stTrue$` and `stFalse$` are exported from module `Core`.
 
 ## Usage
 

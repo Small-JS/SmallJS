@@ -4,7 +4,7 @@ CLASS Float EXTENDS Number MODULE Core CLASSVARS '' VARS ''
 CLASSMETHODS
 
 fromJs: jsNumber
-	INLINE 'if( jsNumber == null ) return stNil'.
+	INLINE 'if( jsNumber == null ) return stNil$'.
 	^ self basicNew js: INLINE 'Number( jsNumber )'.
 !
 

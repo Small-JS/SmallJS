@@ -124,7 +124,7 @@ export class CompiledModule
 
 		node.add( "import { BlockReturn } from '" + this.importBaseFolder() + "Runtime.js';\n" );
 		if( this.name != "Core" )
-			node.add( "import { stNil, stTrue, stFalse } from '" + this.importBaseFolder() + "Core.js';\n" );
+			node.add( "import { stNil$, stTrue$, stFalse$ } from '" + this.importBaseFolder() + "Core.js';\n" );
 
 		return node;
 	}
@@ -162,9 +162,9 @@ export class CompiledModule
 
 		if( this.name == "Core" )
 			node.add(
-				"export let stNil = new StNil().$js$( null );\n" +
-				"export let stTrue = new StBoolean().$js$( true );\n" +
-				"export let stFalse = new StBoolean().$js$( false );\n\n" );
+				"export let stNil$ = new StNil().$js$( null );\n" +
+				"export let stTrue$ = new StBoolean().$js$( true );\n" +
+				"export let stFalse$ = new StBoolean().$js$( false );\n\n" );
 
 		return node;
 	}

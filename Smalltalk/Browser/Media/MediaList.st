@@ -23,7 +23,7 @@ mediaText: mediaText
 item: index
 	"Return the media query at the (zero-based) index, or nil if out of range."
 	INLINE 'let jsItem = this.js.item( index.js )'.
-	INLINE 'if( jsItem == null ) return stNil'.
+	INLINE 'if( jsItem == null ) return stNil$'.
 	^ String fromJs: INLINE 'jsItem'.
 !
 items

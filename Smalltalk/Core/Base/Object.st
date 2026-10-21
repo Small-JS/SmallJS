@@ -11,6 +11,9 @@ CLASSMETHODS
 myTest
 	"This is the first method compiled.
 	Can be changed when testing the compiler."
+	| a |
+	a := 3.
+	a := a * 2.
 !
 
 "Creating"
@@ -25,7 +28,7 @@ fromJs: js
 
 	| jsType jsClass float object jsObject |
 
-	INLINE 'if( js == null ) return stNil'.
+	INLINE 'if( js == null ) return stNil$'.
 
 	jsType := String fromJs: INLINE 'typeof js'.
 

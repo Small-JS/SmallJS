@@ -71,7 +71,7 @@ export class Naming
 
 	static variableJsToSt( jsName: string ): string
 	{
-		return jsName.endsWith( '$' ) ? jsName.slice( -1 ) : jsName;
+		return jsName.endsWith( '$' ) ? jsName.slice( 0, -1 ) : jsName;
 	}
 
 	static jsReservedWords: string[] = [
@@ -79,10 +79,11 @@ export class Naming
 		"class", "const", "continue", "debugger",
 		"default", "delete", "do", "else",
 		"enum", "eval", "export", "extends",
-		"false", "extends", "false", "finally",
-		"for", "function", "if", "import",
-		"in", "instanceof", "new", "null",
-		"private", "public", "return", "super",
+		"false", "finally", "for", "function",
+		"if", "implements", "import", "in",
+		"instanceof", "interface", "let", "new",
+		"null", "package", "private", "protected",
+		"public", "return", "static", "super",
 		"switch", "this", "throw", "true",
 		"try", "typeof", "var", "void",
 		"while", "with", "yield"

@@ -29,7 +29,7 @@ isPrimary: isPrimary
 
 contact
 	"Size of the contact area of the pointer as a Point: width @ height, or nil if not set."
-	INLINE 'if( this.js.width == null && this.js.height == null ) return stNil'.
+	INLINE 'if( this.js.width == null && this.js.height == null ) return stNil$'.
 	^ ( Float fromJs: INLINE 'this.js.width' ) @
 		( Float fromJs: INLINE 'this.js.height' ).
 !
@@ -58,7 +58,7 @@ tangentialPressure: tangentialPressure
 
 tilt
 	"Tilt of the pointer as a Point: tiltX @ tiltY, or nil if not set."
-	INLINE 'if( this.js.tiltX == null && this.js.tiltY == null ) return stNil'.
+	INLINE 'if( this.js.tiltX == null && this.js.tiltY == null ) return stNil$'.
 	^ ( Integer fromJs: INLINE 'this.js.tiltX' ) @
 		( Integer fromJs: INLINE 'this.js.tiltY' ).
 !

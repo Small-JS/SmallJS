@@ -10,7 +10,7 @@ newEmpty
 	^ self fromJs: INLINE '{}'.
 !
 fromJs: aJs
-	INLINE 'if( aJs == null ) return stNil'.
+	INLINE 'if( aJs == null ) return stNil$'.
 	^ self basicNew js: aJs.
 !
 

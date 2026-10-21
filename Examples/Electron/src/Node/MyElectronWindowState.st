@@ -16,7 +16,7 @@ load: path
 	( Fs existsSync: path ) ifFalse: [ ^ nil ].
 	text := ( Fs readFileSync: path ) toString.
 	jsObject := INLINE '( () => { try { return JSON.parse( text.js ) } catch { return null } } )()'.
-	INLINE 'if( ![ "x", "y", "width", "height" ].every( key => Number.isInteger( jsObject?.[ key ] ) ) ) return stNil'.
+	INLINE 'if( ![ "x", "y", "width", "height" ].every( key => Number.isInteger( jsObject?.[ key ] ) ) ) return stNil$'.
 	^ self new
 		bounds: ( Rect fromJs: jsObject )
 		maximized: ( Boolean fromJs: INLINE 'jsObject.maximized === true' ).

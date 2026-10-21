@@ -171,7 +171,7 @@ async watch: fileName options: options iterate: iterateBlock
 			for await ( const event of asyncIterator ) {
 				iterateBlock.$value$value$(
 					stString$class.$fromJs$( event.eventType ),
-					( event.filename == null ? stNil : stString$class.$fromJs$( event.filename ) ) ) }
+					( event.filename == null ? stNil$ : stString$class.$fromJs$( event.filename ) ) ) }
 		} catch( error ) {
 			if( error.name !== "AbortError" ) throw error; }'.
 !

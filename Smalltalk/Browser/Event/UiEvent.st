@@ -16,7 +16,7 @@ fromJsSubEvent: jsEvent
 
 	| jsClassName |
 
-	INLINE 'if( jsEvent == null ) return stNil'.
+	INLINE 'if( jsEvent == null ) return stNil$'.
 
 	jsClassName := String fromJs: INLINE 'jsEvent.constructor.name'.
 	jsClassName = 'UIEvent' ifTrue: [ ^ UiEvent fromJs: jsEvent ].

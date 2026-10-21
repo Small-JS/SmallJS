@@ -115,7 +115,7 @@ export class CompiledClass
 			for( let instVar of this.vars ) {
 				node.add( "\t" + instVar.jsName() );
 				if( this.name != "JsObject" )
-					node.add( " = stNil" );
+					node.add( " = stNil$" );
 				node.add( ";\n" );
 			}
 			node.add( "\n" );
@@ -153,7 +153,7 @@ export class CompiledClass
 		// Generate class variables
 		if( this.classVars.length > 0 ) {
 			for( let classVar of this.classVars )
-				node.add( "\t" + classVar.jsName() + " = stNil;\n" );
+				node.add( "\t" + classVar.jsName() + " = stNil$;\n" );
 				node.add( "\n" );
 		}
 

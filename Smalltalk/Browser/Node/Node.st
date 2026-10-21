@@ -10,7 +10,7 @@ fromJsSubNode: jsNode
 
 	| jsClassName |
 
-	INLINE 'if( jsNode == null ) return stNil'.
+	INLINE 'if( jsNode == null ) return stNil$'.
 
 	jsClassName := String fromJs: INLINE 'jsNode.constructor.name'.
 

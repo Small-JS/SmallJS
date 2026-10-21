@@ -82,7 +82,7 @@ match: regexp flags: flags
 	INLINE '
 		let result = this.js.match( new RegExp( regexp.js, flags.js ) );
 		if( result == null )
-			return stNil;
+			return stNil$;
 		return stArray$class.$fromJs$elementClass$( result, stString$class )'.
 !
 search: regexp

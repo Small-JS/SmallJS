@@ -9,7 +9,7 @@ origin: origin extent: extent
 !
 fromJs: jsDomRect
 	"Note: The argument should be a DOMRect, which is not available in Node.js."
-	INLINE 'if( jsDomRect == null ) return stNil'.
+	INLINE 'if( jsDomRect == null ) return stNil$'.
 	^ self
 		origin: ( Point jsX: INLINE 'jsDomRect.x' jsY: INLINE 'jsDomRect.y' )
 		extent: ( Point jsX: INLINE 'jsDomRect.width' jsY: INLINE 'jsDomRect.height' ).

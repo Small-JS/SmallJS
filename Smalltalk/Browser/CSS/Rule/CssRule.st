@@ -10,7 +10,7 @@ fromJsSubRule: jsCssRule
 
 	| jsClassName |
 
-	INLINE 'if( jsCssRule == null ) return stNil'.
+	INLINE 'if( jsCssRule == null ) return stNil$'.
 
 	jsClassName := String fromJs: INLINE 'jsCssRule.constructor.name'.
 

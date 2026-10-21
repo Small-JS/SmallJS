@@ -11,7 +11,7 @@ fromJsSubElement: jsElement
 
 	| jsClassName localName |
 
-	INLINE 'if( jsElement == null ) return stNil'.
+	INLINE 'if( jsElement == null ) return stNil$'.
 
 	jsClassName := String fromJs: INLINE 'jsElement.constructor.name'.
 

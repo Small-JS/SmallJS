@@ -1,12 +1,12 @@
 CLASS Boolean EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 	"The inherited variable 'js' contains the associated JS boolean object.
-	 Only 2 unmutable global instances are created and used: stTrue and stFalse."
+	 Only 2 unmutable global instances are created and used: stTrue$ and stFalse$."
 
 CLASSMETHODS
 
 fromJs: jsBool
-	INLINE 'if( jsBool == null ) return stNil'.
-	^ INLINE '( jsBool ? stTrue : stFalse )'.
+	INLINE 'if( jsBool == null ) return stNil$'.
+	^ INLINE '( jsBool ? stTrue$ : stFalse$ )'.
 !
 fromInteger: integer
 	^ ( integer = 0 | integer isNil ) not.

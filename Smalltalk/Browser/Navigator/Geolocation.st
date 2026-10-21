@@ -26,7 +26,7 @@ currentPositionThen: block error: errorBlock options: options
 	GeolocationPosition. GeolocationPositionError.	"Force import"
 	INLINE 'this.js.getCurrentPosition(
 		( position ) => block.$value$( stGeolocationPosition$class.$fromJs$( position ) ),
-		errorBlock === stNil ? null :
+		errorBlock === stNil$ ? null :
 			( error ) => errorBlock.$value$( stGeolocationPositionError$class.$fromJs$( error ) ),
 		options.js )'.
 !
@@ -46,7 +46,7 @@ watchPositionOptions: options then: block error: errorBlock
 	GeolocationPosition. GeolocationPositionError.	"Force import"
 	^ Integer fromJs: INLINE 'this.js.watchPosition(
 		( position ) => block.$value$( stGeolocationPosition$class.$fromJs$( position ) ),
-		errorBlock === stNil ? null :
+		errorBlock === stNil$ ? null :
 			( error ) => errorBlock.$value$( stGeolocationPositionError$class.$fromJs$( error ) ),
 		options.js )'.
 !

@@ -21,7 +21,7 @@ get: name
 getName: constructor
 	"Return the name of the custom element for the constructor, or nil if not defined."
 	INLINE 'let jsName = this.js.getName( constructor.js )'.
-	INLINE 'if( jsName == null ) return stNil'.
+	INLINE 'if( jsName == null ) return stNil$'.
 	^ String fromJs: INLINE 'jsName'.
 !
 upgrade: root

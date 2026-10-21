@@ -4,7 +4,7 @@ CLASS BigInt EXTENDS AbstractInteger MODULE Core CLASSVARS '' VARS ''
 CLASSMETHODS
 
 fromJs: jsBigInt
-	INLINE 'if( jsBigInt == null ) return stNil'.
+	INLINE 'if( jsBigInt == null ) return stNil$'.
 	^ self basicNew js: INLINE 'BigInt( jsBigInt )'.
 !
 

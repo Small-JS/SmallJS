@@ -7,7 +7,9 @@ import { SourceNode } from "source-map";
 export class CompiledVariable
 {
 	name: string;
-	node!: SourceNode;
+	// Declaration of a local variable, e.g. "let a = stNil$;".
+	// Not set for arguments, instance variables and class variables.
+	node?: SourceNode;
 
 	constructor( name: string )
 	{
@@ -20,8 +22,9 @@ export class CompiledVariable
 	}
 
 	// Appends dollar sign to variable names that match JS reserved words.
-	// Only do this for names that *actually* cannot be used as variable names for
-	// class variables, methods variables or function parameters.
+	// This is required for arguments and local variables, which are JS variables.
+	// Instance and class variables are JS properties, where reserved words are allowed,
+	// but they get the dollar sign too, so INLINE code uses the same name for every variable.
 
 	jsName(): string
 	{

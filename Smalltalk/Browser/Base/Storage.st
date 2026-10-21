@@ -26,7 +26,7 @@ key: index
 	"Return the name of the key at the (zero-based) index, or nil if index is out of range.
 	 Note: The order of the keys is user-agent defined."
 	INLINE 'let jsKey = this.js.key( index.js )'.
-	INLINE 'if( jsKey == null ) return stNil'.
+	INLINE 'if( jsKey == null ) return stNil$'.
 	^ String fromJs: INLINE 'jsKey'.
 !
 keys
@@ -36,7 +36,7 @@ keys
 item: key
 	"Return the value for the key, or nil if the key does not exist."
 	INLINE 'let jsValue = this.js.getItem( key.js )'.
-	INLINE 'if( jsValue == null ) return stNil'.
+	INLINE 'if( jsValue == null ) return stNil$'.
 	^ String fromJs: INLINE 'jsValue'.
 !
 

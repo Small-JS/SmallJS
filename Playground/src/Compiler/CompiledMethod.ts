@@ -39,8 +39,9 @@ export class CompiledMethod
 		node.add( "(" + this.generateArguments() + ")\n\t{\n" );
 
 		// Generate local variables
-		for( let variable of this.vars)
-			node.add( variable.node );
+		for( let variable of this.vars )
+			if( variable.node )
+				node.add( variable.node );
 
 		// If the method has a return from a (nested) block,
 		// the exception BlockReturn needs to be caught

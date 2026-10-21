@@ -11,7 +11,11 @@ Explanation of syntax used:
 
 - `EXTENDS` : Indicates the base class. `Object` is the root class.
 - `MODULE` : The JS module this class should be put in.
-- `CLASSVARS` : Variables of the class itself (not its instances). Like JS static class vars.
+- `CLASSVARS` : Variables of the class itself (not its instances). Like JS static class vars.\
+  Each subclass gets its own copy of an inherited class variable, starting at `nil`.
+  Assigning it in one class does not change its value in a superclass or subclass.
+  This is intended and differs from standard Smalltalk, where class variables are shared with subclasses.
+  (It works like Smalltalk class-instance variables.)
 - `VARS` : Instance variables of objects created from the class, e.g.: `MyTest new`.
 - `"This is a comment ..."` : Comments are put in double quotes.
 - `CLASSMETHODS` : Following methods will be added to the (meta)class, like JS static class methods.
