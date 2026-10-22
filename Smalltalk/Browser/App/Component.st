@@ -39,7 +39,7 @@ parent: aParent
 
 htmlPath
 	"Answer the (relative) path of this components HTML file."
-	self subclassReponsibility.
+	self subclassResponsibility.
 !
 start
 	"Optional startup code that is called after loading self."

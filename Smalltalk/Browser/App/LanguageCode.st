@@ -27,8 +27,13 @@ fromCode: code
 	| dashPos |
 
 	dashPos := code indexOf: '-'.
-	language := dashPos > 0 ifTrue: [ ( code substring: 0 to: dashPos ) toLocaleLowerCase ] ifFalse: [ code ].
-	country := dashPos >= 0 ifTrue: [ ( code substring: 0 to: dashPos ) toUpperCase ] ifFalse: [ nil ].
+	dashPos >= 0
+		ifTrue: [
+			language := ( code substring: 0 to: dashPos ) toLowerCase.
+			country := ( code substring: dashPos + 1 ) toUpperCase ]
+		ifFalse: [
+			language := code toLowerCase.
+			country := nil ].
 !
 
 "Converting"

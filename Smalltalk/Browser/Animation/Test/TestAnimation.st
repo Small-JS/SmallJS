@@ -134,7 +134,7 @@ async testPromises
 testEvents
 	"Real playback events are sent asynchronously,
 	 so only test that listeners can be set and that dispatching works."
-	| animation received |
+	| animation received listened |
 	animation := Animation new.
 
 	animation onFinish: [ :event | received := event ].
@@ -150,8 +150,8 @@ testEvents
 	animation dispatchEvent: ( AnimationPlaybackEvent type: 'remove' ).
 	self assert: [ received type = 'remove' ].
 
-	received := nil.
-	animation addEventListener: 'finish' then: [ :event | received := event ].
+	"Use a separate var, because the onFinish block above also receives this event."
+	animation addEventListener: 'finish' then: [ :event | listened := event ].
 	animation dispatchEvent: ( Event type: 'finish' ).
-	self assert: [ received type = 'finish' ].
+	self assert: [ listened type = 'finish' ].
 !

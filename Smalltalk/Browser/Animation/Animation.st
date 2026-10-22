@@ -3,7 +3,9 @@ CLASS Animation EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
 "This class encapsulates the JS class: Animation.
  Create one with: Element animate: keyframes options: options,
  or get the running ones with: Element getAnimations.
- Times are Floats in milliseconds, or nil if not set."
+ Times are Floats in milliseconds, or nil if not set.
+ Only time based timelines, like the default document timeline, are supported.
+ Times of a JS ScrollTimeline are CSSNumericValues, that are not converted."
 
 CLASSMETHODS
 
@@ -73,7 +75,7 @@ timeline: timeline
 
 async finished
 	"Wait until the animation has finished.
-	 Throws an Error if the animation is canceled."
+	 Throws a JS DOMException named 'AbortError' if the animation is canceled."
 	INLINE 'await this.js.finished'.
 !
 async ready

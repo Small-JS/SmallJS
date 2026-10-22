@@ -65,7 +65,7 @@ matchCode: matchCode
 	supported do: [ :code |
 		( matchLanguageCode match: code ) ifTrue: [ ^ code ].  "Exact match"
 		( matchLanguageCode matchLanguage: code ) ifTrue: [
-			best notNil ifTrue: [ best := code ] ] ].  "First coutry match"
+			best isNil ifTrue: [ best := code ] ] ].  "First country match"
 
 	^ best notNil ifTrue: [ best ] ifFalse: [ supported first  ].  "Default match"
 !

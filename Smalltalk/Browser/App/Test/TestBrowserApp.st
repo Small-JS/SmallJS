@@ -5,7 +5,8 @@ test
 
 	app := BrowserApp new.
 
-	self assert: [ app testMode | true ].
+	"Tests always run with '?test' in the URL."
+	self assert: [ app testMode ].
 	self assert: [ app url startsWith: 'http' ].
 
 	"These methods are to destructive to test here:

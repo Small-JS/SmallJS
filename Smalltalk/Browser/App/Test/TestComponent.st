@@ -13,5 +13,9 @@ test
 	component parent: parent.
 	self assert: [ component parent = parent ].
 
+	"Subclasses must implement htmlPath."
+	self assert: [ ( [ component htmlPath ] tryCatch: [ :error | error ] ) message
+		= 'Method should be implemented by subclass.' ].
+
 	"Note: Loading a component is tested in the Browser project."
 !

@@ -1,7 +1,8 @@
 CLASS AnimationPlaybackEvent EXTENDS Event MODULE Browser CLASSVARS '' VARS ''
 
 "Encapsulates the JS AnimationPlaybackEvent class.
- Sent to an Animation with type 'cancel', 'finish' or 'remove'."
+ Sent to an Animation with type 'cancel', 'finish' or 'remove'.
+ Times are Floats in milliseconds, or nil. As in Animation, ScrollTimeline times are not supported."
 
 CLASSMETHODS
 
