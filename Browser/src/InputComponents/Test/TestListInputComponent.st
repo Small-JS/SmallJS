@@ -1,4 +1,4 @@
-CLASS TestListInputCompent EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestListInputComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| listInputComponent dataList options |

@@ -4,8 +4,8 @@ CLASS ScriptComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
 htmlPath
 	^ 'Components/ScriptComponent.html'.
 !
-start
-	self loadScript.
+async start
+	await self loadScript.
 	self bindElements.
 !
 bindElements
@@ -16,19 +16,25 @@ bindElements
 	runButton onClick: [ INLINE 'ScriptFunction()' ].
 !
 
-loadScript
+async loadScript
 	"Script must be loaded as a serarate node.
-	 It will not execute when loaded as part of the component HTML, per HTML design."
+	 It will not execute when loaded as part of the component HTML, per HTML design.
+	 Wait until the script has loaded, so ScriptFunction can be called."
 
-	| document script |
+	| document scriptElement loaded |
 	document := Document default.
 	( document getElementById: 'script' ) notNil ifTrue: [ ^ self ].
 
-	script := document createElement: 'script'.
-	script id: 'script'.
-	script src: 'Components/ScriptFunction.js'.
+	scriptElement := document createElement: 'script'.
+	scriptElement id: 'script'.
+	scriptElement src: 'Components/ScriptFunction.js'.
 
-	document head appendChild: script.
+	loaded := Promise new: [ :resolve :reject |
+		scriptElement addEventListener: 'load' then: [ resolve value: nil ].
+		scriptElement addEventListener: 'error' then: [
+			reject value: ( Error new: 'Failed to load script: ', scriptElement src ) ] ].
+	document head appendChild: scriptElement.
+	INLINE 'await loaded.js'.
 !
 
 "Accessing"

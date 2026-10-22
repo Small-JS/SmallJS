@@ -1,4 +1,4 @@
-CLASS TestFormComponent EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
+CLASS TestFormComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
 	| formComponent formElement |

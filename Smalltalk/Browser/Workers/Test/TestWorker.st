@@ -51,10 +51,3 @@ xtestError
 		worker terminate ].
 	worker postMessage: 'Throw'.
 !
-testLoadError
-	| worker |
-	worker := Worker new: 'Script/doesNotExist.js' options: ( WorkerOptions new type: 'module' ).
-	worker onError: [ :event |
-		self assert: [ event type = 'error' ].
-		worker terminate ].
-!

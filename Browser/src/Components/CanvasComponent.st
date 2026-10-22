@@ -25,7 +25,7 @@ canvas
 "Drawing"
 
 draw
-	| context gradient imageData colorBlue imageBitmap path matrix |
+	| context gradient imageData colorBlue path matrix |
 	context := canvas getContext2d.
 	context reset.
 	context fillStyle: 'white'.
@@ -222,8 +222,7 @@ async drawImage
 	imageBitmap close.
 !
 drawPaths
-	| context path path2 matrix
-		imageData pattern gradient attributes lineDash textMetrics contextAttributes |
+	| context path path2 matrix |
 
 	context := canvas getContext2d.
 	self assert: [ context class = CanvasRenderingContext2d ].

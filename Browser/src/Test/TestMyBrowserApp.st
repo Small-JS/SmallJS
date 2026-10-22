@@ -6,9 +6,8 @@ CLASS TestMyBrowserApp EXTENDS Object MODULE TestMyBrowserApp CLASSVARS ''
 
 async start
 	myBrowserApp := MyBrowserApp new.
-	myBrowserApp start.
-	"Wait for app components to load"
-	await Timer timeout: 2000.
+	"Wait for app components to load."
+	await myBrowserApp start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
 	await self testUnits.

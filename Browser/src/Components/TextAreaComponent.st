@@ -15,8 +15,6 @@ bindElements
 	outputButton onClick: [ self onOutputButtonClicked ].
 !
 onOutputButtonClicked
-	| textAreaString |
-
 	outputParagraph textContent: textArea value.
 !
 

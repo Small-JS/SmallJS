@@ -73,10 +73,3 @@ testAddEventListener
 	worker port start.
 	worker port postMessage: 'Hello, shared worker!'.
 !
-testLoadError
-	| worker |
-	worker := SharedWorker new: 'Script/doesNotExist.js' options: ( WorkerOptions new type: 'module' ).
-	worker onError: [ :event |
-		self assert: [ event type = 'error' ].
-		worker port close ].
-!

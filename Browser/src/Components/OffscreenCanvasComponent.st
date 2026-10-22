@@ -41,10 +41,10 @@ METHODS
 htmlPath
 	^ 'Components/OffscreenCanvasComponent.html'.
 !
-start
+async start
 	self bindElements.
 	self drawInMainThread.
-	self drawInWorker.
+	await self drawInWorker.
 !
 bindElements
 	mainCanvas := Document getElementById: 'offscreenMainCanvas' class: HtmlCanvasElement.
@@ -58,7 +58,7 @@ mainCanvas
 !
 workerPixel
 	"RGBA pixel at the sample point, read back by the worker after drawing.
-	 Nil until the worker has replied."
+	 Set when start has finished."
 	^ workerPixel.
 !
 
@@ -72,11 +72,15 @@ drawInMainThread
 	mainCanvas getContext2d drawImage: imageBitmap dest: 0 @ 0.
 	imageBitmap close.
 !
-drawInWorker
-	| offscreenCanvas |
+async drawInWorker
+	"Draw in the worker and wait for its reply."
+	| offscreenCanvas replied |
 	offscreenCanvas := workerCanvas transferControlToOffscreen.
 	worker := Worker new: 'Script/canvasWorker.js' options: ( WorkerOptions new type: 'module' ).
-	worker onMessage: [ :event |
-		workerPixel := Object fromJs: event data js ].
+	replied := Promise new: [ :resolve :reject |
+		worker onMessage: [ :event |
+			workerPixel := Object fromJs: event data js.
+			resolve value: nil ] ].
 	worker postMessage: offscreenCanvas transfer: ( Array with: offscreenCanvas ).
+	INLINE 'await replied.js'.
 !

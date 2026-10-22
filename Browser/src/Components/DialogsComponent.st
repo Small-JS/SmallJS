@@ -1,5 +1,5 @@
 CLASS DialogsComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
-	VARS 'alertButton confirmButton promptButton printButton dialogResultParagraph'
+	VARS 'popupButton alertButton confirmButton promptButton printButton dialogResultParagraph'
 
 "Note: Testing these dialogs can only be done be done manually in the browser."
 
@@ -10,8 +10,8 @@ start
 	self bindElements.
 !
 bindElements
-	alertButton := Document getElementById: 'popupButton' class: HtmlButtonElement.
-	alertButton onClick: [ self onPopup ].
+	popupButton := Document getElementById: 'popupButton' class: HtmlButtonElement.
+	popupButton onClick: [ self onPopup ].
 
 	alertButton := Document getElementById: 'alertButton' class: HtmlButtonElement.
 	alertButton onClick: [ self onAlert ].

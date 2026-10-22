@@ -8,16 +8,17 @@ default
 
 METHODS
 
-start
+async start
 	default := self.
 
-	self bindElements.
+	await self bindElements.
 !
 async bindElements
-	"Load components and add them to the components var."
+	"Load components one by one, in the order of componentClasses,
+	 and add them to the components var."
 
 	components := Array new.
-	self componentClasses do: async [ :componentClass |
+	await self componentClasses doAwait: async [ :componentClass |
 		components add:
 			await componentClass new appendToElement: 'elementTesterTableBody' ].
 !
