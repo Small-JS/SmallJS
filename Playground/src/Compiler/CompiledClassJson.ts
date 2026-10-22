@@ -21,7 +21,7 @@ export class CompiledClassJson
 		return json;
 	}
 
-	// Uses by Playground, so leave it:
+	// Used by Playground, so leave it:
 
 	static toCompiledClass( json: CompiledClassJson ): CompiledClass
 	{

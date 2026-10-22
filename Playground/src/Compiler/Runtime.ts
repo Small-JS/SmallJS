@@ -3,14 +3,18 @@
 
 // This exeption class is thrown on return from a block closure.
 // Needed because JS does not support inline returning from an anonymous function.
+// The home is a unique object per method invocation that the block returns from,
+// so that only that method catches it, not other methods it passes through.
 
 export class BlockReturn
 {
 		value: any;
+		home: object;
 
-		constructor( value: any )
+		constructor( value: any, home: object )
 		{
 			this.value = value;
+			this.home = home;
 		}
 }
 
@@ -362,3 +366,4 @@ export class NumUtil
 		}
 	}
 }
+

@@ -3,7 +3,7 @@ import { CompiledMethod } from "./CompiledMethod.js";
 import { Naming } from "./Runtime.js";
 import { Position } from "./Position.js";
 
-// Playground uses local SourceNode class
+// Playground: Use local SourceNode class iso npm package.
 import { SourceNode } from "./SourceNode.js";
 // import { SourceNode } from "source-map";
 
@@ -38,7 +38,7 @@ export class CompiledClass
 		this.source = source;
 	}
 
-	// Return true if name matches an instance- or class variable of this or a superclass.
+	// Return true if name matches an instance variable of this or a superclass.
 
 	checkVariableReference( compiledVariable: CompiledVariable ): boolean
 	{
@@ -58,7 +58,7 @@ export class CompiledClass
 		return this.superclass == null ? false : this.superclass.checkClassVariableReference( compiledVariable );
 	}
 
-	// Add reference if it is new and not refering to self.
+	// Add reference if it is new and not referring to self.
 
 	addReference( reference: string )
 	{
@@ -98,7 +98,7 @@ export class CompiledClass
 		return this.classMethods.find( method => method.name == methodName );
 	}
 
-	// Generate JavaScript class for instatiation objects of this ST class.
+	// Generate JavaScript class for instantiating objects of this ST class.
 	// Contains instance variables and methods.
 
 	generateObjectClass(): SourceNode
@@ -130,15 +130,15 @@ export class CompiledClass
 			"\t\treturn stString$class.$fromJs$( '" + this.moduleName + "' );\n\t}\n\n" );
 
 		// Generate instance methods
- 		for( let method of this.methods )
-		 node.add( method.generate() );
+		for( let method of this.methods )
+			node.add( method.generate() );
 
-		 node.add( "}\n\n" );
+		node.add( "}\n\n" );
 
 		return node;
 	}
 
-	// Generate JavaScript class for instatiation of the ST class inself
+	// Generate JavaScript class for instantiating the ST class itself
 	// This is sometimes called the meta class.
 	// Contains class variables and methods.
 
@@ -154,7 +154,7 @@ export class CompiledClass
 		if( this.classVars.length > 0 ) {
 			for( let classVar of this.classVars )
 				node.add( "\t" + classVar.jsName() + " = stNil$;\n" );
-				node.add( "\n" );
+			node.add( "\n" );
 		}
 
 		node.add( "\t$basicNew()\n\t{\n" +
@@ -163,7 +163,7 @@ export class CompiledClass
 		node.add( "\t$jsClass()\n\t{\n" +
 			"\t\treturn " + this.jsName() + ".prototype;\n\t}\n\n" );
 
-			// Generate class methods
+		// Generate class methods
 		for( let classMethod of this.classMethods )
 			node.add( classMethod.generate() );
 
@@ -186,7 +186,7 @@ export class CompiledClass
 
 	jsMetaClassName(): string
 	{
-		return Naming.metaClassStToJs( this.name )
+		return Naming.metaClassStToJs( this.name );
 	}
 
 	jsMetaClassSingletonName(): string
@@ -196,7 +196,7 @@ export class CompiledClass
 
 	jsMetaSuperclassName(): string
 	{
-		return Naming.metaClassStToJs( this.superclassName )
+		return Naming.metaClassStToJs( this.superclassName );
 	}
 
 }

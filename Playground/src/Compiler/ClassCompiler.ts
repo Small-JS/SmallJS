@@ -1,4 +1,5 @@
 ﻿import { Parser } from "./Parser.js";
+import { Position } from "./Position.js";
 import { CompiledClass } from "./CompiledClass.js";
 import { CompiledMethod } from "./CompiledMethod.js";
 import { CompiledVariable } from "./CompiledVariable.js";
@@ -229,17 +230,24 @@ export class ClassCompiler
 	compileMethodHeaderVariable()
 	{
 		let variableName = this.parser.parseVariableName();
-		this.method.args.push( new CompiledVariable( variableName ) );
+		this.checkReservedWord( variableName, "Argument" );
+
+		let compiledVariable = new CompiledVariable( variableName );
+		if( compiledVariable.includedIn( this.method.args ) )
+			this.error( "Duplicate argument: " + variableName );
+
+		this.method.args.push( compiledVariable );
 		this.method.header += ' ' + variableName;
 	}
 
+	// Always compile all parts, also for an empty method body,
+	// so that a constructor calls super() and other methods return self.
+
 	compileMethodBody()
 	{
-		while( !this.parser.atMethodEnd() ) {
-			this.compileConstructor();
-			this.compileMethodVariables();
-			this.compileStatements();
-		}
+		this.compileConstructor();
+		this.compileMethodVariables();
+		this.compileStatements();
 
 		// Save the optional next comment as the category comment.
 		this.parser.saveNextComment( true );
@@ -267,9 +275,7 @@ export class ClassCompiler
 	private compileVariable(): SourceNode
 	{
 		let variableName: string = this.parser.parseVariableName();
-
-		if( [ 'true', 'false', 'nil', 'self', 'super', 'await' ].includes( variableName ) )
-			this.error( "Local variable name is reserved word: " + variableName );
+		this.checkReservedWord( variableName, "Local variable" );
 
 		let compiledVariable = new CompiledVariable( variableName );
 		if( compiledVariable.includedIn( this.method.args ) )
@@ -320,6 +326,9 @@ export class ClassCompiler
 
 	private compileStatement(): SourceNode
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		let node = this.sourceNode( "\t\t", "statement" );
 
 		if( this.parser.tryParseTerm( "^" ) ) {
@@ -336,7 +345,48 @@ export class ClassCompiler
 
 		this.parser.tryParseTerm( "." );
 
+		this.mapFirstLine( node, position );
+
 		return node;
+	}
+
+	// Map all generated JS on the first line of a statement that has no
+	// mapping of its own to the start of the statement.
+	// A breakpoint on a line makes V8 pause at the location on it that is
+	// executed first, which is usually not the statement start or the message
+	// send, but e.g. the creation of a literal or block argument. If that
+	// location is unmapped, the debugger shows the compiled JS iso the ST source.
+	// Stops at the first newline, so e.g. statements inside a block argument
+	// keep their own mappings.
+	// Returns true if the end of the first line has been reached.
+
+	private mapFirstLine( node: SourceNode, position: Position ): boolean
+	{
+		// Children are typed as SourceNode[], but can also be strings.
+		let children = node.children as ( SourceNode | string )[];
+		for( let index = 0; index < children.length; ++index ) {
+			let child = children[ index ];
+			if( child instanceof SourceNode ) {
+				if( this.mapFirstLine( child, position ) )
+					return true;
+				continue;
+			}
+
+			let newline = child.indexOf( "\n" );
+			if( node.line === null && child.length > 0 ) {
+				// Only map the part up to the newline, leave the rest unmapped.
+				let end = newline < 0 ? child.length : newline + 1;
+				let mapped = this.positionedSourceNodeAt( position, child.substring( 0, end ), "firstLine" );
+				children.splice( index, 1, mapped );
+				if( end < child.length )
+					children.splice( index + 1, 0, child.substring( end ) );
+			}
+
+			if( newline >= 0 )
+				return true;
+		}
+
+		return false;
 	}
 
 	// An expression is a singe object or the result of messages sent to one,
@@ -362,6 +412,8 @@ export class ClassCompiler
 		if( this.parser.tryParseTerm( ":=" ) ) {
 			if( !this.justCompiledVariable )
 				this.error( "Left side of assignment is not a variable." );
+
+			// Breakpoint mapping of the whole line is done in mapFirstLine().
 			receiver.add( " = " ).add( this.compileAssignment() );
 		}
 		else
@@ -390,9 +442,13 @@ export class ClassCompiler
 		else if( term == "(" )
 			node = this.compileParenthesis();
 		else if( CharUtil.isIdentifierStart( term ) && ![ "nil", "true", "false" ].includes( term ) )
-			node = this.compileIdentifier( term );
+			return this.compileIdentifier( term );
 		else
 			node = this.compileLiteral( term );
+
+		// Only a plain variable can be assigned to, not e.g. a variable
+		// within parentheses, a block or a literal array.
+		this.justCompiledVariable = false;
 
 		return node;
 	}
@@ -446,8 +502,15 @@ export class ClassCompiler
 
 		this.compileBlockVariables( node );
 
-		while( !this.parser.tryParseTerm( "]" ) )
+		// An empty block returns nil.
+		if( this.parser.peekTerm() == "]" )
+			node.add( "\t\t\t\treturn stNil$;\n" );
+
+		while( !this.parser.tryParseTerm( "]" ) ) {
+			if( this.parser.atMethodEnd() )
+				this.error( "Missing \"]\" at end of block." );
 			node.add( this.compileBlockStatement() );
+		}
 
 		node.add( "\t\t\t} )" );
 
@@ -466,14 +529,19 @@ export class ClassCompiler
 
 	compileBlockArguments( node: SourceNode )
 	{
-		let first = true;
+		let blockArgs: CompiledVariable[] = [];
 		while( this.parser.tryParseTerm( ":" ) ) {
-			if( first )
-				first = false;
-			else
+			if( blockArgs.length > 0 )
 				node.add( ", " );
 
-			let arg = new CompiledVariable( this.parser.parseIdentifier() );
+			let variableName = this.parser.parseVariableName();
+			this.checkReservedWord( variableName, "Block argument" );
+
+			let arg = new CompiledVariable( variableName );
+			if( arg.includedIn( blockArgs ) )
+				this.error( "Duplicate block argument: " + variableName );
+			blockArgs.push( arg );
+
 			node.add( arg.jsName() );
 			this.method.args.push( arg );
 		}
@@ -499,6 +567,9 @@ export class ClassCompiler
 
 	private compileBlockStatement(): SourceNode
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
 		let node = this.sourceNode( "\t\t\t\t", "blockStatement" );
 		let hasReturn = this.parser.tryParseTerm( "^" );
 		let expression = this.compileExpression();
@@ -506,7 +577,7 @@ export class ClassCompiler
 
 		if( hasReturn ) {
 			this.method.hasReturnFromBlock = true;
-			node.add( "throw new BlockReturn( " ).add( expression ).add( " );\n" );
+			node.add( "throw new BlockReturn( " ).add( expression ).add( ", $home$ );\n" );
 		}
 		else {
 			// Last expression in block is return value.
@@ -514,6 +585,8 @@ export class ClassCompiler
 				node.add( "return " );
 			node.add( expression ).add( ";\n" );
 		}
+
+		this.mapFirstLine( node, position );
 
 		return node;
 	}
@@ -574,6 +647,11 @@ export class ClassCompiler
 		if( !CharUtil.isDigit( num ) )
 			this.error( "Illegal number: " + negate + num );
 
+		// Remove leading zeros, because JS strict mode does not allow them.
+		// Keep one zero if no other digit follows, e.g. for "0" and "0.5".
+		while( num.length > 1 && num[ 0 ] == "0" && CharUtil.isDigit( num[ 1 ] ) )
+			num = num.substring( 1 );
+
 		let stClass: string;
 		if( num.indexOf( "." ) >= 0 )
 			stClass = "Float";
@@ -593,8 +671,11 @@ export class ClassCompiler
 		this.parser.mustParseTerm( "(" );
 
 		let node = this.sourceNode( "stArray$class.$new()", "array" );
-		while( !this.parser.tryParseTerm( ")" ) )
+		while( !this.parser.tryParseTerm( ")" ) ) {
+			if( this.parser.atMethodEnd() )
+				this.error( "Missing \")\" at end of literal array." );
 			node.add( ".$add$( " ).add( this.compileReceiver() ).add( " )" );
+		}
 
 		this.addClassReferenceToClassAndMethod( "Array" );
 
@@ -607,8 +688,13 @@ export class ClassCompiler
 
 		if( name == "self" )
 			node.add( "this" );
-		else if( name == "super" )
+		else if( name == "super" ) {
+			// In JS, "super" can only be used to call a method, not as a value.
+			let next = this.parser.peekTerm();
+			if( !Naming.methodIsUnary( next ) && !Naming.methodIsBinary( next ) && !Naming.methodIsKeywordSelector( next ) )
+				this.error( "Message expected after \"super\"." );
 			node.add( "super" );
+		}
 		else if( CharUtil.isUppercase( name ) )
 			node.add( this.compileClassReference( name ) );
 		else if( CharUtil.isLowercase( name ) )
@@ -675,20 +761,36 @@ export class ClassCompiler
 
 	private compileCascadedMessages( receiver: SourceNode )
 	{
+		this.parser.skipSpace();
+		let position = this.parser.position.copy();
+
+		let childCount = receiver.children.length;
 		this.compileKeywordMessage( receiver );
 
 		// Non cascaded message
 		if( !this.parser.tryParseTerm( ";" ) )
 			return;
 
-		if( receiver.children.length <= 1 )
+		// Each message send adds one child to the receiver.
+		if( receiver.children.length == childCount )
 			this.error( "Message expected before cascade" );
 
+		// Each cascaded message is generated on its own JS line,
+		// so map them for breakpoints like statements, see mapFirstLine().
 		let lastMessage = <SourceNode> receiver.children.pop();
+
+		// In JS, "super" cannot be stored in a variable.
+		if( receiver.toString() == "super" )
+			this.error( "Cannot cascade messages to \"super\"." );
 		receiver.prepend( "( () => { let $object$ = " ).add( ";\n" );
-		receiver.add( '\t\t\t$object$' ).add( lastMessage ).add( ";\n" );
+		let line = this.sourceNode( "\t\t\t$object$", "cascadedLine" ).add( lastMessage ).add( ";\n" );
+		this.mapFirstLine( line, position );
+		receiver.add( line );
 
 		do {
+			this.parser.skipSpace();
+			position = this.parser.position.copy();
+
 			let cascadedReceiver = this.sourceNode( "$object$", "cascadedReceiver" );
 			this.compileKeywordMessage( cascadedReceiver );
 			if( cascadedReceiver.toString() == '$object$' )
@@ -697,7 +799,9 @@ export class ClassCompiler
 			// Result of last cascaded message sent is return value
 			let returnString = this.parser.peekTerm() == ";" ? "" : "return ";
 
-			receiver.add( "\t\t\t" + returnString ).add( cascadedReceiver ).add( ";\n" );
+			line = this.sourceNode( "\t\t\t" + returnString, "cascadedLine" ).add( cascadedReceiver ).add( ";\n" );
+			this.mapFirstLine( line, position );
+			receiver.add( line );
 		} while( this.parser.tryParseTerm( ";" ) );
 
 		receiver.add( "\t\t} ) ()" );
@@ -714,7 +818,7 @@ export class ClassCompiler
 		if( !Naming.methodIsKeywordSelector( this.parser.peekTerm() ) )
 			return;
 
-		let message = this.positionedSourceNode( "", "keywordMessage" );
+		let position = this.parser.position.copy();
 
 		// Parse keywords and arguments
 		let args: SourceNode[] = [];
@@ -729,10 +833,20 @@ export class ClassCompiler
 		// Save method reference for minimizing
 		this.method.addMethodReference( methodName );
 
-		// Generate JS
-		message.add( "." + Naming.methodStToJs( methodName ) + "( " + args[ 0 ] );
+		// Generate JS.
+		// Add arguments as nodes, not concatenated strings: stringifying them
+		// would discard their own source mappings, e.g. breakpoints on
+		// statements inside a block argument like "ifTrue: [ ... ]".
+		// Only map the ".selector( " part: the rest may end up on later JS
+		// lines (after a multi-line block argument), and a mapping there would
+		// give this ST line a second breakpoint location, which V8 moves on
+		// to the next (unmapped) statement, showing the compiled JS instead.
+		let message = this.sourceNode( "", "keywordMessage" );
+		message.add( this.positionedSourceNodeAt( position,
+			"." + Naming.methodStToJs( methodName ) + "( ", "keywordSelector" ) );
+		message.add( args[ 0 ] );
 		for( let index = 1; index < args.length; ++index )
-			message.add( ", " + args[ index ] );
+			message.add( ", " ).add( args[ index ] );
 		message.add( " )" );
 
 		receiver.add( message );
@@ -750,8 +864,10 @@ export class ClassCompiler
 			// Save method reference for minimizing
 			this.method.addMethodReference( methodName );
 
-			let message = this.positionedSourceNode( "", "binaryMessage" );
-			message.add( "." + Naming.methodStToJs( methodName ) + "( " );
+			// Only map the ".selector( " part, see compileKeywordMessage().
+			let message = this.sourceNode( "", "binaryMessage" );
+			message.add( this.positionedSourceNode(
+				"." + Naming.methodStToJs( methodName ) + "( ", "binarySelector" ) );
 			let arg = this.compileReceiver();
 			this.compileUnaryMessages( arg );
 			message.add( arg ).add( " )" );
@@ -787,16 +903,55 @@ export class ClassCompiler
 
 	positionedSourceNode( script: string, name: string ): SourceNode
 	{
+		return this.positionedSourceNodeAt( this.parser.position, script, name );
+	}
+
+	// Same as positionedSourceNode(), but for an earlier, explicitly saved
+	// parser position rather than the current one.
+
+	positionedSourceNodeAt( position: Position, script: string, name: string ): SourceNode
+	{
+		if( this.disableBreakpoints() )
+			return this.sourceNode( script, name );
+
 		return new SourceNode(
-			this.parser.position.line, this.parser.position.column - 1,
+			position.line, position.column - 1,
 			this.relativeFilename(), script, name );
+	}
+
+	// Often-used conversion methods are generated without any source mappings,
+	// so they cannot have breakpoints and the debugger's smart stepping
+	// skips over them on step-into (F11) iso stepping into their ST source.
+
+	// Breakpoints are disabled for all methods 'fromJs:' and 'js:'
+	// and for common core classes: Block, Boolean, Integer, String.
+
+	disableBreakpoints(): boolean
+	{
+		if( ! this.class || ! this.method )
+			return true;
+
+		if( [ "fromJs:", "js:" ].includes( this.method.name ) )
+			return true;
+
+		if( [ "Block", "Boolean", "Integer", "String" ].includes( this.class.name ) )
+			return true;
+
+		return false;
 	}
 
 	// Source file names in source maps should be referenced relative to the output folder
 
 	relativeFilename(): string
 	{
-		return this.relativeOutputPath() + this.class.path;
+		// Use the file the parser is currently reading, not this.class.path:
+		// for a CLASSEXTENSION, this.class is the class being extended (so
+		// e.g. errors are reported against it), but its methods are defined
+		// in the extension's own .st file, which is what source maps need to
+		// point breakpoints at. Using this.class.path here would label every
+		// extension method's mappings with the base class's file instead,
+		// silently colliding with same-numbered lines there.
+		return this.relativeOutputPath() + this.parser.filename;
 	}
 
 	// Return relative path from output folder to workspace folder.
@@ -822,6 +977,14 @@ export class ClassCompiler
 		}
 
 		return result;
+	}
+
+	// Report an error if an argument or local variable name is a reserved word.
+
+	checkReservedWord( name: string, kind: string )
+	{
+		if( [ 'true', 'false', 'nil', 'self', 'super', 'async', 'await' ].includes( name ) )
+			this.error( kind + " name is reserved word: " + name );
 	}
 
 	error( message: string )

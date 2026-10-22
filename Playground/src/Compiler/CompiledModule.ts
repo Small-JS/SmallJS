@@ -1,7 +1,7 @@
 import { CompiledClass } from "./CompiledClass.js";
 import { Naming } from "./Runtime.js";
 
-// Playground uses local SourceNode class
+// Playground: Use local SourceNode class iso npm package.
 import { SourceNode } from "./SourceNode.js";
 // import { SourceNode } from "source-map";
 
@@ -49,8 +49,8 @@ export class CompiledModule
 		return new SourceNode( null, null, null, "" )
 			.add( this.generateModuleImports( allClasses ) )
 			.add( this.generateClasses() )
-			.add( this.generateObjectsInitalization() )
-			.add( this.generateClassesInitalization() )
+			.add( this.generateObjectsInitialization() )
+			.add( this.generateClassesInitialization() )
 			.add( this.generateClassesInheritance() )
 			.add( this.generateClassesList() );
 	}
@@ -65,21 +65,22 @@ export class CompiledModule
 		let mapFilename = codeFilename + CompiledModule.mapFileExtension;
 		let mapPathname = outputFolder + "/" + mapFilename;
 
-		// codeWithSourceMap interface: { code: String, map: SourceMapGenerator }
-		let codeWithSourceMap = rootNode.toStringWithSourceMap( { file: mapFilename } );
-
 		if( sourceMaps ) {
+			// codeWithSourceMap interface: { code: String, map: SourceMapGenerator }
+			let codeWithSourceMap = rootNode.toStringWithSourceMap( { file: codeFilename } );
+
 			// The comment directive "//# sourceMappingURL" must be added
 			// te enable the browser debugger to find the source map.
 			codeWithSourceMap.code += "\n//# sourceMappingURL=" + mapFilename + "\n";
-		}
 
-		fs.writeFileSync( codePathname, codeWithSourceMap.code );
-
-		if( sourceMaps )
+			fs.writeFileSync( codePathname, codeWithSourceMap.code );
 			fs.writeFileSync( mapPathname, codeWithSourceMap.map.toString() );
-		else
-			fs.unlink( mapPathname, ( error ) => { } );
+		}
+		else {
+			fs.writeFileSync( codePathname, rootNode.toString() );
+			if( fs.existsSync( mapPathname ) )
+				fs.unlinkSync( mapPathname );
+		}
 	} */
 
 	// Generate combined imports for classes in module.
@@ -156,7 +157,7 @@ export class CompiledModule
 
 	// Write singleton objects known by the compiler, only in module Core.
 
-	generateObjectsInitalization(): SourceNode
+	generateObjectsInitialization(): SourceNode
 	{
 		let node = this.sourceNode( "objectsInitalization" );
 
@@ -173,7 +174,7 @@ export class CompiledModule
 	// I.e.: Call the initizalize() function on import.
 	// Must be done at end of the generated file to prevent errors with circular references.
 
-	generateClassesInitalization(): SourceNode
+	generateClassesInitialization(): SourceNode
 	{
 		let node = this.sourceNode( "classesInitalization" );
 

@@ -82,6 +82,8 @@ export class Parser
 
 		if( this.nextChar() != "$" )
 			this.error( "Character expected.");
+		if( this.atEnd() )
+			this.error( "Character expected after \"$\"." );
 
 		let char = "$" + this.nextChar();
 
@@ -101,7 +103,7 @@ export class Parser
 	// Parse string; i.e. text enclosed in argument delimiters, that should be the first char
 	// single or double quotes.
 
-	parseString( allowControlChars : boolean = false ): string
+	parseString( allowControlChars: boolean = false ): string
 	{
 		this.skipSpace();
 
@@ -122,8 +124,9 @@ export class Parser
 				char += this.nextChar();
 			}
 
+			// Tabs are allowed, other control characters like newlines only in INLINE.
 			let charCode = char.charCodeAt( 0 );
-			if( ! allowControlChars && charCode < 32 )
+			if( ! allowControlChars && charCode < 32 && char != "\t" )
 				this.error( "Illegal character in string with code: " + charCode );
 
 			str += char;
@@ -161,22 +164,27 @@ export class Parser
 		return num;
 	}
 
-	static specialSingleChars: string = "()[]";
-	static specialMultiChars: string = "~!@#$%^&*-+=/\\,<>:;.|";
+	// Single chars are always a separate term, e.g. in "^-1", "^#( 1 )" and "[ :a |^ a ]".
+	// Multi chars are combined into one term, e.g. for binary operators and ":=".
+	// The char "$" is not special, because it always starts a character literal.
+
+	static specialSingleChars: string = "()[]^#";
+	static specialMultiChars: string = "~!@%&*-+=/\\,<>:;.|";
 
 	parseSpecial(): string
 	{
 		this.skipSpace();
 
+		if( this.atEnd() )
+			this.error( "Unexpected end of file." );
+
 		let special: string = this.nextChar();
 
-		if( Parser.specialSingleChars.includes( special ) )
-			special;
-		else if( Parser.specialMultiChars.includes( special ) )
-			while( !this.atEnd() && Parser.specialMultiChars.includes( this.peekChar() ) )
+		if( Parser.specialMultiChars.includes( special ) )
+			while( !this.atEnd() && Parser.specialMultiChars.includes( this.peekChar() ) && !this.atNegativeNumber() )
 				special += this.nextChar();
-		else
-			this.error( "Illegal special character: '" + this.peekChar() + "'" );
+		else if( !Parser.specialSingleChars.includes( special ) )
+			this.error( "Illegal special character: '" + special + "'" );
 
 		this.skipSpace();
 
@@ -194,8 +202,8 @@ export class Parser
 		while( !this.atEnd() && ( this.atLetter() || this.atDigit() ) )
 			id += this.nextChar();
 
-		// Method name may end with ":" in ST
-		if( !this.atEnd() && this.peekChar() == ":" )
+		// Method name may end with ":" in ST, but not if it is an assignment, e.g. "x:=1".
+		if( !this.atEnd() && this.peekChar() == ":" && this.peekSecondChar() != "=" )
 			id += this.nextChar();
 
 		this.skipSpace();
@@ -301,12 +309,19 @@ export class Parser
 		if( this.nextChar() != "\"" )
 			this.error( "Failed to parse comment start" );
 
+		let start = this.position.copy();
 		let comment = "";
-		while( !this.atEnd() ){
-			let char = this.nextChar();
-			if( char == "\"")
+		let char = "";
+		while( !this.atEnd() ) {
+			char = this.nextChar();
+			if( char == "\"" )
 				break;
 			comment += char;
+		}
+
+		if( char != "\"" ) {
+			this.position = start;
+			this.error( "Unterminated comment." );
 		}
 
 		// Save comment for class, method or category
@@ -343,6 +358,14 @@ export class Parser
 		return CharUtil.isSpace( this.peekChar() );
 	}
 
+	// Return true if at a minus sign followed by a digit,
+	// so that e.g. "3+-2" and "x :=-1" end the operator before the negative number.
+
+	atNegativeNumber(): boolean
+	{
+		return this.peekChar() == "-" && CharUtil.isDigit( this.peekSecondChar() );
+	}
+
 	atMethodEnd(): boolean
 	{
 		return this.atEnd() || this.peekTerm() == "!";
@@ -373,23 +396,6 @@ export class Parser
 
 	// ================================ Reading
 
-	// Return next line including terminating newline character.
-	// Note: Mac-style only \r is not supported.
-
-	nextLine(): string
-	{
-		let line: string = "";
-
-		while( !this.atEnd() ) {
-			let char: string = this.nextChar();
-			line += char;
-			if( char == "\n" )
-				break;
-		}
-
-		return line;
-	}
-
 	// Return the next char and advance the position.
 	// At the end, return an empty string and stay at the end, like peekChar().
 
@@ -408,12 +414,17 @@ export class Parser
 		this.position = position.copy();
 	}
 
+	// Report the error as "<path>:<line>:<column>: ..."
+	// so that VSCode shows it as a link to the error position.
+	// The path is relative to the current folder, so the link only works
+	// if the terminal is in the same folder as the compiler was started from.
+	// The column is in characters, not tabbed, as VSCode expects.
+
 	error( message: string )
 	{
 		let fullMessage: string =
-			"Compile error in file: " + this.filename +
-			", line " + String( this.position.line ) + ", column " + String( this.position.tabbedColumn ) +
-			": " + message;
+			this.filename + ":" + this.position.line + ":" + this.position.column +
+			": Compile error: " + message;
 
 		console.error( fullMessage )
 		// Playground: Cannot exit process in browser, so comment out next line.

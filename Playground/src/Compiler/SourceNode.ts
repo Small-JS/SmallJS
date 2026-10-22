@@ -6,6 +6,8 @@ export class SourceNode
 {
 	source: string = "";
 	children: SourceNode[] = [];
+	// Only for compatibility with ClassCompiler.mapFirstLine(). Mappings are not generated.
+	line: number | null = null;
 
 	constructor(
 		line: number | null,
