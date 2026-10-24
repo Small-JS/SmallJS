@@ -25,7 +25,7 @@ async test
 async connect
 	| connectionString |
 	connectionString := Environment at: 'SMALLJS_POSTGRES'.
-	self assert: [ connectionString startsWith: 'postgres:' ].
+	self assert: [ connectionString startsWith: 'postgresql:' ].
 
 	database := PostgresDatabase new.
 	await database connect: connectionString.

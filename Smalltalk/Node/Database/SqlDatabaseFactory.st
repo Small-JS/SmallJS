@@ -12,7 +12,7 @@ CLASSMETHODS
 newFor: connectionString
 	"Create database instance indicated by the connection string"
 
-	( connectionString startsWith: 'postgres://' ) ifTrue: [ ^ PostgresDatabase new ].
+	( connectionString startsWith: 'postgresql://' ) ifTrue: [ ^ PostgresDatabase new ].
 	( connectionString startsWith: 'mariadb://' ) ifTrue: [ ^ MariadbDatabase new ].
 	( connectionString startsWith: 'mysql://' ) ifTrue: [ ^ MysqlDatabase new ].
 	( self checkSqlite: connectionString ) ifTrue: [ ^ SqliteDatabase new ].

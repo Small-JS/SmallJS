@@ -24,7 +24,7 @@ async createRag
 async connectStore
 	| config store |
 	config := self getEnv: 'STORE_CONFIG'.
-	( config toLowerCase startsWith: 'postgres:' )
+	( config toLowerCase startsWith: 'postgresql:' )
 		ifTrue: [ store := PostgresRagStore new ]
 		ifFalse: [ store := SqliteRagStore new ].
 

@@ -83,7 +83,7 @@ Connecting to a database is done with this line of ST code:
 
 where connectionString is something like:
 
-    'postgres://postgres:password@localhost:5432/smalljs
+    'postgresql://postgres:password@localhost:5432/smalljs
 
 For different databases replace PostgresDatabase with MariadbDatabase, MysqlDatabase or SqliteDatabase.
 

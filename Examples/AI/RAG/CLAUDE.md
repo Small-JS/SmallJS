@@ -32,7 +32,7 @@ Related projects: ../Server (AI Server), ../Client (AI Client, browser app).
   searches the store for the best match and asks the Ollama chat model with that context.
 - `Store/RagStore.st`: abstract vector store base class.
   `Store/SqliteRagStore.st` and `Store/PostgresRagStore.st` implement it.
-  A `STORE_CONFIG` starting with `postgres:` selects Postgres, otherwise it is an SQLite file path.
+  A `STORE_CONFIG` starting with `postgresql:` selects Postgres, otherwise it is an SQLite file path.
 - `Test/TestRagApp.st`: indexes the documents, asks a question and checks the answer.
   It is not a subclass of `Test`.
 - `types.ts`: imports the ollama and pg npm modules only to inspect their TS types in VSCode;
