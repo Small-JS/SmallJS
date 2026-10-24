@@ -72,9 +72,9 @@ testWatchPositionError
 	| geolocation error watchId |
 	geolocation := self mockGeolocation.
 	watchId := geolocation
-		watchPositionOptions: ( PositionOptions new timeout: 0 )
-		then: [ :aPosition | ]
-		error: [ :anError | error := anError ].
+		watchPositionThen: [ :aPosition | ]
+		error: [ :anError | error := anError ]
+		options: ( PositionOptions new timeout: 0 ).
 	self assert: [ watchId = 42 ].
 	self assert: [ error isTimeout ].
 !

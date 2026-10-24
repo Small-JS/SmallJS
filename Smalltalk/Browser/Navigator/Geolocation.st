@@ -34,12 +34,12 @@ currentPositionThen: block error: errorBlock options: options
 "Watching"
 
 watchPositionThen: block
-	^ self watchPositionOptions: nil then: block error: nil.
+	^ self watchPositionThen: block error: nil options: nil.
 !
 watchPositionThen: block error: errorBlock
-	^ self watchPositionOptions: nil then: block error: errorBlock.
+	^ self watchPositionThen: block error: errorBlock options: nil.
 !
-watchPositionOptions: options then: block error: errorBlock
+watchPositionThen: block error: errorBlock options: options
 	"Options is a PositionOptions or nil.
 	 The blocks are called every time the position changes.
 	 Returns the watch id Integer, to be used with clearWatch:."

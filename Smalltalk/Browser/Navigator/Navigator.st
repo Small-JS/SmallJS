@@ -1,6 +1,6 @@
 CLASS Navigator EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: Navigator.
-	 An instance can be accesses through: Windows default navigator."
+	"This class encapsulates the JS class: Navigator.
+	 An instance can be accessed through: Window default navigator."
 
 "Properties"
 
