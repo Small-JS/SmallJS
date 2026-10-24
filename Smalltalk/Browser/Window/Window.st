@@ -138,9 +138,6 @@ scrollX
 scrollY
 	^ Integer fromJs: INLINE 'Math.round( this.js.scrollY )'.
 !
-self
-	^ Window fromJs: INLINE 'this.js.self'.
-!
 sessionStorage
 	^ Storage fromJs: INLINE 'this.js.sessionStorage'.
 !
@@ -155,9 +152,6 @@ top
 !
 visualViewport
 	^ VisualViewport fromJs: INLINE 'this.js.visualViewport'.
-!
-window
-	^ Window fromJs: INLINE 'this.js.window'.
 !
 
 "Callback."

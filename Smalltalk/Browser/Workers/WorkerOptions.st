@@ -1,6 +1,6 @@
 CLASS WorkerOptions EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
-"Encapsulates the JS object of creaeting a Worker instance."
+"Encapsulates the JS options object for creating a Worker or SharedWorker instance."
 
 CLASSMETHODS
 

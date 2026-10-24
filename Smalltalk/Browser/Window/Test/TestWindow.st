@@ -39,13 +39,11 @@ testProperties
 	self assert:[ window scrollBarsVisible | true ].
 	self assert:[ window scrollX >= 0 ].
 	self assert:[ window scrollY >= 0 ].
-	self assert:[ window self class = Window ].
 	self assert:[ window sessionStorage class = Storage ].
 	self assert:[ window statusBarVisible | true ].
 	self assert:[ window toolBarVisible | true ].
 	self assert:[ window top = window ].
 	self assert:[ window visualViewport class = VisualViewport ].
-	self assert:[ window window = window ].
 !
 testIframe
 	"Test the relation between a window in an iframe and its parent window."

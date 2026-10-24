@@ -38,6 +38,39 @@ testTransfer
 		worker terminate ].
 	worker postMessage: 'Port' transfer: ( Array with: channel port2 ).
 !
+testName
+	| worker |
+	worker := Worker new: 'Script/worker.js' options: ( WorkerOptions new type: 'module'; name: 'myWorker' ).
+	worker onMessage: [ :event |
+		self assert: [ ( String fromJs: event data js ) = 'myWorker' ].
+		worker terminate ].
+	worker postMessage: 'Name'.
+!
+testTransferFromWorker
+	| worker port |
+	worker := self newWorker.
+	worker onMessage: [ :event |
+		self assert: [ ( String fromJs: event data js ) = 'Port' ].
+		self assert: [ event ports length = 1 ].
+		port := event ports first.
+		port onMessage: [ :portEvent |
+			self assert: [ ( String fromJs: portEvent data js ) = 'Hello from worker port!' ].
+			port close.
+			worker terminate ] ].
+	worker postMessage: 'Transfer'.
+!
+async testClose
+	| worker messages |
+	worker := self newWorker.
+	messages := Array new.
+	worker onMessage: [ :event | messages add: ( String fromJs: event data js ) ].
+	worker postMessage: 'Close'.
+	await Timer timeout: 200.
+	worker postMessage: 'Hello, worker!'.
+	await Timer timeout: 200.
+	self assert: [ messages = #( 'Closing' ) ].
+	worker terminate.
+!
 xtestError
 	"This test is disabled by default because the forces error interferes with debugging.
 	The test does work, in batch mode."
