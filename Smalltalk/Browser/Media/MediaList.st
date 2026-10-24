@@ -1,5 +1,5 @@
 CLASS MediaList EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: MediaList.
+	"This class encapsulates the JS class: MediaList.
 	 It is a list of media queries, e.g. of a style sheet or an @import rule.
 	 Get it with: StyleSheet media or CssImportRule media."
 
@@ -22,9 +22,7 @@ mediaText: mediaText
 
 item: index
 	"Return the media query at the (zero-based) index, or nil if out of range."
-	INLINE 'let jsItem = this.js.item( index.js )'.
-	INLINE 'if( jsItem == null ) return stNil$'.
-	^ String fromJs: INLINE 'jsItem'.
+	^ String fromJs: INLINE 'this.js.item( index.js )'.
 !
 items
 	"Return all media queries as an Array of Strings."

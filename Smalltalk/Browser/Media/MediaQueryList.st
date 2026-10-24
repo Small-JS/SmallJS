@@ -1,5 +1,5 @@
 CLASS MediaQueryList EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: MediaQueryList.
+	"This class encapsulates the JS class: MediaQueryList.
 	 Get it with: Window matchMedia: mediaQueryString."
 
 METHODS
@@ -17,9 +17,23 @@ media
 
 "Events"
 
+eventFromJs: jsEvent
+	"Create ST MediaQueryListEvent from JS MediaQueryListEvent, else the ST Event subclass."
+	( Boolean fromJs: INLINE 'jsEvent instanceof MediaQueryListEvent' ) ifTrue: [
+		^ MediaQueryListEvent fromJs: jsEvent ].
+	^ Event fromJsSubEvent: jsEvent.
+!
+addEventListener: type then: block
+	"Override to pass change events as ST MediaQueryListEvent to the block.
+	 Block should have 1 argument: the ST Event."
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( self eventFromJs: jsEvent ) ].
+	INLINE 'this.js.addEventListener( type.js, jsBlock.js )'.
+	self eventIds add: ( EventId fromType: type block: block jsBlock: jsBlock ).
+!
 onChange: block
 	"Block is called with a MediaQueryListEvent when the result of the media query changes."
 	| jsBlock |
-	jsBlock := [ :jsEvent | block value: ( MediaQueryListEvent fromJs: jsEvent ) ].
+	jsBlock := [ :jsEvent | block value: ( self eventFromJs: jsEvent ) ].
 	INLINE 'this.js.onchange = jsBlock.js'.
 !

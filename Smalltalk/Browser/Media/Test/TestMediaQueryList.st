@@ -39,4 +39,23 @@ testEvents
 	list addEventListener: 'change' then: [ :event | received := event ].
 	list dispatchEvent: ( Event type: 'change' ).
 	self assert: [ received type = 'change' ].
+	"A plain Event is not converted to MediaQueryListEvent."
+	self assert: [ received class = Event ].
+!
+testMediaQueryListEvents
+	"Listeners receive a dispatched MediaQueryListEvent as ST MediaQueryListEvent."
+	| list options changeEvent received receivedOnChange |
+	list := Window default matchMedia: 'print'.
+	list addEventListener: 'change' then: [ :event | received := event ].
+	list onChange: [ :event | receivedOnChange := event ].
+
+	options := MediaQueryListEventOptions new matches: true; media: 'print'.
+	changeEvent := MediaQueryListEvent type: 'change' options: options.
+	list dispatchEvent: changeEvent.
+
+	self assert: [ received class = MediaQueryListEvent ].
+	self assert: [ received matches ].
+	self assert: [ received media = 'print' ].
+	self assert: [ receivedOnChange class = MediaQueryListEvent ].
+	self assert: [ receivedOnChange media = 'print' ].
 !
