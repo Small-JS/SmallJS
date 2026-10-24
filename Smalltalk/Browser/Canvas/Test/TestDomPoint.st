@@ -28,10 +28,13 @@ testReadonly
 	self assert: [ domPoint w = 9 ].
 
 	jsObject := domPoint toJson.
+	self assert: [ jsObject class = JsObject ].
 	self assert: [ ( jsObject atJsProperty: 'x' ) = 6 ].
 	self assert: [ ( jsObject atJsProperty: 'y' ) = 7 ].
 	self assert: [ ( jsObject atJsProperty: 'z' ) = 8 ].
 	self assert: [ ( jsObject atJsProperty: 'w' ) = 9 ].
+
+	self assert: [ ( domPoint = 6 ) not ].
 
 	domPoint2 := domPoint copy.
 	self assert: [ domPoint2 x = 6 ].

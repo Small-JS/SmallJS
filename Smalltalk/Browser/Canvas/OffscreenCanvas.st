@@ -39,11 +39,7 @@ size: size
 "Methods"
 
 getContext: type
-	| context |
-	context := JsObject fromJs: INLINE 'this.js.getContext( type.js )'.
-
-	type := type toLowerCase.
-	type = '2d' ifTrue: [ ^ OffscreenCanvasRenderingContext2d fromJs: context js ].
+	type toLowerCase = '2d' ifTrue: [ ^ self getContext2d ].
 
 	self error: 'Unsupported or invalid offscreen canvas context: ', type.
 !

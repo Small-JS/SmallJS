@@ -80,7 +80,7 @@ lineCap: lineCap
 	INLINE 'this.js.lineCap = lineCap .js'.
 !
 lineDashOffset
-	^ Integer fromJs: INLINE 'this.js.lineDashOffset'.
+	^ Float fromJs: INLINE 'this.js.lineDashOffset'.
 !
 lineDashOffset: lineDashOffset
 	INLINE 'this.js.lineDashOffset = lineDashOffset.js'.
@@ -307,7 +307,7 @@ setLineDash: segments
 	INLINE 'this.js.setLineDash( segments.$toJs() )'.
 !
 getLineDash
-	^ Array fromJs: INLINE 'this.js.getLineDash()' elementClass: Integer.
+	^ Array fromJs: INLINE 'this.js.getLineDash()' elementClass: Float.
 !
 
 "Collisions"

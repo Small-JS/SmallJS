@@ -30,6 +30,8 @@ testGetContext
 	self assert: [ context class = OffscreenCanvasRenderingContext2d ].
 	self assert: [ context isContextLost not ].
 	self assertError: [ canvas getContext: 'unknown' ].
+	context := canvas getContext: '2D'.
+	self assert: [ context class = OffscreenCanvasRenderingContext2d ].
 !
 testDraw
 	| canvas context |

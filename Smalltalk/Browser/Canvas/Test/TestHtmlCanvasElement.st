@@ -13,6 +13,10 @@ test
 	canvas height: 100.
 	self assert: [ canvas height = 100 ].
 
+	"Setters return the receiver."
+	self assert: [ ( canvas width: 200 ) = canvas ].
+	self assert: [ ( canvas height: 100 ) = canvas ].
+
 	self assert: [ canvas size = ( 200 @ 100 ) ].
 	canvas size: ( 100 @ 50 ).
 	self assert: [ canvas size = ( 100 @ 50 ) ].
@@ -21,6 +25,9 @@ test
 	self assert: [ context class = CanvasRenderingContext2d ].
 	context := canvas getContext2d.
 	self assert: [ context class = CanvasRenderingContext2d ].
+	context := canvas getContext: '2D'.
+	self assert: [ context class = CanvasRenderingContext2d ].
+	self assertError: [ canvas getContext: 'unknown' ].
 
 	canvas toBlobType: 'image/png' quality: 1.0
 		then: [ :blob | self onToBlob: blob ].

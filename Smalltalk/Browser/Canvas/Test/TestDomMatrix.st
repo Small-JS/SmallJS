@@ -79,13 +79,13 @@ test2dMutating
 	self assert: [ matrix2 equals2d: ( DomMatrix init: #( 2 4 6 8 5 6 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scaleSelf: 3 origin: ( 1 @ 2 @ 3 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 3 6 0 0 3 4 0 0 0 0 2 0 -1 -6 0 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 3 6 0 0 9 12 0 0 0 0 1 0 -9 -14 0 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scale3dSelf: ( 2 @ 3 @ 4 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 6 8 0 0 0 0 2 0 -10 -16 0 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 9 12 0 0 0 0 4 0 5 6 0 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scale3dSelf: ( 2 @ 3 @ 4 ) origin: ( 1 @ 2 @ 3 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 6 8 0 0 0 0 2 0 -10 -16 -1 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 9 12 0 0 0 0 4 0 -8 -12 -9 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy rotateSelf: ( 45 @ 45 @ 45 ).
 	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 3 -0.70 0 2.41 3.12 0.5 0 0.41 1.12 0.5 0 5 6 0 1 ) ) precision: 0.1 ].
@@ -195,13 +195,13 @@ test3dMutating
 	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 0 2 6 0 4 0 1 0 5 6 7 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scaleSelf: 3 origin: ( 1 @ 2 @ 3 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 3 6 0 0 0 1 3 0 8 0 2 0 -1 -6 7 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 3 6 0 0 0 3 9 0 4 0 1 0 3 -2 -5 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scale3dSelf: ( 2 @ 3 @ 4 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 0 2 6 0 8 0 2 0 2 -4 -5 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 0 3 9 0 16 0 4 0 5 6 7 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy scale3dSelf: ( 2 @ 3 @ 4 ) origin: ( 1 @ 2 @ 3 ).
-	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 0 2 6 0 8 0 2 0 -2 -4 -6 1 ) ) precision: 0.001 ].
+	self assert: [ matrix2 equals3d: ( DomMatrix init: #( 2 4 0 0 0 3 9 0 16 0 4 0 -32 0 -14 1 ) ) precision: 0.001 ].
 
 	matrix2 := matrix copy rotateSelf: ( 45 @ 45 @ 45 ).
 	self assert: [ matrix2 equals3d: ( DomMatrix init: #( -2.328 1.5 0.793 0 1.854 0.561 3.061 0 2.854 1.561 0.061 0 5 6 7 1 ) ) precision: 0.001 ].

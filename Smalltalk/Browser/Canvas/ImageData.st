@@ -1,8 +1,8 @@
 CLASS ImageData EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
 "Data
- The data array is always a multple of 4 bytes.
- A set of 4 bytes containting 4 bytes values for red, green, blue and alpha."
+ The data array length is always a multiple of 4 bytes.
+ Each pixel is a set of 4 byte values for red, green, blue and alpha."
 
 data
 	^ Uint8Array fromJs: INLINE 'this.js.data'.
@@ -21,11 +21,12 @@ atPixel: point
 !
 atPixel: point put: rgba
 	"rgba should by an array with RGBA byte values."
-	| index |
+	| data index |
 	self assert: [ rgba length = 4 ].
+	data := self data.
 	index := point y * self width + point x * 4.
-	rgba do: [ :color |
-		INLINE 'this.js.data[ index.js++ ] = color.js' ].
+	0 to: 3 do: [ :offset |
+		data at: index + offset put: ( rgba at: offset ) ].
 !
 pixelLength
 	^ self data length // 4.

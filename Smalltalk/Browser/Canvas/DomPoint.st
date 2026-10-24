@@ -28,7 +28,7 @@ METHODS
 "Converting"
 
 toJson
-	^ String fromJs: INLINE 'this.js.toJSON()'.
+	^ JsObject fromJs: INLINE 'this.js.toJSON()'.
 !
 copy
 	^ DomPoint fromDomPoint: self.
@@ -71,6 +71,7 @@ w: w
 "Comparing"
 
 = domPoint
+	( domPoint isKindOf: DomPoint ) ifFalse: [ ^ false ].
 	^ ( self x = domPoint x ) & ( self y = domPoint y ) &
 		( self z = domPoint z ) & ( self w = domPoint w ).
 !

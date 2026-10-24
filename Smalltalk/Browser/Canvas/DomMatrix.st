@@ -11,7 +11,7 @@ new
 !
 init: array
 	"Array should be either 6 or 16 float values,
-	 to intialize the matrix for 2D or 3D operations respectively."
+	 to initialize the matrix for 2D or 3D operations respectively."
 	^ self fromJs: INLINE 'new DOMMatrix( array.$toJs() )'.
 !
 fromMatrix: matrix
@@ -208,16 +208,20 @@ translateSelf: point3d
 !
 
 scaleSelf: scale
+	"Scale x and y by the same factor."
 	INLINE 'this.js.scaleSelf( scale.js )'.
 !
 scaleSelf: scale origin: origin
-	INLINE 'this.js.scaleSelf( scale.js, origin.x.js, origin.y.js, origin.z.js )'.
+	"Scale x and y by the same factor, around the Point3d origin."
+	INLINE 'this.js.scaleSelf( scale.js, scale.js, 1, origin.x.js, origin.y.js, origin.z.js )'.
 !
 scale3dSelf: scale3d
-	INLINE 'this.js.scale3dSelf( scale3d.x.js, scale3d.y.js, scale3d.z.js )'.
+	"Scale x, y and z by the factors in the Point3d scale3d."
+	INLINE 'this.js.scaleSelf( scale3d.x.js, scale3d.y.js, scale3d.z.js )'.
 !
 scale3dSelf: scale3d origin: origin
-	INLINE 'this.js.scale3dSelf( scale3d.x.js, scale3d.y.js, scale3d.z.js, origin.x.js, origin.y.js, origin.z.js )'.
+	"Scale x, y and z by the factors in the Point3d scale3d, around the Point3d origin."
+	INLINE 'this.js.scaleSelf( scale3d.x.js, scale3d.y.js, scale3d.z.js, origin.x.js, origin.y.js, origin.z.js )'.
 !
 
 rotateSelf: degrees3d

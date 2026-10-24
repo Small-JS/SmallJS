@@ -56,6 +56,8 @@ testProperties
 	self assert: [ context lineDashOffset = 0 ].
 	context lineDashOffset: 4.
 	self assert: [ context lineDashOffset = 4 ].
+	context lineDashOffset: 2.5.
+	self assert: [ context lineDashOffset = 2.5 ].
 
 	self assert: [ context lineJoin = 'miter' ].
 	context lineJoin: 'round'.
@@ -118,6 +120,7 @@ testMethods
 
 	pattern := context createPattern: canvas repetition: 'repeat'.
 	self assert: [ pattern class = CanvasPattern ].
+	pattern setTransform: DomMatrix new.
 
 	gradient := context createLinearGradientFrom: ( 10 @ 20 ) to: ( 30 @ 40 ).
 	self assert: [ gradient class = CanvasGradient ].
@@ -128,6 +131,9 @@ testMethods
 
 	lineDash := context getLineDash.
 	self assert: [ lineDash = #( ) ].
+	context setLineDash: #( 1.5 2 ).
+	self assert: [ context getLineDash = #( 1.5 2 ) ].
+	context setLineDash: #( ).
 
 	matrix := context getTransform.
 	self assert: [ matrix isIdentity ].
