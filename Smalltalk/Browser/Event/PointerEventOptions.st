@@ -28,10 +28,11 @@ isPrimary: isPrimary
 "Contact geometry"
 
 contact
-	"Size of the contact area of the pointer as a Point: width @ height, or nil if not set."
+	"Size of the contact area of the pointer as a Point: width @ height, or nil if not set.
+	 If only one is set, the other has the JS default value 1."
 	INLINE 'if( this.js.width == null && this.js.height == null ) return stNil$'.
-	^ ( Float fromJs: INLINE 'this.js.width' ) @
-		( Float fromJs: INLINE 'this.js.height' ).
+	^ ( Float fromJs: INLINE 'this.js.width ?? 1' ) @
+		( Float fromJs: INLINE 'this.js.height ?? 1' ).
 !
 contact: point
 	"Size of the contact area of the pointer as a Point: width @ height."
@@ -57,10 +58,11 @@ tangentialPressure: tangentialPressure
 "Orientation"
 
 tilt
-	"Tilt of the pointer as a Point: tiltX @ tiltY, or nil if not set."
+	"Tilt of the pointer as a Point: tiltX @ tiltY, or nil if not set.
+	 If only one is set, the other has the JS default value 0."
 	INLINE 'if( this.js.tiltX == null && this.js.tiltY == null ) return stNil$'.
-	^ ( Integer fromJs: INLINE 'this.js.tiltX' ) @
-		( Integer fromJs: INLINE 'this.js.tiltY' ).
+	^ ( Integer fromJs: INLINE 'this.js.tiltX ?? 0' ) @
+		( Integer fromJs: INLINE 'this.js.tiltY ?? 0' ).
 !
 tilt: point
 	"Tilt of the pointer as a Point: tiltX @ tiltY, angles in degrees from -90 to 90."

@@ -10,6 +10,13 @@ type: type options: options
 	"Options is a MouseEventOptions instance."
 	^ self fromJs: INLINE 'new MouseEvent( type.js, options.js )'.
 !
+targetFromJs: jsTarget
+	"Create ST object from JS event target: a Node subclass, Window or else EventTarget."
+	INLINE 'if( jsTarget == null ) return stNil$'.
+	( Boolean fromJs: INLINE 'jsTarget instanceof Node' ) ifTrue: [ ^ Node fromJsSubNode: jsTarget ].
+	( Boolean fromJs: INLINE 'jsTarget instanceof Window' ) ifTrue: [ ^ Window fromJs: jsTarget ].
+	^ EventTarget fromJs: jsTarget.
+!
 
 METHODS
 
@@ -69,5 +76,5 @@ movement
 
 relatedTarget
 	"The secondary target of the event, e.g. the element left for mouseenter, or nil."
-	^ EventTarget fromJs: INLINE 'this.js.relatedTarget'.
+	^ MouseEvent targetFromJs: INLINE 'this.js.relatedTarget'.
 !

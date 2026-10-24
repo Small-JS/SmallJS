@@ -132,3 +132,14 @@ removeChildren
 replaceChild: node with: newNode
 	INLINE 'this.js.replaceChild( newNode.js, node.js )'.
 !
+
+"Events"
+
+addEventListener: type then: block
+	"Override to pass UI events as ST UiEvent subclasses, like MouseEvent, to the block.
+	 Block should have 1 argument: the ST Event."
+	| jsBlock |
+	jsBlock := [ :jsEvent | block value: ( UiEvent fromJsSubEvent: jsEvent ) ].
+	INLINE 'this.js.addEventListener( type.js, jsBlock.js )'.
+	self eventIds add: ( EventId fromType: type block: block jsBlock: jsBlock ).
+!

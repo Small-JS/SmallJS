@@ -35,6 +35,19 @@ testFromJsSubEvent
 	self assert: [ event class = PointerEvent ].
 	self assert: [ event type = 'pointerdown' ].
 
+	event := UiEvent fromJsSubEvent: INLINE 'new WheelEvent( "wheel" )'.
+	self assert: [ event class = WheelEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new KeyboardEvent( "keydown" )'.
+	self assert: [ event class = KeyboardEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new FocusEvent( "focus" )'.
+	self assert: [ event class = FocusEvent ].
+
+	"JS subclasses without an ST class use the ST class of their nearest JS superclass."
+	event := UiEvent fromJsSubEvent: INLINE 'new DragEvent( "drag" )'.
+	self assert: [ event class = MouseEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new InputEvent( "input" )'.
+	self assert: [ event class = UiEvent ].
+
 	"Fall back to Event fromJsSubEvent:"
 	event := UiEvent fromJsSubEvent: INLINE 'new ErrorEvent( "error" )'.
 	self assert: [ event class = ErrorEvent ].

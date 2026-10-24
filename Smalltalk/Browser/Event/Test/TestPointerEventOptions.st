@@ -12,6 +12,14 @@ test
 	self assert: [ options contact isNil ].
 	self assert: [ options tilt isNil ].
 
+	"If only one value is set, the other gets its JS default."
+	INLINE 'options.js.tiltX = 30; options.js.width = 4'.
+	self assert: [ options tilt = ( 30 @ 0 ) ].
+	self assert: [ options contact = ( 4 @ 1 ) ].
+	INLINE 'delete options.js.tiltX; delete options.js.width'.
+	self assert: [ options tilt isNil ].
+	self assert: [ options contact isNil ].
+
 	options pointerId: 3; pointerType: 'touch'; isPrimary: true.
 	self assert: [ options pointerId = 3 ].
 	self assert: [ options pointerType = 'touch' ].

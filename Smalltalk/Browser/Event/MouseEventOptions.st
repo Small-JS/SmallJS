@@ -88,7 +88,7 @@ movementY: movementY
 "Events"
 
 relatedTarget
-	^ EventTarget fromJs: INLINE 'this.js.relatedTarget'.
+	^ MouseEvent targetFromJs: INLINE 'this.js.relatedTarget'.
 !
 relatedTarget: relatedTarget
 	INLINE 'this.js.relatedTarget = relatedTarget.js'.
