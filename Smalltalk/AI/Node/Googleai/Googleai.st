@@ -24,15 +24,18 @@ apiKey
 !
 
 generativeModel: params
-	^ GoogleaiModel fromJs: INLINE 'this.js.getGenerativeModel( params.js )'.
+	"Uses the base URL in GOOGLEAI_BASE_URL. If nil, the SDK uses its default base URL."
+	| baseUrl |
+	baseUrl := self class baseUrl.
+	^ GoogleaiModel fromJs: INLINE 'this.js.getGenerativeModel( params.js, { baseUrl: baseUrl.js } )'.
 !
 
 "Chat"
 
-async chat: messages
+async chat: messages model: aModel
 	| params generativeModel response |
 
-	params := GoogleaiModelParams new model: self model.
+	params := GoogleaiModelParams new model: aModel.
 	generativeModel := self generativeModel: params.
 	response := await generativeModel generateContent: messages.
 	^ response text.

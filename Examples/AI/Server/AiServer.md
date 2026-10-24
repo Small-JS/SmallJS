@@ -9,8 +9,9 @@ This server can route chat requests to supported AI providers in a unified manne
 First install npm dependencies by running `./install.sh` (or `npm install`) in a terminal.
 
 Before running the server you need to set the AI providers to use.\
-Copy the file `.env.example` to `.env` and uncomment the AI providers you want to use.\
-You will have to put in your own secret API keys to be able to connect to paid models.
+Copy the file `.env.example` to `.env` and uncomment the API keys of the AI providers you want to use.\
+You will have to put in your own secret API keys to be able to connect to paid models.\
+A provider is only enabled when its base URL, models and, except for Ollama, API key are set.
 
 Build the server and run its tests with `./build.sh`.\
 Start the server with `./start.sh`.

@@ -19,8 +19,8 @@ async test
 	self assert: [ chatCompletion class = OpenaiChatCompletion ].
 	self assert: [ ( Date new toSeconds - chatCompletion created toSeconds ) < 60 ].
 	self assert: [ chatCompletion id startsWith: 'chatcmpl' ].
-	self assert: [ #( 'chatgpt' 'gpt' 'o1' 'o4' ) some: [ :modelNameStart |
-		chatCompletion model startsWith: modelNameStart ] ].
+	"The answered model name can have a version suffix, e.g.: gpt-4o-mini-2024-07-18."
+	self assert: [ chatCompletion model startsWith: openai model ].
 	self assert: [ chatCompletion object = 'chat.completion' ].
 	self assert: [ #( 'scale' 'default' ) includes: chatCompletion serviceTier ].
 	chatCompletion systemFingerprint ifNotNil: [

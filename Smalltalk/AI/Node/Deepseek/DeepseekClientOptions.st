@@ -3,7 +3,7 @@ CLASS DeepseekClientOptions EXTENDS OpenaiClientOptions MODULE AiOpenai CLASSVAR
 CLASSMETHODS
 
 new
-	self newEmpty
+	^ self newEmpty
 		baseUrl: ( Environment at: 'DEEPSEEK_BASE_URL' );
 		apiKey: ( Environment at: 'DEEPSEEK_API_KEY' );
 		organization: ( Environment at: 'DEEPSEEK_ORG_ID' );

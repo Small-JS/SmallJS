@@ -68,10 +68,11 @@ onProviders: request response: response
 	self log: 'AiServer: Sent providers: ', providers toString.
 !
 
-"For the text AI chat request answer a text reponse from the selected AI.
+"For the text AI chat request answer a text response from the selected AI and model.
+Errors are answered as an unsuccessful response with the error message as text.
 
 Example request:
-	http://localhost:3000/api/chat/?ai=openai&text=Say%20this%20is%20a%20test
+	http://localhost:3000/api/chat?provider=openai&model=gpt-4o-mini&messages=%5B%22Say%20this%20is%20a%20test%22%5D
 Example result:
  	{ success: true, text: 'This is a test.' }"
 
@@ -80,7 +81,10 @@ async onChat: request response: response
 
 	chatResponse := AiChatResponse new success: false; text: ''.
 
-	chatRequest := AiChatRequest fromObject: request query.
+	chatRequest := [ AiChatRequest fromObject: request query ]
+		tryCatch: [ :error | nil ].
+	chatRequest ifNil: [
+		^ response send: ( chatResponse text: 'Chat request parameter "messages" is not valid JSON' ) ].
 	self log: 'AiServer: Received chat request: ', chatRequest toString.
 
 	chatRequest provider ifNil: [
@@ -89,14 +93,20 @@ async onChat: request response: response
 		^ response send: ( chatResponse text: 'Chat request parameter "model" missing' ) ].
 	chatRequest messages ifNil: [
 		^ response send: ( chatResponse text: 'Chat request parameter "messages" missing' ) ].
+	( chatRequest messages isKindOf: Array ) ifFalse: [
+		^ response send: ( chatResponse text: 'Chat request parameter "messages" is not an array' ) ].
 
 	provider := chatRequest provider toLowerCase.
 	ai := aiMap get: provider.
 	ai ifNil: [
 		^ response send: ( chatResponse text: 'AI provider not available: ', provider ) ].
+	( ai class models includes: chatRequest model ) ifFalse: [
+		^ response send: ( chatResponse text: 'AI model not available: ', chatRequest model ) ].
 
-	text := await ai chat: chatRequest messages.
-	chatResponse success: true; text: text.
+	text := await async [ await ai chat: chatRequest messages model: chatRequest model ]
+		tryAwaitCatch: [ :error | chatResponse text: 'AI provider error: ', error message. nil ].
+	text ifNotNil: [
+		chatResponse success: true; text: text ].
 	response send: chatResponse.
 	self log: 'AiServer: Sent chat response: ', chatResponse toString.
 !

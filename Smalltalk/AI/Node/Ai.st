@@ -29,11 +29,13 @@ embeddingModels
 	^ self modelsFor: '_EMBEDDING_MODELS'.
 !
 modelsFor: extension
-	"Return list of embedding model names set in variable"
+	"Return list of model names set in variable <classname><extension>, e.g.: OPENAI_MODELS.
+	 Names are separated by spaces. Return an empty list if the variable is not set."
 	| variableName modelsString |
 	variableName := self name toUpperCase, extension.
 	modelsString := Environment at: variableName.
-	^ modelsString split: ' '.
+	modelsString ifNil: [ ^ #() ].
+	^ ( modelsString split: ' ' ) filter: [ :modelName | modelName isEmpty not ].
 !
 apiKey
 	"Return API key set in varable <classname>_API_KEY, e.g.: OPENAI_API_KEY"
@@ -41,9 +43,19 @@ apiKey
 	variableName := self name toUpperCase, '_API_KEY'.
 	^ Environment at: variableName.
 !
+requiresApiKey
+	"Return true if this AI needs an API key. Local AIs override this."
+	^ true.
+!
 available
-	"Return true if the base URL key is set for this AI."
-	^ self baseUrl notNil.
+	"Return true if the base URL, the models and, if required, the API key are set for this AI."
+	( self isSet: self baseUrl ) ifFalse: [ ^ false ].
+	( self requiresApiKey and: [ ( self isSet: self apiKey ) not ] ) ifTrue: [ ^ false ].
+	^ self models isEmpty not.
+!
+isSet: value
+	"Return true if the environment variable value is set and not blank."
+	^ value notNil and: [ value trim isEmpty not ].
 !
 
 METHODS
@@ -59,6 +71,8 @@ name
 !
 model
 	model ifNil: [
+		self class models isEmpty ifTrue: [
+			self error: 'Environment variable not set: ', self class name toUpperCase, '_MODELS' ].
 		model := self class models first ].
 	^ model.
 !
@@ -67,6 +81,8 @@ model: aModel
 !
 embeddingModel
 	embeddingModel ifNil: [
+		self class embeddingModels isEmpty ifTrue: [
+			self error: 'Environment variable not set: ', self class name toUpperCase, '_EMBEDDING_MODELS' ].
 		embeddingModel := self class embeddingModels first ].
 	^ embeddingModel.
 !
@@ -78,7 +94,13 @@ embeddingModel: aEmbeddingModel
 
 chat: messages
 	"Ask a question to this AI provider with the text strings in the messages array,
-	 and call the block with the response text."
+	 using the current model. Answer a promise of the response text."
+	^ self chat: messages model: self model.
+!
+chat: messages model: aModel
+	"Ask a question to this AI provider with the text strings in the messages array,
+	 using the model named aModel. Answer a promise of the response text.
+	 The model is passed per call, so concurrent requests can use different models."
 	self error: 'Subclass responsibility.'.
 !
 

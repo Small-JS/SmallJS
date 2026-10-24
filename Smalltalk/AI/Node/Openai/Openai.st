@@ -18,10 +18,10 @@ METHODS
 
 "Chat"
 
-async chat: messages
+async chat: messages model: aModel
 	| request chatCompletion |
 	request := OpenaiChatCompletionRequest new
-		model: self model.
+		model: aModel.
 	messages do: [ :message |
 		request addRole: 'user' content: message ].
 

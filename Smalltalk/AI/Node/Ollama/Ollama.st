@@ -11,14 +11,21 @@ new: config
 	^ self fromJs: INLINE 'new Ollama( config.js )'.
 !
 
+"Configuration"
+
+requiresApiKey
+	"Ollama runs locally without an API key."
+	^ false.
+!
+
 METHODS
 
 "Chat"
 
-async chat: messages
+async chat: messages model: aModel
 	| request response |
 	request := OllamaChatRequest new
-		model: self model.
+		model: aModel.
 	messages do: [ :message |
 		request addRole: 'user' content: message ].
 

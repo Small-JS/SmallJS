@@ -14,7 +14,8 @@ model: model
 	INLINE 'this.js.model = model.js'.
 !
 input: input
-	INLINE 'this.js.input = input.js'.
+	"String or Array of Strings."
+	INLINE 'this.js.input = input.$toJs()'.
 !
 truncate: truncate
 	INLINE 'this.js.truncate = truncate.js'.

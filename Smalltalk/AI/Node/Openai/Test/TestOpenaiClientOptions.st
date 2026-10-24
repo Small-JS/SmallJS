@@ -8,8 +8,8 @@ test
 
 	self assert: [ options baseUrl = ( Environment at: 'OPENAI_BASE_URL' ) ].
 	self assert: [ options apiKey = ( Environment at: 'OPENAI_API_KEY' ) ].
-	self assert: [ options organization = ( Environment at: 'OPENAI_ORGANIZATION' ) ].
-	self assert: [ options project = ( Environment at: 'OPENAI_PROJECT' ) ].
+	self assert: [ options organization = ( Environment at: 'OPENAI_ORG_ID' ) ].
+	self assert: [ options project = ( Environment at: 'OPENAI_PROJECT_ID' ) ].
 
 	options baseUrl: 'https://api.openai.com/v1'.
 	self assert: [ options baseUrl = 'https://api.openai.com/v1' ].

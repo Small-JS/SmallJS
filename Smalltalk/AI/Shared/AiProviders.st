@@ -4,8 +4,8 @@ CLASS AiProviders EXTENDS Object MODULE AiShared CLASSVARS '' VARS 'map'
  Communicated by the AI server to the client.
 
  A JSON example of the communication is:
-	[	{ provider: 'OpenAI', models: [ 'gpt-4o-mini', ' gpt-4o' ] }
-		{ provider: 'Deepseek', models: [ 'deepseek-chat' 'deepseek-reasoner' ] } ]"
+	[	{ provider: 'openai', models: [ 'gpt-4o-mini', 'gpt-4o' ] },
+		{ provider: 'deepseek', models: [ 'deepseek-chat', 'deepseek-reasoner' ] } ]"
 
 CLASSMETHODS
 

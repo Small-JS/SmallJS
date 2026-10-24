@@ -12,10 +12,11 @@ new
 "Models"
 
 models
-	| modelsString |
-	modelsString := Environment at: 'DEEPSEEK_MODELS'.
-	modelsString ifNil: [ ^ #( 'deepseek-chat' ) ].  "Default"
-	^ modelsString split: ' '.
+	"Default to deepseek-chat if DEEPSEEK_MODELS is not set."
+	| models |
+	models := self modelsFor: '_MODELS'.
+	models isEmpty ifTrue: [ ^ #( 'deepseek-chat' ) ].
+	^ models.
 !
 
 METHODS

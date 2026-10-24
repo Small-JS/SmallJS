@@ -12,7 +12,7 @@ new
 
 	apiKey := self apiKey.
 	apiKey ifNil: [
-		self error: 'Evironment variable not set: ANTHROPIC_API_KEY' ].
+		self error: 'Environment variable not set: ANTHROPIC_API_KEY' ].
 
 	options := AnthropicClientOptions new apiKey: apiKey.
 
@@ -22,12 +22,21 @@ new: options
 	^ self fromJs: INLINE 'new Anthropic( options.js )'.
 !
 
+"Configuration"
+
+maxTokens
+	"The Anthropic API requires a maximum number of output tokens per chat.
+	 Longer answers are cut off, with stop reason 'max_tokens'."
+	^ 4096.
+!
+
 METHODS
 
 "Chat"
 
-async chat: messages
-	| messageParams createMessageParams message |
+async chat: messages model: aModel
+	"Answer the text of the first text block. Other blocks, like thinking, are skipped."
+	| messageParams createMessageParams message textBlock |
 
 	messageParams := messages map: [ :message |
 		AnthropicMessageParam new
@@ -35,12 +44,15 @@ async chat: messages
 			content: message ].
 
 	createMessageParams := AnthropicMessageCreateParams new
-		model: self model;
-		maxTokens: 1024;
+		model: aModel;
+		maxTokens: self class maxTokens;
 		messages: messageParams.
 
 	message := await self create: createMessageParams.
-	^ message content first text.
+	textBlock := message content find: [ :block | block type = 'text' ].
+	textBlock ifNil: [
+		self error: 'Anthropic response has no text, stop reason: ', message stopReason toString ].
+	^ textBlock text.
 !
 async create: params
 	^ AnthropicMessage fromJs: INLINE 'await this.js.messages.create( params.js )'.

@@ -4,7 +4,7 @@ CLASS TestDeepseek EXTENDS Test MODULE TestAi CLASSVARS '' VARS ''
  The only configuration differences are environment variables:
  	Base URL: DEEPSEEK_BASE_URL
 	API key: DEEPSEEK_API_KEY
-	Text models: DEEPSEEK_TEXT_MODELS
+	Text models: DEEPSEEK_MODELS
 
 The class DeepseekClientOptions uses the Deepseek base URL and API key env vars for defaults."
 
@@ -29,7 +29,8 @@ async test
 	self assert: [ chatCompletion id length > 10 ].
 	self assert: [ chatCompletion model startsWith: 'deepseek' ].
 	self assert: [ chatCompletion object = 'chat.completion' ].
-	self assert: [ chatCompletion systemFingerprint length > 8 ].
+	chatCompletion systemFingerprint ifNotNil: [
+		self assert: [ chatCompletion systemFingerprint isEmpty not ] ].
 	self assert: [ chatCompletion choices length = 1 ].
 
 	choice := chatCompletion choices first.

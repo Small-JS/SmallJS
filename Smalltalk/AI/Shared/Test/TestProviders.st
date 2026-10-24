@@ -4,9 +4,9 @@ test
 	| providers providers2 |
 
 	providers := AiProviders new.
-	providers setProvider: 'openai' models: 'o3 o4'.
+	providers setProvider: 'openai' models: #( 'o3' 'o4' ).
 	self assert: [ providers size = 1 ].
-	self assert: [ ( providers modelsFor: 'openai' ) = 'o3 o4' ].
+	self assert: [ ( providers modelsFor: 'openai' ) = #( 'o3' 'o4' ) ].
 	self assert: [ providers toString = 'AiProviders( openai )' ].
 
 	providers2 := AiProviders fromObject: providers toObject.

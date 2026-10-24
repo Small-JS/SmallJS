@@ -16,7 +16,7 @@ doneReason
 	^ String fromJs: INLINE 'this.js.done_reason'.
 !
 loadDuration
-	^ String fromJs: INLINE 'this.js.load_duration'.
+	^ Integer fromJs: INLINE 'this.js.load_duration'.
 !
 promptEvalCount
 	^ Integer fromJs: INLINE 'this.js.prompt_eval_count'.

@@ -34,6 +34,9 @@ async test
 async testEmbedding
 	| ollama request response message |
 
+	"Embedding is optional: skip if OLLAMA_EMBEDDING_MODELS is not set."
+	Ollama embeddingModels isEmpty ifTrue: [ ^ self ].
+
 	ollama := Ollama new.
 	request := OllamaEmbedRequest new
 		model: ollama embeddingModel;
@@ -42,7 +45,8 @@ async testEmbedding
 	response := await ollama embed: request.
 	self assert: [ response class = OllamaEmbedResponse ].
 	self assert: [ response model = ollama embeddingModel ].
-	self assert: [ response embedding length = 768 ].
+	"The number of dimensions depends on the model, e.g. 768 for nomic-embed-text."
+	self assert: [ response embedding length > 0 ].
 	self assert: [ response promptEvalCount > 0 ].
 	self assert: [ response loadDuration > 1000 ].
 	self assert: [ response totalDuration > 1000 ].

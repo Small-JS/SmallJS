@@ -14,7 +14,9 @@ model
 "Content"
 
 async generateContent: messages
-	"This evaluates block with a ContentResponse.
-	 ContentResult is skipped because it only has the one reponse member."
-	^ GoogleaiContentResponse fromJs: INLINE '( await this.js.generateContent( messages.$toJs() ) ).response'.
+	"Answer the ContentResponse for the message Strings, each sent as a separate user turn,
+	 like the other AI providers do.
+	 ContentResult is skipped because it only has the one response member."
+	^ GoogleaiContentResponse fromJs: INLINE '( await this.js.generateContent( {
+		contents: messages.$toJs().map( text => ( { role: "user", parts: [ { text } ] } ) ) } ) ).response'.
 !

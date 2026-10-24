@@ -35,6 +35,6 @@ providers
 	^ providers.
 !
 available: name
-	"Return true if the API key is set for the named AI."
+	"Return true if the named AI is configured in the environment, see: Ai class>>available."
 	^ ( self classNamed: name ) available.
 !
