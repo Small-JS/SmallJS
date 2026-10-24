@@ -1,7 +1,7 @@
 CLASS TestSelectionComponent EXTENDS Test MODULE TestMyBrowserApp CLASSVARS '' VARS ''
 
 test
-	| document selectionComponent selectionInput selection text range |
+	| document selectionComponent selectionInput selection text range textNode |
 	document := Document default.
 	selectionComponent := MyBrowserApp default findComponent: SelectionComponent.
 	selectionInput := selectionComponent input.
@@ -56,6 +56,21 @@ test
 	selection
 		setBase: ( document getElementById: 'selectionInput' class: HtmlInputElement )
 		extent: ( document getElementById: 'selectionOutputParagraph' class: HtmlParagraphElement ).
+
+	"Test selection with offsets within a text node."
+	textNode := selectionComponent outputParagraph firstChild.
+	self assert: [ textNode class = Text ].
+	selection setBase: textNode offset: 1 extent: textNode offset: 4.
+	self assert: [ selection toString = ( textNode textContent substring: 1 to: 4 ) ].
+	self assert: [ selection anchorOffset = 1 ].
+	self assert: [ selection focusOffset = 4 ].
+	selection extend: textNode offset: 6.
+	self assert: [ selection focusOffset = 6 ].
+	self assert: [ selection toString = ( textNode textContent substring: 1 to: 6 ) ].
+	selection collapse: textNode offset: 3.
+	self assert: [ selection isCollapsed ].
+	self assert: [ selection anchorOffset = 3 ].
+	selection removeAllRanges.
 !
 async testGui
 	| selectionComponent |

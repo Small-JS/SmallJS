@@ -1,10 +1,10 @@
 CLASS ValidityState EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: ValidityState."
+	"This class encapsulates the JS class: ValidityState."
 
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new ValidityState()'.
+	self error: 'ValidityState cannot be created with new.'.
 !
 
 METHODS

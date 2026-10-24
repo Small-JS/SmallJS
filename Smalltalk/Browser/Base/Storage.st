@@ -1,6 +1,6 @@
 CLASS Storage EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
 
-"This class encasulates the JS class: Storage.
+"This class encapsulates the JS class: Storage.
  Instances are obtained with: Storage local / session.
  Keys and values are strings."
 
@@ -25,9 +25,7 @@ length
 key: index
 	"Return the name of the key at the (zero-based) index, or nil if index is out of range.
 	 Note: The order of the keys is user-agent defined."
-	INLINE 'let jsKey = this.js.key( index.js )'.
-	INLINE 'if( jsKey == null ) return stNil$'.
-	^ String fromJs: INLINE 'jsKey'.
+	^ String fromJs: INLINE 'this.js.key( index.js )'.
 !
 keys
 	"Return all keys as an Array of Strings."
@@ -35,9 +33,7 @@ keys
 !
 item: key
 	"Return the value for the key, or nil if the key does not exist."
-	INLINE 'let jsValue = this.js.getItem( key.js )'.
-	INLINE 'if( jsValue == null ) return stNil$'.
-	^ String fromJs: INLINE 'jsValue'.
+	^ String fromJs: INLINE 'this.js.getItem( key.js )'.
 !
 
 "Modifying"

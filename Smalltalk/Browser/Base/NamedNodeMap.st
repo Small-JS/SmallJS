@@ -1,7 +1,5 @@
 CLASS NamedNodeMap EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS NamedNodeMap class."
-
-CLASSMETHODS
+	"This class encapsulates the JS NamedNodeMap class."
 
 METHODS
 
@@ -23,6 +21,6 @@ removeNamedItem: attrName
 	INLINE 'this.js.removeNamedItem( attrName.js )'.
 !
 item: index
-	"Index is 1 based, per ST convertion."
+	"Index is 1 based, per ST convention."
 	^ Attr fromJs: INLINE 'this.js.item( index.js - 1 )'.
 !

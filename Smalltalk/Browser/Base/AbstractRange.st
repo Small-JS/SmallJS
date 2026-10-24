@@ -1,5 +1,5 @@
 CLASS AbstractRange EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class AbstractRange."
+	"This class encapsulates the JS class AbstractRange."
 
 METHODS
 

@@ -17,7 +17,6 @@ fromJsSubNode: jsNode
 	jsClassName = 'Text' ifTrue: [ ^ Text fromJs: jsNode ].
 	jsClassName = 'Attr' ifTrue: [ ^ Attr fromJs: jsNode ].
 	jsClassName = 'CharacterData' ifTrue: [ ^ CharacterData fromJs: jsNode ].
-	jsClassName = 'Text' ifTrue: [ ^ Text fromJs: jsNode ].
 	jsClassName = 'Comment' ifTrue: [ ^ Comment fromJs: jsNode ].
 
 	jsClassName = 'Document' ifTrue: [ ^ Document fromJs: jsNode ].

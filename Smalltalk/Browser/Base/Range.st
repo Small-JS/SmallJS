@@ -1,5 +1,5 @@
 CLASS Range EXTENDS AbstractRange MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class Range."
+	"This class encapsulates the JS class Range."
 
 CLASSMETHODS
 
@@ -18,7 +18,11 @@ commonAncestorContainer
 "Methods."
 
 collapse
-	INLINE 'this.js.collapse()'.
+	"Collapse to the end boundary point, like the JS default."
+	self collapseToEnd.
+!
+collapseToEnd
+	INLINE 'this.js.collapse( false )'.
 !
 collapseToStart
 	INLINE 'this.js.collapse( true )'.

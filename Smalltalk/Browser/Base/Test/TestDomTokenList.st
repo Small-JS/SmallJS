@@ -13,7 +13,7 @@ test
 	self assert: [ domTokenList length = 3 ].
 	self assert: [ domTokenList value = 'a b c' ].
 	self assert: [ domTokenList contains: 'b' ].
-	self assert: [ domTokenList entries = #( '0,a' '1,b' '2,c' ) ].
+	self assert: [ domTokenList entries = #( #( 0 'a' ) #( 1 'b' ) #( 2 'c' ) ) ].
 	self assert: [ ( domTokenList item: 1 ) = 'b' ].
 	self assert: [ domTokenList keys last = 2 ].
 

@@ -1,5 +1,5 @@
 CLASS Location EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS Location class."
+	"This class encapsulates the JS Location class."
 
 METHODS
 

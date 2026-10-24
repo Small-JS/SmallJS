@@ -2,6 +2,9 @@ CLASS TestValidityState EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 test
 	| validityState |
+
+	self assertError: [ ValidityState new ].
+
 	validityState := ( Document new createElement: 'fieldSet' ) validity.
 	self assert: [ validityState class = ValidityState ].
 

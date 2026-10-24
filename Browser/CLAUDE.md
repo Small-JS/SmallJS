@@ -53,3 +53,24 @@ https://developer.mozilla.org/en-US/docs/Web/API
   Test such APIs with a mock JS object instead (see `TestGeolocation`, `TestHistory`).
 - Unit tests must not add entries to the session history of the test page (e.g. `pushState`),
   also not from an iframe, because then the test page cannot close itself after the tests.
+
+### Running the tests (for Claude)
+
+Always run the tests this way, not with `./build.sh`:
+`./build.sh` does not report test results, and it terminates the web server.
+
+1. Compile: `tsc && ../Compiler/start.sh ../Smalltalk/Core ../Smalltalk/Browser src web/Script`
+2. Use the web server already running on port 3000 (check with `curl http://localhost:3000/`).
+   If it is not running, start it yourself in the background with `./startWebServer.sh`.
+   Never stop the web server; leave it running after the tests,
+   enabling manual testing.
+3. Run the tests in headless Chrome and read the results from the console log:
+   ```bash
+   "/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new \
+     --user-data-dir="<scratchpad>/chrome-profile" --enable-logging=stderr --v=0 --no-first-run \
+     "http://localhost:3000/?test" > "<scratchpad>/out.txt" 2>&1
+   grep CONSOLE "<scratchpad>/out.txt"
+   ```
+   Use a separate `--user-data-dir` so the user's own Chrome session is not affected.
+   Success looks like: `Successfully run sync tests: N`, `Successfully run async tests: N`,
+   `Disabled test modules: 0`. Anything else (errors, failed asserts, a missing summary) is a failure.

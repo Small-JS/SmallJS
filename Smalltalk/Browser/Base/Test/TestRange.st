@@ -48,6 +48,15 @@ test
 
 	range setStart: p1 offset: 0.
 	range setEnd: p3 offset: 0.
+	range collapseToStart.
+	self assert: [ range endContainer id = 'p1' ].
+	range setEnd: p3 offset: 0.
+	range collapseToEnd.
+	self assert: [ range collapsed = true ].
+	self assert: [ range startContainer id = 'p3' ].
+
+	range setStart: p1 offset: 0.
+	range setEnd: p3 offset: 0.
 	self assert: [ ( range comparePoint: p2 offset: 0 ) = 0 ].
 	range2 := Range new selectNode: p2.
 	self assert: [ ( range compareBoundaryPoints: 0 with: range2 ) = -1 ].

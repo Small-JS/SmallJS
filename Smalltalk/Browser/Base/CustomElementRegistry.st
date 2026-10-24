@@ -1,5 +1,5 @@
 CLASS CustomElementRegistry EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: CustomElementRegistry.
+	"This class encapsulates the JS class: CustomElementRegistry.
 	 Element constructors are JS classes that extend HTMLElement (or a subclass of it),
 	 wrapped in a JsObject."
 

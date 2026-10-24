@@ -1,5 +1,5 @@
 CLASS Selection EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class Range."
+	"This class encapsulates the JS class Selection."
 
 CLASSMETHODS
 
@@ -45,7 +45,10 @@ addRange: range
 	INLINE 'this.js.addRange( range.js )'.
 !
 collapse: node
-	INLINE 'this.js.collapse( node.js )'.
+	self collapse: node offset: 0.
+!
+collapse: node offset: offset
+	INLINE 'this.js.collapse( node.js, offset.js )'.
 !
 collapseToEnd
 	INLINE 'this.js.collapseToEnd()'.
@@ -60,7 +63,10 @@ deleteFromDocument
 	INLINE 'this.js.deleteFromDocument()'.
 !
 extend: node
-	INLINE 'this.js.extend( node.js )'.
+	self extend: node offset: 0.
+!
+extend: node offset: offset
+	INLINE 'this.js.extend( node.js, offset.js )'.
 !
 getRangeAt: index
 	^ Range fromJs: INLINE 'this.js.getRangeAt( index.js )'.
@@ -75,7 +81,10 @@ selectAllChildren: node
 	INLINE 'this.js.selectAllChildren( node.js )'.
 !
 setBase: anchorNode extent: focusNode
-	INLINE 'this.js.setBaseAndExtent( anchorNode.js, 0, focusNode.js, 0 )'.
+	self setBase: anchorNode offset: 0 extent: focusNode offset: 0.
+!
+setBase: anchorNode offset: anchorOffset extent: focusNode offset: focusOffset
+	INLINE 'this.js.setBaseAndExtent( anchorNode.js, anchorOffset.js, focusNode.js, focusOffset.js )'.
 !
 toString
 	^ String fromJs: INLINE 'this.js.toString()'.

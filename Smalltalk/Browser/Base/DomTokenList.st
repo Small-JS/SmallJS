@@ -1,5 +1,5 @@
 CLASS DomTokenList EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: NamedNodeMap.
+	"This class encapsulates the JS class: DOMTokenList.
 	 Note: Item indexes and keys in this class are zero based."
 
 CLASSMETHODS
@@ -31,7 +31,9 @@ contains: token
 	^ Boolean fromJs: INLINE 'this.js.contains( token.js )'.
 !
 entries
-	^ Array fromJs: INLINE 'this.js.entries()' elementClass: String.
+	"Return an Array of pairs: Arrays with the (zero-based) index and the token."
+	^ Array fromJs: INLINE 'this.js.entries()' elementConverter:
+		[ :jsEntry | Array with: ( Integer fromJs: INLINE 'jsEntry[ 0 ]' ) with: ( String fromJs: INLINE 'jsEntry[ 1 ]' ) ].
 !
 item: index
 	^ String fromJs: INLINE 'this.js.item( index.js )'.
