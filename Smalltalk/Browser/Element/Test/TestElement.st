@@ -161,8 +161,14 @@ testMethods2
 	p3 replaceWith: p4.
 	self assert: [ div children first id = 'p4' ].
 
+	div replaceChildren: ( Array with: p1 with: p2 ).
+	self assert: [ div childNodes length = 2 ].
+	self assert: [ div children first = p1 ].
+	self assert: [ div children last = p2 ].
+
 	div removeChildren.
 	self assert: [ div children length = 0 ].
+	self assert: [ div childNodes length = 0 ].
 !
 testPointerMethods
 	"Without a real pointer device interaction, only the error cases can be tested.

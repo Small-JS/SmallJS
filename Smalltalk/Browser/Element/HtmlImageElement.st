@@ -1,10 +1,14 @@
 CLASS HtmlImageElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class HTMLImageElement,
-	 of which variable js contains an instance."
+	"This class encapsulates the JS class HTMLImageElement."
 
-imageWidth: width height: height
-	^ HtmlImageElement fromJs: INLINE 'HtmlImageElement.Image( width, height )'.
+CLASSMETHODS
+
+width: width height: height
+	"Create a new image element, not yet connected to a document."
+	^ self fromJs: INLINE 'new Image( width.js, height.js )'.
 !
+
+METHODS
 
 "Dimensions"
 
@@ -39,25 +43,16 @@ naturalSize
 	^ self naturalWidth @ self naturalHeight.
 !
 
-"Position"
+"Position, read-only"
 
 x
 	^ Integer fromJs: INLINE 'this.js.x'.
 !
-x: x
-	INLINE 'this.js.x = x.js'.
-!
 y
 	^ Integer fromJs: INLINE 'this.js.y'.
 !
-y: y
-	INLINE 'this.js.y = y.js'.
-!
 position
-	self x @ self y.
-!
-position: point
-	self x: point x y: point y.
+	^ self x @ self y.
 !
 
 "Other properties"

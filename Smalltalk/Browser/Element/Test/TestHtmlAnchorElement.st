@@ -7,7 +7,8 @@ test
 	self assert: [ anchor class = HtmlAnchorElement ].
 
 	self assert: [ anchor download = '' ].
-	anchor download: 'Test.txt'.
+	"Setters return the receiver."
+	self assert: [ ( anchor download: 'Test.txt' ) = anchor ].
 	self assert: [ anchor download = 'Test.txt' ].
 
 	self assert: [ anchor href = '' ].

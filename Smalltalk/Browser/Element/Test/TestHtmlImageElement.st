@@ -46,3 +46,15 @@ test
 
 	self assert: [ image useMap = '' ].
 !
+testCreation
+	| image |
+	image := HtmlImageElement width: 40 height: 30.
+	self assert: [ image class = HtmlImageElement ].
+	self assert: [ image size = ( 40 @ 30 ) ].
+!
+testPosition
+	| image |
+	"Not connected to a rendered document, so the position is 0 @ 0."
+	image := Document new createElement: 'img'.
+	self assert: [ image position = ( 0 @ 0 ) ].
+!

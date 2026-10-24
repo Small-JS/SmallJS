@@ -1,6 +1,5 @@
 CLASS HtmlElement EXTENDS Element MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class HTMLElement
-	 of which variable js contains an instance."
+	"This class encapsulates the JS class HTMLElement."
 
 METHODS
 
@@ -70,7 +69,7 @@ offsetLeft
 	^ Integer fromJs: INLINE 'this.js.offsetLeft'.
 !
 offsetParent
-	^ Integer fromJs: INLINE 'this.js.offsetParent'.
+	^ Element fromJsSubElement: INLINE 'this.js.offsetParent'.
 !
 offsetTop
 	^ Integer fromJs: INLINE 'this.js.offsetTop'.
@@ -82,7 +81,7 @@ style
 	^ CssStyleDeclaration fromJs: INLINE 'this.js.style'.
 !
 tabIndex
-	^ String fromJs: INLINE 'this.js.tabIndex'.
+	^ Integer fromJs: INLINE 'this.js.tabIndex'.
 !
 tabIndex: tabIndex
 	INLINE 'this.js.tabIndex = tabIndex.js'.

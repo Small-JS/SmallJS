@@ -16,7 +16,7 @@ formAction: formAction
 formEnctype
 	^ String fromJs: INLINE 'this.js.formEnctype'.
 !
-formEncType: formEnctype
+formEnctype: formEnctype
 	INLINE 'this.js.formEnctype = formEnctype.js'.
 !
 formMethod
@@ -35,7 +35,7 @@ formTarget
 	^ String fromJs: INLINE 'this.js.formTarget'.
 !
 formTarget: formTarget
-	INLINE 'this.js.formtarget = formTarget.js'.
+	INLINE 'this.js.formTarget = formTarget.js'.
 !
 
 "Not hidden"
@@ -74,16 +74,15 @@ valueAsDate
 	^ Date fromJs: INLINE 'this.js.valueAsDate'.
 !
 valueAsNumber
-	"Note: this method converts date/time elements to numbers.
-	 It does *not* convert integers or floats to numbers.
-	 See: https://stackoverflow.com/questions/18062069/why-does-valueasnumber-return-nan-as-a-value"
-	^ Integer fromJs: INLINE 'this.js.valueAsNumber'.
+	"Return the value as a Float, for number, range and date/time inputs.
+	 Note: It returns NaN for other input types, or when the value is empty or invalid."
+	^ Float fromJs: INLINE 'this.js.valueAsNumber'.
 !
 
 "Validation"
 
 validity
-	^ Boolean fromJs: INLINE 'this.js.validity'.
+	^ ValidityState fromJs: INLINE 'this.js.validity'.
 !
 validationMessage
 	^ String fromJs: INLINE 'this.js.validationMessage'.
@@ -162,7 +161,8 @@ accept: accept
 	INLINE 'this.js.accept = accept.js'.
 !
 files
-	^ Array fromJs: INLINE 'Array.from( this.js.files )' elementClass: File.
+	"Return nil if this is not a file input."
+	^ Array fromJs: INLINE 'this.js.files' elementClass: File.
 !
 
 "Text and Number input."
@@ -291,5 +291,5 @@ multiple: multiple
 	INLINE 'this.js.multiple = multiple.js'.
 !
 labels
-	^ Array fromJs: INLINE 'this.js.labels' toClass: HtmlLabelElement.
+	^ Array fromJs: INLINE 'this.js.labels' elementClass: HtmlLabelElement.
 !

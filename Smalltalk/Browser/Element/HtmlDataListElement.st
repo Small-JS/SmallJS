@@ -4,7 +4,7 @@ options
 	^ Array fromJs: INLINE 'this.js.options' elementClass: HtmlOptionElement.
 !
 indexOf: value
-	"Return the HtmlOptionElement that contains argument text"
+	"Return the (zero-based) index of the option with the argument value, or -1 if not found."
 
 	| index |
 	index := 0.

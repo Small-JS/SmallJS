@@ -6,7 +6,7 @@ control
 	^ HtmlElement fromJsSubElement: INLINE 'this.js.control'.
 !
 form
-	^ HtmlFormElement fromJs: INLINE 'this.js.htmlForm'.
+	^ HtmlFormElement fromJs: INLINE 'this.js.form'.
 !
 htmlFor
 	^ String fromJs: INLINE 'this.js.htmlFor'.

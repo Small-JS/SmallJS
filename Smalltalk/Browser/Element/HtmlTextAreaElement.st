@@ -80,7 +80,7 @@ required: required
 	INLINE 'this.js.required = required.js'.
 !
 rows
-	^ String fromJs: INLINE 'this.js.rows'.
+	^ Integer fromJs: INLINE 'this.js.rows'.
 !
 rows: rows
 	INLINE 'this.js.rows = rows.js'.

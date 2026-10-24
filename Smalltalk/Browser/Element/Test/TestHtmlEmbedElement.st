@@ -8,6 +8,8 @@ testProperties
 	embed := body children first.
 
 	self assert: [ embed size = ( 300 @ 40 ) ].
+	self assert: [ embed width = '300' ].
+	self assert: [ embed height = '40' ].
 	self assert: [ embed src = 'Missing.html' ].
 	self assert: [ embed type = 'text/html' ].
 !

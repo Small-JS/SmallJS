@@ -212,7 +212,9 @@ querySelectorAll: selector
 	^ Element fromJsSubElements: INLINE 'this.js.querySelectorAll( selector.js )'.
 !
 replaceChildren: nodes
-	INLINE 'this.js.replaceChildren( ...nodes.$toJs() )'.
+	"Argument nodes is a Node or an Array of Nodes."
+	INLINE 'let jsNodes = nodes.$toJs()'.
+	INLINE 'this.js.replaceChildren( ...( Array.isArray( jsNodes ) ? jsNodes : [ jsNodes ] ) )'.
 !
 
 "Extension for HTML documents."

@@ -45,12 +45,42 @@ test
 	input size: 30.
 	self assert: [ input size = 30 ].
 	input size: 20.
+
+	self assert: [ input files isNil ].
+	input type: 'file'.
+	self assert: [ input files isEmpty ].
+	input type: 'text'.
+!
+testValueAsNumber
+	| input |
+	input := Document new createElement: 'input'.
+	input type: 'number'; value: '2.5'.
+	self assert: [ input valueAsNumber = 2.5 ].
+!
+testFormProperties
+	| input |
+	input := Document new createElement: 'input'.
+
+	input formEnctype: 'text/plain'.
+	self assert: [ input formEnctype = 'text/plain' ].
+	input formTarget: '_blank'.
+	self assert: [ input formTarget = '_blank' ].
+!
+testLabels
+	| body input |
+	body := Document new body
+		innerHtml: '<label for="myInput">Label</label><input id="myInput">'.
+	input := body lastElementChild.
+	self assert: [ input class = HtmlInputElement ].
+	self assert: [ input labels length = 1 ].
+	self assert: [ input labels first class = HtmlLabelElement ].
 !
 testValidation
 	| input |
 	input := Document new createElement: 'input'.
 
-	self assert: [ input validity ].
+	self assert: [ input validity class = ValidityState ].
+	self assert: [ input validity valid ].
 	self assert: [ input validationMessage = '' ].
 	self assert: [ input willValidate ].
 	self assert: [ input checkValidity ].

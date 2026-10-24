@@ -10,6 +10,9 @@ test
 	self assert: [ iframe allow = 'camera' ].
 
 	self assert: [ iframe size = ( 0 @ 0 ) ].
+	self assert: [ iframe width = '' ].
+	iframe setAttribute: 'width' value: '50%'.
+	self assert: [ iframe width = '50%' ].
 	self assert: [ iframe contentDocument isNil ].
 	self assert: [ iframe contentWindow isNil ].
 

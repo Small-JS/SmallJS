@@ -1,6 +1,5 @@
 CLASS HtmlLinkElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class HTMLinkElement,
-	 of which variable js contains an instance."
+	"This class encapsulates the JS class HTMLLinkElement."
 
 METHODS
 

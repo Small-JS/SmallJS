@@ -48,6 +48,8 @@ testProperties
 	self assert: [ paragraph offsetLeft = 0 ].
 	self assert: [ paragraph offsetHeight = 0 ].
 	self assert: [ paragraph offsetWidth = 0 ].
+	"Not connected to a rendered document, so no offset parent."
+	self assert: [ paragraph offsetParent isNil ].
 
 	self assert: [ paragraph style class = CssStyleDeclaration ].
 

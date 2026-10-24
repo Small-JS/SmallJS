@@ -32,9 +32,6 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLHtmlElement' ifTrue: [ ^ HtmlHtmlElement fromJs: jsElement ].
 	jsClassName = 'HTMLParagraphElement' ifTrue: [ ^ HtmlParagraphElement fromJs: jsElement ].
 	jsClassName = 'HTMLImageElement' ifTrue: [ ^ HtmlImageElement fromJs: jsElement ].
-	jsClassName = 'HTMLTableElement' ifTrue: [ ^ HtmlTableElement fromJs: jsElement ].
-	jsClassName = 'HTMLTableCellElement' ifTrue: [ ^ HtmlTableCellElement fromJs: jsElement ].
-	jsClassName = 'HTMLTableRowElement' ifTrue: [ ^ HtmlTableRowElement fromJs: jsElement ].
 	jsClassName = 'HTMLDivElement' ifTrue: [ ^ HtmlDivElement fromJs: jsElement ].
 	jsClassName = 'HTMLScriptElement' ifTrue: [ ^ HtmlScriptElement fromJs: jsElement ].
 	jsClassName = 'HTMLSlotElement' ifTrue: [ ^ HtmlSlotElement fromJs: jsElement ].
@@ -268,10 +265,12 @@ removeAttributeNode: attr
 	INLINE 'this.js.removeAttributeNode( attr.js )'.
 !
 removeChildren
-	INLINE 'this.js.replaceChildren( [] )'.
+	INLINE 'this.js.replaceChildren()'.
 !
 replaceChildren: nodes
-	INLINE 'this.js.replaceChildren( nodes.$toJs() )'.
+	"Argument nodes is a Node or an Array of Nodes."
+	INLINE 'let jsNodes = nodes.$toJs()'.
+	INLINE 'this.js.replaceChildren( ...( Array.isArray( jsNodes ) ? jsNodes : [ jsNodes ] ) )'.
 !
 replaceWith: node
 	INLINE 'this.js.replaceWith( node.js )'.
