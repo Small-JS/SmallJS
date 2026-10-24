@@ -1,5 +1,5 @@
 CLASS ShadowRoot EXTENDS DocumentFragment MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS ShadowRoot class."
+	"This class encapsulates the JS ShadowRoot class."
 
 METHODS
 

@@ -13,6 +13,21 @@ testDefine
 	self assert: [ ( registry get: 'test-define-element' ) = constructor ].
 	self assert: [ ( registry getName: constructor ) = 'test-define-element' ].
 !
+testCustomElementClass
+	"Custom elements are wrapped as HtmlElement, also as host of a shadow root."
+	| registry constructor element shadow |
+	registry := Window default customElements.
+	constructor := JsObject fromJs: INLINE 'class TestClassElement extends HTMLElement {}'.
+	registry define: 'test-class-element' constructor: constructor.
+
+	element := Document default createElement: 'test-class-element'.
+	self assert: [ element class = HtmlElement ].
+	self assert: [ Boolean fromJs: INLINE 'element.js instanceof constructor.js' ].
+
+	shadow := element attachShadow: 'open' delegatesFocus: false.
+	self assert: [ shadow host = element ].
+	self assert: [ shadow host class = HtmlElement ].
+!
 testUpgrade
 	| registry constructor div jsElement |
 	registry := Window default customElements.

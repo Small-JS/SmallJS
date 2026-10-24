@@ -7,7 +7,7 @@ new
 !
 fromJsSubElement: jsElement
 	"Create ST HTML Element object from JS HTML element object.
-	 Throw error if unknown element."
+	 Throw error if not an HTML element."
 
 	| jsClassName localName |
 
@@ -59,6 +59,10 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLOptionElement' ifTrue: [ ^ HtmlOptionElement fromJs: jsElement ].
 
 	jsClassName = 'HTMLCanvasElement' ifTrue: [ ^ HtmlCanvasElement fromJs: jsElement ].
+
+	"Fall back to HtmlElement for elements without a specific JS class, like section and nav,
+	 and for custom elements, whose JS class name is the name of their own class."
+	( Boolean fromJs: INLINE 'jsElement instanceof HTMLElement' ) ifTrue: [ ^ HtmlElement fromJs: jsElement ].
 
 	^ self error: 'Element.fromJsSubElement: Unknown JS element class: ', jsClassName.
 !

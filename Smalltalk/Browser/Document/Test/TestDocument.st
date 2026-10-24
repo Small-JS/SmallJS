@@ -80,6 +80,8 @@ testMethods
 	self assert: [ document createDocumentFragment class = DocumentFragment ].
 	self assert: [ ( document createElement: 'unknown' ) class = HtmlUnknownElement ].
 	self assert: [ ( document createElement: 'p' ) class = HtmlParagraphElement ].
+	"Elements without a specific JS class fall back to HtmlElement."
+	self assert: [ ( document createElement: 'section' ) class = HtmlElement ].
 	self assert: [ document createRange class = Range ].
 	self assert: [ ( document createTextNode: 'myText' ) class = Text ].
 
@@ -93,6 +95,32 @@ testMethods
 	self assert: [ ( document getElementsByClassName: 'paragraphClass' ) first className = 'paragraphClass' ].
 	self assert: [ ( document getElementsByTagName: 'p' ) first class = HtmlParagraphElement ].
 	self assert: [ document getSelection isNil ].
+
+	document body appendChild: ( document createElement: 'form' ).
+	self assert: [ document forms length = 1 ].
+	self assert: [ document forms first class = HtmlFormElement ].
+	self assert: [ document embeds length = 0 ].
+!
+testChildren
+	| document doctype html comment |
+	document := Document new.
+	doctype := document doctype.
+	html := document documentElement.
+
+	document replaceChildren: #( ).
+	self assert: [ document childNodes length = 0 ].
+
+	self assert: [ ( document append: html ) = document ].
+	self assert: [ document documentElement = html ].
+
+	comment := document createComment: 'myComment'.
+	self assert: [ ( document prepend: comment ) = document ].
+	self assert: [ document firstChild = comment ].
+
+	document replaceChildren: ( Array with: doctype with: html ).
+	self assert: [ document childNodes length = 2 ].
+	self assert: [ document firstChild = doctype ].
+	self assert: [ document documentElement = html ].
 !
 testNodeMethods
 	| document newDocument newNode adoptedNode importedNode |

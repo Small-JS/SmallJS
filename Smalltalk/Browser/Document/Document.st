@@ -1,5 +1,5 @@
 CLASS Document EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates JS HTML 'document' and HTML5 'HTMLDocument' classes."
+	"This class encapsulates JS HTML 'document' and HTML5 'HTMLDocument' classes."
 
 CLASSMETHODS
 
@@ -64,16 +64,13 @@ lastElementChild
 	^ Element fromJsSubElement: INLINE 'this.js.lastElementChild'.
 !
 forms
-	^ Array fromJs: INLINE 'this.js.embeds' elementClass: HtmlFormElement.
+	^ Array fromJs: INLINE 'this.js.forms' elementClass: HtmlFormElement.
 !
 fullscreenElement
 	^ Element fromJsSubElement: INLINE 'this.js.fullscreenElement'.
 !
 head
 	^ HtmlHeadElement fromJs: INLINE 'this.js.head'.
-!
-hasFocus
-	^ Boolean fromJs: INLINE 'this.js.hasFocus()'.
 !
 hidden
 	^ Boolean fromJs: INLINE 'this.js.hidden'.
@@ -154,7 +151,7 @@ adoptNode: node
 	^ Node fromJsSubNode: INLINE 'this.js.adoptNode( node.js )'.
 !
 append: node
-	^ Node fromJs: INLINE 'this.js.append( node.js )'.
+	INLINE 'this.js.append( node.js )'.
 !
 createAttribute: name
 	^ Attr fromJs: INLINE 'this.js.createAttribute( name.js )'.
@@ -196,6 +193,9 @@ getElementsByClassName: className
 getElementsByTagName: tagName
 	^ Element fromJsSubElements: INLINE 'this.js.getElementsByTagName( tagName.js )'.
 !
+hasFocus
+	^ Boolean fromJs: INLINE 'this.js.hasFocus()'.
+!
 getSelection
 	^ Selection fromJs: INLINE 'this.js.getSelection()'.
 !
@@ -203,7 +203,7 @@ importNode: node deep: deep
 	^ Node fromJsSubNode: INLINE 'this.js.importNode( node.js, deep.js )'.
 !
 prepend: node
-	^ Node fromJs: INLINE 'this.js.prepend( node.js )'.
+	INLINE 'this.js.prepend( node.js )'.
 !
 querySelector: selector
 	^ Element fromJsSubElement: INLINE 'this.js.querySelector( selector.js )'.
@@ -211,11 +211,11 @@ querySelector: selector
 querySelectorAll: selector
 	^ Element fromJsSubElements: INLINE 'this.js.querySelectorAll( selector.js )'.
 !
-replaceChildren: elements
-	INLINE 'this.js.replaceChildren( elements.$toJs() )'.
+replaceChildren: nodes
+	INLINE 'this.js.replaceChildren( ...nodes.$toJs() )'.
 !
 
-"Exension for HTML documents."
+"Extension for HTML documents."
 
 close
 	INLINE 'this.js.close()'.

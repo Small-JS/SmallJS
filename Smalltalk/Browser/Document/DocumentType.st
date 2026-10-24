@@ -1,5 +1,5 @@
 CLASS DocumentType EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS abstract class: DocumentType."
+	"This class encapsulates the JS class: DocumentType."
 
 METHODS
 
