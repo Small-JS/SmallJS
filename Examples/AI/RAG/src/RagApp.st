@@ -2,13 +2,19 @@ CLASS RagApp EXTENDS Object MODULE RagApp CLASSVARS ''
 	VARS 'rag'
 
 async start
+	| error |
 	await self createRag.
 
-	await ( Process argv includes: '-index' )
-		ifTrueAwait: async [ await self indexDocuments ]
-		ifFalseAwait: async [ await self queryRag: 'What is RAG?' ].
+	"Always end the RAG to disconnect the store, also on errors, which are then rethrown."
+	error := await async [
+		await ( Process argv includes: '-index' )
+			ifTrueAwait: async [ await self indexDocuments ]
+			ifFalseAwait: async [ await self queryRag: 'What is RAG?' ].
+		nil ]
+		tryAwaitCatch: [ :caught | caught ].
 
-	self end.
+	await self end.
+	error ifNotNil: [ error throw ].
 !
 async createRag
 	| store |

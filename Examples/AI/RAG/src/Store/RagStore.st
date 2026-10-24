@@ -4,17 +4,17 @@ CLASS RagStore EXTENDS Object MODULE RagApp CLASSVARS ''
 "Abstract base class for RAG vector store implementations."
 
 async connect: connectionString
-	Error throw: 'Subclass responsibility'.
+	self subclassResponsibility.
 !
 async disconnect
-	database end.
+	await database end.
 !
 async deleteDocuments
 	await database query: 'DELETE FROM documents'.
 !
 async insertDocument: content embedding: embedding
-	Error throw: 'Subclass responsibility'.
+	self subclassResponsibility.
 !
 async search: embedding limit: limit
-	Error throw: 'Subclass responsibility'.
+	self subclassResponsibility.
 !

@@ -32,7 +32,7 @@ async embed: content
 !
 async ask: question
 	| documentRows documents context prompt response |
-	documentRows := await self search: question limit: 1.
+	documentRows := await self search: question limit: 2.
 	documents := documentRows map: [ :documentRow | documentRow atProperty: 'content' ].
 	context := documents join: '\n\n'.
 

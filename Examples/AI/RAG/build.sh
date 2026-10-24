@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds the AI Server project.
+# This script builds the AI RAG project.
 
 # Exit script if a step fails
 set -e
@@ -41,12 +41,15 @@ set -o allexport
 source .env
 set +o allexport
 
-# Run tests
+# Run tests, but terminate Ollama even if they fail.
 
-node out/main.js -test
+status=0
+node out/main.js -test || status=$?
 
 # Terminate Ollama
 
 echo "Terminating Ollama"
 npx kill-port 11434
 sleep 4
+
+exit $status

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start AI Server.
+# Start AI RAG app in query mode.
 
 # Exit script if a step fails
 set -e
