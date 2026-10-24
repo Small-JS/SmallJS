@@ -4,11 +4,24 @@ CLASS TestHtmlTableElement EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 
+testNew
+	| table row cell |
+	table := HtmlTableElement new.
+	self assert: [ table class = HtmlTableElement ].
+
+	row := HtmlTableRowElement new.
+	self assert: [ row class = HtmlTableRowElement ].
+
+	cell := HtmlTableCellElement new.
+	self assert: [ cell class = HtmlTableCellElement ].
+	self assert: [ cell localName = 'td' ].
+!
 testTable
 	| table tHead tBody tFoot |
 
 	table := Document default createElement: 'table'.
 	self assert: [ table class = HtmlTableElement ].
+	self assert: [ table tBody isNil ].
 
 	tHead := table createTHead.
 	self assert: [ tHead class = HtmlTableSectionElement ].
@@ -19,6 +32,7 @@ testTable
 	tBody := table createTBody.
 	self assert: [ tBody class = HtmlTableSectionElement ].
 	self assert: [ table tBodies first = tBody ].
+	self assert: [ table tBody = tBody ].
 
 	tFoot := table createTFoot.
 	self assert: [ tFoot class = HtmlTableSectionElement ].
@@ -36,6 +50,7 @@ testCaption
 	caption := table createCaption.
 	self assert: [ caption class = HtmlTableCaptionElement ].
 	self assert: [ table caption = caption ].
+	self assert: [ table caption class = HtmlTableCaptionElement ].
 
 	caption innerHtml: '<b>My table caption</b>'.
 	self assert: [ caption innerHtml = '<b>My table caption</b>' ].
@@ -63,6 +78,13 @@ testSections
 	self assert: [ tBody rows length = 1 ].
 	tBody deleteRow: 0.
 	self assert: [ tBody rows length = 0 ].
+
+	"Without index, the row is appended."
+	tBody insertRow: 0.
+	row := tBody insertRow.
+	self assert: [ row class = HtmlTableRowElement ].
+	self assert: [ tBody rows length = 2 ].
+	self assert: [ tBody rows last = row ].
 !
 testRow
 	| table row cell |

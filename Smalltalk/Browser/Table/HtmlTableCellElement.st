@@ -3,7 +3,9 @@ CLASS HtmlTableCellElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS 
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new HTMLTableCellElement()'.
+	"Create a new table data cell element (td) in the default document.
+	 Use Document createElement: 'th' for a header cell."
+	^ Document default createElement: 'td'.
 !
 
 METHODS

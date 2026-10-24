@@ -3,7 +3,8 @@ CLASS HtmlTableElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS ''
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new HTMLTableElement()'.
+	"Create a new table element in the default document."
+	^ Document default createElement: 'table'.
 !
 
 METHODS
@@ -11,7 +12,7 @@ METHODS
 "Caption"
 
 caption
-	^ String fromJs: INLINE 'this.js.caption'.
+	^ HtmlTableCaptionElement fromJs: INLINE 'this.js.caption'.
 !
 createCaption
 	^ HtmlTableCaptionElement fromJs: INLINE 'this.js.createCaption()'.
@@ -41,7 +42,10 @@ tBodies
 	^ Array fromJs: INLINE 'this.js.tBodies' elementClass: HtmlTableSectionElement.
 !
 tBody
-	^ self tBodies first.
+	"Return the first tbody element, or nil if there is none."
+	| bodies |
+	bodies := self tBodies.
+	^ bodies isEmpty ifTrue: [ nil ] ifFalse: [ bodies first ].
 !
 
 "Rows"

@@ -3,7 +3,8 @@ CLASS HtmlTableRowElement EXTENDS HtmlElement MODULE Browser CLASSVARS '' VARS '
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new HTMLTableRowElement()'.
+	"Create a new table row element in the default document."
+	^ Document default createElement: 'tr'.
 !
 
 METHODS
