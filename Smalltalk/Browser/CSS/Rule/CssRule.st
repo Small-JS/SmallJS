@@ -1,6 +1,5 @@
 CLASS CssRule EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: CSSRule,
-	 of which variable value contains an instance."
+	"This class encapsulates the JS class: CSSRule."
 
 CLASSMETHODS
 
@@ -29,5 +28,5 @@ parentRule
 	^ CssRule fromJsSubRule: INLINE 'this.js.parentRule'.
 !
 parentStyleSheet
-	^ StyleSheet fromJs: INLINE 'this.js.parentStyleSheet'.
+	^ CssStyleSheet fromJs: INLINE 'this.js.parentStyleSheet'.
 !

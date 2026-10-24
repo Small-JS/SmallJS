@@ -1,5 +1,5 @@
 CLASS CssStyleDeclaration EXTENDS JsObject MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS classes CSSStyleDeclaration."
+	"This class encapsulates the JS class CSSStyleDeclaration."
 
 METHODS
 
@@ -9,19 +9,19 @@ cssText
 	^ String fromJs: INLINE 'this.js.cssText'.
 !
 cssText: text
-	^ INLINE 'this.js.cssText = text.js'.
+	INLINE 'this.js.cssText = text.js'.
 !
 length
 	^ Integer fromJs: INLINE 'this.js.length'.
 !
 parentRule
-	^ CssRule fromJs: INLINE 'this.js.parentRule'.
+	^ CssRule fromJsSubRule: INLINE 'this.js.parentRule'.
 !
 float
 	^ String fromJs: INLINE 'this.js.float'.
 !
 float: text
-	^ INLINE 'this.js.float = text.js'.
+	INLINE 'this.js.float = text.js'.
 !
 
 "Methods."
@@ -36,7 +36,8 @@ item: index
 	^ String fromJs: INLINE 'this.js.item( index.js )'.
 !
 removeProperty: property
-	^ String fromJs: INLINE 'this.js.getPropertyValue( property.js )'.
+	"Remove the property and return its old value."
+	^ String fromJs: INLINE 'this.js.removeProperty( property.js )'.
 !
 setProperty: property value: value
 	INLINE 'this.js.setProperty( property.js, value.js )'.

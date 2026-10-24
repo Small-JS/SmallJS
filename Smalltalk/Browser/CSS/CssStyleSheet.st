@@ -33,8 +33,10 @@ deleteRule: index
 	INLINE 'this.js.deleteRule( index.js )'.
 !
 insertRule: rule index: index
-	INLINE 'this.js.insertRule( rule.js, index.js )'.
+	"Return the index of the inserted rule."
+	^ Integer fromJs: INLINE 'this.js.insertRule( rule.js, index.js )'.
 !
-replace: text
+replaceSync: text
+	"Replace all rules with the rules in text. Note: @import rules are ignored."
 	INLINE 'this.js.replaceSync( text.js )'.
 !
