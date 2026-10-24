@@ -1,5 +1,5 @@
 CLASS Comment EXTENDS CharacterData MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS abstract class CharacterData."
+	"This class encapsulates the JS class Comment."
 
 CLASSMETHODS
 

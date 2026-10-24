@@ -1,11 +1,11 @@
 CLASS Node EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS 'Node' class."
+	"This class encapsulates the JS 'Node' class."
 
 
 CLASSMETHODS
 
 fromJsSubNode: jsNode
-	"Create ST Node subsclass object from JS Node element or subsclass.
+	"Create ST Node subclass object from JS Node element or subclass.
 	 Raise error if none found."
 
 	| jsClassName |
@@ -22,6 +22,7 @@ fromJsSubNode: jsNode
 	jsClassName = 'Document' ifTrue: [ ^ Document fromJs: jsNode ].
 	jsClassName = 'HTMLDocument' ifTrue: [ ^ Document fromJs: jsNode ].
 	jsClassName = 'DocumentFragment' ifTrue: [ ^ DocumentFragment fromJs: jsNode ].
+	jsClassName = 'ShadowRoot' ifTrue: [ ^ ShadowRoot fromJs: jsNode ].
 	jsClassName = 'DocumentType' ifTrue: [ ^ DocumentType fromJs: jsNode ].
 
 	"Try if jsNode is a subclass of Element."
@@ -120,7 +121,10 @@ normalize
 	INLINE 'this.js.normalize()'.
 !
 remove
-	self parentNode removeChild: self.
+	"Remove self from its parent node. Does nothing if there is no parent node."
+	| parent |
+	parent := self parentNode.
+	parent notNil ifTrue: [ parent removeChild: self ].
 !
 removeChild: node
 	INLINE 'this.js.removeChild( node.js )'.

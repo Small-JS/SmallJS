@@ -1,5 +1,5 @@
 CLASS Attr EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS 'Attr' class."
+	"This class encapsulates the JS 'Attr' class."
 
 METHODS
 

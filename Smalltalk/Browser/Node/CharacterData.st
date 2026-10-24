@@ -1,5 +1,5 @@
 CLASS CharacterData EXTENDS Node MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS abstract class CharacterData."
+	"This class encapsulates the JS abstract class CharacterData."
 
 METHODS
 
@@ -12,7 +12,7 @@ data: data
 	INLINE 'this.js.data = data.js'.
 !
 length
-	^ String fromJs: INLINE 'this.js.length'.
+	^ Integer fromJs: INLINE 'this.js.length'.
 !
 nextElementSibling
 	^ Element fromJsSubElement: INLINE 'this.js.nextElementSibling'.
@@ -38,7 +38,7 @@ replaceWith: node
 "String operations."
 
 appendData: string
-	^ String fromJs: INLINE 'this.js.appendData( string.js )'.
+	INLINE 'this.js.appendData( string.js )'.
 !
 deleteDataAt: offset count: count
 	INLINE 'this.js.deleteData( offset.js - 1, count.js )'.

@@ -72,3 +72,27 @@ test
 	div removeChild: p3.
 	self assert: [ div lastChild = p1 ].
 !
+testShadowRoot
+	"Nodes in a shadow tree have the ShadowRoot as root node."
+	| host shadow paragraph |
+	host := Document new createElement: 'div'.
+	shadow := host attachShadow: 'open' delegatesFocus: false.
+	paragraph := Document new createElement: 'p'.
+	shadow append: paragraph.
+
+	self assert: [ paragraph getRootNode class = ShadowRoot ].
+	self assert: [ paragraph getRootNode = shadow ].
+	self assert: [ paragraph parentNode class = ShadowRoot ].
+!
+testRemove
+	"Node remove does nothing if there is no parent node, like JS remove()."
+	| document doctype |
+	document := Document new.
+	doctype := document doctype.
+	self assert: [ doctype class = DocumentType ].
+
+	doctype remove.
+	self assert: [ document doctype isNil ].
+	self assert: [ doctype parentNode isNil ].
+	doctype remove.
+!

@@ -1,6 +1,6 @@
 CLASS TestCharacterData EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 	"Note: CharacterData is an abstract class.
-		We will test using instances of the Text subsclass."
+		We will test using instances of the Text subclass."
 
 METHODS
 
@@ -12,6 +12,8 @@ testProperties
 	text data: text data, '!'.
 	self assert: [ text data = 'My Text!' ].
 	self assert: [ text length = 8 ].
+	self assert: [ text length class = Integer ].
+	self assert: [ text length + 1 = 9 ].
 	self assert: [ text nextElementSibling = nil ].
 	self assert: [ text previousElementSibling = nil ].
 !
@@ -34,7 +36,7 @@ testDataMethods
 
 	text := Text new data: 'ab'.
 
-	text appendData: 'cd'.
+	self assert: [ ( text appendData: 'cd' ) = text ].
 	self assert: [ text data = 'abcd' ].
 
 	text deleteDataAt: 2 count: 2.
