@@ -94,7 +94,9 @@ embeddingModel: aEmbeddingModel
 
 chat: messages
 	"Ask a question to this AI provider with the text strings in the messages array,
-	 using the current model. Answer a promise of the response text."
+	 using the current model. Answer a promise of the response text.
+	 The messages alternate user questions and AI answers, starting with a question,
+	 so the last message is the new question. See roleAt:."
 	^ self chat: messages model: self model.
 !
 chat: messages model: aModel
@@ -102,6 +104,11 @@ chat: messages model: aModel
 	 using the model named aModel. Answer a promise of the response text.
 	 The model is passed per call, so concurrent requests can use different models."
 	self error: 'Subclass responsibility.'.
+!
+roleAt: index
+	"Answer the chat role of the message at (zero based) index in a messages array:
+	 'user' for questions at even indexes, 'assistant' for AI answers at odd indexes."
+	^ index even ifTrue: [ 'user' ] ifFalse: [ 'assistant' ].
 !
 
 "Id"

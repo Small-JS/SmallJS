@@ -31,10 +31,11 @@ startServer
 
 	express := Express new.
 	express useSession.
+	express useJson.
 	express static: '../Client/web'.
 	express get: '/api/providers'
 		then: [ :request :response | self onProviders: request response: response ].
-	express get: '/api/chat'
+	express post: '/api/chat'
 		then: [ :request :response | self onChat: request response: response ].
 
 	portString := Environment at: 'AI_SERVER_PORT'.
@@ -69,32 +70,35 @@ onProviders: request response: response
 !
 
 "For the text AI chat request answer a text response from the selected AI and model.
+The request is a POST with a JSON body: an instance of class AiChatRequest.
 Errors are answered as an unsuccessful response with the error message as text.
+Invalid JSON is answered by Express with status 400 (Bad Request).
 
 Example request:
-	http://localhost:3000/api/chat?provider=openai&model=gpt-4o-mini&messages=%5B%22Say%20this%20is%20a%20test%22%5D
+	POST http://localhost:3000/api/chat
+	Content-Type: application/json
+	{ provider: 'openai', model: 'gpt-4o-mini', messages: [ 'Say this is a test' ] }
 Example result:
  	{ success: true, text: 'This is a test.' }"
 
 async onChat: request response: response
-	| chatResponse chatRequest provider ai text |
+	| chatResponse body chatRequest messagesError provider ai text |
 
 	chatResponse := AiChatResponse new success: false; text: ''.
 
-	chatRequest := [ AiChatRequest fromObject: request query ]
-		tryCatch: [ :error | nil ].
-	chatRequest ifNil: [
-		^ response send: ( chatResponse text: 'Chat request parameter "messages" is not valid JSON' ) ].
+	body := request body.
+	body ifNil: [
+		^ response send: ( chatResponse text: 'Chat request JSON body missing' ) ].
+	chatRequest := AiChatRequest fromObject: body.
 	self log: 'AiServer: Received chat request: ', chatRequest toString.
 
 	chatRequest provider ifNil: [
 		^ response send: ( chatResponse text: 'Chat request parameter "provider" missing' ) ].
 	chatRequest model ifNil: [
 		^ response send: ( chatResponse text: 'Chat request parameter "model" missing' ) ].
-	chatRequest messages ifNil: [
-		^ response send: ( chatResponse text: 'Chat request parameter "messages" missing' ) ].
-	( chatRequest messages isKindOf: Array ) ifFalse: [
-		^ response send: ( chatResponse text: 'Chat request parameter "messages" is not an array' ) ].
+	messagesError := chatRequest messagesError.
+	messagesError ifNotNil: [
+		^ response send: ( chatResponse text: 'Chat request parameter "messages" ', messagesError ) ].
 
 	provider := chatRequest provider toLowerCase.
 	ai := aiMap get: provider.

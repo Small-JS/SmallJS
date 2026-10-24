@@ -47,17 +47,22 @@ The response is implemented in the ST class: `AiProviders`
 #### Description
 
 Calls the specified AI provider and model with text messages (prompts)\
-and returns the single text answer.
+and returns the single text answer.\
+This is a `POST` request with a JSON body (header `Content-Type: application/json`).\
+Invalid JSON is answered with status 400 (Bad Request).
 
 #### Arguments
 
 - `provider`: the name of the AI provider, as returned by `api/providers`.
 - `model`: the name of the model.
-- `messages`: a JSON array of text messages.
+- `messages`: an array of text messages that alternate user questions and AI answers,\
+  starting with a question, so the last message is the new question.\
+  This gives the AI the context of the whole conversation.
 
 #### Example call
 
-`http://localhost:3000/api/chat?provider=openai&model=gpt-5.6-luna&messages=["Say this is a test"]`
+`POST http://localhost:3000/api/chat`\
+`{ "provider": "openai", "model": "gpt-5.6-luna", "messages": [ "Hi", "Hello, how can I help?", "Say this is a test" ] }`
 
 The request is implemented in the ST class: `AiChatRequest`
 

@@ -22,8 +22,8 @@ async chat: messages model: aModel
 	| request chatCompletion |
 	request := OpenaiChatCompletionRequest new
 		model: aModel.
-	messages do: [ :message |
-		request addRole: 'user' content: message ].
+	0 to: messages length - 1 do: [ :index |
+		request addRole: ( self roleAt: index ) content: ( messages at: index ) ].
 
 	chatCompletion := await self createChatCompletion: request.
 	^ chatCompletion choices first message content.

@@ -59,44 +59,78 @@ async chatRequest: ai
 		provider: ai name;
 		model: ai class models first;
 		messages: #( 'Say exactly: This is a test' ).
-	chatResponse := await self fetchChat: chatRequest toUrlQuery.
+	chatResponse := await self fetchChat: chatRequest toObject.
 	self log: 'TestAiServer: Chat response received from: ', ai name.
 
 	self assert: [ chatResponse success ].
 	self assert: [ chatResponse text toLowerCase includes: 'test' ].
+
+	"Earlier questions and answers give the AI the context of the conversation."
+	chatRequest messages: #(
+		'My name is Zaphod.'
+		'Nice to meet you, Zaphod.'
+		'What is my name? Answer with only the name.' ).
+	chatResponse := await self fetchChat: chatRequest toObject.
+	self log: 'TestAiServer: Chat context response received from: ', ai name.
+
+	self assert: [ chatResponse success ].
+	self assert: [ chatResponse text toLowerCase includes: 'zaphod' ].
 !
 async testChatErrors
 	"Invalid requests are answered with an unsuccessful response, without calling an AI."
-	| provider model chatResponse |
+	| provider model chatRequest chatResponse response object |
 
 	provider := aiServer aiMap keys first.
 	model := ( aiServer aiMap get: provider ) class models first.
+	chatRequest := AiChatRequest new
+		provider: provider;
+		model: model.
 
-	chatResponse := await self fetchChat: '?provider=', provider, '&model=', model.
+	chatResponse := await self fetchChat: ( chatRequest messages: nil ) toObject.
 	self assert: [ chatResponse success not ].
 	self assert: [ chatResponse text includes: '"messages" missing' ].
 
-	chatResponse := await self fetchChat: '?provider=', provider, '&model=', model, '&messages=%5B'.
-	self assert: [ chatResponse success not ].
-	self assert: [ chatResponse text includes: 'not valid JSON' ].
-
-	chatResponse := await self fetchChat: '?provider=', provider, '&model=', model, '&messages=5'.
+	chatResponse := await self fetchChat: ( chatRequest messages: 5 ) toObject.
 	self assert: [ chatResponse success not ].
 	self assert: [ chatResponse text includes: 'not an array' ].
 
-	chatResponse := await self fetchChat: '?provider=nonexistent&model=', model, '&messages=%5B%5D'.
+	chatResponse := await self fetchChat: ( chatRequest messages: #( 'Question' 'Answer' ) ) toObject.
+	self assert: [ chatResponse success not ].
+	self assert: [ chatResponse text includes: 'not ending with a question' ].
+
+	chatRequest messages: #( 'Question' ).
+	chatResponse := await self fetchChat: ( chatRequest provider: 'nonexistent' ) toObject.
 	self assert: [ chatResponse success not ].
 	self assert: [ chatResponse text includes: 'provider not available' ].
 
-	chatResponse := await self fetchChat: '?provider=', provider, '&model=nonexistent&messages=%5B%5D'.
+	chatRequest provider: provider.
+	chatResponse := await self fetchChat: ( chatRequest model: 'nonexistent' ) toObject.
 	self assert: [ chatResponse success not ].
 	self assert: [ chatResponse text includes: 'model not available' ].
+
+	response := await Fetch request: self chatUrl options: ( RequestInit new method: 'POST' ).
+	object := await response json.
+	chatResponse := AiChatResponse fromObject: object.
+	self assert: [ chatResponse success not ].
+	self assert: [ chatResponse text includes: 'body missing' ].
+
+	response := await Fetch request: self chatUrl options: ( self chatOptions: '{ invalid' ).
+	self assert: [ response status = 400 ].
 !
-async fetchChat: urlQuery
-	| url object |
-	url := 'http://localhost:', aiServer port toString, '/api/chat', urlQuery.
-	object := await Fetch object: url.
-	^ AiChatResponse fromObject: object.
+async fetchChat: object
+	| responseObject |
+	responseObject := await Fetch object: self chatUrl options: ( self chatOptions: object toJson ).
+	^ AiChatResponse fromObject: responseObject.
+!
+chatUrl
+	^ 'http://localhost:', aiServer port toString, '/api/chat'.
+!
+chatOptions: json
+	"Answer the options for a POST request with the JSON string as body."
+	^ RequestInit new
+		method: 'POST';
+		headers: ( Headers new set: 'content-type' value: 'application/json' );
+		body: json.
 !
 async stopServer
 	self log: 'TestAiServer: API tests successful.'.

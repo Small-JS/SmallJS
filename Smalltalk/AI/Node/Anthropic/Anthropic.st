@@ -38,10 +38,11 @@ async chat: messages model: aModel
 	"Answer the text of the first text block. Other blocks, like thinking, are skipped."
 	| messageParams createMessageParams message textBlock |
 
-	messageParams := messages map: [ :message |
-		AnthropicMessageParam new
-			role: 'user';
-			content: message ].
+	messageParams := Array new.
+	0 to: messages length - 1 do: [ :index |
+		messageParams add: ( AnthropicMessageParam new
+			role: ( self roleAt: index );
+			content: ( messages at: index ) ) ].
 
 	createMessageParams := AnthropicMessageCreateParams new
 		model: aModel;

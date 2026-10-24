@@ -4,6 +4,11 @@ METHODS
 
 "Original"
 
+body
+	"Answer the request body as ST object, if parsed by a body parser like Express>>useJson.
+	 Otherwise answer nil."
+	^ Object fromJs: INLINE 'this.js.body'.
+!
 headers
 	^ Headers fromJs: INLINE 'this.js.headers'.
 !
@@ -17,7 +22,7 @@ session
 	^ Session fromJs: INLINE 'this.js.session'.
 !
 sessionId
-	^ Session fromJs: INLINE 'this.js.sessionID'.
+	^ String fromJs: INLINE 'this.js.sessionID'.
 !
 url
 	^ String fromJs: INLINE 'this.js.url'.

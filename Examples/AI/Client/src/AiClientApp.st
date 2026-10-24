@@ -1,21 +1,25 @@
 CLASS AiClientApp EXTENDS BrowserApp MODULE AiClientApp CLASSVARS ''
 	VARS 'aiProviders providerSelect modelSelect
-		conversationQuestions conversationTable conversationQuestionTemplate conversationAnswerTemplate conversationClearButton
+		conversationMessages conversationTable conversationQuestionTemplate conversationAnswerTemplate conversationClearButton
 		questionTextArea questionAskButton errorSpan'
 
 "Note:
-	The variable 'conversationQuestions' is an string array that holds the user questions.
-	It's is needed to resend it to an AI with every question, to allow the AI to have the conversation context."
+	The variable 'conversationMessages' is a String array that holds the user questions and AI answers,
+	alternating and starting with a question.
+	It is resent to the AI with every new question, to give the AI the context of the conversation."
 
 METHODS
 
+constructor
+	conversationMessages := #().
+!
 async start
 	self bindElements.
 	await self loadData.
 !
 bindElements
 	providerSelect := Document getElementById: 'providerSelect' class: HtmlSelectElement.
-	providerSelect addEventListener: 'change' then: [ self onOnProviderChange ].
+	providerSelect addEventListener: 'change' then: [ self onProviderChange ].
 	modelSelect := Document getElementById: 'modelSelect' class: HtmlSelectElement.
 	modelSelect addEventListener: 'change' then: [ self onModelChange ].
 
@@ -35,8 +39,13 @@ bindElements
 async loadData
 	| object providers option |
 	providerSelect length: 0.
+	"Enabled only when providers are loaded."
+	questionAskButton disabled: true.
 
-	object := await Fetch object: self url, '/api/providers'.
+	object := await async [ await Fetch object: self url, '/api/providers' ]
+		tryAwaitCatch: [ :error | self onError: error. nil ].
+	object ifNil: [ ^ nil ].
+
 	aiProviders := AiProviders fromObject: object.
 	providers := aiProviders providers.
 	providers length > 0 ifFalse: [
@@ -49,9 +58,10 @@ async loadData
 		option value: provider.
 		providerSelect add: option ].
 
-	self onOnProviderChange.
+	self onProviderChange.
+	questionAskButton disabled: false.
 !
-onOnProviderChange
+onProviderChange
 	"Set models for selected provider"
 	|  provider |
 
@@ -77,38 +87,64 @@ onModelChange
 	self clearConversation.
 !
 clearConversation
-	conversationQuestions := #().
+	conversationMessages := #().
 	conversationTable removeChildren.
+	errorSpan textContent: ''.
 !
 async askQuestion
-	| request url object response |
+	"The question and answer are only added to the conversation if the AI answered successfully.
+	 The Ask button is disabled while waiting for the answer, to prevent overlapping requests.
+	 If the conversation is cleared while waiting, the answer is discarded."
+	| question startMessages messages request object response |
 
-	conversationQuestions add: questionTextArea value.
+	question := questionTextArea value.
+	question trim isEmpty ifTrue: [
+		^ errorSpan textContent: 'Please enter a question.' ].
+	errorSpan textContent: ''.
 
+	startMessages := conversationMessages.
+	messages := startMessages copy.
+	messages add: question.
 	request := AiChatRequest new
 		provider: providerSelect value;
 		model: modelSelect value;
-		messages: conversationQuestions.
+		messages: messages.
 
-	url := self url, '/api/chat', request toUrlQuery.
-	object := await Fetch object: url.
+	questionAskButton disabled: true.
+	object := await async [ await self fetchChat: request ]
+		tryAwaitCatch: [ :error | self onError: error. nil ].
+	questionAskButton disabled: false.
+	object ifNil: [ ^ nil ].
 
+	conversationMessages == startMessages ifFalse: [ ^ nil ].
 	response := AiChatResponse fromObject: object.
-	response success
-		ifTrue: [ self displayResponse: response ]
-		ifFalse: [ errorSpan textContent: response text ].
+	response success ifFalse: [
+		^ errorSpan textContent: response text ].
+
+	messages add: response text.
+	conversationMessages := messages.
+	self displayQuestion: question answer: response text.
 !
-displayResponse: response
+async fetchChat: request
+	"Answer the response object of a POST request with the request as JSON body."
+	| options |
+	options := RequestInit new
+		method: 'POST';
+		headers: ( Headers new set: 'content-type' value: 'application/json' );
+		body: request toObject toJson.
+	^ await Fetch object: self url, '/api/chat' options: options.
+!
+displayQuestion: question answer: answer
 	|  questionRow questionSpan answerRow answerSpan |
 
 	questionRow := conversationQuestionTemplate cloneContent firstElementChild.
 	questionSpan := questionRow cells first firstElementChild.
-	questionSpan textContent: questionTextArea value.
+	questionSpan textContent: question.
 	conversationTable appendChild: questionRow.
 
 	answerRow := conversationAnswerTemplate cloneContent firstElementChild.
 	answerSpan := answerRow cells first lastElementChild.
-	answerSpan textContent: response text.
+	answerSpan textContent: answer.
 	conversationTable appendChild: answerRow.
 !
 onError: error
@@ -117,6 +153,9 @@ onError: error
 
 "Accessing (used by tests)"
 
+conversationMessages
+	^ conversationMessages.
+!
 providerSelect
 	^ providerSelect.
 !

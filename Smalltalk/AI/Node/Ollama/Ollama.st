@@ -26,8 +26,8 @@ async chat: messages model: aModel
 	| request response |
 	request := OllamaChatRequest new
 		model: aModel.
-	messages do: [ :message |
-		request addRole: 'user' content: message ].
+	0 to: messages length - 1 do: [ :index |
+		request addRole: ( self roleAt: index ) content: ( messages at: index ) ].
 
 	response := await self chatRequest: request.
 	^ response message content.
