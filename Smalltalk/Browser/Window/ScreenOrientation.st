@@ -1,5 +1,5 @@
 CLASS ScreenOrientation EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: Screen."
+	"This class encapsulates the JS class: ScreenOrientation."
 
 METHODS
 
@@ -9,13 +9,18 @@ type
 	^ String fromJs: INLINE 'this.js.type'.
 !
 angle
-	^ String fromJs: INLINE 'this.js.angle'.
+	"Return the orientation angle in degrees: 0, 90, 180 or 270."
+	^ Integer fromJs: INLINE 'this.js.angle'.
 !
 
 "Methods."
 
 lock: orientation onLocked: block onError: errorBlock
-	INLINE 'this.js.lock( orientation.js ).then( () => block.js() ).catch( () => errorBlock.js() )'.
+	"The error block is called with an Error argument, e.g. when the document is not fullscreen."
+	Error.  "Force import of class."
+	INLINE 'this.js.lock( orientation.js )
+		.then( () => block.js() )
+		.catch( ( error ) => errorBlock.js( stError$class.$fromJs$( error ) ) )'.
 !
 unlock
 	INLINE 'this.js.unlock()'.

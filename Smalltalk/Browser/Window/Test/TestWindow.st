@@ -61,3 +61,23 @@ testIframe
 	self assert:[ Window default frameElement isNil ].
 	iframe remove.
 !
+testScrollTo
+	"Test with a mock JS object, because the test page may not be scrollable."
+	| window |
+	window := Window fromJs: INLINE '( {
+		scrollTo( x, y ) { this.scrolled = x + "," + y },
+		resizeTo( x, y ) { this.resized = true } } )'.
+	window scrollTo: 10 @ 20.
+	self assert: [ ( window atJsProperty: 'scrolled' ) = '10,20' ].
+	self assert: [ ( window atJsProperty: 'resized' ) isNil ].
+!
+testPostMessage
+	"Test with a mock JS object, to check the conversion of the message to JS."
+	| window |
+	window := Window fromJs: INLINE '( {
+		postMessage( message, targetOrigin ) { this.message = message; this.targetOrigin = targetOrigin } } )'.
+	window postMessage: #( 1 'two' ) targetOrigin: '*'.
+	self assert: [ Boolean fromJs: INLINE 'Array.isArray( window.js.message )' ].
+	self assert: [ Boolean fromJs: INLINE 'window.js.message[ 1 ] === "two"' ].
+	self assert: [ ( window atJsProperty: 'targetOrigin' ) = '*' ].
+!

@@ -1,5 +1,5 @@
 CLASS Window EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS 'window' class."
+	"This class encapsulates the JS 'window' class."
 
 CLASSMETHODS
 
@@ -18,7 +18,7 @@ isChromium
 	^ self default navigator userAgent includes: 'Chrome'.
 !
 isWindows
-	"Shortcut method to test for MacOs platform."
+	"Shortcut method to test for Windows platform."
 	^ self default navigator platform startsWith: 'Win'.
 !
 isMacos
@@ -241,7 +241,8 @@ matchMedia: mediaQueryString
 	^ MediaQueryList fromJs: INLINE 'this.js.matchMedia( mediaQueryString.js )'.
 !
 postMessage: message targetOrigin: targetOrigin
-	INLINE 'this.js.postMessage( message.js, targetOrigin.js )'.
+	"Message is converted to JS with toJs, so it should be a value like a String, Number, Boolean, Array or nil."
+	INLINE 'this.js.postMessage( message.$toJs(), targetOrigin.js )'.
 !
 print
 	INLINE 'this.js.print()'.
@@ -253,7 +254,7 @@ resizeTo: size
 	INLINE 'this.js.resizeTo( size.x.js, size.y.js )'.
 !
 scrollTo: point
-	INLINE 'this.js.resizeTo( point.x.js, point.y.js )'.
+	INLINE 'this.js.scrollTo( point.x.js, point.y.js )'.
 !
 scrollTo: point behavior: behavior
 	INLINE 'this.js.scrollTo( { top: point.y.js, left: point.x.js, behavior: behavior.js } )'.

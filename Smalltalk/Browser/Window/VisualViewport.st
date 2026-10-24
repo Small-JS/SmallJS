@@ -1,15 +1,16 @@
 CLASS VisualViewport EXTENDS EventTarget MODULE Browser CLASSVARS '' VARS ''
-	"This class encasulates the JS class: VisualViewport."
+	"This class encapsulates the JS class: VisualViewport.
+	 Note: Offsets and sizes are Floats, because they can be fractional when zoomed."
 
 METHODS
 
 "Offset."
 
 offsetLeft
-	^ Integer fromJs: INLINE 'this.js.offsetLeft'.
+	^ Float fromJs: INLINE 'this.js.offsetLeft'.
 !
 offsetTop
-	^ Integer fromJs: INLINE 'this.js.offsetLeft'.
+	^ Float fromJs: INLINE 'this.js.offsetTop'.
 !
 offset
 	^ self offsetLeft @ self offsetTop.
@@ -18,10 +19,10 @@ offset
 "Page."
 
 pageLeft
-	^ Integer fromJs: INLINE 'this.js.pageLeft'.
+	^ Float fromJs: INLINE 'this.js.pageLeft'.
 !
 pageTop
-	^ Integer fromJs: INLINE 'this.js.pageLeft'.
+	^ Float fromJs: INLINE 'this.js.pageTop'.
 !
 pageOffset
 	^ self pageLeft @ self pageTop.
@@ -30,10 +31,10 @@ pageOffset
 "Size."
 
 width
-	^ Integer fromJs: INLINE 'this.js.width'.
+	^ Float fromJs: INLINE 'this.js.width'.
 !
 height
-	^ Integer fromJs: INLINE 'this.js.height'.
+	^ Float fromJs: INLINE 'this.js.height'.
 !
 size
 	^ self width @ self height.
