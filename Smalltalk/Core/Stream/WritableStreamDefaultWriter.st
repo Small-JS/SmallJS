@@ -9,7 +9,8 @@ async closed
 	INLINE 'await this.js.closed'.
 !
 desiredSize
-	^ Integer fromJs: INLINE 'this.js.desiredSize'.
+	"An Integer, or a Float when a custom size strategy is used. Nil when the stream errored."
+	^ Object fromJs: INLINE 'this.js.desiredSize'.
 !
 async ready
 	"Returns when the desired size of the stream becomes positive."

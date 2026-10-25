@@ -17,6 +17,14 @@ test
 	"A File is a Blob."
 	self assert: [ file isKindOf: Blob ].
 	self assert: [ ( file slice: 1 to: 3 ) size = 2 ].
+
+	"A Uint8Array part is stored as bytes."
+	file := File fromArray: ( Uint8Array from: #( 4 5 6 7 100 ) ) name: 'test.bin'.
+	self assert: [ file size = 5 ].
+
+	"A File needs a name."
+	self assertError: [ File fromArray: #( 'a' ) ].
+	self assertError: [ File fromArray: #( 'a' ) options: FileCreateOptions new ].
 !
 testOptions
 	| file |

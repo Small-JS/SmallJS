@@ -44,6 +44,19 @@ async testCancel
 	result := await reader read.
 	self assert: [ result done ].
 !
+async testReleaseLock
+	| stream reader result |
+	stream := self newStream.
+	reader := stream getReader.
+	self assert: [ stream locked ].
+	reader releaseLock.
+	self assert: [ stream locked not ].
+
+	"A new reader can be obtained after releasing the lock."
+	reader := stream getReader.
+	result := await reader read.
+	self assert: [ result done not ].
+!
 
 "Helpers"
 

@@ -21,14 +21,22 @@ async testAbort
 	self assert: [ Boolean fromJs: INLINE 'sink.js.aborted' ].
 	self assert: [ ( String fromJs: INLINE 'sink.js.reason' ) = 'No longer needed' ].
 !
+async testClose
+	| sink writable |
+	sink := self newSink.
+	writable := self newWritable: sink.
+	await writable close.
+	self assert: [ Boolean fromJs: INLINE 'sink.js.closed' ].
+!
 
 "Helpers"
 
 newSink
 	"JS object that records what a WritableStream receives."
-	^ JsObject fromJs: INLINE '{ aborted: false, reason: null }'.
+	^ JsObject fromJs: INLINE '{ aborted: false, reason: null, closed: false }'.
 !
 newWritable: sink
 	^ WritableStream fromJs: INLINE 'new WritableStream( {
+		close() { sink.js.closed = true },
 		abort( reason ) { sink.js.aborted = true; sink.js.reason = reason } } )'.
 !

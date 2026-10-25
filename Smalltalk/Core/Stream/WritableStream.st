@@ -16,6 +16,10 @@ async abort
 async abort: reason
 	INLINE 'await this.js.abort( reason.js )'.
 !
+async close
+	"Closes the stream after all queued chunks are written."
+	INLINE 'await this.js.close()'.
+!
 getWriter
 	^ WritableStreamDefaultWriter fromJs: INLINE 'this.js.getWriter()'.
 !

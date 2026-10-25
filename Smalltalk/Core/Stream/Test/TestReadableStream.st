@@ -14,9 +14,60 @@ test
 	streamTee := stream tee.
 	self assert: [ streamTee first class = ReadableStream ].
 	streamTee first cancelThen: [ self onCancel ].
+	self newStream cancelThen: [ self onCancel ] catch: [ :error | self assert: [ false ] ].
+
+	"Canceling a locked stream fails."
+	stream := self newStream.
+	stream getReader.
+	stream cancelThen: [ self assert: [ false ] ] catch: [ :error | self onCancelError: error ].
 !
 onCancel
 	self assert: [ true ].
+!
+onCancelError: error
+	self assert: [ error class = Error ].
+!
+async testCancel
+	| stream reader result |
+	stream := self newStream.
+	await stream cancel.
+	reader := stream getReader.
+	result := await reader read.
+	self assert: [ result done ].
+
+	stream := self newStream.
+	await stream cancel: 'No longer needed'.
+	result := await stream getReader read.
+	self assert: [ result done ].
+!
+async testByobReader
+	| stream reader result |
+	stream := self newStream.
+	reader := stream getByobReader.
+	self assert: [ reader class = ReadableStreamByobReader ].
+	self assert: [ stream locked ].
+
+	result := await reader read: ( Uint8Array new: 8 ) min: 4.
+	self assert: [ result done not ].
+	self assert: [ result value toArray = #( 4 5 6 7 ) ].
+
+	result := await reader read: ( Uint8Array new: 8 ).
+	self assert: [ result done ].
+	await reader closed.
+
+	reader releaseLock.
+	self assert: [ stream locked not ].
+
+	stream := self newStream.
+	reader := stream getByobReader.
+	await reader cancel: 'No longer needed'.
+	result := await reader read: ( Uint8Array new: 8 ).
+	self assert: [ result done ].
+
+	reader := self newStream getByobReader.
+	await reader cancel.
+	result := await reader read: ( Uint8Array new: 8 ).
+	self assert: [ result done ].
 !
 async testTee
 	| stream streamTee bytes |
@@ -48,6 +99,12 @@ async testPipeTo
 	self assert: [ Boolean fromJs: INLINE 'sink.js.closed' ].
 	self assert: [ stream locked not ].
 	self assert: [ writable locked not ].
+
+	"Without options."
+	sink := self newSink.
+	await self newStream pipeTo: ( self newWritable: sink ).
+	self assert: [ ( Integer fromJs: INLINE 'sink.js.bytes' ) = 4 ].
+	self assert: [ Boolean fromJs: INLINE 'sink.js.closed' ].
 !
 async testPipeToPreventClose
 	| stream sink writable |
@@ -75,6 +132,13 @@ async testPipeThrough
 	await piped pipeTo: ( self newWritable: sink ) options: JsObject newEmpty.
 	self assert: [ ( Integer fromJs: INLINE 'sink.js.bytes' ) = 8 ].
 	self assert: [ Boolean fromJs: INLINE 'sink.js.closed' ].
+
+	"Without options."
+	transform := JsObject fromJs: INLINE 'new TransformStream()'.
+	piped := self newStream pipeThrough: transform.
+	sink := self newSink.
+	await piped pipeTo: ( self newWritable: sink ).
+	self assert: [ ( Integer fromJs: INLINE 'sink.js.bytes' ) = 4 ].
 !
 
 "Helpers"

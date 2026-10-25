@@ -22,6 +22,10 @@ async testWrite
 	await writer closed.
 	self assert: [ Boolean fromJs: INLINE 'sink.js.closed' ].
 	self assert: [ writer desiredSize = 0 ].
+
+	"With a custom size strategy, the desired size can be a Float."
+	writer := ( WritableStream fromJs: INLINE 'new WritableStream( {}, { highWaterMark: 1.5, size() { return 1 } } )' ) getWriter.
+	self assert: [ writer desiredSize = 1.5 ].
 !
 async testAbort
 	| sink writer |

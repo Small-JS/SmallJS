@@ -21,3 +21,7 @@ async read
 	"Returns the next chunk of the stream as a ReadableStreamReadResult."
 	^ ReadableStreamReadResult fromJs: INLINE 'await this.js.read()'.
 !
+releaseLock
+	"Unlocks the stream, so a new reader can be obtained."
+	INLINE 'this.js.releaseLock()'.
+!

@@ -6,6 +6,7 @@ test
 	| options |
 	options := FileCreateOptions new.
 	self assert: [ options class = FileCreateOptions ].
+	self assert: [ options isKindOf: BlobCreateOptions ].
 	self assert: [ options type isNil ].
 	self assert: [ options lastModified isNil ].
 	self assert: [ options endings isNil ].
