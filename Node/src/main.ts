@@ -3,5 +3,6 @@
 
 let nodeAppModuleName: string = "./NodeApp.js";
 import( nodeAppModuleName )
-	.then( module => { module.stNodeApp$class.$new().$start(); } );
+	.then( module => module.stNodeApp$class.$new().$start() )
+	.catch( error => { console.error( error ); process.exitCode = 1; } );
 

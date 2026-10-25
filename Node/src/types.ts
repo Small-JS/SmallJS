@@ -47,7 +47,6 @@ import { HttpTerminator } from "http-terminator";
 
 // Express
 import express from "express";
-import cors from "express";
 import session from "express-session";
 
 // ==== Databases
@@ -56,7 +55,7 @@ import session from "express-session";
 import * as sqlite from "node:sqlite";
 let sqDatabaseSync: sqlite.DatabaseSync;
 let sqDatabaseSyncOptions: sqlite.DatabaseSyncOptions;
-let sqtatementSync: sqlite.StatementSync;
+let sqStatementSync: sqlite.StatementSync;
 
 // Postgres
 import * as pg from "pg";
