@@ -2,7 +2,7 @@ CLASS RequestInit  EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
 
 	"Implements the JS object that can be sent with a request.
 	 The Request object cannot be changed after it was created with these options.
-	 The setter methods creates properties in the containted JS object,
+	 The setter methods create properties in the contained JS object,
 	 that cannot be unset but can be changed."
 
 CLASSMETHODS

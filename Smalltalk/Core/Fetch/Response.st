@@ -7,10 +7,11 @@ error
 	^ Response fromJs: INLINE 'Response.error()'.
 !
 json: data
-	^ Response fromJs: INLINE 'Response.json( data.js )'.
+	"Data is converted to JS first, so ST objects and collections give the expected JSON."
+	^ Response fromJs: INLINE 'Response.json( data.$toJs() )'.
 !
 redirect: url
-	^ Response fromJs: INLINE 'Response.json( url.js )'.
+	^ Response fromJs: INLINE 'Response.redirect( url.js )'.
 !
 
 METHODS
@@ -22,9 +23,6 @@ body
 !
 bodyUsed
 	^ Boolean fromJs: INLINE 'this.js.bodyUsed'.
-!
-bodyUsed: aBool
-	INLINE 'this.js.bodyUsed = aBool.js'.
 !
 headers
 	^ Headers fromJs: INLINE 'this.js.headers'.

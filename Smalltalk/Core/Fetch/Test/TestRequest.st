@@ -6,6 +6,8 @@ testDefaults
 	request := Request url: 'http://unknown.com'.
 
 	self assert: [ request bodyUsed not ].
+	"A GET request has no body."
+	self assert: [ request body isNil ].
 	self assert: [ request cache = 'default' ].
 	self assert: [ request credentials = 'same-origin' ].
 	self assert: [ request destination = '' ].
@@ -56,7 +58,7 @@ testInitialized
 	self assert: [ request url includes: 'unknown.com' ].
 !
 async testMethods
-	| url requestInit request arrayBuffer blob bytes text object formData |
+	| url requestInit request clone arrayBuffer blob bytes text object formData |
 
 	url := 'http://unknown.com'.
 	requestInit := RequestInit new
@@ -65,7 +67,11 @@ async testMethods
 		integrity: 'sha256-abc123'.
 
 	request := Request url: url options: requestInit.
-	self assert: [ request clone integrity = request integrity ].
+	self assert: [ request body class = ReadableStream ].
+	clone := request clone.
+	self assert: [ clone class = Request ].
+	self assert: [ ( clone == request ) not ].
+	self assert: [ clone integrity = request integrity ].
 
 	"Note: 2025-07-29:
 	 The method Request.clone in Node.js does *not* create re-readable requests (error: unusable),

@@ -19,8 +19,12 @@ test
 	headers append: 'x-header' value: 'value'.
 	self assert: [ ( headers get: 'x-header' ) = 'value' ].
 
+	headers append: 'x-header' value: 'value2'.
+	self assert: [ ( headers get: 'x-header' ) = 'value, value2' ].
+
+	"set: replaces all existing values."
 	headers set: 'x-header' value: 'new-value'.
-	self assert: [ ( headers get: 'x-header' ) = 'value, new-value' ].
+	self assert: [ ( headers get: 'x-header' ) = 'new-value' ].
 
 	self assert: [ headers has: 'x-header' ].
 	headers delete: 'x-header'.

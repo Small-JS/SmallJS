@@ -45,3 +45,18 @@ async test
 	"formDataThen: is not tested here,
 	 because the is no suitable API present in API test site typicode.com."
 !
+testRedirect
+	| response |
+	response := Response redirect: 'https://example.com/'.
+	self assert: [ response status = 302 ].
+	self assert: [ ( response headers get: 'location' ) = 'https://example.com/' ].
+!
+async testJson
+	"ST objects are converted to JS before creating the JSON."
+	| response text |
+	response := Response json: #( 1 'a' ).
+	self assert: [ response ok ].
+	self assert: [ ( response headers get: 'content-type' ) includes: 'application/json' ].
+	text := await response text.
+	self assert: [ text = '[1,"a"]' ].
+!

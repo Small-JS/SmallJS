@@ -17,3 +17,15 @@ async test
 	object := await Fetch object: url.
 	self assert: [ ( object atProperty: 'id' ) = 1 ].
 !
+async testCreated
+	"Creating a post at the test API returns status 201 (Created), which is also successful."
+	| url options object |
+	url := 'https://jsonplaceholder.typicode.com/posts'.
+	options := RequestInit new
+		method: 'POST';
+		body: '{ "title": "test" }';
+		headers: ( Headers new set: 'content-type' value: 'application/json' ).
+
+	object := await Fetch object: url options: options.
+	self assert: [ ( object atProperty: 'title' ) = 'test' ].
+!

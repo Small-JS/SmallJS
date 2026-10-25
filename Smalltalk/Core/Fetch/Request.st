@@ -1,5 +1,5 @@
 CLASS Request EXTENDS JsObject MODULE Core CLASSVARS '' VARS ''
-	"Implements the JS Request API used inn the JS fetch() API in browsers."
+	"Implements the JS Request API used in the JS fetch() API in browsers."
 
 CLASSMETHODS
 
@@ -18,13 +18,10 @@ METHODS
 "Properties"
 
 body
-	^ ReadableStream fromJs: INLINE 'this.body'.
+	^ ReadableStream fromJs: INLINE 'this.js.body'.
 !
 bodyUsed
 	^ Boolean fromJs: INLINE 'this.js.bodyUsed'.
-!
-bodyUsed: aBool
-	INLINE 'this.js.bodyUsed = aBool.js'.
 !
 cache
 	^ String fromJs: INLINE 'this.js.cache'.
@@ -69,7 +66,7 @@ url
 "Copying"
 
 clone
-	Request fromJs: INLINE 'this.js.clone()'.
+	^ Request fromJs: INLINE 'this.js.clone()'.
 !
 
 "Reading body as types"

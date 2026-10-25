@@ -20,8 +20,8 @@ get: name
 	^ String fromJs: INLINE 'this.js.get( name.js )'.
 !
 set: name value: value
-	"Note: This method *appends* values to any exiting values, comma separated."
-	INLINE 'this.js.append( name.js, value.js )'.
+	"Replace any existing values of name. Use append:value: to add a value."
+	INLINE 'this.js.set( name.js, value.js )'.
 !
 delete: name
 	INLINE 'this.js.delete( name.js )'.

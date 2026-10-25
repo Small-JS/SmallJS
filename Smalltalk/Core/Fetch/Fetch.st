@@ -22,7 +22,8 @@ async text: url options: options
 	"Returns the fetched file content as a text string."
 	| response |
 	response := await self request: url options: options.
-	response status = 200
+	"Any 2xx status is successful."
+	response ok
 		ifFalse: [ Error throw: response statusAndText ].
 
 	^ await response text.
@@ -34,10 +35,11 @@ async object: url
 	^ await self object: url options: nil
 !
 async object: url options: options
-	"Returns a ST object constructed from the the fetched JSON response."
+	"Returns a ST object constructed from the fetched JSON response."
 	| response |
 	response := await self request: url options: options.
-	response status = 200
+	"Any 2xx status is successful."
+	response ok
 		ifFalse: [ Error throw: response statusAndText ].
 
 	^ await response json.
