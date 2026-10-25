@@ -36,7 +36,7 @@ additionalData: additionalData
 	INLINE 'this.js.additionalData = additionalData.js'.
 !
 tagLength
-	^ ArrayBuffer fromJs: INLINE 'this.js.tagLength'.
+	^ Integer fromJs: INLINE 'this.js.tagLength'.
 !
 tagLength: tagLength
 	INLINE 'this.js.tagLength = tagLength.js'.

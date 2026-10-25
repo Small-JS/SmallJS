@@ -15,13 +15,13 @@ name
 	^ String fromJs: INLINE 'this.js.name'.
 !
 name: name
-	self assert: [ #( 'ECDH' 'ACDSA' ) includes: name ].
+	self assert: [ #( 'ECDH' 'ECDSA' ) includes: name ].
 	INLINE 'this.js.name = name.js'.
 !
 namedCurve
 	^ String fromJs: INLINE 'this.js.namedCurve'
 !
 namedCurve: namedCurve
-	self assert: [ #( 'P-256' 'P-384' 'P-512' ) includes: namedCurve ].
+	self assert: [ #( 'P-256' 'P-384' 'P-521' ) includes: namedCurve ].
 	INLINE 'this.js.namedCurve = namedCurve.js'
 !

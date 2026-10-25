@@ -8,6 +8,9 @@ test
 	params name: 'ECDH'.
 	self assert: [ params name = 'ECDH' ].
 
-	params namedCurve: 'P-512'.
-	self assert: [ params namedCurve = 'P-512' ].
+	params name: 'ECDSA'.
+	self assert: [ params name = 'ECDSA' ].
+
+	params namedCurve: 'P-521'.
+	self assert: [ params namedCurve = 'P-521' ].
 !

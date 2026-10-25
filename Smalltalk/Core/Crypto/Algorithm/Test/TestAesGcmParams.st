@@ -16,5 +16,6 @@ test
 	self assert: [ params additionalData = additionalData ].
 
 	params tagLength: 64.
+	self assert: [ params tagLength class = Integer ].
 	self assert: [ params tagLength = 64 ].
 !

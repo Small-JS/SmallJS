@@ -45,5 +45,27 @@ async signVerify
 	signatureBuffer := await Crypto sign: params key: keyPair privateKey data: plainData.
 
 	verified := await Crypto verify: params key: keyPair publicKey signature: signatureBuffer data: plainData.
+	self assert: [ verified class = Boolean ].
+	self assert: [ verified ].
+
+	verified := await Crypto verify: params key: keyPair publicKey signature: signatureBuffer
+		data: ( Uint8Array encodeFromString: 'Tampered' ).
+	self assert: [ verified not ].
+!
+async testRsassaPkcs1
+	"The name of this algorithm does not start with 'RSA-'."
+	"Uses a local key pair, because async tests run concurrently with testGenerateKey."
+	| params pair privateKey signParams data signature verified |
+	params := RsaKeyGenParams new name: 'RSASSA-PKCS1-v1_5'.
+	pair := await Crypto generateKey: params extractable: false usages: #( 'sign' 'verify' ).
+	privateKey := pair privateKey.
+	self assert: [ privateKey algorithm class = RsaKeyGenParams ].
+	self assert: [ privateKey algorithm name = 'RSASSA-PKCS1-v1_5' ].
+
+	signParams := JsObject newEmpty.
+	signParams atJsProperty: 'name' put: 'RSASSA-PKCS1-v1_5'.
+	data := Uint8Array encodeFromString: 'Hello, RSASSA-PKCS1-v1_5!'.
+	signature := await Crypto sign: signParams key: privateKey data: data.
+	verified := await Crypto verify: signParams key: pair publicKey signature: signature data: data.
 	self assert: [ verified ].
 !

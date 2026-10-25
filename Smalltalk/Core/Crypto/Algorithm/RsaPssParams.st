@@ -19,7 +19,7 @@ name: name
 	INLINE 'this.js.name = name.js'.
 !
 saltLength
-	^ ArrayBuffer fromJs: INLINE 'this.js.saltLength'
+	^ Integer fromJs: INLINE 'this.js.saltLength'
 !
 saltLength: saltLength
 	INLINE 'this.js.saltLength = saltLength.js'

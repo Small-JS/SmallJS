@@ -1,11 +1,11 @@
 CLASS CryptoKey EXTENDS JsObject MODULE Crypto CLASSVARS '' VARS ''
 
-"This class is tested in class Crypto."
+"This class is tested in the TestCrypto* classes."
 
 CLASSMETHODS
 
 new
-	self newEmpty.
+	^ self newEmpty.
 !
 
 METHODS
@@ -21,10 +21,12 @@ algorithm
 	jsObject := JsObject fromJs: INLINE 'this.js.algorithm'.
 	name := jsObject atJsProperty: 'name'.
 	( name startsWith: 'AES-' ) ifTrue: [ ^ AesKeyGenParams fromJs: jsObject js ].
-	( name startsWith: 'RSA-' ) ifTrue: [ ^ RsaKeyGenParams fromJs: jsObject js ].
+	"Also matches RSASSA-PKCS1-v1_5."
+	( name startsWith: 'RSA' ) ifTrue: [ ^ RsaKeyGenParams fromJs: jsObject js ].
 	( name startsWith: 'EC' ) ifTrue: [ ^ EcKeyGenParams fromJs: jsObject js ].
 
-	self error: 'CryptoKey.algorithm: Unknown algorithm name: ', name.
+	"Other algorithms, e.g. HMAC, Ed25519, X25519."
+	^ jsObject.
 !
 usages
 	^ Array fromJsStrings: INLINE 'this.js.usages'.

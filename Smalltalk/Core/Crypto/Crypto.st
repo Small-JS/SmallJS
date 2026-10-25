@@ -40,19 +40,19 @@ async sign: algorithm key: key data: data
 		INLINE 'await crypto.subtle.sign( algorithm.js, key.js, data.js )'.
 !
 async verify: algorithm key: key signature: signature data: data
-	^ ArrayBuffer fromJs:
+	^ Boolean fromJs:
 		INLINE 'await crypto.subtle.verify( algorithm.js, key.js, signature.js, data.js )'.
 !
 
 "Keys"
 
 async generateKey: algorithm extractable: extractable usages: usages
-	| algorithmPrefix isKeyPairAlgorithm keyClass |
-	algorithmPrefix := algorithm name substring: 0 to: 2.
-	isKeyPairAlgorithm := #( 'RS' 'EC' ) includes: algorithmPrefix.
-	keyClass := isKeyPairAlgorithm ifTrue: [ CryptoKeyPair] ifFalse: [ CryptoKey ].
-	^ keyClass fromJs:
-		INLINE 'await crypto.subtle.generateKey( algorithm.js, extractable.js, usages.$toJs() )'.
+	"Answer a CryptoKeyPair for asymmetric algorithms (e.g. RSA, EC, Ed25519), otherwise a CryptoKey."
+	| jsResult |
+	jsResult := INLINE 'await crypto.subtle.generateKey( algorithm.js, extractable.js, usages.$toJs() )'.
+	^ ( Boolean fromJs: INLINE '"privateKey" in jsResult' )
+		ifTrue: [ CryptoKeyPair fromJs: jsResult ]
+		ifFalse: [ CryptoKey fromJs: jsResult ].
 !
 async deriveKey: algorithm key: key type: type extractable: extractable usages: usages
 	^ CryptoKey fromJs:

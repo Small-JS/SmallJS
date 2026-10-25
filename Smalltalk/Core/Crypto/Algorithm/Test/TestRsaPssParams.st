@@ -7,5 +7,6 @@ test
 	self assert: [ params name = 'RSA-PSS' ].
 
 	params saltLength: 32.
+	self assert: [ params saltLength class = Integer ].
 	self assert: [ params saltLength = 32 ].
 !
