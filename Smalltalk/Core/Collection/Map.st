@@ -23,7 +23,7 @@ fromArray: array
 			keyValueArray length = 2 ] ) ifFalse: [
 				Error throw: 'Inner elements must be arrays of size 2' ].
 		( keyValueArray at: 0 ) class = String ifFalse: [
-						Error throw: 'Keys must be strings' ].
+				Error throw: 'Keys must be strings' ].
 		map set: ( keyValueArray at: 0 ) value: ( keyValueArray at: 1 ) ].
 
 	^ map.
@@ -32,9 +32,10 @@ fromArray: array
 "Grouping"
 
 group: array by: block
+	"The results of block are converted to strings, because Map keys must be strings."
 	| map |
 	map := self fromJs: INLINE 'Map.groupBy( array.js,
-		( element ) => block.js( element ).js )'.
+		( element ) => block.js( element ).$toString().js )'.
 	"Now convert all values from JS array to ST array."
 	map forEach: [ :key :jsArray |
 		map set: key value: ( Array fromJs: jsArray ) ].

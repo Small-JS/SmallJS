@@ -65,4 +65,10 @@ testGroupBy
 	v := map get: 'even'.
 	self assert: [ ( map get: 'even' ) = #( 2 4 ) ].
 	self assert: [ ( map get: 'odd' ) = #( 1 3 5 ) ].
+
+	"Non-string group results are converted to string keys."
+	map := Map group: #( 1 2 3 4 5 ) by: [ :element | element % 2 ].
+	self assert: [ map keys = #( '1' '0' ) ].
+	self assert: [ ( map get: '0' ) = #( 2 4 ) ].
+	self assert: [ ( map get: '1' ) = #( 1 3 5 ) ].
 !

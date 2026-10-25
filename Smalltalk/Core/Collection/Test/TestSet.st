@@ -45,4 +45,34 @@ test
 	set clear.
 	self assert: [ set size = 0 ].
 !
+testDuplicates
+	| set |
+
+	"Separate but (value)equal objects are only added once."
+	set := Set new: #( 1 1 2 ).
+	self assert: [ set size = 2 ].
+	self assert: [ set values = #( 1 2 ) ].
+
+	"nil is a valid value."
+	set := Set new.
+	set add: nil.
+	set add: nil.
+	self assert: [ set size = 1 ].
+	self assert: [ set has: nil ].
+	set delete: nil.
+	self assert: [ set size = 0 ].
+	self assert: [ ( set has: nil ) not ].
+!
+testOperationsWithEqualValues
+	"Operations on sets with separate but (value)equal objects. The receiver is not modified."
+	| set set2 |
+	set := Set new: #( 1 2 3 ).
+	set2 := Set new: #( 2 3 4 ).
+	self assert: [ ( set union: set2 ) values = #( 1 2 3 4 ) ].
+	self assert: [ ( set intersection: set2 ) values = #( 2 3 ) ].
+	self assert: [ ( set difference: set2 ) values = #( 1 ) ].
+	self assert: [ ( set symmetricDifference: set2 ) values = #( 1 4 ) ].
+	self assert: [ set values = #( 1 2 3 ) ].
+	self assert: [ set2 values = #( 2 3 4 ) ].
+!
 

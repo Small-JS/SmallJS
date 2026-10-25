@@ -80,7 +80,7 @@ find: key
 "Accessing"
 
 at: key
-	"Return value at key, or thorw an error if the key is absent."
+	"Return value at key, or throw an error if the key is absent."
 	^ self at: key ifAbsent: [
 		Error throw: 'Key not found: ', key toString ]
 !

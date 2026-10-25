@@ -10,7 +10,11 @@ new
 	^ self fromJs: INLINE 'new Set()'.
 !
 new: array
-	^ self fromJs: INLINE 'new Set( array.js )'.
+	"Values are added one by one, so (value)equal duplicates in array are removed."
+	| set |
+	set := self new.
+	array do: [ :value | set add: value ].
+	^ set.
 !
 
 METHODS
@@ -51,17 +55,23 @@ toString
 "Modifying"
 
 add: value
-	( self find: value ) ifNil: [
+	( self has: value ) ifFalse: [
 		INLINE 'this.js.add( value )' ].
+!
+addUnchecked: value
+	"Private: Add value without testing for (value)equality.
+	 Only use for values known not to be in self."
+	INLINE 'this.js.add( value )'.
 !
 clear
 	INLINE 'this.js.clear()'.
 !
-delete: value
-	| ownValue |
-	ownValue := self find: value.
-	ownValue ifNotNil: [
-		INLINE 'this.js.delete( ownValue )' ].
+delete: aValue
+	"Delete the object in the set that is (value)equal to the argument value, if any."
+	self forEach: [ :value |
+		value = aValue ifTrue: [
+			INLINE 'this.js.delete( value )'.
+			^ self ] ].
 !
 
 "Operations with other sets"
@@ -71,7 +81,7 @@ difference: set
 	result := Set new.
 	self forEach: [ :value |
 		( set has: value ) ifFalse: [
-			result add: value ] ].
+			result addUnchecked: value ] ].
 	^ result.
 !
 intersection: set
@@ -79,35 +89,30 @@ intersection: set
 	result := Set new.
 	self forEach: [ :value |
 		( set has: value ) ifTrue: [
-			result add: value ] ].
+			result addUnchecked: value ] ].
 	^ result.
 !
 symmetricDifference: set
+	"Both parts are free of duplicates and disjoint, so they are added unchecked."
 	| result |
 	result := Set new.
 
 	self forEach: [ :value |
 		( set has: value ) ifFalse: [
-			result add: value ] ].
+			result addUnchecked: value ] ].
 
 	set forEach: [ :value |
 		( self has: value ) ifFalse: [
-			result add: value ] ].
+			result addUnchecked: value ] ].
 
 	^ result.
 !
 union: set
+	"self has no duplicates, so its JS set can be copied without equality tests.
+	 add: already skips values that are present."
 	| result |
-	result := Set new.
-
-	self forEach: [ :value |
-		( result has: value ) ifFalse: [
-			result add: value ] ].
-
-	set forEach: [ :value |
-		( result has: value ) ifFalse: [
-			result add: value ] ].
-
+	result := Set fromJs: INLINE 'new Set( this.js )'.
+	set forEach: [ :value | result add: value ].
 	^ result.
 !
 
@@ -119,8 +124,13 @@ find: aValue
 		value = aValue ifTrue: [ ^ value ] ].
 	^ nil.
 !
-has: value
-	^ ( self find: value ) notNil.
+has: aValue
+	"Not implemented with find:, because that cannot distinguish a nil value from not found.
+	 The identity test in the JS set is fast, so it is done first."
+	( Boolean fromJs: INLINE 'this.js.has( aValue )' ) ifTrue: [ ^ true ].
+	self forEach: [ :value |
+		value = aValue ifTrue: [ ^ true ] ].
+	^ false.
 !
 isDisjointFrom: set
 	self forEach: [ :value |
