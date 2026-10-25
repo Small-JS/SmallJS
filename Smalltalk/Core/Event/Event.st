@@ -56,7 +56,10 @@ target
 	^ EventTarget fromJs: INLINE 'this.js.target'.
 !
 timeStamp
-	^ Date fromJs: INLINE 'this.js.timeStamp'.
+	"The time the event was created, in milliseconds since the time origin:
+	 the start of the page or process (performance.timeOrigin), not since 1970.
+	 Suitable for measuring the time between events."
+	^ Float fromJs: INLINE 'this.js.timeStamp'.
 !
 type
 	^ String fromJs: INLINE 'this.js.type'.

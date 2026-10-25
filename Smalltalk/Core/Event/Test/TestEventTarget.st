@@ -60,6 +60,27 @@ testMultipleListeners
 	self assert: [ count1 = 1 ].
 	self assert: [ count2 = 11 ].
 !
+testDuplicateListener
+	| target count block |
+	target := EventTarget new.
+	count := 0.
+	block := [ :event | count := count + 1 ].
+
+	"As in JS, the same block for the same type is only added once."
+	target addEventListener: 'test' then: block.
+	target addEventListener: 'test' then: block.
+	self assert: [ target eventIds length = 1 ].
+	target dispatchEvent: ( Event type: 'test' ).
+	self assert: [ count = 1 ].
+
+	"The same block for another type is added."
+	target addEventListener: 'other' then: block.
+	self assert: [ target eventIds length = 2 ].
+
+	target removeEventListener: 'test' then: block.
+	target dispatchEvent: ( Event type: 'test' ).
+	self assert: [ count = 1 ].
+!
 testRemoveEventListener
 	| target count block1 block2 |
 	target := EventTarget new.

@@ -22,6 +22,8 @@ test
 	date2 utcYear: 1995; utcMonth: 9; utcDay: 15; utcHours: 14; utcMinutes: 13; utcSeconds: 12; utcMilliseconds: 999.
 	self assert: [ ( date2 utcYear = 1995 ) & ( date2 utcMonth = 9 ) & ( date2 utcDay = 15 ) ].
 	self assert: [ ( date2 utcHours = 14 ) & ( date2 utcMinutes = 13 ) & ( date2 utcSeconds = 12 ) & ( date2 utcMilliseconds = 999 ) ].
+	"October 15, 1995 was a Sunday."
+	self assert: [ date2 utcDayOfWeek = 0 ].
 
 	self assert: [ ( date1 = date2 ) not ].
 	self assert: [ ( Date fromMilliseconds: date1 toMilliseconds ) = date1 ].

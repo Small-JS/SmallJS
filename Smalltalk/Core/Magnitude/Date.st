@@ -136,7 +136,7 @@ utcMonth
 utcDay
 	^ Integer fromJs: INLINE 'this.js.getUTCDate()'.
 !
-uctDayOfWeek
+utcDayOfWeek
 	^ Integer fromJs: INLINE 'this.js.getUTCDay()'.
 !
 utcHours
