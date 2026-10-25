@@ -66,6 +66,33 @@ onFinally
 	"This method should be reached."
 	self assert: [ true ].
 !
+async testChaining
+	| promise result answer |
+
+	"Promise new: should not assign the new promise to the class object."
+	promise := Promise new: [ :resolve :reject | resolve value: 1 ].
+	self assert: [ Boolean fromJs: INLINE 'stPromise$class.js === undefined' ].
+
+	result := ( ( Promise resolve: 1 ) then: [ :value | value + 1 ] ) then: [ :value | value * 10 ].
+	answer := await result js.
+	self assert: [ answer = 20 ].
+
+	result := ( ( Promise resolve: 1 ) then: [ :value | Error throw: 'In then' ] )
+		catch: [ :error | error message ].
+	answer := await result js.
+	self assert: [ answer = 'In then' ].
+
+	"The rejection is not reported as unhandled, because catch is chained after then.
+	 It is rejected later, so the VSCode debugger does not halt on it, unlike in testCatch."
+	promise := Promise new: [ :resolve :reject |
+		Timer timeout: 10 then: [ reject value: ( Error new: 'Rejected' ) js ] ].
+	result := Promise fromJs: promise js
+		then: [ :value | 'Not reached' ]
+		catch: [ :error | error message ]
+		finally: [ self onFinally ].
+	answer := await result js.
+	self assert: [ answer = 'Rejected' ].
+!
 testCatch
 	| promise1 promise2 |
 

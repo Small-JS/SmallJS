@@ -52,6 +52,18 @@ async testWhileTrueAwait
 		async [ await Timer timeout: 10.
 			num := num + 1. ].
 	self assert: [ num = 3 ].
+
+	"Async condition block, with and without body block."
+	num := 0.
+	await async [ await Timer timeout: 10.
+		num := num + 1.
+		num < 3 ] whileTrueAwait.
+	self assert: [ num = 3 ].
+
+	num := 0.
+	await async [ await Timer timeout: 10.
+		num < 3 ] whileTrueAwait: [ num := num + 1 ].
+	self assert: [ num = 3 ].
 !
 
 testTryCatch

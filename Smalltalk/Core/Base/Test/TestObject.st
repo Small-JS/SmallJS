@@ -29,6 +29,10 @@ testConversion
 	self assert: [ object toString = 'a Object' ].
 	"JS cannot compare objects for value quality, so use toJson for implecitly testing toJs."
 	self assert: [ object toJson = '{}' ].
+
+	object := Object fromJs: INLINE '5n'.
+	self assert: [ object class = BigInt ].
+	self assert: [ object toString = '5' ].
 !
 testPerform
 	| object |

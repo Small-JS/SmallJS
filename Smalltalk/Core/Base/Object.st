@@ -40,6 +40,9 @@ fromJs: js
 		float := Float fromJs: js.
 		^ float isSafeInteger ifTrue: [ float toInteger ] ifFalse: [ float ] ].
 
+	jsType = 'bigint' ifTrue: [
+		^ BigInt fromJs: js ].
+
 	jsType = 'boolean' ifTrue: [
 		^ Boolean fromJs: js ].
 

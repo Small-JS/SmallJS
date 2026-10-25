@@ -54,10 +54,11 @@ whileTrue: block
 		block.$value()'.
 !
 async whileTrueAwait
-	INLINE 'while( await this.$value().js )'.
+	"The condition block may be async."
+	INLINE 'while( ( await this.$value() ).js )'.
 !
 async whileTrueAwait: block
-	INLINE 'while( await this.$value().js )
+	INLINE 'while( ( await this.$value() ).js )
 		await block.$value()'.
 !
 

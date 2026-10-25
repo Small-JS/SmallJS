@@ -9,19 +9,20 @@ fromJs: jsPromise then: then
 		then: then.
 !
 fromJs: jsPromise then: block catch: catch
-	^ ( self fromJs: jsPromise )
-		then: block;
+	"Chained, so catch also handles rejections of the promise returned by then:."
+	^ ( ( self fromJs: jsPromise )
+		then: block )
 		catch: catch.
 !
 fromJs: jsPromise then: block catch: catch finally: finally
-	^ ( self fromJs: jsPromise )
-		then: block;
-		catch: catch;
+	^ ( ( ( self fromJs: jsPromise )
+		then: block )
+		catch: catch )
 		finally: finally.
 !
 new: resolveRejectBlock
 	^ self fromJs: INLINE
-		'this.js = new Promise( ( resolve, reject ) => resolveRejectBlock.$value$value$(
+		'new Promise( ( resolve, reject ) => resolveRejectBlock.$value$value$(
 			new StBlock().$js$( resolve ), new StBlock().$js$( reject ) ) )'.
 !
 resolve: object
@@ -52,12 +53,14 @@ race: promises then: block
 
 METHODS
 
+"Each method answers a new Promise, like its JS counterpart, so calls can be chained."
+
 then: block
-	INLINE 'this.js.then( ( result ) => block.$value$( result ) )'.
+	^ Promise fromJs: INLINE 'this.js.then( ( result ) => block.$value$( result ) )'.
 !
 catch: block
-	INLINE 'this.js.catch( ( error ) => block.$value$( stError$class.$fromJs$( error ) ) )'.
+	^ Promise fromJs: INLINE 'this.js.catch( ( error ) => block.$value$( stError$class.$fromJs$( error ) ) )'.
 !
 finally: block
-	INLINE 'this.js.finally( () => block.$value() )'.
+	^ Promise fromJs: INLINE 'this.js.finally( () => block.$value() )'.
 !
