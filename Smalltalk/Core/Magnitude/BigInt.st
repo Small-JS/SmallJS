@@ -13,7 +13,7 @@ METHODS
 "Conversion"
 
 toString
-	^ String fromJs: js.
+	^ String fromJs: INLINE 'this.js.toString()'.
 !
 toFloat
 	^ Float fromJs: INLINE 'Number( this.js )'.
@@ -110,12 +110,29 @@ divideIntoInteger: integer
 	^ Fraction numerator: integer denominator: self.
 !
 integerDivideIntoInteger: integer
-	^ BigInt fromJs: INLINE 'BigInt( integer.js ) / this.js'.
+	"Rounds down (floored division), consistent with moduloFromInteger:."
+	INLINE '
+		let a = BigInt( integer.js ), b = this.js;
+		if( b != 0n ) {
+			let q = a / b;
+			if( a % b != 0n && ( a < 0n ) != ( b < 0n ) )
+				q--;
+			return stBigInt$class.$fromJs$( q ) }'.
+	self divisionByZeroError.
 !
 moduloFromInteger: integer
-	^ BigInt fromJs: INLINE 'BigInt( integer.js ) % this.js'.
+	"Floored modulo: the result has the sign of the divisor (self)."
+	INLINE '
+		let a = BigInt( integer.js ), b = this.js;
+		if( b != 0n ) {
+			let r = a % b;
+			if( r != 0n && ( r < 0n ) != ( b < 0n ) )
+				r += b;
+			return stBigInt$class.$fromJs$( r ) }'.
+	self divisionByZeroError.
 !
 powerBaseInteger: integer
+	self < 0 ifTrue: [ ^ 1 / ( integer ** self negated ) ].
 	^ BigInt fromJs: INLINE 'BigInt( integer.js ) ** this.js'.
 !
 
@@ -134,12 +151,29 @@ divideIntoBigInt: bigInt
 	^ Fraction numerator: bigInt denominator: self.
 !
 integerDivideIntoBigInt: bigInt
-	^ BigInt fromJs: INLINE 'bigInt.js / this.js'.
+	"Rounds down (floored division), consistent with moduloFromBigInt:."
+	INLINE '
+		let a = bigInt.js, b = this.js;
+		if( b != 0n ) {
+			let q = a / b;
+			if( a % b != 0n && ( a < 0n ) != ( b < 0n ) )
+				q--;
+			return stBigInt$class.$fromJs$( q ) }'.
+	self divisionByZeroError.
 !
 moduloFromBigInt: bigInt
-	^ BigInt fromJs: INLINE 'bigInt.js % this.js'.
+	"Floored modulo: the result has the sign of the divisor (self)."
+	INLINE '
+		let a = bigInt.js, b = this.js;
+		if( b != 0n ) {
+			let r = a % b;
+			if( r != 0n && ( r < 0n ) != ( b < 0n ) )
+				r += b;
+			return stBigInt$class.$fromJs$( r ) }'.
+	self divisionByZeroError.
 !
 powerBaseBigInt: bigInt
+	self < 0 ifTrue: [ ^ 1 / ( bigInt ** self negated ) ].
 	^ BigInt fromJs: INLINE 'bigInt.js ** this.js'.
 !
 
@@ -164,7 +198,13 @@ integerDivideIntoFloat: float
 	^ Float fromJs: INLINE 'Math.floor( float.js / Number( this.js ) )'.
 !
 moduloFromFloat: float
-	^ Float fromJs: INLINE 'float.js % Number( this.js )'.
+	"Floored modulo: the result has the sign of the divisor (self)."
+	INLINE '
+		let b = Number( this.js );
+		let r = float.js % b;
+		if( r != 0 && ( r < 0 ) != ( b < 0 ) )
+			r += b;
+		return stFloat$class.$fromJs$( r )'.
 !
 powerBaseFloat: float
 	^ Float fromJs: INLINE 'float.js ** Number( this.js )'.
@@ -173,19 +213,19 @@ powerBaseFloat: float
 "Bit operations."
 
 & number
-	^ BigInt fromJs: INLINE 'this.js & number.js'.
+	^ BigInt fromJs: INLINE 'this.js & BigInt( number.js )'.
 !
 | number
-	^ BigInt fromJs: INLINE 'this.js | number.js'.
+	^ BigInt fromJs: INLINE 'this.js | BigInt( number.js )'.
 !
 xor: number
-	^ BigInt fromJs: INLINE 'this.js ^ number.js'.
+	^ BigInt fromJs: INLINE 'this.js ^ BigInt( number.js )'.
 !
 >> count
-	^ BigInt fromJs: INLINE 'this.js >> count.js'.
+	^ BigInt fromJs: INLINE 'this.js >> BigInt( count.js )'.
 !
 << count
-	^ BigInt fromJs: INLINE 'this.js << count.js'.
+	^ BigInt fromJs: INLINE 'this.js << BigInt( count.js )'.
 !
 
 "Basic arithmatic with points

@@ -198,6 +198,28 @@ moduloFromPoint: point
 	^ Point x: point x % x  y: point y % y.
 !
 
+"Basic arithmatic with point3d arguments.
+ Self has z = 0, so the result is a Point3d."
+
+addToPoint3d: point3d
+	^ Point3d x: point3d x + x  y: point3d y + y  z: point3d z + self z.
+!
+subtractFromPoint3d: point3d
+	^ Point3d x: point3d x - x  y: point3d y - y  z: point3d z - self z.
+!
+multiplyByPoint3d: point3d
+	^ Point3d x: point3d x * x  y: point3d y * y  z: point3d z * self z.
+!
+divideIntoPoint3d: point3d
+	^ Point3d x: point3d x / x  y: point3d y / y  z: point3d z / self z.
+!
+integerDivideIntoPoint3d: point3d
+	^ Point3d x: point3d x // x  y: point3d y // y  z: point3d z // self z.
+!
+moduloFromPoint3d: point3d
+	^ Point3d x: point3d x % x  y: point3d y % y  z: point3d z % self z.
+!
+
 "Other arithmatic."
 
 negated

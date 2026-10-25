@@ -61,7 +61,7 @@ squared
 isSquare
 	"Answer true if receiver is a square"
 
-	self < 2 ifTrue: [ ^ false ].
+	self < 0 ifTrue: [ ^ false ].
 
 	^ self toFloat sqrt toInteger squared = self.
 !

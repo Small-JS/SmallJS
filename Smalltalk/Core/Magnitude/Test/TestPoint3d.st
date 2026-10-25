@@ -26,6 +26,7 @@ testComparisons
 	self assert: [ ( 1 @ 2 @ 3 ) >= ( 1 @ 2 @ 3 ) ].
 	self assert: [ ( 1 @ 2 @ 3 ) < ( 2 @ 3 @ 4 ) ].
 	self assert: [ ( 2 @ 3 @ 4 ) > ( 1 @ 2 @ 3 ) ].
+	self assert: [ ( ( 1 @ 1 @ 5 ) < ( 2 @ 2 @ 3 ) ) not ].
 !
 testBasicArithmatic
 	"Basic arithmatic with Point3d arguments."
@@ -35,6 +36,13 @@ testBasicArithmatic
 	self assert: [ ( 4 @ 8 @ 16 ) / ( 2 @ 4 @ 8 ) = ( 2 @ 2 @ 2 ) ].
 	self assert: [ ( 4 @ 8 @ 16 ) // ( 3 @ 5 @ 9 ) = ( 1 @ 1 @ 1 ) ].
 	self assert: [ ( 4 @ 8 @ 12 ) % ( 3 @ 5 @ 7 ) = ( 1 @ 3 @ 5 ) ].
+
+	"Basic arithmatic with 2D point arguments."
+	self assert: [ ( 1 @ 2 @ 3 ) + ( 4 @ 5 ) = ( 5 @ 7 @ 3 ) ].
+	self assert: [ ( 4 @ 5 ) + ( 1 @ 2 @ 3 ) = ( 5 @ 7 @ 3 ) ].
+	self assert: [ ( 4 @ 5 ) - ( 1 @ 2 @ 3 ) = ( 3 @ 3 @ -3 ) ].
+	self assert: [ ( 4 @ 5 @ 6 ) - ( 1 @ 2 ) = ( 3 @ 3 @ 6 ) ].
+	self assert: [ ( ( 4 @ 5 ) + ( 1 @ 2 @ 3 ) ) class = Point3d ].
 
 	"Basic arithmatic with Integer arguments."
 	self assert: [ ( 1 @ 2 @ 3 ) + 4 = ( 5 @ 6 @ 7 ) ].

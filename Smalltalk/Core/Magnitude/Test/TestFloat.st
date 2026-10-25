@@ -6,6 +6,8 @@ testConstants
 !
 testConversion
 	self assert: [ 3.4 toInteger = 3 ].
+	self assert: [ -3.4 toInteger = -4 ].
+	self assertError: [ ( 1.0 / 0.0 ) toInteger ].
 	self assert: [ 4.0 toString = '4' ].
 
 	self assert: [ 2.5 f16Round = 2.5 ].

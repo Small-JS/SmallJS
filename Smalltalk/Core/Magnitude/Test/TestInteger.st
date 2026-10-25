@@ -47,6 +47,24 @@ testBasicArithmatic
 	self assert: [ 7 // 3 = 2 ].
 	self assert: [ 7 % 3 = 1 ].
 	self assert: [ 7 ** 3 = 343 ].
+	self assert: [ 2 ** -2 = ( 1 / 4 ) ].
+	self assertError: [ 0 ** -1 ].
+
+	"Integer division and modulo round down."
+	self assert: [ -7 // 2 = -4 ].
+	self assert: [ -7 % 2 = 1 ].
+	self assert: [ 7 // -2 = -4 ].
+	self assert: [ 7 % -2 = -1 ].
+	self assert: [ -7 // -2 = 3 ].
+	self assert: [ -7 % -2 = -1 ].
+	self assertError: [ 7 // 0 ].
+	self assertError: [ 7 % 0 ].
+	self assert: [ -7 // 2 toBigInt = -4 ].
+	self assert: [ -7 % 2 toBigInt = 1 ].
+	self assertError: [ 7 // 0 toBigInt ].
+	self assert: [ -7 // 2.0 = -4.0 ].
+	self assert: [ -7 % 2.0 = 1.0 ].
+	self assert: [ 2 ** -1 toBigInt = ( 1 / 2 ) ].
 
 	"Basic arithmatic with large integer arguments."
 	self assert: [ 3 + 4 toBigInt = 7 ].
@@ -89,6 +107,14 @@ testBitOperations
 	self assert: [ ( 6 xor: 3 ) = 5 ].
 	self assert: [ 7 >> 1 = 3 ].
 	self assert: [ 3 << 1 = 6 ].
+	self assert: [ 6 & 3 toBigInt = 2 ].
+
+	"Beyond 32 bits."
+	self assert: [ 1 << 40 = ( 2 ** 40 ) ].
+	self assert: [ ( 2 ** 40 ) >> 39 = 2 ].
+	self assert: [ ( 2 ** 40 ) + 3 & 6 = 2 ].
+	self assert: [ ( 1 << 60 ) class = BigInt ].
+	self assert: [ -8 >> 1 = -4 ].
 
 !
 testGcd

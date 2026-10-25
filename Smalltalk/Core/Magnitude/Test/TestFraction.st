@@ -6,6 +6,8 @@ testCreation
 !
 testConversion
 	self assert: [ ( 5 / 3 ) toInteger = 1 ].
+	self assert: [ ( 5 / 3 ) toInteger class = Integer ].
+	self assert: [ ( -5 / 3 ) toInteger = -2 ].
 	self assert: [ ( 3 / 4 ) toFloat = 0.75 ].
 	self assert: [ ( 3 / 4 ) toString = '( 3 / 4 )' ].
 
@@ -18,6 +20,7 @@ testComparisons
 	| bigInt fraction |
 
 	self assert: [ ( 2 / 3 ) = ( 4 / 6 ) ].
+	self assert: [ ( ( 1 / 6 ) = ( 2 / 3 ) ) not ].
 	self assert: [ ( 2 / 3 ) <= ( 2 / 3 ) ].
 	self assert: [ ( 2 / 3 ) >= ( 2 / 3 ) ].
 	self assert: [ ( 2 / 3 ) < ( 5 / 6 ) ].

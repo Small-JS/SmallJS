@@ -1,5 +1,5 @@
 CLASS Date EXTENDS Magnitude MODULE Core CLASSVARS '' VARS ''
-	"This class encapsulates a JS Date object in the variable 'date'."
+	"This class encapsulates a JS Date object in the inherited variable 'js'."
 
 CLASSMETHODS
 
@@ -131,7 +131,7 @@ utcYear
 	^ Integer fromJs: INLINE 'this.js.getUTCFullYear()'.
 !
 utcMonth
-	^ Integer fromJs: INLINE 'this.js.getMonth()'.
+	^ Integer fromJs: INLINE 'this.js.getUTCMonth() + 1'.
 !
 utcDay
 	^ Integer fromJs: INLINE 'this.js.getUTCDate()'.
@@ -156,7 +156,7 @@ utcYear: utcYear
 	INLINE 'this.js.setUTCFullYear( utcYear.js )'.
 !
 utcMonth: utcMonth
-	INLINE 'this.js.setUTCMonth( utcMonth.js )'.
+	INLINE 'this.js.setUTCMonth( utcMonth.js - 1 )'.
 !
 utcDay: utcDay
 	INLINE 'this.js.setUTCDate( utcDay.js )'.
@@ -168,10 +168,10 @@ utcMinutes: utcMinutes
 	INLINE 'this.js.setUTCMinutes( utcMinutes.js )'.
 !
 utcSeconds: utcSeconds
-	^ INLINE 'this.js.setUTCSeconds( utcSeconds.js )'.
+	INLINE 'this.js.setUTCSeconds( utcSeconds.js )'.
 !
 utcMilliseconds: utcMilliseconds
-	^ INLINE 'this.js.setUTCMilliseconds( utcMilliseconds.js )'.
+	INLINE 'this.js.setUTCMilliseconds( utcMilliseconds.js )'.
 !
 
 "Comparisons"
@@ -194,8 +194,12 @@ timezoneOffset
 !
 dstOffset
 	"Return Daylight Savings Time offset in minutes.
-	 Returns negative values for DST times, to be compatible with timezoneOffset."
-	^ self timezoneOffset - ( Date year: self year month: 0 day: 1 ) timezoneOffset.
+	 Returns negative values for DST times, to be compatible with timezoneOffset.
+	 Standard time has the largest offset. Compares January and July to also handle the southern hemisphere."
+	| january july |
+	january := ( Date year: self year month: 1 day: 1 ) timezoneOffset.
+	july := ( Date year: self year month: 7 day: 1 ) timezoneOffset.
+	^ self timezoneOffset - ( january max: july ).
 !
 timezoneDstOffset
 	^ self timezoneOffset + self dstOffset.

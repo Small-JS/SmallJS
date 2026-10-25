@@ -133,20 +133,30 @@ divideIntoInteger: integer
 		^ Fraction numerator: integer denominator: self.
 !
 integerDivideIntoInteger: integer
+	"Rounds down (floored division), consistent with moduloFromInteger:."
 	INLINE '
-		let jsResult = Math.floor( integer.js / this.js );
-		if( Number.isSafeInteger( jsResult ) )
-			return stInteger$class.$fromJs$( jsResult )'.
+		let a = integer.js, b = this.js;
+		if( b != 0 ) {
+			let r = a % b;
+			let q = ( a - r ) / b;
+			if( r != 0 && ( r < 0 ) != ( b < 0 ) )
+				q--;
+			return stInteger$class.$fromJs$( q ) }'.
 	self divisionByZeroError.
 !
 moduloFromInteger: integer
+	"Floored modulo: the result has the sign of the divisor (self)."
 	INLINE '
-		let jsResult = integer.js % this.js;
-		if( Number.isSafeInteger( jsResult ) )
-			return stInteger$class.$fromJs$( jsResult )'.
+		let a = integer.js, b = this.js;
+		if( b != 0 ) {
+			let r = a % b;
+			if( r != 0 && ( r < 0 ) != ( b < 0 ) )
+				r += b;
+			return stInteger$class.$fromJs$( r ) }'.
 	self divisionByZeroError.
 !
 powerBaseInteger: integer
+	self < 0 ifTrue: [ ^ 1 / ( integer ** self negated ) ].
 	INLINE '
 		let jsResult = integer.js ** this.js ;
 		if( Number.isSafeInteger( jsResult ) )
@@ -167,18 +177,34 @@ multiplyByBigInt: bigInt
 !
 divideIntoBigInt: bigInt
 	INLINE '
-		let modulo = bigInt.js % BigInt( this.js );
-		if( modulo == 0 )
-			return stBigInt$class.$fromJs$( bigInt.js / BigInt( this.js ) );'
+		if( this.js != 0 && bigInt.js % BigInt( this.js ) == 0n )
+			return stBigInt$class.$fromJs$( bigInt.js / BigInt( this.js ) )'.
 	^ Fraction numerator: bigInt denominator: self.
 !
 integerDivideIntoBigInt: bigInt
-	^ BigInt fromJs: INLINE 'bigInt.js / BigInt( this.js )'.
+	"Rounds down (floored division), consistent with moduloFromBigInt:."
+	INLINE '
+		let a = bigInt.js, b = BigInt( this.js );
+		if( b != 0n ) {
+			let q = a / b;
+			if( a % b != 0n && ( a < 0n ) != ( b < 0n ) )
+				q--;
+			return stBigInt$class.$fromJs$( q ) }'.
+	self divisionByZeroError.
 !
 moduloFromBigInt: bigInt
-	^ BigInt fromJs: INLINE 'bigInt.js % BigInt( this.js )'.
+	"Floored modulo: the result has the sign of the divisor (self)."
+	INLINE '
+		let a = bigInt.js, b = BigInt( this.js );
+		if( b != 0n ) {
+			let r = a % b;
+			if( r != 0n && ( r < 0n ) != ( b < 0n ) )
+				r += b;
+			return stBigInt$class.$fromJs$( r ) }'.
+	self divisionByZeroError.
 !
 powerBaseBigInt: bigInt
+	self < 0 ifTrue: [ ^ 1 / ( bigInt ** self negated ) ].
 	^ BigInt fromJs: INLINE 'bigInt.js ** BigInt( this.js )'.
 !
 
@@ -203,7 +229,12 @@ integerDivideIntoFloat: float
 	^ Float fromJs: INLINE 'Math.floor( float.js / this.js )'.
 !
 moduloFromFloat: float
-	^ Float fromJs: INLINE 'float.js % this.js'.
+	"Floored modulo: the result has the sign of the divisor (self)."
+	INLINE '
+		let r = float.js % this.js;
+		if( r != 0 && ( r < 0 ) != ( this.js < 0 ) )
+			r += this.js;
+		return stFloat$class.$fromJs$( r )'.
 !
 powerBaseFloat: float
 	^ Float fromJs: INLINE 'float.js ** this.js'.
@@ -212,22 +243,43 @@ powerBaseFloat: float
 "Basic arithmatic with points
  is implementend in superclass Number."
 
-"Bit operations"
+"Bit operations.
+ JS number bit operations work on 32 bits only,
+ so operands outside that range are handled as BigInts."
 
 & number
-	^ Integer fromJs: INLINE 'this.js & number.js'.
+	INLINE '
+		if( ( this.js | 0 ) === this.js && typeof number.js == "number" && ( number.js | 0 ) === number.js )
+			return stInteger$class.$fromJs$( this.js & number.js );
+		return this.$fromBigIntResult$( BigInt( this.js ) & BigInt( number.js ) )'.
 !
 | number
-	^ Integer fromJs: INLINE 'this.js | number.js'.
+	INLINE '
+		if( ( this.js | 0 ) === this.js && typeof number.js == "number" && ( number.js | 0 ) === number.js )
+			return stInteger$class.$fromJs$( this.js | number.js );
+		return this.$fromBigIntResult$( BigInt( this.js ) | BigInt( number.js ) )'.
 !
 xor: number
-	^ Integer fromJs: INLINE 'this.js ^ number.js'.
+	INLINE '
+		if( ( this.js | 0 ) === this.js && typeof number.js == "number" && ( number.js | 0 ) === number.js )
+			return stInteger$class.$fromJs$( this.js ^ number.js );
+		return this.$fromBigIntResult$( BigInt( this.js ) ^ BigInt( number.js ) )'.
 !
 >> count
-	^ Integer fromJs: INLINE 'this.js >> count.js'.
+	INLINE '
+		if( ( this.js | 0 ) === this.js && typeof count.js == "number" && count.js >= 0 && count.js < 32 )
+			return stInteger$class.$fromJs$( this.js >> count.js );
+		return this.$fromBigIntResult$( BigInt( this.js ) >> BigInt( count.js ) )'.
 !
 << count
-	^ Integer fromJs: INLINE 'this.js << count.js'.
+	^ self fromBigIntResult: INLINE 'BigInt( this.js ) << BigInt( count.js )'.
+!
+fromBigIntResult: jsBigInt
+	"Private. Answer an Integer if the JS BigInt fits in a safe integer, else a BigInt."
+	INLINE '
+		if( Number.isSafeInteger( Number( jsBigInt ) ) )
+			return stInteger$class.$fromJs$( Number( jsBigInt ) );
+		return stBigInt$class.$fromJs$( jsBigInt )'.
 !
 
 "gcd"

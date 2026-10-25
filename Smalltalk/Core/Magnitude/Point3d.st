@@ -33,7 +33,7 @@ toString
 	^ ( x = point3d x ) & ( y = point3d y ) & ( z = point3d z ).
 !
 < point3d
-	^ ( x < point3d x ) & ( y < point3d y ) ( z < point3d z ).
+	^ ( x < point3d x ) & ( y < point3d y ) & ( z < point3d z ).
 !
 <= point3d
 	^ ( x <= point3d x ) & ( y <= point3d y ) & ( z <= point3d z ).
@@ -153,6 +153,28 @@ integerDivideIntoFloat: float
 !
 moduloFromFloat: float
 	^ Point3d x: float % x  y: float % y  z: float % z.
+!
+
+"Basic arithmatic with 2D point arguments.
+ A 2D point has z = 0, so the result is a Point3d."
+
+addToPoint: point
+	^ self addToPoint3d: point.
+!
+subtractFromPoint: point
+	^ self subtractFromPoint3d: point.
+!
+multiplyByPoint: point
+	^ self multiplyByPoint3d: point.
+!
+divideIntoPoint: point
+	^ self divideIntoPoint3d: point.
+!
+integerDivideIntoPoint: point
+	^ self integerDivideIntoPoint3d: point.
+!
+moduloFromPoint: point
+	^ self moduloFromPoint3d: point.
 !
 
 "Basic arithmatic with point3d arguments."

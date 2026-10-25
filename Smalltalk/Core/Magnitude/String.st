@@ -7,10 +7,10 @@ new
 	^ self basicNew js: INLINE '""'.
 !
 fromCharacter: character
-	^ self fromJs: INLINE 'String.fromCharCode( character.js )'.
+	^ self fromJs: INLINE 'String.fromCodePoint( character.js )'.
 !
 fromCharCode: code
-	^ self fromJs: INLINE 'String.fromCharCode( code.js )'.
+	^ self fromJs: INLINE 'String.fromCodePoint( code.js )'.
 !
 newline
 	^ self fromCharacter: Character newline.
@@ -48,7 +48,7 @@ at: index put: character
 	( index < 0 ) | ( index >= self length ) ifTrue: [
 		self error: 'String index out of bounds.' ].
 
-	INLINE 'this.js = this.js.substring( 0, index.js ) + String.fromCharCode( character.js ) + this.js.substring( index.js + 1, this.js.length )'.
+	INLINE 'this.js = this.js.substring( 0, index.js ) + String.fromCodePoint( character.js ) + this.js.substring( index.js + 1, this.js.length )'.
 !
 
 "Searching."
@@ -187,7 +187,7 @@ toLocaleLowerCase
 do: block
 	INLINE '
 		for( let $char of this.js ) {
-			block.$value$( stCharacter$class.$fromJs$( $char.charCodeAt( 0 ) ) ) }'.
+			block.$value$( stCharacter$class.$fromJs$( $char.codePointAt( 0 ) ) ) }'.
 !
 
 "Testing."

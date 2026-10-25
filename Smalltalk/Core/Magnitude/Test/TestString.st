@@ -29,6 +29,12 @@ testIteration
 	'ABC' do: [ :char |
 		sum := sum + char code ].
 	self assert: [ sum = 198 ].
+
+	sum := 0.
+	( String fromCharCode: 128512 ) do: [ :char |
+		sum := sum + 1.
+		self assert: [ char code = 128512 ] ].
+	self assert: [ sum = 1 ].
 !
 testSearching
 	self assert: [ 'abcde' includes: 'bc' ].

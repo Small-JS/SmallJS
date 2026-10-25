@@ -60,7 +60,8 @@ toFloat
 	^ numerator toFloat / denominator toFloat.
 !
 toInteger
-	^ numerator toFloat // denominator toFloat.
+	"Rounds down."
+	^ numerator // denominator.
 !
 
 "Comparisons with number subsclass arguments.
@@ -103,7 +104,8 @@ argIsSmallerOrEqualToBigInt: bigInt
 "Comparisons with Fraction arguments."
 
 argIsEqualToFraction: fraction
-	^  ( fraction numerator * fraction denominator ) = ( numerator * denominator ).
+	"Fractions are always normalized, so their coefficients can be compared directly."
+	^ ( fraction numerator = numerator ) & ( fraction denominator = denominator ).
 !
 argIsSmallerThanFraction: fraction
 	^ ( fraction numerator * denominator ) < ( numerator * fraction denominator ).

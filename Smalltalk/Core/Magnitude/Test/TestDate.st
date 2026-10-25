@@ -19,8 +19,8 @@ test
 	self assert: [ ( date2 year = 1996 ) & ( date2 month = 10 ) & ( date2 day = 30 ) ].
 	self assert: [ ( date2 hours = 22 ) & ( date2 minutes = 21 ) & ( date2 seconds = 20 ) & ( date2 milliseconds = 123 ) ].
 
-	date2 utcYear: 1995; utcMonth: 9; utcDay: 15; utcHours: 14; utcMinutes: 13; utcSeconds: 12; utcMilliseconds: 999.
-	self assert: [ ( date2 utcYear = 1995 ) & ( date2 utcMonth = 9 ) & ( date2 utcDay = 15 ) ].
+	date2 utcYear: 1995; utcMonth: 10; utcDay: 15; utcHours: 14; utcMinutes: 13; utcSeconds: 12; utcMilliseconds: 999.
+	self assert: [ ( date2 utcYear = 1995 ) & ( date2 utcMonth = 10 ) & ( date2 utcDay = 15 ) ].
 	self assert: [ ( date2 utcHours = 14 ) & ( date2 utcMinutes = 13 ) & ( date2 utcSeconds = 12 ) & ( date2 utcMilliseconds = 999 ) ].
 	"October 15, 1995 was a Sunday."
 	self assert: [ date2 utcDayOfWeek = 0 ].
@@ -47,6 +47,9 @@ test
 	self assert: [ date2 toJson = '1995-10-15T14:13:12.999Z' ].
 	self assert: [ date2 toLocaleDateString includes: '15' ].
 	self assert: [ date2 toLocaleTimeString includes: '13' ].
+
+	self assert: [ date2 dstOffset <= 0 ].
+	self assert: [ ( Date year: 2000 month: 1 day: 15 ) dstOffset + ( Date year: 2000 month: 7 day: 15 ) dstOffset <= 0 ].
 
 	self assert: [ Date isJsDate: INLINE 'new Date()' ].
 	self assert: [ ( Date isJsDate: INLINE '1' ) not ].

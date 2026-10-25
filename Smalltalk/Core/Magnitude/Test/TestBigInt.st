@@ -6,6 +6,7 @@ testCreation
 !
 testConversion
 	self assert: [ 13 toBigInt toString = '13' ].
+	self assert: [ 13 toBigInt toString length = 2 ].
 	self assert: [ 13 toBigInt toFloat = 13.0 ].
 !
 testComparisons
@@ -87,6 +88,13 @@ testBitOperations
 	self assert: [ ( 6 toBigInt xor: 3 toBigInt ) = 5 ].
 	self assert: [ 7 toBigInt >> 1 toBigInt = 3 ].
 	self assert: [ 3 toBigInt << 1 toBigInt = 6 ].
+
+	"With Integer arguments."
+	self assert: [ 6 toBigInt & 3 = 2 ].
+	self assert: [ 6 toBigInt | 3 = 7 ].
+	self assert: [ ( 6 toBigInt xor: 3 ) = 5 ].
+	self assert: [ 7 toBigInt >> 1 = 3 ].
+	self assert: [ 3 toBigInt << 1 = 6 ].
 
 !
 testGcd
