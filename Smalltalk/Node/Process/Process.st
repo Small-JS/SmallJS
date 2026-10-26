@@ -4,8 +4,8 @@ CLASS Process EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 "Environment 'env' functionality is implemented in the Environment class."
 
 "Use the second import form, because it's compatible with NW.js."
-"INLINE 'import * as os$ from 'os';"
-INLINE 'const process$ = await import( "process" );'
+"INLINE 'import * as process$ from 'node:process';'"
+INLINE 'const process$ = await import( "node:process" );'
 
 CLASSMETHODS
 
@@ -88,13 +88,16 @@ connected
 	^ Boolean fromJs: INLINE 'process$.connected'.
 !
 disconnect
-	INLINE 'process$.channel.disconnect()'.
+	"Close the IPC channel to the parent process. Does nothing without IPC channel."
+	INLINE 'process$.disconnect?.()'.
 !
 channelRef
-	INLINE 'process$.channel.ref()'.
+	"Does nothing without IPC channel."
+	INLINE 'process$.channel?.ref()'.
 !
 channelUnref
-	INLINE 'process$.channel.unref()'.
+	"Does nothing without IPC channel."
+	INLINE 'process$.channel?.unref()'.
 !
 
 "IDs"
@@ -132,8 +135,12 @@ egid
 egid: egid
 	INLINE 'process$.setegid( egid.js )'.
 !
+groups
+	"Not available on Windows."
+	^ Array fromJs: INLINE 'process$.getgroups()' elementClass: Integer.
+!
 groups: gids
-	INLINE 'process$.groups( gids.$toJs() )'.
+	INLINE 'process$.setgroups( gids.$toJs() )'.
 !
 
 "CPU"
@@ -142,7 +149,8 @@ cpuUsage
 	^ CpuUsage fromJs: INLINE 'process$.cpuUsage()'.
 !
 threadCpuUsage
-	^ CpuUsage fromJs: INLINE 'process$.cpuUsage()'.
+	"CPU usage of the current thread only."
+	^ CpuUsage fromJs: INLINE 'process$.threadCpuUsage()'.
 !
 
 "New - to categorize"
@@ -165,7 +173,10 @@ ref: jsObject
 	INLINE 'process$.ref( jsObject.js )'.
 !
 unref: jsObject
-	INLINE 'process$.ref( jsObject.js )'.
+	INLINE 'process$.unref( jsObject.js )'.
+!
+report
+	^ ProcessReport fromJs: INLINE 'process$.report'.
 !
 resourceUsage
 	^ ResourceUsage fromJs: INLINE 'process$.resourceUsage()'.
@@ -199,6 +210,4 @@ process.stdin
 process.stdin.fd
 process.stdout
 process.stdout.fd
-process.ref(maybeRefable)
-process.unref(maybeRefable)
 "

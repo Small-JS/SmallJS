@@ -10,6 +10,9 @@ test
 
 	Environment deleteAt: var.
 	self assert: [ ( Environment at: var ) isNil ].
+
+	"Environment only has class methods."
+	self assertError: [ Environment new ].
 !
 testLoad
 	| tempPath envString |

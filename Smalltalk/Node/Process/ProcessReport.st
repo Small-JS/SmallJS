@@ -1,6 +1,6 @@
 CLASS ProcessReport EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 
-"This class is tested with TestProcers."
+"Encapsulates the JS object 'process.report'. Get it with: Process report."
 
 "Settings"
 
@@ -39,10 +39,13 @@ signal: signal
 "Reporting"
 
 getReport: error
-	^ JsObject fromJs: INLINE 'this.js.getReport( error.js )'.
+	"Error can be nil."
+	^ JsObject fromJs: INLINE 'this.js.getReport( error.js ?? undefined )'.
 !
 writeReport: filename error: error
-	^ String fromJs: INLINE 'this.js.getReport( filename.js, error.js )'.
+	"Write the report to a file. Return its file name.
+	 If filename is nil, a name is generated."
+	^ String fromJs: INLINE 'this.js.writeReport( filename.js ?? undefined, error.js ?? undefined )'.
 !
 
 "Reporting events"

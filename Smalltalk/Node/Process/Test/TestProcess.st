@@ -59,10 +59,10 @@ testMemory
 !
 testIpc
 	self assert: [ Process connected isNil ].
-	"IPC not tested:"
-	"Process disconnect."
-	"Process channelRef."
-	"Process channelUnref."
+	"Without IPC channel, these do nothing, but must not fail."
+	Process channelRef.
+	Process channelUnref.
+	Process disconnect.
 !
 testPids
 	self assert: [ Process pid > 0 ].
@@ -77,10 +77,40 @@ testUids
 	self assert: [ Process euid >= 0 ].
 	self assert: [ Process gid >= 0 ].
 	self assert: [ Process egid >= 0 ].
+	self assert: [ Process groups first class = Integer ].
 !
 testCpuUsage
+	| threadUsage processUsage |
 	self assert: [ Process cpuUsage class = CpuUsage ].
 	self assert: [ Process threadCpuUsage class = CpuUsage ].
+
+	"The main thread uses no more CPU time than the whole process.
+	 Measure the thread first, so the process time cannot be older."
+	threadUsage := Process threadCpuUsage.
+	processUsage := Process cpuUsage.
+	self assert: [ threadUsage user <= processUsage user ].
+	self assert: [ threadUsage system <= processUsage system ].
+!
+testRef
+	| timer |
+	timer := JsObject fromJs: INLINE 'setTimeout( () => {}, 100000 )'.
+	Process unref: timer.
+	self assert: [ ( Boolean fromJs: INLINE 'timer.js.hasRef()' ) not ].
+	Process ref: timer.
+	self assert: [ Boolean fromJs: INLINE 'timer.js.hasRef()' ].
+	INLINE 'clearTimeout( timer.js )'.
+!
+testReport
+	| report path |
+	report := Process report.
+	self assert: [ report class = ProcessReport ].
+	self assert: [ report compact class = Boolean ].
+	self assert: [ ( report getReport: nil ) class = JsObject ].
+
+	path := Os tmpPath: 'smalljs-report-'.
+	self assert: [ ( report writeReport: path error: nil ) = path ].
+	self assert: [ Fs existsSync: path ].
+	Fs unlinkSync: path.
 !
 testMisc
 	| nodeVersion |

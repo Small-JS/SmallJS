@@ -5,7 +5,7 @@ CLASS Environment EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 CLASSMETHODS
 
 new
-	^ INLINE 'process$.env'.
+	self error: 'Environment has no instances. Use its class methods.'.
 !
 load: path
 	INLINE 'process$.loadEnvFile( path.js )'.
