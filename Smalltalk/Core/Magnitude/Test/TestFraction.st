@@ -7,7 +7,7 @@ testCreation
 testConversion
 	self assert: [ ( 5 / 3 ) toInteger = 1 ].
 	self assert: [ ( 5 / 3 ) toInteger class = Integer ].
-	self assert: [ ( -5 / 3 ) toInteger = -2 ].
+	self assert: [ ( -5 / 3 ) toInteger = -1 ].
 	self assert: [ ( 3 / 4 ) toFloat = 0.75 ].
 	self assert: [ ( 3 / 4 ) toString = '( 3 / 4 )' ].
 
@@ -63,6 +63,13 @@ testBasicMath
 	self assert: [ ( 8 / 3 ) // 2 = 1 ].
 	self assert: [ ( 8 / 3 ) % 2 = ( 2 / 3 ) ].
 	self assert: [ ( 1 / 2 ) ** 2 equals: 0.25 precision: 0.01 ].
+	self assertError: [ ( 1 / 2 ) / 0 ].
+	self assertError: [ ( 1 / 2 ) // 0 ].
+	self assertError: [ ( 1 / 2 ) % 0 ].
+	self assertError: [ ( 1 / 2 ) / 0 toBigInt ].
+	self assertError: [ ( 1 / 2 ) // 0 toBigInt ].
+	self assertError: [ ( 1 / 2 ) % 0 toBigInt ].
+	self assertError: [ Fraction numerator: 1 denominator: 0 ].
 
 	"Basic math with points."
 	self assert: [ ( 1 / 3 ) + ( 2 @ 3 ) = ( ( 7 / 3 ) @ ( 10 / 3 ) ) ].

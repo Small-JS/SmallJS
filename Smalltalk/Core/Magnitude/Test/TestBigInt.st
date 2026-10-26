@@ -45,6 +45,12 @@ testBasicArithmatic
 	self assert: [ 4 toBigInt / 3 toBigInt = ( 4 / 3 ) ].
 	self assert: [ 7 toBigInt // 3 toBigInt = 2 toBigInt ].
 	self assert: [ 7 toBigInt % 3 toBigInt = 1 toBigInt ].
+	self assert: [ -7 toBigInt // 2 toBigInt = -3 toBigInt ].
+	self assert: [ -7 toBigInt % 2 toBigInt = -1 toBigInt ].
+	self assert: [ 7 toBigInt // -2 toBigInt = -3 toBigInt ].
+	self assert: [ 7 toBigInt % -2 toBigInt = 1 toBigInt ].
+	self assertError: [ 7 toBigInt // 0 toBigInt ].
+	self assertError: [ 7 toBigInt % 0 toBigInt ].
 	self assert: [ 7 toBigInt ** 3 toBigInt = 343 toBigInt ].
 
 	"Basic arithmatic with integer arguments."
@@ -54,6 +60,14 @@ testBasicArithmatic
 	self assert: [ 3 toBigInt / 4 = ( 3 / 4 ) ].
 	self assert: [ 7 toBigInt // 3 = 2 ].
 	self assert: [ 7 toBigInt % 3 = 1 ].
+	self assert: [ -7 toBigInt // 2 = -3 ].
+	self assert: [ -7 toBigInt % 2 = -1 ].
+	self assert: [ 7 toBigInt // -2 = -3 ].
+	self assert: [ 7 toBigInt % -2 = 1 ].
+	self assertError: [ 7 toBigInt // 0 ].
+	self assertError: [ 7 toBigInt % 0 ].
+	self assertError: [ 7 toBigInt / 0 ].
+	self assertError: [ 7 toBigInt / 0 toBigInt ].
 	self assert: [ 7 toBigInt ** 3 = 343 toBigInt ].
 
 	"Basic arithmatic with fraction arguments."

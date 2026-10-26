@@ -28,12 +28,13 @@ toString
 	^ String fromJs: INLINE 'this.js.toString()'.
 !
 toInteger
-	"Rounds down."
+	"Truncates towards zero."
 	INLINE
-		'if( Number.isSafeInteger( Math.floor( this.js ) ) )
-			return stInteger$class.$fromJs$( this.js );
-		if( Number.isFinite( this.js ) )
-			return stBigInt$class.$fromJs$( BigInt( this.js ) )'.
+		'let jsTrunc = Math.trunc( this.js );
+		if( Number.isSafeInteger( jsTrunc ) )
+			return stInteger$class.$fromJs$( jsTrunc );
+		if( Number.isFinite( jsTrunc ) )
+			return stBigInt$class.$fromJs$( BigInt( jsTrunc ) )'.
 	self error: 'Error: Cannot convert to integer: ', self toString.
 !
 toFixed: decimals
@@ -155,15 +156,12 @@ divideIntoInteger: integer
 	^ Float fromJs: INLINE 'integer.js / this.js'.
 !
 integerDivideIntoInteger: integer
-	^ Float fromJs: INLINE 'Math.floor( integer.js / this.js )'.
+	"Truncates towards zero, consistent with moduloFromInteger:."
+	^ Float fromJs: INLINE 'Math.trunc( integer.js / this.js )'.
 !
 moduloFromInteger: integer
-	"Floored modulo: the result has the sign of the divisor (self)."
-	INLINE '
-		let r = integer.js % this.js;
-		if( r != 0 && ( r < 0 ) != ( this.js < 0 ) )
-			r += this.js;
-		return stFloat$class.$fromJs$( r )'.
+	"JS modulo: the result has the sign of the dividend (integer)."
+	^ Float fromJs: INLINE 'integer.js % this.js'.
 !
 powerBaseInteger: integer
 	^ Float fromJs: INLINE 'integer.js ** this.js'.
@@ -184,15 +182,12 @@ divideIntoBigInt: bigInt
 	^ Float fromJs: INLINE 'Number( bigInt.js ) / this.js'.
 !
 integerDivideIntoBigInt: bigInt
-	^ Float fromJs: INLINE 'Math.floor( Number( bigInt.js ) / this.js )'.
+	"Truncates towards zero, consistent with moduloFromBigInt:."
+	^ Float fromJs: INLINE 'Math.trunc( Number( bigInt.js ) / this.js )'.
 !
 moduloFromBigInt: bigInt
-	"Floored modulo: the result has the sign of the divisor (self)."
-	INLINE '
-		let r = Number( bigInt.js ) % this.js;
-		if( r != 0 && ( r < 0 ) != ( this.js < 0 ) )
-			r += this.js;
-		return stFloat$class.$fromJs$( r )'.
+	"JS modulo: the result has the sign of the dividend (bigInt)."
+	^ Float fromJs: INLINE 'Number( bigInt.js ) % this.js'.
 !
 powerBaseBigInt: bigInt
 	^ Float fromJs: INLINE 'Number( bigInt.js ) ** this.js'.
@@ -213,15 +208,12 @@ divideIntoFloat: float
 	^ Float fromJs: INLINE 'float.js / this.js'.
 !
 integerDivideIntoFloat: float
-	^ Float fromJs: INLINE 'Math.floor( float.js / this.js )'.
+	"Truncates towards zero, consistent with moduloFromFloat:."
+	^ Float fromJs: INLINE 'Math.trunc( float.js / this.js )'.
 !
 moduloFromFloat: float
-	"Floored modulo: the result has the sign of the divisor (self)."
-	INLINE '
-		let r = float.js % this.js;
-		if( r != 0 && ( r < 0 ) != ( this.js < 0 ) )
-			r += this.js;
-		return stFloat$class.$fromJs$( r )'.
+	"JS modulo: the result has the sign of the dividend (float)."
+	^ Float fromJs: INLINE 'float.js % this.js'.
 !
 powerBaseFloat: float
 	^ Float fromJs: INLINE 'float.js ** this.js'.

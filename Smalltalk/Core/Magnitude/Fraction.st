@@ -60,7 +60,7 @@ toFloat
 	^ numerator toFloat / denominator toFloat.
 !
 toInteger
-	"Rounds down."
+	"Truncates towards zero."
 	^ numerator // denominator.
 !
 

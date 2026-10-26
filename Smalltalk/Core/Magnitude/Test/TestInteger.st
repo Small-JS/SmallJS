@@ -3,6 +3,9 @@ CLASS TestInteger EXTENDS Test MODULE TestCore CLASSVARS '' VARS ''
 testCreation
 	self assert: [ 42 class = Integer ].
 	self assert: [ ( Integer fromJs: INLINE '7' ) class = Integer ].
+	self assert: [ ( Integer fromJs: INLINE '3.4' ) = 3 ].
+	self assert: [ ( Integer fromJs: INLINE '-3.4' ) = -3 ].
+	self assert: [ ( Integer fromJs: INLINE '-3.9' ) = -3 ].
 	self assert: [ #( 2 3 4 ) includes: ( Integer randomFrom: 2 to: 4 ) ].
 !
 testConversion
@@ -50,20 +53,31 @@ testBasicArithmatic
 	self assert: [ 2 ** -2 = ( 1 / 4 ) ].
 	self assertError: [ 0 ** -1 ].
 
-	"Integer division and modulo round down."
-	self assert: [ -7 // 2 = -4 ].
-	self assert: [ -7 % 2 = 1 ].
-	self assert: [ 7 // -2 = -4 ].
-	self assert: [ 7 % -2 = -1 ].
+	"Integer division truncates towards zero. Integer modulo is JS modulo: sign of the dividend."
+	self assert: [ -7 // 2 = -3 ].
+	self assert: [ -7 % 2 = -1 ].
+	self assert: [ 7 // -2 = -3 ].
+	self assert: [ 7 % -2 = 1 ].
 	self assert: [ -7 // -2 = 3 ].
 	self assert: [ -7 % -2 = -1 ].
 	self assertError: [ 7 // 0 ].
+	self assertError: [ 0 // 0 ].
 	self assertError: [ 7 % 0 ].
-	self assert: [ -7 // 2 toBigInt = -4 ].
-	self assert: [ -7 % 2 toBigInt = 1 ].
+	self assertError: [ 0 % 0 ].
+	self assert: [ -7 // 2 toBigInt = -3 ].
+	self assert: [ -7 % 2 toBigInt = -1 ].
+	self assert: [ 7 // -2 toBigInt = -3 ].
+	self assert: [ 7 % -2 toBigInt = 1 ].
+	self assertError: [ 7 % 0 toBigInt ].
 	self assertError: [ 7 // 0 toBigInt ].
-	self assert: [ -7 // 2.0 = -4.0 ].
-	self assert: [ -7 % 2.0 = 1.0 ].
+	self assertError: [ 7 / 0 toBigInt ].
+	self assertError: [ 0 / 0 ].
+	self assert: [ -7 // 2.0 = -3.0 ].
+	self assert: [ 7 // -2.0 = -3.0 ].
+	self assert: [ -7 % 2.0 = -1.0 ].
+	self assert: [ 7 % -2.0 = 1.0 ].
+	self assert: [ 7 % 2.5 = 2.0 ].
+	self assert: [ ( 7 % 0.0 ) isNan ].
 	self assert: [ 2 ** -1 toBigInt = ( 1 / 2 ) ].
 
 	"Basic arithmatic with large integer arguments."

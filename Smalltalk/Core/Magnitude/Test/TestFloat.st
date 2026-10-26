@@ -6,7 +6,11 @@ testConstants
 !
 testConversion
 	self assert: [ 3.4 toInteger = 3 ].
-	self assert: [ -3.4 toInteger = -4 ].
+	self assert: [ -3.4 toInteger = -3 ].
+	self assert: [ -3.9 toInteger = -3 ].
+	self assert: [ 3.4 toInteger class = Integer ].
+	self assert: [ ( Float fromJs: INLINE '-1e20' ) toInteger = ( BigInt fromJs: INLINE '-100000000000000000000n' ) ].
+	self assert: [ ( Float fromJs: INLINE '-1e20' ) toInteger class = BigInt ].
 	self assertError: [ ( 1.0 / 0.0 ) toInteger ].
 	self assert: [ 4.0 toString = '4' ].
 
@@ -64,6 +68,13 @@ testBasicMath
 	self assert: [ 7.0 / 2.0 = 3.5 ].
 	self assert: [ 7.0 // 2.0 = 3.0 ].
 	self assert: [ 7.0 % 2.0 = 1.0 ].
+	self assert: [ -7.0 // 2.0 = -3.0 ].
+	self assert: [ -7.0 % 2.0 = -1.0 ].
+	self assert: [ 7.0 // -2.0 = -3.0 ].
+	self assert: [ 7.0 % -2.0 = 1.0 ].
+	self assert: [ -7.5 % 2.0 = -1.5 ].
+	self assert: [ ( 7.0 // 0.0 ) isFinite not ].
+	self assert: [ ( 7.0 % 0.0 ) isNan ].
 	self assert: [ 7.0 ** 2.0 equals: 49.0 precision: epsilon ].
 
 	"Basic math with integers."
@@ -73,6 +84,12 @@ testBasicMath
 	self assert: [ 7.0 / 2 = 3.5 ].
 	self assert: [ 7.0 // 2 = 3.0 ].
 	self assert: [ 7.0 % 2 = 1.0 ].
+	self assert: [ -7.0 // 2 = -3.0 ].
+	self assert: [ -7.0 % 2 = -1.0 ].
+	self assert: [ 7.0 // -2 = -3.0 ].
+	self assert: [ 7.0 % -2 = 1.0 ].
+	self assert: [ ( 7.0 // 0 ) isFinite not ].
+	self assert: [ ( 7.0 % 0 ) isNan ].
 	self assert: [ 7.0 ** 2  equals: 49.0 precision: epsilon ].
 
 	"Basic math with large integers."
@@ -85,6 +102,10 @@ testBasicMath
 	self assert: [ 7.0 / bigInt = 3.5 ].
 	self assert: [ 7.0 // bigInt = 3.0 ].
 	self assert: [ 7.0 % bigInt = 1.0 ].
+	self assert: [ -7.0 // bigInt = -3.0 ].
+	self assert: [ -7.0 % bigInt = -1.0 ].
+	self assert: [ ( 7.0 // 0 toBigInt ) isFinite not ].
+	self assert: [ ( 7.0 % 0 toBigInt ) isNan ].
 	self assert: [ 7.0 ** bigInt equals: 49.0 precision: epsilon ].
 
 	"Basic math with fractions."

@@ -11,6 +11,16 @@ METHODS
 	^ Point new x: self y: number.
 !
 
+"Testing.
+ Subclasses that do not hold a JS number (BigInt, Fraction) are never NaN and always finite."
+
+isNan
+	^ Boolean fromJs: INLINE 'Number.isNaN( this.js )'.
+!
+isFinite
+	^ Boolean fromJs: INLINE 'typeof this.js != "number" || Number.isFinite( this.js )'.
+!
+
 "Basic arithmatic with Point arguments."
 
 addToPoint: point

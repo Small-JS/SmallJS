@@ -110,25 +110,17 @@ divideIntoInteger: integer
 	^ Fraction numerator: integer denominator: self.
 !
 integerDivideIntoInteger: integer
-	"Rounds down (floored division), consistent with moduloFromInteger:."
+	"Truncates towards zero, consistent with moduloFromInteger:."
 	INLINE '
-		let a = BigInt( integer.js ), b = this.js;
-		if( b != 0n ) {
-			let q = a / b;
-			if( a % b != 0n && ( a < 0n ) != ( b < 0n ) )
-				q--;
-			return stBigInt$class.$fromJs$( q ) }'.
+		if( this.js != 0n )
+			return stBigInt$class.$fromJs$( BigInt( integer.js ) / this.js )'.
 	self divisionByZeroError.
 !
 moduloFromInteger: integer
-	"Floored modulo: the result has the sign of the divisor (self)."
+	"JS modulo: the result has the sign of the dividend (integer)."
 	INLINE '
-		let a = BigInt( integer.js ), b = this.js;
-		if( b != 0n ) {
-			let r = a % b;
-			if( r != 0n && ( r < 0n ) != ( b < 0n ) )
-				r += b;
-			return stBigInt$class.$fromJs$( r ) }'.
+		if( this.js != 0n )
+			return stBigInt$class.$fromJs$( BigInt( integer.js ) % this.js )'.
 	self divisionByZeroError.
 !
 powerBaseInteger: integer
@@ -151,25 +143,17 @@ divideIntoBigInt: bigInt
 	^ Fraction numerator: bigInt denominator: self.
 !
 integerDivideIntoBigInt: bigInt
-	"Rounds down (floored division), consistent with moduloFromBigInt:."
+	"Truncates towards zero, consistent with moduloFromBigInt:."
 	INLINE '
-		let a = bigInt.js, b = this.js;
-		if( b != 0n ) {
-			let q = a / b;
-			if( a % b != 0n && ( a < 0n ) != ( b < 0n ) )
-				q--;
-			return stBigInt$class.$fromJs$( q ) }'.
+		if( this.js != 0n )
+			return stBigInt$class.$fromJs$( bigInt.js / this.js )'.
 	self divisionByZeroError.
 !
 moduloFromBigInt: bigInt
-	"Floored modulo: the result has the sign of the divisor (self)."
+	"JS modulo: the result has the sign of the dividend (bigInt)."
 	INLINE '
-		let a = bigInt.js, b = this.js;
-		if( b != 0n ) {
-			let r = a % b;
-			if( r != 0n && ( r < 0n ) != ( b < 0n ) )
-				r += b;
-			return stBigInt$class.$fromJs$( r ) }'.
+		if( this.js != 0n )
+			return stBigInt$class.$fromJs$( bigInt.js % this.js )'.
 	self divisionByZeroError.
 !
 powerBaseBigInt: bigInt
@@ -195,16 +179,12 @@ divideIntoFloat: float
 	^ Float fromJs: INLINE 'float.js / Number( this.js )'.
 !
 integerDivideIntoFloat: float
-	^ Float fromJs: INLINE 'Math.floor( float.js / Number( this.js ) )'.
+	"Truncates towards zero, consistent with moduloFromFloat:."
+	^ Float fromJs: INLINE 'Math.trunc( float.js / Number( this.js ) )'.
 !
 moduloFromFloat: float
-	"Floored modulo: the result has the sign of the divisor (self)."
-	INLINE '
-		let b = Number( this.js );
-		let r = float.js % b;
-		if( r != 0 && ( r < 0 ) != ( b < 0 ) )
-			r += b;
-		return stFloat$class.$fromJs$( r )'.
+	"JS modulo: the result has the sign of the dividend (float)."
+	^ Float fromJs: INLINE 'float.js % Number( this.js )'.
 !
 powerBaseFloat: float
 	^ Float fromJs: INLINE 'float.js ** Number( this.js )'.
