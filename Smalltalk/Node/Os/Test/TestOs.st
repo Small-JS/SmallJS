@@ -23,8 +23,8 @@ test
 	self assert: [ Os uptime > 0 ].
 
 	loadavg := Os loadavg.
-	self assert: [ Os loadavg length = 3 ].
-	self assert: [ Os loadavg first >= 0.0 ].
+	self assert: [ loadavg length = 3 ].
+	self assert: [ loadavg first >= 0.0 ].
 
 	self assert: [ Os freemem > 1000 ].
 	self assert: [ Os totalmem > 1000 ].
@@ -42,14 +42,16 @@ test
 
 	self assert: [ Os hostname length > 0 ].
 	self assert: [ Os machine length > 0 ].
-	self assert: [ Os networkInterfaces values first first class = OsNetworkInterfaceInfo ].
+	"Some containers and sandboxes report no network interfaces or CPUs."
+	self assert: [ Os networkInterfaces values isEmpty
+		or: [ Os networkInterfaces values first first class = OsNetworkInterfaceInfo ] ].
 
 	"CPU"
 
 	self assert: [ Os arch length > 0 ].
 	self assert: [ #( 'BE' 'LE' ) includes: Os endianness ].
 	self assert: [ Os availableParallelism > 0 ].
-	self assert: [ Os cpus first class = OsCpuInfo ].
+	self assert: [ Os cpus isEmpty or: [ Os cpus first class = OsCpuInfo ] ].
 !
 checkPriority
 	| normalPriority lowerPriority |

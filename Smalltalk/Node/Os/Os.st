@@ -1,8 +1,8 @@
 CLASS Os EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 
 "Use the second import form, because it's compatible with NW.js."
-"INLINE 'import * as os$ from 'os';"
-INLINE 'const os$ = await import( "os" );'
+"INLINE 'import * as os$ from 'node:os';'"
+INLINE 'const os$ = await import( "node:os" );'
 
 CLASSMETHODS
 
@@ -11,7 +11,7 @@ tmpDir
 !
 tmpPath: prefix
 	| fileName |
-	fileName := prefix, ( Integer randomFrom: 0 to: 999999 ).
+	fileName := prefix, ( Integer randomFrom: 0 to: 999999 ) toString.
 	^ Path join: self tmpDir with: fileName.
 !
 eol
