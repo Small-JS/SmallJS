@@ -26,7 +26,7 @@ maxListeners
 	^ Integer fromJs: INLINE 'this.js.getMaxListeners()'.
 !
 maxListeners: maxListeners
-	Integer fromJs: INLINE 'this.js.setMaxListeners( maxListeners.js )'.
+	INLINE 'this.js.setMaxListeners( maxListeners.js )'.
 !
 listenerCount: event
 	^ Integer fromJs: INLINE 'this.js.listenerCount( event.js )'.
@@ -42,16 +42,16 @@ on: event then: block
 	self addListener: event then: block.
 !
 on: event class: aClass then: block
-	self addListener: event class: aClass then: block
+	self addListener: event class: aClass then: block.
 !
 addListener: event then: block
-	self addListener: event class: JsObject then: block
+	self addListener: event class: JsObject then: block.
 !
 addListener: event class: aClass then: block
 	INLINE 'this.js.on( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
 !
 once: event then: block
-	self once: event class: JsObject then: block
+	self once: event class: JsObject then: block.
 !
 once: event class: aClass then: block
 	INLINE 'this.js.once( event.js, ( message ) => block.$value$( aClass.$fromJs$( message ) ) )'.
