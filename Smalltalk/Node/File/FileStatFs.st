@@ -1,6 +1,6 @@
 CLASS FileStatFs EXTENDS JsObject MODULE Node1 CLASSVARS '' VARS ''
 
-"Information about a mounted file system, returned by: Fsp statfs:options:.
+"Information about a mounted file system, returned by: Fs statfsSync:options: and Fsp statfs:options:.
  Sizes are in blocks of bsize bytes."
 
 METHODS

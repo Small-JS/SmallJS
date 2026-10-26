@@ -52,7 +52,10 @@ async readFile
 		INLINE 'await this.js.readFile()'.
 !
 async readFile: options
-	^ Buffer fromJs:
+	"Return a String if options has an encoding, otherwise a Buffer."
+	| resultClass |
+	resultClass := ( options isNil or: [ options encoding isNil ] ) ifTrue: [ Buffer ] ifFalse: [ String ].
+	^ resultClass fromJs:
 		INLINE 'await this.js.readFile( options.js )'.
 !
 
@@ -82,7 +85,8 @@ async chmod: mode
 async chown: uid gid: gid
 	INLINE 'await this.js.chown( uid.js, gid.js )'.
 !
-async atime: atime mtime: mtime
+async utimesAtime: atime mtime: mtime
+	"Set the access and modification times."
 	INLINE 'await this.js.utimes( atime.js, mtime.js )'.
 !
 

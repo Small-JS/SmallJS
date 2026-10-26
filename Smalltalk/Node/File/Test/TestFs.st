@@ -48,7 +48,7 @@ writeReadBuffer
 
 	tempFileFd := Fs openSync: tempFilePath flags: 'w+' mode: nil.
 	writeBuffer := Buffer from: 'efgh'.
-	Fs writeSync: tempFileFd buffer: writeBuffer options: nil.
+	self assert: [ ( Fs writeSync: tempFileFd buffer: writeBuffer options: nil ) = 4 ].
 	Fs closeSync: tempFileFd.
 
 	tempFileFd := Fs openSync: tempFilePath flags: 'r+' mode: nil.
@@ -65,7 +65,7 @@ writeReadBufferPositioned
 
 	tempFileFd := Fs openSync: tempFilePath flags: 'w+' mode: nil.
 	writeBuffer := Buffer from: 'ijklmn'.
-	Fs writeSync: tempFileFd buffer: writeBuffer offset: 1 length: 4 position: nil.
+	self assert: [ ( Fs writeSync: tempFileFd buffer: writeBuffer offset: 1 length: 4 position: nil ) = 4 ].
 	Fs closeSync: tempFileFd.
 
 	tempFileFd := Fs openSync: tempFilePath flags: 'r+' mode: nil.
@@ -144,7 +144,7 @@ truncate
 	self directory.
 !
 directory
-	| pattern fileNames dir dirent |
+	| pattern fileNames dirents dir dirent |
 	pattern := Path join: tempDirName with: '**/**'.
 	fileNames := Fs globSync: pattern options: nil.
 	self assert: [ fileNames length = 4 ].
@@ -153,6 +153,15 @@ directory
 	fileNames := Fs readdirSync: tempDirName options: nil.
 	self assert: [ fileNames length = 2 ].
 	self assert: [ fileNames includes: 'sub1' ].
+	self assert: [ fileNames first class = String ].
+
+	dirents := Fs readdirSync: tempDirName options: ( DirOptions new withFileTypes: true ).
+	self assert: [ dirents length = 2 ].
+	dirents do: [ :each | self dirent: each ].
+
+	dirents := Fs globSync: pattern options: ( FileGlobOptions new withFileTypes: true ).
+	self assert: [ dirents length = 4 ].
+	self assert: [ dirents first class = Dirent ].
 
 	dir := Fs opendirSync: tempDirName options: nil.
 	fileNames := #().
@@ -167,7 +176,8 @@ directory
 dirent: dirent
 	self assert: [ dirent parentPath = tempDirName ].
 
-	#( 'sub1' 'tempfile.tmp' ) includes: dirent name.
+	self assert: [ dirent class = Dirent ].
+	self assert: [ #( 'sub1' 'tempfile.tmp' ) includes: dirent name ].
 	dirent name = 'tempfile.tmp' ifTrue: [
 		self assert: [ dirent isFile ] ].
 	dirent name = 'sub1' ifTrue: [
@@ -175,7 +185,6 @@ dirent: dirent
 
 	self assert: [ dirent isCharacterDevice not ].
 	self assert: [ dirent isBlockDevice not ].
-	self assert: [ dirent isCharacterDevice not ].
 	self assert: [ dirent isSymbolicLink not ].
 	self assert: [ dirent isFifo not ].
 	self assert: [ dirent isSocket not ].

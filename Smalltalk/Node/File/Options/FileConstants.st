@@ -15,7 +15,7 @@ readOk
 	^ Integer fromJs: INLINE 'fsp$.constants.R_OK'.
 !
 writeOk
-	^ Integer fromJs: INLINE 'fsp$.constants.R_OK'.
+	^ Integer fromJs: INLINE 'fsp$.constants.W_OK'.
 !
 executeOk
 	^ Integer fromJs: INLINE 'fsp$.constants.X_OK'.
@@ -26,9 +26,11 @@ executeOk
 copyExclusive
 	^ Integer fromJs: INLINE 'fsp$.constants.COPYFILE_EXCL'.
 !
-copyLink
+copyClone
+	"Try to create a copy-on-write clone (reflink). Fall back to a normal copy if not supported."
 	^ Integer fromJs: INLINE 'fsp$.constants.COPYFILE_FICLONE'.
 !
-copyLinkForce
+copyCloneForce
+	"Create a copy-on-write clone (reflink). Fail if not supported."
 	^ Integer fromJs: INLINE 'fsp$.constants.COPYFILE_FICLONE_FORCE'.
 !

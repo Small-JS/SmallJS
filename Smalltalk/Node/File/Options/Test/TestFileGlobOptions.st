@@ -9,6 +9,7 @@ test
 
 	options withFileTypes: true.
 	self assert: [ options withFileTypes ].
+	self assert: [ options withFileTypes class = Boolean ].
 
 	options exclude: [ :path | false ].
 !

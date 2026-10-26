@@ -3,7 +3,7 @@ CLASS Fsp EXTENDS Object MODULE Node1 CLASSVARS '' VARS ''
 "This class implements the Node.js *promises* based filesystem API."
 
 "Use the second import form, because it's compatible with NW.js."
-"INLINE 'import * as fs$ from 'fs';'"
+"INLINE 'import * as fsp$ from 'node:fs/promises';'"
 INLINE 'const fsp$ = await import( "node:fs/promises" );'
 
 CLASSMETHODS
@@ -133,14 +133,18 @@ async opendir: path options: options
 		INLINE 'await fsp$.opendir( path.js, options.js )'.
 !
 async readdir: path options: options
-	^ Array fromJsStrings:
-		INLINE 'await fsp$.readdir( path.js, options.js )'.
+	"Return an Array of Strings, or of Dirents if options withFileTypes is true."
+	^ Array fromJs: INLINE 'await fsp$.readdir( path.js, options.js )'
+		elementClass: ( Fs entryClassFor: options ).
 !
 async glob: pattern options: options iterate: iterateBlock
+	"IterateBlock is called with a String, or a Dirent if options withFileTypes is true."
+	| entryClass |
+	entryClass := Fs entryClassFor: options.
 	INLINE '
 		let asyncIterator = fsp$.glob( pattern.js, ( options.js ? options.js : undefined ) );
-  		for await ( const fileName of asyncIterator ) {
-			iterateBlock.$value$( stString$class.$fromJs$( fileName ) ) }'.
+		for await ( const entry of asyncIterator ) {
+			iterateBlock.$value$( entryClass.$fromJs$( entry ) ) }'.
 !
 async mkdir: path options: options
 	INLINE 'await fsp$.mkdir( path.js, options.js )'.

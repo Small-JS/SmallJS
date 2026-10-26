@@ -61,14 +61,14 @@ readSync: fd buffer: buffer offset: offset length: length position: position
 
 writeFileSync: file data: data options: options
 	"Argument file can be path or file descriptor."
-	^ Buffer fromJs:
-		INLINE 'fs$.writeFileSync( file.js, data.js, options.js )'.
+	INLINE 'fs$.writeFileSync( file.js, data.js, options.js )'.
 !
 appendFileSync: path data: data options: options
 	INLINE 'fs$.appendFileSync( path.js, data.js, options.js )'.
 !
 writeSync: fd buffer: buffer options: options
-	^ Buffer fromJs:
+	"Return the number of bytes written."
+	^ Integer fromJs:
 		INLINE 'fs$.writeSync( fd.js, buffer.js, options.js )'.
 !
 writevSync: fd buffers: buffers position: position
@@ -78,7 +78,7 @@ writevSync: fd buffers: buffers position: position
 		INLINE 'fs$.writevSync( fd.js, buffers.$toJs(), position.js )'.
 !
 writeSync: fd buffer: buffer offset: offset length: length position: position
-	^ Buffer fromJs:
+	^ Integer fromJs:
 		INLINE 'fs$.writeSync( fd.js, buffer.js, offset.js, length.js, position.js )'.
 !
 truncateSync: path length: length
@@ -208,13 +208,22 @@ opendirSync: path options: options
 		INLINE 'fs$.opendirSync( path.js, options.js )'.
 !
 readdirSync: path options: options
-	^ Array fromJsStrings:
-		INLINE 'fs$.readdirSync( path.js, options.js )'.
+	"Return an Array of Strings, or of Dirents if options withFileTypes is true."
+	^ Array fromJs: INLINE 'fs$.readdirSync( path.js, options.js )'
+		elementClass: ( self entryClassFor: options ).
 !
 globSync: pattern options: options
-	^ Array fromJsStrings:
-		INLINE 'fs$.globSync( pattern.js, ( options.js ? options.js : undefined ) )'.
+	"Return an Array of Strings, or of Dirents if options withFileTypes is true."
+	^ Array fromJs: INLINE 'fs$.globSync( pattern.js, ( options.js ? options.js : undefined ) )'
+		elementClass: ( self entryClassFor: options ).
 !
 rmdirSync: path
 	INLINE 'fs$.rmdirSync( path.js )'.
+!
+entryClassFor: options
+	"Return the class of directory entries returned by readdir and glob:
+	 Dirent if options withFileTypes is true, otherwise String.
+	 Options can be nil, DirOptions or FileGlobOptions."
+	^ ( Boolean fromJs: INLINE 'Boolean( options.js?.withFileTypes )' )
+		ifTrue: [ Dirent ] ifFalse: [ String ].
 !

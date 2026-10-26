@@ -39,7 +39,7 @@ async stat
 	self assert: [ ( now - stats atimeMs ) abs < 300000 ].
 !
 async writeRead
-	| writeBuffer bytesWritten readBuffer bytesRead buffer stats |
+	| writeBuffer bytesWritten readBuffer bytesRead buffer string stats |
 	writeBuffer := Buffer new: 8.
 	0 to: 7 do: [ :index |
 		writeBuffer at: index put: 97 + index ].
@@ -63,7 +63,15 @@ async writeRead
 	await fileHandle close.
 	fileHandle := await FileHandle open: fileName flags: 'r+'.
 	buffer := await fileHandle readFile.
+	self assert: [ buffer class = Buffer ].
 	self assert: [ buffer toString = 'abcd' ].
+
+	"Reopen to read from the start again, now with an encoding."
+	await fileHandle close.
+	fileHandle := await FileHandle open: fileName flags: 'r+'.
+	string := await fileHandle readFile: ( FileOptions new encoding: 'utf8' ).
+	self assert: [ string class = String ].
+	self assert: [ string = 'abcd' ].
 
 	await fileHandle truncate: 2.
 	stats := await fileHandle stat.
@@ -86,7 +94,7 @@ async properties
 	self assert: [ stats uid >= 0 ].
 	self assert: [ stats gid >= 0 ].
 
-	await fileHandle atime: 1 mtime: 2.
+	await fileHandle utimesAtime: 1 mtime: 2.
 	stats := await fileHandle stat.
 	self assert: [ stats atimeMs = 1000 ].
 	self assert: [ stats mtimeMs = 2000 ].

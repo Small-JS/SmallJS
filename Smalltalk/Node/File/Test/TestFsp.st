@@ -88,7 +88,7 @@ async properties
 	await Fsp chown: tempFilePath uid: stats uid gid: stats gid.
 !
 async directories
-	| fileNames pattern dir dirent |
+	| fileNames dirents pattern dir dirent |
 
 	"Glob"
 
@@ -106,6 +106,15 @@ async directories
 	fileNames := await Fsp readdir: tempDirName options: nil.
 	self assert: [ fileNames length = 2 ].
 	self assert: [ fileNames includes: 'sub1' ].
+	dirents := await Fsp readdir: tempDirName options: ( DirOptions new withFileTypes: true ).
+	self assert: [ dirents length = 2 ].
+	dirents do: [ :each | self checkDirent: each ].
+
+	dirents := #().
+	await Fsp glob: pattern options: ( FileGlobOptions new withFileTypes: true )
+		iterate: [ :each | dirents add: each ].
+	self assert: [ dirents length = 4 ].
+	self assert: [ dirents first class = Dirent ].
 
 	fileNames := #().
 	dir := await Fsp opendir: tempDirName options: nil.

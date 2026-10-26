@@ -15,7 +15,7 @@ cwd: cwd
 	INLINE 'this.js.cwd = cwd.js'.
 !
 withFileTypes
-	^ String fromJs: INLINE 'this.js.withFileTypes'.
+	^ Boolean fromJs: INLINE 'this.js.withFileTypes'.
 !
 withFileTypes: withFileTypes
 	INLINE 'this.js.withFileTypes = withFileTypes.js'.
