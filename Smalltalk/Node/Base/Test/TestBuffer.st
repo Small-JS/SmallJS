@@ -4,7 +4,6 @@ testCreation
 	| buffer |
 
 	self assert: [ Buffer new length = 0 ].
-	buffer := Buffer new: 3.
 	self assert: [ ( Buffer new: 3 ) length = 3 ].
 	self assert: [ ( Buffer new: 3 ) last = 0 ].
 	self assert: [ ( Buffer with: 7 ) first = 7 ].
@@ -15,6 +14,9 @@ testCreation
 	self assert: [ ( buffer at: 1 ) = 98 ].
 	self assert: [ ( Buffer from: ( Array with: 1 with: 2 ) ) last = 2 ].
 	self assert: [ ( Buffer from: buffer ) toString = 'abc' ].
+	buffer := Buffer encodeFromString: 'é'.
+	self assert: [ Buffer isBuffer: buffer ].
+	self assert: [ ( buffer toString: 'hex' ) = 'c3a9' ].
 
 	self assert: [ ( Buffer new: 3 fill: 5 ) last = 5 ].
 	self assert: [ ( Buffer new: 4 fill: 'ab' ) toString = 'abab' ].
@@ -81,13 +83,19 @@ testConcat
 	self assert: [ ( Buffer concat: buffers ) class = Buffer ].
 !
 testCopyBytesFrom
-	| words |
+	| bytes halfFloats |
 
-	words := Uint8Array new: 3.
-	words at: 0 put: 1; at: 1 put: 2; at: 2 put: 3.
-	self assert: [ ( Buffer copyBytesFrom: words ) length = 3 ].
-	self assert: [ ( Buffer copyBytesFrom: words offset: 1 ) first = 2 ].
-	self assert: [ ( Buffer copyBytesFrom: words offset: 1 length: 1 ) length = 1 ].
+	bytes := Uint8Array new: 3.
+	bytes at: 0 put: 1; at: 1 put: 2; at: 2 put: 3.
+	self assert: [ ( Buffer copyBytesFrom: bytes ) length = 3 ].
+	self assert: [ ( Buffer copyBytesFrom: bytes offset: 1 ) first = 2 ].
+	self assert: [ ( Buffer copyBytesFrom: bytes offset: 1 length: 1 ) length = 1 ].
+
+	"Offset and length are in elements, not bytes."
+	halfFloats := Float16Array new: 3.
+	self assert: [ ( Buffer copyBytesFrom: halfFloats ) length = 6 ].
+	self assert: [ ( Buffer copyBytesFrom: halfFloats offset: 1 ) length = 4 ].
+	self assert: [ ( Buffer copyBytesFrom: halfFloats offset: 1 length: 1 ) length = 2 ].
 !
 testCopying
 	| buffer copy target |
@@ -107,6 +115,13 @@ testCopying
 	self assert: [ copy class = Buffer ].
 	copy at: 0 put: 120.
 	self assert: [ buffer toString = 'abc' ].
+
+	copy := buffer toReversed.
+	self assert: [ copy toString = 'cba' ].
+	self assert: [ Buffer isBuffer: copy ].
+	copy at: 0 put: 120.
+	self assert: [ buffer toString = 'abc' ].
+	self assert: [ Buffer isBuffer: ( buffer slice: 1 ) ].
 
 	"subarray: shares memory."
 	( buffer subarray: 1 ) at: 0 put: 120.

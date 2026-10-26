@@ -49,6 +49,10 @@ from: source
 from: string encoding: encoding
 	^ self fromJs: INLINE 'Buffer.from( string.js, encoding.js )'.
 !
+encodeFromString: string
+	"Overridden, because TextEncoder returns a Uint8Array, not a Buffer."
+	^ self from: string.
+!
 concat: buffers
 	"Buffers is an Array of Buffers or Uint8Arrays."
 	^ self fromJs: INLINE 'Buffer.concat( buffers.$toJs() )'.
@@ -162,11 +166,16 @@ copy
 	^ self class fromJs: INLINE 'Buffer.from( this.js )'.
 !
 slice: start
-	"Return a copy, like other arrays do. Use subarray: to share memory."
-	^ self class fromJs: INLINE 'Buffer.from( Uint8Array.prototype.slice.call( this.js, start.js ) )'.
+	"Return a copy, like other arrays do. Use subarray: to share memory.
+	 Uint8Array.prototype.slice copies and returns a Buffer here."
+	^ self class fromJs: INLINE 'Uint8Array.prototype.slice.call( this.js, start.js )'.
 !
 slice: start to: end
-	^ self class fromJs: INLINE 'Buffer.from( Uint8Array.prototype.slice.call( this.js, start.js, end.js ) )'.
+	^ self class fromJs: INLINE 'Uint8Array.prototype.slice.call( this.js, start.js, end.js )'.
+!
+toReversed
+	"Overridden, because Uint8Array.prototype.toReversed returns a Uint8Array, not a Buffer."
+	^ self class fromJs: INLINE 'Buffer.from( this.js ).reverse()'.
 !
 copyTo: target
 	"Copy bytes into target Buffer or Uint8Array. Return the number of bytes copied."
