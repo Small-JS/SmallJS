@@ -65,7 +65,7 @@ insert: sqlObject
 
 	id := result lastInsertRowId.
 	id > 0 ifFalse: [
-		self error: 'INSERT did not result a valid id: ', result id toString ].
+		self error: 'INSERT did not result a valid id: ', id toString ].
 
 	sqlObject id: id.
 !

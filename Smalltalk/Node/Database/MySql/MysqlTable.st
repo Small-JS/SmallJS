@@ -42,7 +42,7 @@ async insert: sqlObject
 	 The id variable will be set to a new serial value after the insert."
 	| query result |
 	query := 'INSERT INTO ', self quotedName, ' ( ', self columnList, ' ) VALUES ( ', self insertValuesParameters, ' )'.
-	result := await database query: query with: sqlObject columnValues.
+	result := await database query: query with: ( self columnValues: sqlObject ).
 	result affectedRows = 1 ifFalse: [
 		Error throw: 'INSERT did not effect exactly 1 row: ', result affectedRows toString ].
 	result insertId > 0 ifFalse: [
@@ -56,7 +56,7 @@ async update: sqlObject
 	"Update sqlObject in table using id."
 	| query result |
 	query := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters, ' WHERE `id` = ?'.
-	result := await database query: query with: ( sqlObject columnValues add: sqlObject id ).
+	result := await database query: query with: ( ( self columnValues: sqlObject ) add: sqlObject id ).
 	result affectedRows = 1 ifFalse: [
 		Error throw: 'UPDATE by id did not effect exactly 1 row: ', result affectedRows toString ].
 !

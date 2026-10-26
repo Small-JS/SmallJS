@@ -17,7 +17,7 @@ async connect: connectionString
 		INLINE 'await mysql$.createConnection( connectionString.js )'.
 !
 async end
-	INLINE 'await this.js.close()'.
+	INLINE 'await this.js.end()'.
 !
 
 "Table"

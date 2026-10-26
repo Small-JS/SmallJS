@@ -70,7 +70,7 @@ prepare: sql
 "Common SQL interface"
 
 query: query
-	self query: query with: #().
+	^ self query: query with: #().
 !
 query: query with: parameters
 	| statement |

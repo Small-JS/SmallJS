@@ -39,7 +39,7 @@ async insert: sqlObject
 	query := 'INSERT INTO ', self quotedName, ' ( ', self columnList, ' ) VALUES ( ', self insertValuesParameters, ' )'.
 	result := await database query: query with: ( self columnValues: sqlObject ).
 	result affectedRows = 1 ifFalse: [
-		Error throw: 'INSERT did not effect exactly 1 row for id: ', sqlObject id toString ].
+		Error throw: 'INSERT did not effect exactly 1 row: ', result affectedRows toString ].
 	result insertId > 0 ifFalse: [
 		Error throw: 'INSERT did not return a valid id: ', result insertId toString ].
 	sqlObject id: result insertId.

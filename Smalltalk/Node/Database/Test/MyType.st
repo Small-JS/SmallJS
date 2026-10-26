@@ -88,7 +88,7 @@ anil: aAnil
 "Conversion"
 
 toString
-	^ 'Type: id: ', string toString,
+	^ 'Type: id: ', id toString,
 		', string: ', string,
 		', integer: ', integer toString,
 		', float: ', float toString,

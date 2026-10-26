@@ -68,6 +68,11 @@ databaseSelect
 	newType date: ( Date fromString: newType date ).
 	newType boolean: ( Boolean fromInteger: newType boolean ).
 	self assert: [ newType = type ].
+
+	rows := database query: 'SELECT * FROM "Type"'.
+	self assert: [ rows length = 1 ].
+	rows := database query: 'SELECT * FROM "Type" WHERE "string" = ?' with: #( ( type string ) ).
+	self assert: [ rows length = 1 ].
 !
 tableSelectAll
 	| selectedTypes |

@@ -13,11 +13,12 @@ newFor: connectionString
 	"Create database instance indicated by the connection string"
 
 	( connectionString startsWith: 'postgresql://' ) ifTrue: [ ^ PostgresDatabase new ].
+	( connectionString startsWith: 'postgres://' ) ifTrue: [ ^ PostgresDatabase new ].
 	( connectionString startsWith: 'mariadb://' ) ifTrue: [ ^ MariadbDatabase new ].
 	( connectionString startsWith: 'mysql://' ) ifTrue: [ ^ MysqlDatabase new ].
 	( self checkSqlite: connectionString ) ifTrue: [ ^ SqliteDatabase new ].
 
-	self error: 'Cannot match connection string to database type:', connectionString.
+	self error: 'Cannot match connection string to database type: ', connectionString.
 !
 checkSqlite: connectionString
 	connectionString := connectionString toLowerCase.

@@ -59,11 +59,11 @@ async update: sqlObject
 
 	query := 'UPDATE ', self quotedName, ' SET ', self updateSetParameters,
 		' WHERE `id` = ? RETURNING `id`'.
-	queryResult := await self query: query with: ( sqlObject columnValues add: sqlObject id ).
+	queryResult := await self query: query with: ( ( self columnValues: sqlObject ) add: sqlObject id ).
 
 	id := queryResult toId.
 	id = sqlObject id ifFalse: [
-		Error throw: 'Update did not return a expected id: ', id ].
+		Error throw: 'Update did not return the expected id: ', id toString ].
 !
 
 "Deleting"
@@ -82,7 +82,7 @@ async delete: sqlObject
 
 	id := queryResult toId.
 	id = sqlObject id ifFalse: [
-		Error throw: 'Delete did not return a expected id: ', id ].
+		Error throw: 'Delete did not return the expected id: ', id toString ].
 !
 async query: query
 	^ await database query: ( self translateQuery: query ).
@@ -94,16 +94,19 @@ translateQuery: query
 	"Translate query to Postgres conventions with:
 		- double quoted table and column names
 		- single quoted strings
-		- numbered parameters like $1."
-	| resultQuery parameterIndex string |
+		- numbered parameters like $1.
+	 Question marks inside string literals are not parameters."
+	| resultQuery parameterIndex string inString |
 
 	query := ( query replaceAll: '"' with: '\'' )
 			replaceAll: '`' with: '"'.
 
 	resultQuery := ''.
 	parameterIndex := 0.
+	inString := false.
 	query do: [ :char |
-		string := char = $?
+		char toString = '\'' ifTrue: [ inString := inString not ].
+		string := ( char = $? ) & inString not
 			ifTrue: [ parameterIndex increment. '$', parameterIndex ]
 			ifFalse: [ char toString ].
 		resultQuery := resultQuery, string ].
