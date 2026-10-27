@@ -67,7 +67,8 @@ async testMethods
 		integrity: 'sha256-abc123'.
 
 	request := Request url: url options: requestInit.
-	self assert: [ request body class = ReadableStream ].
+	"Note: 2026-10-27: Firefox does not support Request.body, so it is nil there."
+	self assert: [ request body isNil or: [ request body class = ReadableStream ] ].
 	clone := request clone.
 	self assert: [ clone class = Request ].
 	self assert: [ ( clone == request ) not ].

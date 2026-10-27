@@ -53,6 +53,14 @@ race: promises then: block
 
 METHODS
 
+constructor
+	"Make Promise objects thenable, so 'await aPromise' waits for the JS promise, like 'await aPromise js'.
+	 Defined once on the prototype, and not enumerable, so it does not show up in e.g. keys."
+	INLINE 'if( !Object.hasOwn( StPromise.prototype, "then" ) )
+		Object.defineProperty( StPromise.prototype, "then", {
+			value( onFulfilled, onRejected ) { return this.js.then( onFulfilled, onRejected ) } } )'.
+!
+
 "Each method answers a new Promise, like its JS counterpart, so calls can be chained."
 
 then: block

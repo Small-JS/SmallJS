@@ -77,7 +77,10 @@ async testChaining
 	answer := await result js.
 	self assert: [ answer = 20 ].
 
-	result := ( ( Promise resolve: 1 ) then: [ :value | Error throw: 'In then' ] )
+	"The then block returns a rejected promise instead of throwing an error,
+	 because the Firefox debugger halts on errors thrown in promise callbacks,
+	 with 'Break on uncaught exceptions' on, even if a chained catch handles them."
+	result := ( ( Promise resolve: 1 ) then: [ :value | Promise reject: ( Error new: 'In then' ) js ] )
 		catch: [ :error | error message ].
 	answer := await result js.
 	self assert: [ answer = 'In then' ].
@@ -92,6 +95,21 @@ async testChaining
 		finally: [ self onFinally ].
 	answer := await result js.
 	self assert: [ answer = 'Rejected' ].
+!
+async testAwait
+	| promise answer |
+
+	"A Promise can be awaited directly, without sending js."
+	promise := Promise new: [ :resolve :reject |
+		Timer timeout: 10 then: [ resolve value: 42 ] ].
+	answer := await promise.
+	self assert: [ answer = 42 ].
+
+	answer := await ( ( Promise resolve: 1 ) then: [ :value | value + 1 ] ).
+	self assert: [ answer = 2 ].
+
+	"Being thenable does not add a property to Promise objects."
+	self assert: [ promise keys = #( 'js' ) ].
 !
 testCatch
 	| promise1 promise2 |

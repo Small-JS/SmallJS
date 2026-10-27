@@ -117,7 +117,15 @@ testChildren
 	self assert: [ ( document prepend: comment ) = document ].
 	self assert: [ document firstChild = comment ].
 
-	document replaceChildren: ( Array with: doctype with: html ).
+	"Note: 2026-10-27: Firefox follows the spec strictly, Chrome does not:
+	 - Multiple nodes are inserted via a DocumentFragment, which cannot contain a DocumentType.
+	 - Validity is checked against the current children, so these must not conflict with the new ones."
+	document replaceChildren: comment.
+	self assert: [ document childNodes length = 1 ].
+	document replaceChildren: doctype.
+	self assert: [ document childNodes length = 1 ].
+	self assert: [ document firstChild = doctype ].
+	document append: html.
 	self assert: [ document childNodes length = 2 ].
 	self assert: [ document firstChild = doctype ].
 	self assert: [ document documentElement = html ].

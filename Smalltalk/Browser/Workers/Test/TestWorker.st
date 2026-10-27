@@ -60,12 +60,16 @@ testTransferFromWorker
 	worker postMessage: 'Transfer'.
 !
 async testClose
-	| worker messages |
+	| worker messages closing |
 	worker := self newWorker.
 	messages := Array new.
-	worker onMessage: [ :event | messages add: ( String fromJs: event data js ) ].
+	"Wait for the reply instead of a fixed time, because starting the worker can be slow, e.g. in Firefox."
+	closing := Promise new: [ :resolve :reject |
+		worker onMessage: [ :event |
+			messages add: ( String fromJs: event data js ).
+			resolve value: nil ] ].
 	worker postMessage: 'Close'.
-	await Timer timeout: 200.
+	await closing.
 	worker postMessage: 'Hello, worker!'.
 	await Timer timeout: 200.
 	self assert: [ messages = #( 'Closing' ) ].
