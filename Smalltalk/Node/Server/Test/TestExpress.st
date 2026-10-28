@@ -338,7 +338,7 @@ async requestError: path status: status message: message
 	self assert: [ ( object atProperty: 'message' ) = message ].
 !
 async onAsyncErrorRequest: request response: response
-	await Promise resolve: nil.
+	await ( Promise resolve: nil ) js.
 	Error throw: 'Async error'.
 !
 onNotFound: request response: response

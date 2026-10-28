@@ -69,7 +69,7 @@ async testClose
 			messages add: ( String fromJs: event data js ).
 			resolve value: nil ] ].
 	worker postMessage: 'Close'.
-	await closing.
+	await closing js.
 	worker postMessage: 'Hello, worker!'.
 	await Timer timeout: 200.
 	self assert: [ messages = #( 'Closing' ) ].
