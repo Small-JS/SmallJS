@@ -4,5 +4,5 @@ test
 	| qApplication |
 	qApplication := QApplication instance.
 	self assert: [ qApplication jsClassName = 'QApplication' ].
-	self assert: [ qApplication testMode | true ].
+	self assert: [ qApplication testMode ].
 !

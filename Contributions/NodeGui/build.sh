@@ -21,8 +21,10 @@ tsc
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
-# 2026-09-07 NodeGui currenty, suddenly always exist in error *only* in batch mode.
-# So unset the bash exit-on-error option for now.
-set +e
+# 2026-10-28: NWjs may print warnings like:
+# "QThreadStorage: entry 1 destroyed before end of thread 0x..."
+# This this is a bug in NWjs, but does not extit the script with a failure.
+
 ./node_modules/.bin/qode out/main.js -test
+
 echo "NodeGui finished"
