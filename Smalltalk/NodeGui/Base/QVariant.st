@@ -2,13 +2,11 @@ CLASS QVariant EXTENDS JsObject MODULE NodeGui CLASSVARS '' VARS ''
 
 "Holds a value of a Qt property. Use the to* methods to get the value."
 
-INLINE 'import { QVariant } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new: value
 	"Value can be a String, Number, Boolean or Array of Strings."
-	^ self fromJs: INLINE 'new QVariant( value.$toJs() )'.
+	^ self fromJs: INLINE 'new nodegui$.QVariant( value.$toJs() )'.
 !
 
 METHODS

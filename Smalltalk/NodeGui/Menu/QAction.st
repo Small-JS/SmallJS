@@ -1,11 +1,9 @@
 CLASS QAction EXTENDS QObject MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QAction } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QAction()'.
+	^ self fromJs: INLINE 'new nodegui$.QAction()'.
 !
 
 METHODS

@@ -1,11 +1,9 @@
 CLASS QMenu EXTENDS QWidget MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QMenu } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QMenu()'.
+	^ self fromJs: INLINE 'new nodegui$.QMenu()'.
 !
 
 METHODS

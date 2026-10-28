@@ -1,11 +1,9 @@
 CLASS QBoxLayout EXTENDS QLayout MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QBoxLayout } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new: direction
-	^ self fromJs: INLINE 'new QBoxLayout( direction.js )'.
+	^ self fromJs: INLINE 'new nodegui$.QBoxLayout( direction.js )'.
 !
 
 METHODS

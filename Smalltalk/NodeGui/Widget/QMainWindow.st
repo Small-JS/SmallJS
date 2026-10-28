@@ -1,11 +1,9 @@
 CLASS QMainWindow EXTENDS QWidget MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QMainWindow } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QMainWindow()'.
+	^ self fromJs: INLINE 'new nodegui$.QMainWindow()'.
 !
 
 METHODS

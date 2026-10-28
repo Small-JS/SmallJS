@@ -1,11 +1,9 @@
 CLASS QLabel EXTENDS QFrame MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QLabel } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QLabel()'.
+	^ self fromJs: INLINE 'new nodegui$.QLabel()'.
 !
 
 METHODS

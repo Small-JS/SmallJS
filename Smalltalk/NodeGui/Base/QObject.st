@@ -2,12 +2,10 @@ CLASS QObject EXTENDS JsObject MODULE NodeGui CLASSVARS '' VARS 'eventIds'
 	"Variable eventIds holds the ST listener blocks with their JS wrapper functions,
 	 so they can be removed again."
 
-INLINE 'import { QObject } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QObject()'.
+	^ self fromJs: INLINE 'new nodegui$.QObject()'.
 !
 
 "Timer type enums"
@@ -74,9 +72,12 @@ inherits: className
 "Properties"
 
 setProperty: name value: value
-	"Value can be a String, Number, Boolean or Array of Strings.
-	 Answer true if name is a declared Qt property, false if a dynamic property was set."
-	^ Boolean fromJs: INLINE 'this.js.setProperty( name.js, value.$toJs() )'.
+	"Value can be a String, Number, Boolean, Array of Strings, or a NodeGui value like QSize.
+	 Answer true if name is a declared Qt property, false if a dynamic property was set.
+	 JS setProperty() does not unwrap NodeGui values, so pass their native object."
+	| jsValue |
+	jsValue := INLINE 'value.$toJs()'.
+	^ Boolean fromJs: INLINE 'this.js.setProperty( name.js, jsValue?.native ?? jsValue )'.
 !
 property: name
 	^ QVariant fromJs: INLINE 'this.js.property( name.js )'.

@@ -1,13 +1,11 @@
 CLASS QWidget EXTENDS QObject MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QWidget } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 "Creation"
 
 new
-	^ self fromJs: INLINE 'new QWidget()'.
+	^ self fromJs: INLINE 'new nodegui$.QWidget()'.
 !
 
 METHODS

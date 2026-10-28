@@ -1,7 +1,5 @@
 CLASS QLayout EXTENDS QObject MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QLayout } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 "Direction enums"

@@ -1,14 +1,12 @@
 CLASS QIcon EXTENDS QComponent MODULE NodeGui CLASSVARS '' VARS ''
 
-INLINE 'import { QIcon } from "@nodegui/nodegui";'
-
 CLASSMETHODS
 
 new
-	^ self fromJs: INLINE 'new QIcon()'.
+	^ self fromJs: INLINE 'new nodegui$.QIcon()'.
 !
 new: fileName
-	^ self fromJs: INLINE 'new QIcon( fileName.js )'.
+	^ self fromJs: INLINE 'new nodegui$.QIcon( fileName.js )'.
 !
 
 METHODS

@@ -3,11 +3,14 @@ CLASS QApplication EXTENDS QObject MODULE NodeGui CLASSVARS '' VARS ''
 "The instances will always refer to the same JS QApplication object.
  App wide settings, that are static in JS, are class methods."
 
-INLINE 'import { QApplication } from "@nodegui/nodegui";'
+"Import all NodeGui JS classes for all classes of the NodeGui module.
+ The JS classes are accessed with the prefix 'nodegui$.', e.g. 'new nodegui$.QLabel()'.
+ The $ prevents name clashes with ST variables."
+INLINE 'import * as nodegui$ from "@nodegui/nodegui";'
 
 "JS QApplication.instance() creates a new JS wrapper on each call,
  so keep the first one, to make event listeners and equality work."
-INLINE 'let jsInstance = null;'
+INLINE 'let qApplicationInstance$ = null;'
 
 CLASSMETHODS
 
@@ -15,43 +18,43 @@ new
 	^ self instance.
 !
 instance
-	^ self fromJs: INLINE 'jsInstance ??= QApplication.instance()'.
+	^ self fromJs: INLINE 'qApplicationInstance$ ??= nodegui$.QApplication.instance()'.
 !
 
 "App wide settings"
 
 setApplicationDisplayName: name
-	INLINE 'QApplication.setApplicationDisplayName( name.js )'.
+	INLINE 'nodegui$.QApplication.setApplicationDisplayName( name.js )'.
 !
 applicationDisplayName
-	^ String fromJs: INLINE 'QApplication.applicationDisplayName()'.
+	^ String fromJs: INLINE 'nodegui$.QApplication.applicationDisplayName()'.
 !
 setDesktopFileName: name
 	"Set the name of the .desktop file of the app, used on Linux."
-	INLINE 'QApplication.setDesktopFileName( name.js )'.
+	INLINE 'nodegui$.QApplication.setDesktopFileName( name.js )'.
 !
 desktopFileName
-	^ String fromJs: INLINE 'QApplication.desktopFileName()'.
+	^ String fromJs: INLINE 'nodegui$.QApplication.desktopFileName()'.
 !
 setDesktopSettingsAware: on
 	"Set if the app should use the desktop settings, like fonts and colors.
 	 Must be set before creating widgets."
-	INLINE 'QApplication.setDesktopSettingsAware( on.js )'.
+	INLINE 'nodegui$.QApplication.setDesktopSettingsAware( on.js )'.
 !
 desktopSettingsAware
-	^ Boolean fromJs: INLINE 'QApplication.desktopSettingsAware()'.
+	^ Boolean fromJs: INLINE 'nodegui$.QApplication.desktopSettingsAware()'.
 !
 setWindowIcon: icon
 	"Set the default icon of all windows."
-	INLINE 'QApplication.setWindowIcon( icon.js )'.
+	INLINE 'nodegui$.QApplication.setWindowIcon( icon.js )'.
 !
 windowIcon
 	"JS QApplication.windowIcon() answers a native object, so wrap it in a JS QIcon."
-	^ QIcon fromJs: INLINE 'new QIcon( QApplication.windowIcon() )'.
+	^ QIcon fromJs: INLINE 'new nodegui$.QIcon( nodegui$.QApplication.windowIcon() )'.
 !
 platformName
 	"Answer the name of the Qt platform plugin, e.g. 'windows', 'cocoa', 'xcb' or 'wayland'."
-	^ String fromJs: INLINE 'QApplication.platformName()'.
+	^ String fromJs: INLINE 'nodegui$.QApplication.platformName()'.
 !
 
 METHODS

@@ -16,3 +16,13 @@
 	padding: 4px;
 }
 
+
+#statusLabel {
+	background-color: #9CD6DC;
+	font-size: 15px;
+	padding: 4px;
+}
+
+#groupTitle {
+	font-weight: bold;
+}

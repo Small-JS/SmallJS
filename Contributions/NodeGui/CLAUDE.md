@@ -18,13 +18,18 @@ https://docs.nodegui.org/
 - `main.ts`: app entry point. Starts `MyNodeGuiApp`, or `TestMyNodeGuiApp` if the app is started with the argument `-test`.
 - `MyNodeGuiApp.st`: the main app, a subclass of `QApplication`
   (creates the main window, menu bar, style sheet and the central widget with its layout).
+- `types.ts`: imports the NodeGui classes and enums wrapped in ../../Smalltalk/NodeGui,
+  only to inspect their TS types in VSCode; not used at runtime.
 - `Test/TestMyNodeGuiApp.st`: tests for this app.
   `TestMyNodeGuiApp` first runs the library tests (`TestQApplication all`), then the app GUI tests.
 
 ## NodeGui specifics
 
-- Library classes import NodeGui classes with ESM in INLINE code,
-  e.g. `INLINE 'import { QLabel } from "@nodegui/nodegui";'`.
+- All NodeGui library classes compile into a single JS module (`out/NodeGui.js`).
+  `QApplication.st` imports all NodeGui JS classes once for that module:
+  `INLINE 'import * as nodegui$ from "@nodegui/nodegui";'`.
+  Other library classes do not import NodeGui themselves; they use the prefix `nodegui$.`
+  in INLINE code, e.g. `INLINE 'new nodegui$.QLabel()'`. The `$` prevents name clashes with ST variables.
 - The app runs with `qode` (Node.js with the Qt event loop), in `./node_modules/.bin/qode`, not with plain `node`.
 - `QApplication instance` always refers to the JS singleton `QApplication`.
 - Styling is done with Qt style sheets (CSS-like) in `./assets/default.css`, or inline with `setInlineStyle:`.
