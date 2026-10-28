@@ -9,6 +9,8 @@ async start
 	await Timer timeout: 1000.
 	await TestQApplication all.
 	await self testGui.
+	"TestMyNodeGuiBase exits the app as the last test."
+	await TestMyNodeGuiBase new test: myNodeGuiApp.
 !
 async testGui
 	"Click the 'Change Style' button
@@ -19,7 +21,4 @@ async testGui
 	"NodeGui/QT cannot read widget styles,
 	 so just check if colorIndex has changed."
 	self assert: [ myNodeGuiApp colorIndex = 1 ].
-
-	await Timer timeout: 1000.
-	myNodeGuiApp quit.
 !

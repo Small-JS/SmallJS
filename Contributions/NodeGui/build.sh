@@ -21,10 +21,10 @@ tsc
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo apt-get install libxcb-cursor0
 
-# 2026-10-28: NWjs may print warnings like:
+# 2026-10-28: NodeGui may print warnings like:
 # "QThreadStorage: entry 1 destroyed before end of thread 0x..."
-# This this is a bug in NWjs, but does not extit the script with a failure.
+# This is a bug in NodeGui, but does not exit the script with a failure.
 
 ./node_modules/.bin/qode out/main.js -test
 
-echo "NodeGui finished"
+echo "NodeGui build finished."
