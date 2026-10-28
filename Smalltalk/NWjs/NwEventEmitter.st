@@ -16,7 +16,7 @@ CLASSMETHODS
 METHODS
 
 emit: event
-	"2025-08-17 This does not seem te work yet, e.g. for event 'click' on a NwMenuItem.
+	"2025-08-17 This does not seem to work yet, e.g. for event 'click' on a NwMenuItem.
 	 Always returns false."
 	^ Boolean fromJs: INLINE 'this.js.emit( event.js )'.
 !

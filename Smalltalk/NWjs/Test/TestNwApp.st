@@ -33,37 +33,15 @@ test
 
 	"Hotkey"
 
+	"The then: block is only evaluated when the user presses the hotkey,
+	 so only registering and unregistering it is tested here.
+	 Failing to register is not a test failure, because the OS can reserve the hotkey."
 	hotKey := 'Ctrl+Shift+A'.
 	app registerGlobalHotKey: hotKey
-		then: [ self onRegisterGlobalHotKey: hotKey ]
-		error: [ :message | self onRegisterGlobalHotKey: hotKey error: message].
+		then: [ ]
+		error: [ :message | ].
+	app unregisterGlobalHotKey: hotKey.
 
-	"closeAllWindows cannot be tested here beacuse it terminates the app."
+	"closeAllWindows cannot be tested here because it terminates the app."
 	"app closeAllWindows."
-!
-
-"Hotkeys"
-
-onRegisterGlobalHotKey: hotKey
-	self assert: [ true ].
-	self unregisterGlobalHotKey: hotKey
-!
-onRegisterGlobalHotKey: hotKey error: message
-	"Failing to register the hotkey also counts als test succes.
-	 Probably some security setting."
-	self assert: [ true ].
-	self unregisterGlobalHotKey: hotKey
-!
-unregisterGlobalHotKey: hotKey
-	app unregisterGlobalHotKey: hotKey
-		then: [ self onUnegisterGlobalHotKey: hotKey ]
-		error: [ :message | self onUnregisterGlobalHotKey: hotKey error: message] .
-!
-onUnregisterGlobalHotKey: hotKey
-	self assert: [ true ].
-!
-onUnregisterGlobalHotKey: hotKey error: message
-	"Failing to unregister the hotkey also counts als test succes.
-	 Probably some security setting."
-	self assert: [ true ].
 !

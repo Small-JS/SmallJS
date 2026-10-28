@@ -8,6 +8,6 @@ async start
 	await TestNwApp all.
 
 	await TestMyNwMenu new test: myNwApp.
-	"TestMyWindow closes the window as the last test."
+	"TestMyNwWindow closes the window as the last test."
 	await TestMyNwWindow new test: myNwApp.
 !

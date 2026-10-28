@@ -34,7 +34,7 @@ test
 	"2025-08-14 Setting the menu item key crashes Nw.js on Windows:
 	 This has been reported here: https://github.com/nwjs/nw.js/issues/8290
 	menuItem key: 'F'.
-	self assert: [ menuItem key = 'F1' ]."
+	self assert: [ menuItem key = 'F' ]."
 
 	self assert: [ menuItem modifiers = '' ].
 	"2025-08-14 Setting the menu item modifiers also crashes Nw.js on Windows:

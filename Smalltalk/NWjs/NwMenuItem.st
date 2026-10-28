@@ -86,7 +86,7 @@ modifiers
 	^ String fromJs: INLINE 'this.js.modifiers'.
 !
 modifiers: modifiers
-	"2025-08-14 Setting the menu item modifiers corrently crashes Nw.js on Windows:
+	"2025-08-14 Setting the menu item modifiers currently crashes Nw.js on Windows:
 	 This has been reported here: https://github.com/nwjs/nw.js/issues/8290"
 	INLINE 'this.js.modifiers = modifiers.js '.
 !

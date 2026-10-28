@@ -51,6 +51,12 @@ async testOpen
 	self assert: [ childWindow size >= ( 300 @ 200 ) ].
 	self assert: [ childWindow size < ( 400 @ 300 ) ].
 
+	"Focus and show must be read from the child window's own document."
+	self assert: [ childWindow show ].
+	Window isWindows ifTrue: [
+		self assert: [ childWindow focus ].
+		self assert: [ window focus not ] ].
+
 	childWindow close.
 	window focus: true.
 	await Timer timeout: 500.
@@ -65,13 +71,13 @@ async testSize
 
 	window moveToCenter.
 	window resizable: true.
-	"Minimum and maximum sizes are one enforced after window move or resize,
+	"Minimum and maximum sizes are only enforced after window move or resize,
 	 so they are not tested here."
 	window minimumSize: 100 @ 200.
 	window maximumSize: 800 @ 600.
 	await Timer timeout: 500.
 
-	"Windows sizing operation are executed async,
+	"Window sizing operations are executed async,
 	so small delay is done before checking each result,
 	which also allows for a visual check."
 
@@ -91,6 +97,11 @@ async testSize
 		And can even *reduce* the window size by 1 because of rounding?"
 	"self assert: [ window size >= ( oldSize + ( 20 @ 10 ) ) ]."
 	self assert: [ window size + ( 5 @ 5 ) >= oldSize ].
+
+	"Remove the size limits again (0 means no limit),
+	 so they do not constrain the next tests, like maximizing."
+	window minimumSize: 0 @ 0.
+	window maximumSize: 0 @ 0.
 !
 async testMinimizeMaximize
 	| oldSize |
@@ -163,8 +174,8 @@ async testShow
 	window focus: true.
 	await Timer timeout: 500.
 	"Unfortunately, window.show does not restore the document visibility state,
-	even though tge document is shown."
-	"self assert: [ window show not ]."
+	even though the document is shown."
+	"self assert: [ window show ]."
 !
 async testAlwaysOnTop
 	window alwaysOnTop: true.

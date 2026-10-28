@@ -30,18 +30,28 @@ testMenuBar
 	self assert: [ exitMenuItem label = 'Exit' ].
 !
 async testContextMenu
-	| contextMenu greenMenuItem |
+	| contextMenu redMenuItem greenMenuItem |
 
 	contextMenu := app contextMenu.
 	self assert: [ contextMenu class = NwMenu ].
 	self assert: [ contextMenu type = 'contextmenu' ].
 	self assert: [ contextMenu items length = 3 ].
 
+	redMenuItem := contextMenu items at: 0.
+	self assert: [ redMenuItem label = 'Red' ].
+
 	greenMenuItem := contextMenu items at: 1.
 	self assert: [ greenMenuItem class = NwMenuItem ].
 	self assert: [ greenMenuItem label = 'Green' ].
 
+	redMenuItem click value.
+	await Timer timeout: 500.
+	self assert: [ ( app body style getPropertyValue: 'background-color' ) = 'red' ].
+	self assert: [ ( ( contextMenu items filter: [ :item | item checked ] ) map: [ :item | item label ] ) = #( 'Red' ) ].
+
+	"Choosing another color must uncheck the previous one."
 	greenMenuItem click value.
 	await Timer timeout: 500.
 	self assert: [ ( app body style getPropertyValue: 'background-color' ) = 'green' ].
+	self assert: [ ( ( contextMenu items filter: [ :item | item checked ] ) map: [ :item | item label ] ) = #( 'Green' ) ].
 !

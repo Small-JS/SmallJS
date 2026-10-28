@@ -11,11 +11,17 @@ function startApp()
 	if( testMode ) {
 		let moduleName = "./TestMyNwApp.js";
 		import( moduleName )
-			.then( module => { module.stTestMyNwApp$class.$new().$start(); } );
+			.then( module => module.stTestMyNwApp$class.$new().$start() )
+			.catch( error => {
+				// Close the window, otherwise the build script waits forever.
+				console.error( error );
+				gui.Window.get().close( true );
+			} );
 	} else {
 		let moduleName = "./MyNwApp.js";
 		import( moduleName )
-			.then( module => { module.stMyNwApp$class.$new().$start(); } );
+			.then( module => { module.stMyNwApp$class.$new().$start(); } )
+			.catch( error => { console.error( error ); } );
 	}
 }
 

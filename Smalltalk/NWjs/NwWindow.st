@@ -97,7 +97,7 @@ fullscreen: fullscreen
 "Focus"
 
 focus
-	^ Document default hasFocus.
+	^ self window document hasFocus.
 !
 focus: focus
 	focus
@@ -108,7 +108,7 @@ focus: focus
 "Showing"
 
 show
-	^ Document default hidden not.
+	^ self window document hidden not.
 !
 show: show
 	show

@@ -62,17 +62,16 @@ The NW.js class Shortcut is not implemented separately because
 it is only used in these 2 methods and would complicate things unnecessarily."
 
 registerGlobalHotKey: key then: block error: errorBlock
+	"The block is evaluated each time the hotkey is pressed.
+	 The errorBlock is evaluated with a message if registering fails."
 	INLINE '
 		let shortcutOption = { "key": key.js,
 			"active": function () { block.js() },
 			"failed": function ( message ) { errorBlock.$value$( stString$class.$fromJs$( message ) ) } };
 		this.js.registerGlobalHotKey( new gui.Shortcut( shortcutOption ) )'.
 !
-unregisterGlobalHotKey: key then: block error: errorBlock
-	INLINE '
-		let shortcutOption = { "key": key.js,
-			"active": function () { block.js() },
-			"failed": function ( message ) { errorBlock.$value$( stString$class.$fromJs$( message ) ) } };
-		this.js.unregisterGlobalHotKey( new gui.Shortcut( shortcutOption ) )'.
+unregisterGlobalHotKey: key
+	"NW.js identifies the shortcut to unregister by its key."
+	INLINE 'this.js.unregisterGlobalHotKey( new gui.Shortcut( { "key": key.js } ) )'.
 !
 

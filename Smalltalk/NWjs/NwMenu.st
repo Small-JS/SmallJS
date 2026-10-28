@@ -7,16 +7,15 @@ new
 	^ self fromJs: INLINE 'new gui.Menu()'
 !
 newMenuBar
-	"Context manu is default type"
 	^ self fromJs: INLINE 'new gui.Menu( { type: "menubar" } )'.
 !
 setMacosMenuBar: menuBar
 	"Extend application menu for Mac OS"
 	INLINE '
 		if( process.platform == "darwin" ) {
-			if( menuBar.createMacBuiltin )
-				menuBar.createMacBuiltin( window.document.title );
-			gui.Window.get().menu = menu;
+			if( menuBar.js.createMacBuiltin )
+				menuBar.js.createMacBuiltin( window.document.title );
+			gui.Window.get().menu = menuBar.js;
 		}'
 !
 
@@ -52,5 +51,5 @@ createMacBuiltin: appName hideEdit: hideEdit hideWindow: hideWindow
 	INLINE '
 		if( this.js.createMacBuiltin )
 			this.js.createMacBuiltin( appName.js,
-			{ hideEdit: hideEdit.js, hindWindow: hideWindow.js } )'.
+			{ hideEdit: hideEdit.js, hideWindow: hideWindow.js } )'.
 !
