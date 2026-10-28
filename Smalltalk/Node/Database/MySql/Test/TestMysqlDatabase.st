@@ -30,7 +30,7 @@ async connect
 	database := MysqlDatabase new.
 	await database connect: connectionString.
 
-	typeTable := database connectTable: 'type' rowClass: MyType.
+	typeTable := database connectTable: 'Type' rowClass: MyType.
 !
 async tableDeleteAll
 	await typeTable deleteAll.

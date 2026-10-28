@@ -6,10 +6,10 @@ Note that using MySQL in commercial software requires a paid license.
 # Resources
 
 The JS "driver" (client library) for each database is already installed
-in the projects `./Node` and `./Shop/Server`.
+in the projects `./Node` and `./Examples/Shop/Server`.
 
-Here are the download locations for the database server and administration software:
-The these can be installed with their default settings.
+Here are the download locations for the database server and administration software.
+These can be installed with their default settings.
 
 ## Postgres
 
@@ -28,16 +28,21 @@ The these can be installed with their default settings.
 
 ## SQLite
 
-- Server:   Is built into Nodes.js starting version 22.5.0,
+- Server:   Is built into Node.js starting version 22.5.0.
 - Admin:    https://sqlitebrowser.org/dl/
 
 # Create the SmallJS database
 
 Start the admin tool of the database of your choice.
-First create a database called "smalljs".
-Then run the SQL script ./\<database name\>/SmallJS.sql from the admin tool.
+Then run the SQL script ./\<database name\>/SmallJS.sql from the admin tool:
 
-How to do this exactly is database dependent. Check the corresponding documentation.
+- Postgres: First create a database called "smalljs", then run the script in that database.
+  This can also be done with: `psql -U postgres -d smalljs -f Postgres/SmallJS.sql`
+- MariaDB, MySQL: The script creates the database "smalljs" itself, if it does not exist yet.
+- SQLite: No admin tool is needed. Run **./install.sh**, which creates the file **./SQLite/smalljs.db**.
+
+The scripts drop existing tables first, so they can be run again to reset the database.
+How to run a script exactly is database dependent. Check the corresponding documentation.
 
 # Testing your database
 
@@ -73,25 +78,33 @@ The following conversions are done due to limited database (driver) type support
     making a source JS Date not equal to the SQL Timestamp when retrieved.
     ST Boolean to SQL Integer for: SQLite, MariaDB.
 
-See class TestDatabase in the ./Node workspace for this and following examples.
+See the test classes in ../Smalltalk/Node/Database/\<database\>/Test for this and following examples,
+e.g. TestPostgresDatabase. They are run from the ./Node workspace.
 
 ## Connecting to a database
 
-Connecting to a database is done with this line of ST code:
+All database operations are async, so they are awaited in async methods.
+Connecting to a database is done with this ST code:
 
-    database := PostgresDatabase new connect: connectionString then: [ self onConnect ].
+    database := PostgresDatabase new.
+    await database connect: connectionString.
 
 where connectionString is something like:
 
-    'postgresql://postgres:password@localhost:5432/smalljs
+    'postgresql://postgres:password@localhost:5432/smalljs'
 
 For different databases replace PostgresDatabase with MariadbDatabase, MysqlDatabase or SqliteDatabase.
+Or use "SqlDatabaseFactory newFor: connectionString" to select the class from the connection string.
+When done, close the connection with "await database end".
 
 ## Connect a database table to a ST class with ORM
 
 Then connect to a table with code ST like:
 
-    productTable := database table: 'public."Product"' rowClass: MyProduct.
+    productTable := database connectTable: 'Product' rowClass: MyProduct.
+
+Table names are case sensitive on some databases (e.g. MariaDB and MySQL on Linux),
+so use the exact name as in the SQL scripts.
 
 Note: Tables should exist already, the ORM does not support creating them.
     A "database first" approach is taken, to keep the SQL clean and reusable elsewhere.
@@ -105,50 +118,55 @@ The following code examples implement CRUD operations:
 Insert new product, setting its id:
 
     product := MyProduct new name: 'Test'.
-    productTable insert: product then: [ :product | ... ].
+    await productTable insert: product.
 
 ### Read (select query)
 
+Read all products:
+
+    products := await productTable selectAll.
+
 Read multiple products by price:
 
-    productTable select: 'price >= 100' then: [ :products | ... ].
+    products := await productTable select: '`price` >= 100'.
+
+Or with parameters:
+
+    products := await productTable select: '`price` >= ?' with: #( 100 ).
 
 Read single product by Id:
 
-    productTable selectId: 1 then: [ :product | ... ].
+    product := await productTable selectId: 1.
 
-If the id does not exist, nil passed to the then block.
+If the id does not exist, nil is returned.
 
 ### Update
 
 Update a product using its id:
 
     product name: 'Changed name'.
-    productTable update: product then: [ ... ].
+    await productTable update: product.
 
 ### Delete
 
 Delete a product, using its id:
 
-    productTable delete: product then: [ ... ].
+    await productTable delete: product.
 
 ## Using a database without ORM
 
-This is done my executing SQL commands directly on the database.
+This is done by executing SQL commands directly on the database.
 Note that these are always called queries, even if they contain mutation commands.
 
 To query a Postgres table for which there is no SqlObject mapping, you can use:
 
-    database query: 'SELECT id, name FROM "Product" WHERE id = 1'
-        then: [ :queryResult | self onProductQuery: queryResult ].
+    queryResult := await database query: 'SELECT id, name FROM "Product" WHERE id = 1'.
 
-And then in "onProductQuery: queryResult" read the results with:
+And then read the results with:
 
-        "queryResult fieldNames" returns: #( 'id' 'name' 'price' ).
+        "queryResult fieldNames" returns: #( 'id' 'name' ).
         "queryResult rows first atJsProperty: 'name'" returns: 'Apple'.
 
-Then using a Postgres database, "queryResult" with be an instance of the class PostgresQueryResult.
+When using a Postgres database, "queryResult" will be an instance of the class PostgresQueryResult.
 Other databases will have other implementation details.
 To be (more) database independent, it is recommended to use the ORM mapping functionality described above.
-
-

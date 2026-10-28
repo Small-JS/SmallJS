@@ -10,6 +10,14 @@ console.log( "Creating SQLite database: " + databasePath );
 if ( fs.existsSync( databasePath ) )
 	fs.unlinkSync( databasePath );
 let database = new DatabaseSync( databasePath );
-database.exec( sql );
+try {
+	database.exec( sql );
+} catch ( error ) {
+	// Do not leave a partially created database behind.
+	database.close();
+	fs.unlinkSync( databasePath );
+	throw error;
+}
+database.close();
 
 console.log( "Done." );
