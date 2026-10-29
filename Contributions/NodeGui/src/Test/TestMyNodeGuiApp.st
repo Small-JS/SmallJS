@@ -23,6 +23,13 @@ async testGui
 	await self testStackedWidget.
 	await self testAction.
 	self testMenuBar.
+	await self testLabel.
+	await self testFrame.
+	await self testLineEdit.
+	await self testProgressBar.
+	await self testLcdNumber.
+	await self testCalendar.
+	await self testWindow.
 !
 async testPushButton
 	"Click the 'Change style' button and check if the style of the styled text has changed."
@@ -137,7 +144,131 @@ testMenuBar
 	self assert: [ myNodeGuiApp exitAction text = 'Exit' ].
 	self assert: [ myNodeGuiApp exitAction shortcut = ( QKeySequence new: 'Ctrl+Q' ) ].
 	self assert: [ myNodeGuiApp changeStyleShortcut key = ( QKeySequence new: 'Ctrl+S' ) ].
-	self assert: [ myNodeGuiApp statusBar currentMessage = 'Ready' ].
+	self assert: [ myNodeGuiApp window statusBar = myNodeGuiApp statusBar ].
+!
+async testLabel
+	"NodeGui cannot click the link, so check the setup. The heart is animated."
+	| frame |
+	self assert: [ myNodeGuiApp richLabel textFormat = QLabel richText ].
+	self assert: [ myNodeGuiApp labelStatus text = 'No link clicked' ].
+	self assert: [ myNodeGuiApp heart state = QMovie running ].
+	frame := myNodeGuiApp heart currentFrameNumber.
+	await Timer timeout: 500.
+	self assert: [ myNodeGuiApp heart currentFrameNumber ~= frame ].
+!
+async testFrame
+	"Click the 'Shape' button through all shapes, back to the first."
+	| frame status |
+	frame := myNodeGuiApp frame.
+	status := myNodeGuiApp frameStatus.
+	self assert: [ status text = 'Shape: Box' ].
+	self assert: [ frame frameShape = QFrame box ].
+	self assert: [ frame frameShadow = QFrame sunken ].
+
+	await self clickAndWait: myNodeGuiApp shapeButton.
+	self assert: [ status text = 'Shape: Panel' ].
+	self assert: [ frame frameShape = QFrame panel ].
+	await self clickAndWait: myNodeGuiApp shapeButton.
+	self assert: [ frame frameShape = QFrame styledPanel ].
+	await self clickAndWait: myNodeGuiApp shapeButton.
+	self assert: [ status text = 'Shape: Box' ].
+!
+async testLineEdit
+	"NodeGui cannot type keys, so insert text, which fires the same event."
+	| lineEdit status |
+	lineEdit := myNodeGuiApp lineEdit.
+	status := myNodeGuiApp lineEditStatus.
+	self assert: [ status text = 'Empty' ].
+	self assert: [ lineEdit placeholderText = 'Type here' ].
+
+	lineEdit insert: 'Hello'.
+	await Timer timeout: 500.
+	self assert: [ status text = 'Text: Hello' ].
+	lineEdit clear.
+	await Timer timeout: 500.
+	self assert: [ status text = 'Empty' ].
+!
+async testProgressBar
+	"Click the 'Step' button until the progress wraps around to 0."
+	| progressBar status |
+	progressBar := myNodeGuiApp progressBar.
+	status := myNodeGuiApp progressBarStatus.
+	self assert: [ status text = 'Value: 0' ].
+
+	await self clickAndWait: myNodeGuiApp stepButton.
+	self assert: [ status text = 'Value: 25' ].
+	self assert: [ progressBar text = '25%' ].
+	await self clickAndWait: myNodeGuiApp stepButton.
+	await self clickAndWait: myNodeGuiApp stepButton.
+	await self clickAndWait: myNodeGuiApp stepButton.
+	self assert: [ progressBar value = 100 ].
+	await self clickAndWait: myNodeGuiApp stepButton.
+	self assert: [ status text = 'Value: 0' ].
+!
+async testLcdNumber
+	| status |
+	status := myNodeGuiApp lcdNumberStatus.
+	self assert: [ status text = 'Count: 0' ].
+	await self clickAndWait: myNodeGuiApp countButton.
+	await self clickAndWait: myNodeGuiApp countButton.
+	self assert: [ status text = 'Count: 2' ].
+	self assert: [ myNodeGuiApp lcdNumber intValue = 2 ].
+!
+async testCalendar
+	"Click the 'Select date' button to pop up the calendar below it.
+	 NodeGui cannot click a date, so select it, which fires the same event, and close the popup."
+	| calendar button status today |
+	calendar := myNodeGuiApp calendar.
+	button := myNodeGuiApp dateButton.
+	status := myNodeGuiApp calendarStatus.
+	today := QDate today.
+	self assert: [ status text = ( 'Date: ', today toString ) ].
+	self assert: [ calendar isVisible not ].
+
+	await self clickAndWait: button.
+	self assert: [ calendar isVisible ].
+	self assert: [ calendar isWindow ].
+	self assert: [ calendar pos = ( button mapToGlobal: ( QPoint x: 0 y: button height ) ) ].
+
+	calendar setSelectedDate: ( today addDays: 1 ).
+	await Timer timeout: 500.
+	self assert: [ status text = ( 'Date: ', ( today addDays: 1 ) toString ) ].
+	calendar setSelectedDate: today.
+	await Timer timeout: 500.
+	self assert: [ status text = ( 'Date: ', today toString ) ].
+
+	calendar hide.
+	await Timer timeout: 500.
+	self assert: [ calendar isVisible not ].
+!
+async testWindow
+	"Resizing and moving the visible window fires events. Restore the geometry afterwards."
+	| window geometry moveCount |
+	window := myNodeGuiApp window.
+	self assert: [ window isVisible ].
+	self assert: [ window isWindow ].
+	geometry := window geometry.
+	moveCount := 0.
+	window onMove: [ moveCount := moveCount + 1 ].
+
+	window resize: ( QSize width: geometry width + 20 height: geometry height ).
+	await Timer timeout: 500.
+	self assert: [ myNodeGuiApp statusBar currentMessage =
+		( 'Window size: ', ( geometry width + 20 ) toString, ' x ', geometry height toString ) ].
+
+	window move: ( QPoint x: window x + 10 y: window y ).
+	await Timer timeout: 500.
+	self assert: [ moveCount > 0 ].
+	window setGeometry: geometry.
+	await Timer timeout: 500.
+
+	"A widget in the window is visible, until it is hidden."
+	self assert: [ myNodeGuiApp lcdNumber isVisible ].
+	myNodeGuiApp lcdNumber hide.
+	self assert: [ myNodeGuiApp lcdNumber isVisible not ].
+	myNodeGuiApp lcdNumber show.
+	self assert: [ myNodeGuiApp lcdNumber isVisible ].
+	self assert: [ ( myNodeGuiApp lcdNumber window ) = window ].
 !
 async clickAndWait: button
 	"Click button, then wait to allow for a visual check."

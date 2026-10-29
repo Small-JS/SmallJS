@@ -50,7 +50,8 @@ https://docs.nodegui.org/
 ## Generated files
 
 - `./out` contains compiled output (JS and source maps). Do not edit files there; edit ./src instead.
-- `./assets` contains hand-written files: `default.css`, `logo.ico`, `logo.png`.
+- `./assets` contains hand-written files: `default.css`, `logo.ico`, `logo.png`,
+  and `heart.gif`, an animated beating heart used by the app and the `QMovie` tests.
 
 ## Goal
 

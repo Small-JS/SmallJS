@@ -60,8 +60,9 @@ isEmpty
 	"Answer true if width or height is less than or equal to 0."
 	^ Boolean fromJs: INLINE 'this.js.isEmpty()'.
 !
-isNull
-	"Answer true if both width and height are 0."
+isZero
+	"Answer true if both width and height are 0.
+	 JS isNull(), not named isNull, which is used by JsObject to test for a JS null."
 	^ Boolean fromJs: INLINE 'this.js.isNull()'.
 !
 isValid

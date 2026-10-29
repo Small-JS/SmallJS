@@ -15,6 +15,9 @@ let qObjectSignals: nodegui.QObjectSignals;
 let qApplication: nodegui.QApplication;
 let qVariant: nodegui.QVariant;
 let qSize: nodegui.QSize;
+let qPoint: nodegui.QPoint;
+let qRect: nodegui.QRect;
+let qDate: nodegui.QDate;
 
 // Button
 let qAbstractButton: nodegui.QAbstractButton<nodegui.QAbstractButtonSignals>;
@@ -30,6 +33,7 @@ let qButtonGroupSignals: nodegui.QButtonGroupSignals;
 // Component
 let qIcon: nodegui.QIcon;
 let qPixmap: nodegui.QPixmap;
+let qMovie: nodegui.QMovie;
 
 // Layout
 let qLayout: nodegui.QLayout;
@@ -71,20 +75,44 @@ let qLabel: nodegui.QLabel;
 let qMainWindow: nodegui.QMainWindow;
 let qStatusBar: nodegui.QStatusBar;
 let qStatusBarSignals: nodegui.QStatusBarSignals;
+let qLabelSignals: nodegui.QLabelSignals;
+let qLineEdit: nodegui.QLineEdit;
+let qLineEditSignals: nodegui.QLineEditSignals;
+let qProgressBar: nodegui.QProgressBar;
+let qProgressBarSignals: nodegui.QProgressBarSignals;
+let qLcdNumber: nodegui.QLCDNumber;
+let qLcdNumberSignals: nodegui.QLCDNumberSignals;
+let qCalendar: nodegui.QCalendarWidget;
+let qCalendarSignals: nodegui.QCalendarWidgetSignals;
 
 // Enums, used as integer constants in the ST classes.
+// Note: The QMovie signals and the QCalendarWidget header format enums are not exported by NodeGui.
 let alignmentFlag = nodegui.AlignmentFlag.AlignCenter;
 let arrowType = nodegui.ArrowType.RightArrow;
 let aspectRatioMode = nodegui.AspectRatioMode.KeepAspectRatio;
+let cacheMode = nodegui.CacheMode.CacheAll;
 let checkState = nodegui.CheckState.PartiallyChecked;
 let corner = nodegui.Corner.TopRightCorner;
+let cursorShape = nodegui.CursorShape.PointingHandCursor;
+let dayOfWeek = nodegui.DayOfWeek.Sunday;
 let direction = nodegui.Direction.TopToBottom;
+let echoMode = nodegui.EchoMode.Password;
+let focusPolicy = nodegui.FocusPolicy.StrongFocus;
+let lcdMode = nodegui.Mode.Dec;
+let movieState = nodegui.MovieState.Running;
 let orientation = nodegui.Orientation.Horizontal;
+let qProgressBarDirection = nodegui.QProgressBarDirection.TopToBottom;
 let qSizePolicyPolicy = nodegui.QSizePolicyPolicy.Expanding;
 let qSystemTrayIconActivationReason = nodegui.QSystemTrayIconActivationReason.Trigger;
 let shortcutContext = nodegui.ShortcutContext.WindowShortcut;
+let segmentStyle = nodegui.SegmentStyle.Flat;
+let selectionMode = nodegui.SelectionMode.SingleSelection;
+let shadow = nodegui.Shadow.Sunken;
+let shape = nodegui.Shape.Box;
 let stackingMode = nodegui.StackingMode.StackOne;
 let tabPosition = nodegui.TabPosition.North;
+let textFormat = nodegui.TextFormat.RichText;
+let textInteractionFlag = nodegui.TextInteractionFlag.TextSelectableByMouse;
 let timerType = nodegui.TimerType.PreciseTimer;
 let toolButtonStyle = nodegui.ToolButtonStyle.ToolButtonTextBesideIcon;
 let toolButtonPopupMode = nodegui.ToolButtonPopupMode.MenuButtonPopup;

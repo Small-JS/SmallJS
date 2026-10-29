@@ -30,22 +30,23 @@ testTesting
 	size := QSize new.
 	self assert: [ size isValid not ].
 	self assert: [ size isEmpty ].
-	self assert: [ size isNull not ].
+	self assert: [ size isZero not ].
 
 	size := QSize width: 0 height: 0.
+	self assert: [ size jsClassName = 'QSize' ].
 	self assert: [ size isValid ].
 	self assert: [ size isEmpty ].
-	self assert: [ size isNull ].
+	self assert: [ size isZero ].
 
 	size := QSize width: 30 height: 0.
 	self assert: [ size isValid ].
 	self assert: [ size isEmpty ].
-	self assert: [ size isNull not ].
+	self assert: [ size isZero not ].
 
 	size := QSize width: 30 height: 20.
 	self assert: [ size isValid ].
 	self assert: [ size isEmpty not ].
-	self assert: [ size isNull not ].
+	self assert: [ size isZero not ].
 !
 testBoundedExpanded
 	| size1 size2 |

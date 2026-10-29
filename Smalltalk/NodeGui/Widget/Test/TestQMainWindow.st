@@ -13,6 +13,11 @@ test
 	centralWidget := QWidget new.
 	window setCentralWidget: centralWidget.
 	self assert: [ window centralWidget = centralWidget ].
+	self assert: [ window takeCentralWidget = centralWidget ].
+	self assert: [ window centralWidget isNil ].
+	self assert: [ window takeCentralWidget isNil ].
+
+	window setMenuWidget: QLabel new.
 !
 testStatusBar
 	| window statusBar |

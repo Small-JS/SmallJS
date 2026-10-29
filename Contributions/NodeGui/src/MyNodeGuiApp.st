@@ -4,7 +4,10 @@ CLASS MyNodeGuiApp EXTENDS QApplication MODULE MyNodeGuiApp CLASSVARS ''
 		radioButtons buttonGroup radioButtonStatus toolButton toolMenuActions toolButtonStatus
 		groupBox groupBoxStatus tabWidget tabNames tabWidgetStatus
 		stackedWidget nextPageButton stackedWidgetStatus
-		statusBar exitAction changeStyleShortcut optionsButton optionActions actionStatus'
+		statusBar exitAction changeStyleShortcut optionsButton optionActions actionStatus
+		heart richLabel labelStatus frame frameShapes frameShapeIndex shapeButton frameStatus
+		lineEdit lineEditStatus progressBar stepButton progressBarStatus
+		lcdNumber countButton lcdNumberStatus dateButton calendar calendarStatus'
 
 start
 	colors := #( 'black' 'red' 'green' 'blue' ).
@@ -21,6 +24,8 @@ createWindow
 	window setStyleSheet: self createStyleSheet.
 	window setCentralWidget: self createCentralWidget.
 	self createShortcut.
+	window resize: ( QSize width: 720 height: 700 ).
+	window onResize: [ self showWindowSize ].
 	window show.
 !
 createIcon
@@ -53,6 +58,9 @@ createShortcut
 onFileExit
 	QApplication instance quit.
 !
+showWindowSize
+	statusBar showMessage: 'Window size: ', window width toString, ' x ', window height toString.
+!
 createStyleSheet
 	^ ( Fs readFileSync: 'assets/default.css' ) toString.
 !
@@ -68,7 +76,7 @@ createRootLayout
 	layout := QBoxLayout new: QLayout topToBottom.
 	layout addWidget: self createGreetLabel stretch: 0 align: QLayout alignCenter.
 	layout addWidget: self createImageLabel stretch: 0 align: QLayout alignCenter.
-	layout addWidget: self createTable stretch: 0 align: QLayout alignCenter.
+	layout addWidget: self createTableScrollArea stretch: 1 align: 0.
 	^ layout.
 !
 createImageLabel
@@ -89,6 +97,15 @@ createGreetLabel
  Each row shows a widget type, a widget of that type and the status of its last event.
  The 'Change style' button changes the style of the text in its status column instead."
 
+createTableScrollArea
+	"The table can be higher than the window, so show it in a scroll area."
+	| scrollArea |
+	scrollArea := QScrollArea new.
+	scrollArea setWidget: self createTable.
+	scrollArea setWidgetResizable: true.
+	scrollArea setAlignment: QLayout alignHCenter.
+	^ scrollArea.
+!
 createTable
 	| layout widget |
 	layout := QGridLayout new.
@@ -111,6 +128,18 @@ createTable
 		status: ( stackedWidgetStatus := self createStatusLabel: 'Page 1' ).
 	self addRow: 7 to: layout type: 'Action' widget: self createOptionsButton
 		status: ( actionStatus := self createStatusLabel: 'No options' ).
+	self addRow: 8 to: layout type: 'Label' widget: self createLabelRow
+		status: ( labelStatus := self createStatusLabel: 'No link clicked' ).
+	self addRow: 9 to: layout type: 'Frame' widget: self createFrameRow
+		status: ( frameStatus := self createStatusLabel: 'Shape: Box' ).
+	self addRow: 10 to: layout type: 'LineEdit' widget: self createLineEdit
+		status: ( lineEditStatus := self createStatusLabel: 'Empty' ).
+	self addRow: 11 to: layout type: 'ProgressBar' widget: self createProgressBarRow
+		status: ( progressBarStatus := self createStatusLabel: 'Value: 0' ).
+	self addRow: 12 to: layout type: 'LcdNumber' widget: self createLcdNumberRow
+		status: ( lcdNumberStatus := self createStatusLabel: 'Count: 0' ).
+	self addRow: 13 to: layout type: 'Calendar' widget: self createDateButton
+		status: ( calendarStatus := self createStatusLabel: 'Date: ', QDate today toString ).
 
 	widget := QWidget new.
 	widget setObjectName: 'table'.
@@ -118,6 +147,8 @@ createTable
 	^ widget.
 !
 addRow: row to: layout type: typeName widget: widget status: statusLabel
+	"The status tip is shown in the status bar, when the mouse is over the widget."
+	widget setStatusTip: 'A widget of type ', typeName.
 	layout addWidget: ( self createLabel: typeName name: 'typeName' ) row: row column: 0 align: QLayout alignVCenter.
 	layout addWidget: widget row: row column: 1 align: QLayout alignLeft.
 	layout addWidget: statusLabel row: row column: 2 align: QLayout alignVCenter.
@@ -280,6 +311,95 @@ showOptions
 resetOptions
 	optionActions do: [ :action | action setChecked: false ].
 !
+createLabelRow
+	"A label with an animated heart and a rich text label with a link.
+	 Clicking the link shows it in the status column, instead of opening it."
+	heart := QMovie new: 'assets/heart.gif'.
+	heart start.
+	richLabel := QLabel new.
+	richLabel setTextFormat: QLabel richText.
+	richLabel setText: '<i>Rich</i> text with a <a href="#link">link</a>'.
+	richLabel onLinkActivate: [ :link | labelStatus setText: 'Link: ', link ].
+	^ self createRow: ( Array new add: ( QLabel new setMovie: heart ); add: richLabel ).
+!
+createFrameRow
+	"The 'Shape' button shows the next frame shape."
+	frameShapes := #( 'Box' 'Panel' 'StyledPanel' ).
+	frameShapeIndex := 0.
+	frame := QFrame new.
+	frame setFrameShadow: QFrame sunken.
+	frame setLineWidth: 2.
+	frame setLayout: ( ( QBoxLayout new: QLayout leftToRight ) addWidget: ( QLabel new setText: 'Framed label' ) stretch: 0 align: QLayout alignCenter ).
+	self showFrameShape.
+
+	shapeButton := QPushButton new.
+	shapeButton setText: 'Shape'.
+	shapeButton onClick: [
+		frameShapeIndex := frameShapeIndex + 1 % frameShapes length.
+		self showFrameShape ].
+	^ self createRow: ( Array new add: frame; add: shapeButton ).
+!
+showFrameShape
+	| shapes |
+	shapes := Array new add: QFrame box; add: QFrame panel; add: QFrame styledPanel.
+	frame setFrameShape: ( shapes at: frameShapeIndex ).
+	frameStatus notNil ifTrue: [
+		frameStatus setText: 'Shape: ', ( frameShapes at: frameShapeIndex ) ].
+!
+createLineEdit
+	"The status column echoes the text."
+	lineEdit := QLineEdit new.
+	lineEdit setPlaceholderText: 'Type here'.
+	lineEdit setClearButtonEnabled: true.
+	lineEdit onTextChange: [
+		lineEditStatus setText: ( lineEdit text isEmpty ifTrue: [ 'Empty' ] ifFalse: [ 'Text: ', lineEdit text ] ) ].
+	^ lineEdit.
+!
+createProgressBarRow
+	"The 'Step' button adds 25 to the progress, back to 0 after 100."
+	progressBar := QProgressBar new.
+	progressBar setValue: 0.
+	progressBar onValueChange: [ progressBarStatus setText: 'Value: ', progressBar value toString ].
+
+	stepButton := QPushButton new.
+	stepButton setText: 'Step'.
+	stepButton onClick: [ progressBar setValue: progressBar value + 25 % 125 ].
+	^ self createRow: ( Array new add: progressBar; add: stepButton ).
+!
+createLcdNumberRow
+	"The LCD shows the number of clicks on the 'Count' button."
+	lcdNumber := QLcdNumber new.
+	lcdNumber setDigitCount: 3.
+	lcdNumber setSegmentStyle: QLcdNumber flat.
+	lcdNumber display: 0.
+
+	countButton := QPushButton new.
+	countButton setText: 'Count'.
+	countButton onClick: [
+		lcdNumber display: lcdNumber intValue + 1.
+		lcdNumberStatus setText: 'Count: ', lcdNumber intValue toString ].
+	^ self createRow: ( Array new add: lcdNumber; add: countButton ).
+!
+createDateButton
+	"The 'Select date' button pops up the calendar below it.
+	 The popup closes when the user clicks a date, or clicks outside it."
+	calendar := QCalendar new.
+	calendar setWindowFlag: QWidget popup on: true.
+	calendar setGridVisible: true.
+	calendar setVerticalHeaderFormat: QCalendar noVerticalHeader.
+	calendar onSelectionChange: [ calendarStatus setText: 'Date: ', calendar selectedDate toString ].
+	calendar onClick: [ calendar hide ].
+	calendar onActivate: [ calendar hide ].
+
+	dateButton := QPushButton new.
+	dateButton setText: 'Select date'.
+	dateButton onClick: [ self showCalendar ].
+	^ dateButton.
+!
+showCalendar
+	calendar move: ( dateButton mapToGlobal: ( QPoint x: 0 y: dateButton height ) ).
+	calendar show.
+!
 
 "Accessing (used by tests)"
 
@@ -354,4 +474,58 @@ optionActions
 !
 actionStatus
 	^ actionStatus.
+!
+window
+	^ window.
+!
+heart
+	^ heart.
+!
+richLabel
+	^ richLabel.
+!
+frame
+	^ frame.
+!
+shapeButton
+	^ shapeButton.
+!
+frameStatus
+	^ frameStatus.
+!
+lineEdit
+	^ lineEdit.
+!
+lineEditStatus
+	^ lineEditStatus.
+!
+progressBar
+	^ progressBar.
+!
+stepButton
+	^ stepButton.
+!
+progressBarStatus
+	^ progressBarStatus.
+!
+lcdNumber
+	^ lcdNumber.
+!
+countButton
+	^ countButton.
+!
+lcdNumberStatus
+	^ lcdNumberStatus.
+!
+dateButton
+	^ dateButton.
+!
+calendar
+	^ calendar.
+!
+calendarStatus
+	^ calendarStatus.
+!
+labelStatus
+	^ labelStatus.
 !

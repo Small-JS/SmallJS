@@ -25,3 +25,11 @@
 #status {
 	padding: 4px;
 }
+
+QScrollArea {
+	border: none;
+}
+
+#table {
+	background-color: #B4E5EA;
+}
