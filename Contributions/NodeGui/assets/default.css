@@ -17,12 +17,11 @@
 }
 
 
-#statusLabel {
-	background-color: #9CD6DC;
-	font-size: 15px;
+#typeName {
+	font-weight: bold;
 	padding: 4px;
 }
 
-#groupTitle {
-	font-weight: bold;
+#status {
+	padding: 4px;
 }

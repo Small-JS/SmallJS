@@ -34,6 +34,21 @@ let qPixmap: nodegui.QPixmap;
 // Layout
 let qLayout: nodegui.QLayout;
 let qBoxLayout: nodegui.QBoxLayout;
+let qGridLayout: nodegui.QGridLayout;
+let qStackedLayout: nodegui.QStackedLayout;
+let qStackedLayoutSignals: nodegui.QStackedLayoutSignals;
+let qFlexLayout: nodegui.FlexLayout;
+
+// Container
+let qGroupBox: nodegui.QGroupBox;
+let qGroupBoxSignals: nodegui.QGroupBoxSignals;
+let qScrollArea: nodegui.QScrollArea;
+let qSplitter: nodegui.QSplitter;
+let qSplitterSignals: nodegui.QSplitterSignals;
+let qStackedWidget: nodegui.QStackedWidget;
+let qStackedWidgetSignals: nodegui.QStackedWidgetSignals;
+let qTabWidget: nodegui.QTabWidget;
+let qTabWidgetSignals: nodegui.QTabWidgetSignals;
 
 // Menu
 let qAction: nodegui.QAction;
@@ -41,19 +56,35 @@ let qMenu: nodegui.QMenu;
 let qMenuBar: nodegui.QMenuBar;
 // Note: The enums SequenceFormat and SequenceMatch of QKeySequence are not exported by NodeGui.
 let qKeySequence: nodegui.QKeySequence;
+let qActionSignals: nodegui.QActionSignals;
+let qMenuSignals: nodegui.QMenuSignals;
+let qMenuBarSignals: nodegui.QMenuBarSignals;
+let qShortcut: nodegui.QShortcut;
+let qShortcutSignals: nodegui.QShortcutSignals;
+let qSystemTrayIcon: nodegui.QSystemTrayIcon;
+let qSystemTrayIconSignals: nodegui.QSystemTrayIconSignals;
 
 // Widget
 let qWidget: nodegui.QWidget;
 let qFrame: nodegui.QFrame;
 let qLabel: nodegui.QLabel;
 let qMainWindow: nodegui.QMainWindow;
+let qStatusBar: nodegui.QStatusBar;
+let qStatusBarSignals: nodegui.QStatusBarSignals;
 
 // Enums, used as integer constants in the ST classes.
 let alignmentFlag = nodegui.AlignmentFlag.AlignCenter;
 let arrowType = nodegui.ArrowType.RightArrow;
 let aspectRatioMode = nodegui.AspectRatioMode.KeepAspectRatio;
 let checkState = nodegui.CheckState.PartiallyChecked;
+let corner = nodegui.Corner.TopRightCorner;
 let direction = nodegui.Direction.TopToBottom;
+let orientation = nodegui.Orientation.Horizontal;
+let qSizePolicyPolicy = nodegui.QSizePolicyPolicy.Expanding;
+let qSystemTrayIconActivationReason = nodegui.QSystemTrayIconActivationReason.Trigger;
+let shortcutContext = nodegui.ShortcutContext.WindowShortcut;
+let stackingMode = nodegui.StackingMode.StackOne;
+let tabPosition = nodegui.TabPosition.North;
 let timerType = nodegui.TimerType.PreciseTimer;
 let toolButtonStyle = nodegui.ToolButtonStyle.ToolButtonTextBesideIcon;
 let toolButtonPopupMode = nodegui.ToolButtonPopupMode.MenuButtonPopup;

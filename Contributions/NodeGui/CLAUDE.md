@@ -5,7 +5,7 @@ The SmallJS standard library is located in the folder: ../../Smalltalk.
 
 This is a NodeGui app testing the NodeGui API wrappers in the SmallJS library,
 located in the folder ../../Smalltalk/NodeGui, with their unit tests in the `Test` subfolder
-of each category folder (`Base`, `Button`, `Component`, `Layout`, `Menu`, `Widget`).
+of each category folder (`Base`, `Button`, `Component`, `Container`, `Layout`, `Menu`, `Widget`).
 NodeGui is a Node.js library wrapping the Qt GUI library; widgets are Qt widgets, not HTML elements.
 The app also uses the Node wrappers in ../../Smalltalk/Node (e.g. `Fs`, `Process`, `Timer`).
 

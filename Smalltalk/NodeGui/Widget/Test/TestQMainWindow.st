@@ -14,3 +14,15 @@ test
 	window setCentralWidget: centralWidget.
 	self assert: [ window centralWidget = centralWidget ].
 !
+testStatusBar
+	| window statusBar |
+	window := QMainWindow new.
+	statusBar := QStatusBar new.
+	window setStatusBar: statusBar.
+	self assert: [ window statusBar = statusBar ].
+
+	"Without a status bar, an empty one is created."
+	window setStatusBar: nil.
+	self assert: [ window statusBar class = QStatusBar ].
+	self assert: [ window statusBar ~= statusBar ].
+!

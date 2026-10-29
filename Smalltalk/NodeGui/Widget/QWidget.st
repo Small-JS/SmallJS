@@ -13,8 +13,15 @@ METHODS
 addAction: action
 	INLINE 'this.js.addAction( action.js )'.
 !
+removeAction: action
+	INLINE 'this.js.removeAction( action.js )'.
+!
 setLayout: layout
 	INLINE 'this.js.setLayout( layout.js )'.
+!
+setSizePolicy: horizontal vertical: vertical
+	"Use the QSizePolicy enums. NodeGui cannot read the size policy back."
+	INLINE 'this.js.setSizePolicy( horizontal.js, vertical.js )'.
 !
 setInlineStyle: style
 	INLINE 'this.js.setInlineStyle( style.js )'.

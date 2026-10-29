@@ -20,6 +20,16 @@ setCentralWidget: widget
 centralWidget
 	^ QWidget fromJs: INLINE 'this.js.centralWidget()'.
 !
+setStatusBar: statusBar
+	"StatusBar can be nil to remove the status bar."
+	statusBar isNil
+		ifTrue: [ INLINE 'this.js.setStatusBar( null )' ]
+		ifFalse: [ INLINE 'this.js.setStatusBar( statusBar.js )' ].
+!
+statusBar
+	"Answer the status bar. If there is none, an empty one is created."
+	^ QStatusBar fromJs: INLINE 'this.js.statusBar()'.
+!
 show
 	INLINE 'this.js.show()'.
 !

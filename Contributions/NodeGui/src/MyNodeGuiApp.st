@@ -1,6 +1,10 @@
 CLASS MyNodeGuiApp EXTENDS QApplication MODULE MyNodeGuiApp CLASSVARS ''
-	VARS 'window greetLabel changeStyleButton colors colorIndex
-		statusLabel checkBox radioButtons buttonGroup toolButton toolMenuActions'
+	VARS 'window greetLabel colors colorIndex
+		changeStyleButton styledLabel checkBox checkBoxStatus
+		radioButtons buttonGroup radioButtonStatus toolButton toolMenuActions toolButtonStatus
+		groupBox groupBoxStatus tabWidget tabNames tabWidgetStatus
+		stackedWidget nextPageButton stackedWidgetStatus
+		statusBar exitAction changeStyleShortcut optionsButton optionActions actionStatus'
 
 start
 	colors := #( 'black' 'red' 'green' 'blue' ).
@@ -13,27 +17,38 @@ createWindow
 	window setWindowTitle: 'Hello NodeGui'.
 	window setWindowIcon: self createIcon.
 	window setMenuBar: self createMenuBar.
+	window setStatusBar: self createStatusBar.
 	window setStyleSheet: self createStyleSheet.
 	window setCentralWidget: self createCentralWidget.
+	self createShortcut.
 	window show.
 !
 createIcon
 	^ QIcon new: 'assets/logo.ico'.
 !
 createMenuBar
-	| action menu menuBar |
-
-	action := QAction new.
-	action setText: 'Exit'.
-	action addEventListener: 'triggered' then: [ self onFileExit ].
-
-	menu := QMenu new.
-	menu setTitle: 'File'.
-	menu addAction: action.
+	| menu menuBar |
+	exitAction := QAction new.
+	exitAction setText: 'Exit'.
+	exitAction setShortcut: ( QKeySequence new: 'Ctrl+Q' ).
+	exitAction onTrigger: [ self onFileExit ].
 
 	menuBar := QMenuBar new.
-	menuBar addMenu: menu.
+	menu := menuBar addMenuWithTitle: 'File'.
+	menu addAction: exitAction.
 	^ menuBar.
+!
+createStatusBar
+	"The status bar shows the last menu item triggered by the user."
+	statusBar := QStatusBar new.
+	statusBar showMessage: 'Ready'.
+	^ statusBar.
+!
+createShortcut
+	"Ctrl+S has the same effect as the 'Change style' button."
+	changeStyleShortcut := QShortcut new: window.
+	changeStyleShortcut setKey: ( QKeySequence new: 'Ctrl+S' ).
+	changeStyleShortcut onActivate: [ self changeStyle ].
 !
 onFileExit
 	QApplication instance quit.
@@ -51,11 +66,9 @@ createCentralWidget
 createRootLayout
 	| layout |
 	layout := QBoxLayout new: QLayout topToBottom.
-	layout addWidget: self createImageLabel stretch: 0 align: QLayout alignCenter.
 	layout addWidget: self createGreetLabel stretch: 0 align: QLayout alignCenter.
-	layout addWidget: self createChangeStyleButton stretch: 0 align: QLayout alignCenter.
-	layout addWidget: self createButtonsWidget stretch: 0 align: QLayout alignCenter.
-	layout addWidget: self createStatusLabel stretch: 0 align: QLayout alignCenter.
+	layout addWidget: self createImageLabel stretch: 0 align: QLayout alignCenter.
+	layout addWidget: self createTable stretch: 0 align: QLayout alignCenter.
 	^ layout.
 !
 createImageLabel
@@ -72,54 +85,52 @@ createGreetLabel
 	greetLabel := label.
 	^ label.
 !
-createChangeStyleButton
-	| button |
-	button := QPushButton new.
-	button setObjectName: 'changeStyleButton'.
-	button setText: 'Change style'.
-	button onClick: [ self changeStyle ].
-	changeStyleButton := button.
-	^ button.
-!
-changeStyle
-	colorIndex := colorIndex + 1 % colors length.
-	greetLabel setInlineStyle: 'color: ', ( colors at: colorIndex ).
-!
+"Widget tester table, like the element tester table of the Browser example.
+ Each row shows a widget type, a widget of that type and the status of its last event.
+ The 'Change style' button changes the style of the text in its status column instead."
 
-"Buttons, for manually testing the button classes.
- The status label shows the last button event."
+createTable
+	| layout widget |
+	layout := QGridLayout new.
+	"Keep the status column wide enough, so the table does not resize when a status changes."
+	layout setColumnMinimumWidth: 2 to: 160.
 
-createButtonsWidget
-	"Arrange the buttons vertically, grouped by type."
-	| widget layout |
-	layout := QBoxLayout new: QLayout topToBottom.
-	layout addWidget: ( self createGroup: 'Check box' widgets: ( Array new add: self createCheckBox ) )
-		stretch: 0 align: QLayout alignLeft.
-	layout addWidget: ( self createGroup: 'Radio buttons' widgets: ( Array new add: ( self createRow: self createRadioButtons ) ) )
-		stretch: 0 align: QLayout alignLeft.
-	layout addWidget: ( self createGroup: 'Tool button' widgets: ( Array new add: self createToolButton ) )
-		stretch: 0 align: QLayout alignLeft.
+	self addRow: 0 to: layout type: 'PushButton' widget: self createChangeStyleButton
+		status: ( styledLabel := self createStatusLabel: 'Styled text' ).
+	self addRow: 1 to: layout type: 'CheckBox' widget: self createCheckBox
+		status: ( checkBoxStatus := self createStatusLabel: 'unchecked' ).
+	self addRow: 2 to: layout type: 'RadioButton' widget: ( self createRow: self createRadioButtons )
+		status: ( radioButtonStatus := self createStatusLabel: 'None' ).
+	self addRow: 3 to: layout type: 'ToolButton' widget: self createToolButton
+		status: ( toolButtonStatus := self createStatusLabel: 'Not clicked' ).
+	self addRow: 4 to: layout type: 'GroupBox' widget: self createGroupBox
+		status: ( groupBoxStatus := self createStatusLabel: 'checked' ).
+	self addRow: 5 to: layout type: 'TabWidget' widget: self createTabWidget
+		status: ( tabWidgetStatus := self createStatusLabel: 'Tab: One' ).
+	self addRow: 6 to: layout type: 'StackedWidget' widget: self createStackedWidgetRow
+		status: ( stackedWidgetStatus := self createStatusLabel: 'Page 1' ).
+	self addRow: 7 to: layout type: 'Action' widget: self createOptionsButton
+		status: ( actionStatus := self createStatusLabel: 'No options' ).
 
 	widget := QWidget new.
-	widget setObjectName: 'buttons'.
+	widget setObjectName: 'table'.
 	widget setLayout: layout.
 	^ widget.
 !
-createGroup: title widgets: widgets
-	"Answer a widget with a title label above widgets."
-	| titleLabel layout group |
-	titleLabel := QLabel new.
-	titleLabel setObjectName: 'groupTitle'.
-	titleLabel setText: title.
-
-	layout := QBoxLayout new: QLayout topToBottom.
-	layout addWidget: titleLabel stretch: 0 align: QLayout alignLeft.
-	widgets do: [ :widget |
-		layout addWidget: widget stretch: 0 align: QLayout alignLeft ].
-
-	group := QWidget new.
-	group setLayout: layout.
-	^ group.
+addRow: row to: layout type: typeName widget: widget status: statusLabel
+	layout addWidget: ( self createLabel: typeName name: 'typeName' ) row: row column: 0 align: QLayout alignVCenter.
+	layout addWidget: widget row: row column: 1 align: QLayout alignLeft.
+	layout addWidget: statusLabel row: row column: 2 align: QLayout alignVCenter.
+!
+createLabel: text name: name
+	| label |
+	label := QLabel new.
+	label setObjectName: name.
+	label setText: text.
+	^ label.
+!
+createStatusLabel: text
+	^ self createLabel: text name: 'status'.
 !
 createRow: widgets
 	"Answer a widget with widgets arranged horizontally."
@@ -132,11 +143,22 @@ createRow: widgets
 	row setLayout: layout.
 	^ row.
 !
+createChangeStyleButton
+	changeStyleButton := QPushButton new.
+	changeStyleButton setObjectName: 'changeStyleButton'.
+	changeStyleButton setText: 'Change style'.
+	changeStyleButton onClick: [ self changeStyle ].
+	^ changeStyleButton.
+!
+changeStyle
+	colorIndex := colorIndex + 1 % colors length.
+	styledLabel setInlineStyle: 'color: ', ( colors at: colorIndex ).
+!
 createCheckBox
 	checkBox := QCheckBox new.
 	checkBox setText: 'Tristate'.
 	checkBox setTristate: true.
-	checkBox onStateChange: [ self showStatus: 'Check box: ', self checkStateName ].
+	checkBox onStateChange: [ checkBoxStatus setText: self checkStateName ].
 	^ checkBox.
 !
 checkStateName
@@ -155,7 +177,7 @@ createRadioButtons
 		id := id + 1.
 		buttonGroup addButton: radioButton id: id ].
 	buttonGroup onIdClick: [ :id |
-		self showStatus: 'Radio button: ', ( buttonGroup button: id ) text ].
+		radioButtonStatus setText: ( buttonGroup button: id ) text ].
 	^ radioButtons.
 !
 createToolButton
@@ -171,7 +193,7 @@ createToolButton
 	toolButton setToolButtonStyle: QToolButton textBesideIcon.
 	toolButton setMenu: menu.
 	toolButton setPopupMode: QToolButton menuButtonPopup.
-	toolButton onClick: [ self showStatus: 'Tool button clicked' ].
+	toolButton onClick: [ toolButtonStatus setText: 'Clicked' ].
 	^ toolButton.
 !
 createToolMenuAction: text
@@ -182,16 +204,81 @@ createToolMenuAction: text
 	^ action.
 !
 onToolMenu: text
-	self showStatus: 'Tool menu: ', text.
+	toolButtonStatus setText: 'Menu: ', text.
 !
-createStatusLabel
-	statusLabel := QLabel new.
-	statusLabel setObjectName: 'statusLabel'.
-	statusLabel setText: 'Click a button.'.
-	^ statusLabel.
+createGroupBox
+	"Unchecking the group box disables the widgets in it."
+	| layout |
+	layout := QBoxLayout new: QLayout leftToRight.
+	layout addWidget: ( QLabel new setText: 'Grouped label' ) stretch: 0 align: QLayout alignLeft.
+	layout addWidget: ( QPushButton new setText: 'Grouped button' ) stretch: 0 align: QLayout alignLeft.
+
+	groupBox := QGroupBox new.
+	groupBox setTitle: 'Enabled'.
+	groupBox setCheckable: true.
+	groupBox setLayout: layout.
+	groupBox onToggle: [
+		groupBoxStatus setText: ( groupBox isChecked ifTrue: [ 'checked' ] ifFalse: [ 'unchecked' ] ) ].
+	^ groupBox.
 !
-showStatus: text
-	statusLabel setText: text.
+createTabWidget
+	tabNames := #( 'One' 'Two' 'Three' ).
+	tabWidget := QTabWidget new.
+	tabNames do: [ :name |
+		tabWidget addTab: ( QLabel new setText: 'Page ', name ) label: name ].
+	tabWidget onCurrentChange: [
+		tabWidgetStatus setText: 'Tab: ', ( tabNames at: tabWidget currentIndex ) ].
+	^ tabWidget.
+!
+createStackedWidgetRow
+	"The 'Next' button shows the next page of the stacked widget."
+	stackedWidget := QStackedWidget new.
+	#( 'Page 1' 'Page 2' 'Page 3' ) do: [ :text |
+		stackedWidget addWidget: ( QLabel new setText: text ) ].
+	stackedWidget onCurrentChange: [
+		stackedWidgetStatus setText: 'Page ', ( stackedWidget currentIndex + 1 ) toString ].
+
+	nextPageButton := QPushButton new.
+	nextPageButton setText: 'Next'.
+	nextPageButton onClick: [
+		stackedWidget setCurrentIndex: stackedWidget currentIndex + 1 % stackedWidget count ].
+	^ self createRow: ( Array new add: stackedWidget; add: nextPageButton ).
+!
+createOptionsButton
+	"A button with a menu of checkable actions. The status shows the checked actions.
+	 Triggering a menu item also shows it in the status bar."
+	| menu resetAction |
+	menu := QMenu new.
+	menu addSection: 'Options'.
+	optionActions := #( 'Bold' 'Italic' 'Underline' ) map: [ :text | self createOptionAction: text ].
+	optionActions do: [ :action | menu addAction: action ].
+	menu addSeparator.
+	resetAction := QAction new setText: 'Reset'.
+	resetAction onTrigger: [ self resetOptions ].
+	menu addAction: resetAction.
+	menu onTrigger: [ :action | statusBar showMessage: 'Menu: ', action text ].
+
+	optionsButton := QToolButton new.
+	optionsButton setText: 'Options'.
+	optionsButton setMenu: menu.
+	optionsButton setPopupMode: QToolButton instantPopup.
+	^ optionsButton.
+!
+createOptionAction: text
+	| action |
+	action := QAction new.
+	action setText: text.
+	action setCheckable: true.
+	action onToggle: [ self showOptions ].
+	^ action.
+!
+showOptions
+	| checked |
+	checked := ( optionActions filter: [ :action | action isChecked ] ) map: [ :action | action text ].
+	actionStatus setText: ( checked isEmpty ifTrue: [ 'No options' ] ifFalse: [ checked join: ', ' ] ).
+!
+resetOptions
+	optionActions do: [ :action | action setChecked: false ].
 !
 
 "Accessing (used by tests)"
@@ -199,27 +286,72 @@ showStatus: text
 greetLabel
 	^ greetLabel.
 !
-changeStyleButton
-	^ changeStyleButton.
-!
 colors
 	^ colors.
 !
 colorIndex
 	^ colorIndex.
 !
-statusLabel
-	^ statusLabel.
+changeStyleButton
+	^ changeStyleButton.
+!
+styledLabel
+	^ styledLabel.
 !
 checkBox
 	^ checkBox.
 !
+checkBoxStatus
+	^ checkBoxStatus.
+!
 radioButtons
 	^ radioButtons.
+!
+radioButtonStatus
+	^ radioButtonStatus.
 !
 toolButton
 	^ toolButton.
 !
 toolMenuActions
 	^ toolMenuActions.
+!
+toolButtonStatus
+	^ toolButtonStatus.
+!
+groupBox
+	^ groupBox.
+!
+groupBoxStatus
+	^ groupBoxStatus.
+!
+tabWidget
+	^ tabWidget.
+!
+tabWidgetStatus
+	^ tabWidgetStatus.
+!
+stackedWidget
+	^ stackedWidget.
+!
+nextPageButton
+	^ nextPageButton.
+!
+stackedWidgetStatus
+	^ stackedWidgetStatus.
+!
+statusBar
+	^ statusBar.
+!
+exitAction
+	^ exitAction.
+!
+changeStyleShortcut
+	^ changeStyleShortcut.
+!
+optionActions
+	^ optionActions.
+!
+actionStatus
+	^ actionStatus.
 !
