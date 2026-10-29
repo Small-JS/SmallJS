@@ -7,7 +7,8 @@ CLASS MyNodeGuiApp EXTENDS QApplication MODULE MyNodeGuiApp CLASSVARS ''
 		statusBar exitAction changeStyleShortcut optionsButton optionActions actionStatus
 		heart richLabel labelStatus frame frameShapes frameShapeIndex shapeButton frameStatus
 		lineEdit lineEditStatus progressBar stepButton progressBarStatus
-		lcdNumber countButton lcdNumberStatus dateButton calendar calendarStatus'
+		lcdNumber countButton lcdNumberStatus dateButton calendar calendarStatus
+		hue swatch colorButton colorStatus fonts fontIndex fontSample fontButton fontStatus'
 
 start
 	colors := #( 'black' 'red' 'green' 'blue' ).
@@ -140,6 +141,10 @@ createTable
 		status: ( lcdNumberStatus := self createStatusLabel: 'Count: 0' ).
 	self addRow: 13 to: layout type: 'Calendar' widget: self createDateButton
 		status: ( calendarStatus := self createStatusLabel: 'Date: ', QDate today toString ).
+	self addRow: 14 to: layout type: 'Color' widget: self createColorRow
+		status: ( colorStatus := self createStatusLabel: 'Color: ', self swatchColor name ).
+	self addRow: 15 to: layout type: 'Font' widget: self createFontRow
+		status: ( fontStatus := self createStatusLabel: self fontName ).
 
 	widget := QWidget new.
 	widget setObjectName: 'table'.
@@ -400,6 +405,53 @@ showCalendar
 	calendar move: ( dateButton mapToGlobal: ( QPoint x: 0 y: dateButton height ) ).
 	calendar show.
 !
+createColorRow
+	"A swatch, a pixmap made from an image filled with a color.
+	 The 'Color' button changes the hue of the color."
+	hue := 0.
+	swatch := QLabel new.
+	self showSwatch.
+	colorButton := QPushButton new.
+	colorButton setText: 'Color'.
+	colorButton onClick: [
+		hue := hue + 60 % 360.
+		self showSwatch.
+		colorStatus setText: 'Color: ', self swatchColor name ].
+	^ self createRow: ( Array new add: swatch; add: colorButton ).
+!
+swatchColor
+	^ QColor hue: hue saturation: 200 value: 230.
+!
+showSwatch
+	| image |
+	image := QImage width: 40 height: 16.
+	image fill: self swatchColor.
+	swatch setPixmap: ( QPixmap fromImage: image ).
+!
+createFontRow
+	"The 'Font' button shows the sample text in the next font."
+	fonts := Array new
+		add: ( QFont family: 'Arial' pointSize: 10 );
+		add: ( ( QFont family: 'Courier New' pointSize: 11 ) setBold: true );
+		add: ( ( QFont family: 'Times New Roman' pointSize: 12 ) setItalic: true ).
+	fontIndex := 0.
+	fontSample := QLabel new setText: 'Sample text'.
+	fontSample setFont: ( fonts at: 0 ).
+	fontButton := QPushButton new.
+	fontButton setText: 'Font'.
+	fontButton onClick: [
+		fontIndex := fontIndex + 1 % fonts length.
+		fontSample setFont: ( fonts at: fontIndex ).
+		fontStatus setText: self fontName ].
+	^ self createRow: ( Array new add: fontSample; add: fontButton ).
+!
+fontName
+	| font |
+	font := fontSample font.
+	^ font family, ' ', font pointSize toString,
+		( font bold ifTrue: [ ' bold' ] ifFalse: [ '' ] ),
+		( font italic ifTrue: [ ' italic' ] ifFalse: [ '' ] ).
+!
 
 "Accessing (used by tests)"
 
@@ -528,4 +580,22 @@ calendarStatus
 !
 labelStatus
 	^ labelStatus.
+!
+swatch
+	^ swatch.
+!
+colorButton
+	^ colorButton.
+!
+colorStatus
+	^ colorStatus.
+!
+fontSample
+	^ fontSample.
+!
+fontButton
+	^ fontButton.
+!
+fontStatus
+	^ fontStatus.
 !

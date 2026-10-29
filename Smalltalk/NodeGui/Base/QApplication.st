@@ -21,6 +21,13 @@ instance
 	^ self fromJs: INLINE 'qApplicationInstance$ ??= nodegui$.QApplication.instance()'.
 !
 
+"Clipboard"
+
+clipboard
+	"Answer the system clipboard."
+	^ QClipboard fromJs: INLINE 'nodegui$.QApplication.clipboard()'.
+!
+
 "App wide settings"
 
 setApplicationDisplayName: name

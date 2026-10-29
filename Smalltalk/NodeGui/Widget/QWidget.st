@@ -120,9 +120,15 @@ setStyleSheet: styleSheet
 styleSheet
 	^ String fromJs: INLINE 'this.js.styleSheet()'.
 !
-setCursor: cursorShape
-	"Use the cursor shape enums."
-	INLINE 'this.js.setCursor( cursorShape.js )'.
+setCursor: cursor
+	"Cursor is a QCursor, or a cursor shape enum."
+	INLINE 'this.js.setCursor( cursor.js )'.
+!
+setFont: font
+	INLINE 'this.js.setFont( font.js )'.
+!
+font
+	^ QFont fromJs: INLINE 'this.js.font()'.
 !
 update
 	"Repaint the widget when control returns to the event loop."

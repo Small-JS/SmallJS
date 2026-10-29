@@ -29,6 +29,8 @@ async testGui
 	await self testProgressBar.
 	await self testLcdNumber.
 	await self testCalendar.
+	await self testColor.
+	await self testFont.
 	await self testWindow.
 !
 async testPushButton
@@ -240,6 +242,30 @@ async testCalendar
 	calendar hide.
 	await Timer timeout: 500.
 	self assert: [ calendar isVisible not ].
+!
+async testColor
+	"Click the 'Color' button and check the color of the swatch."
+	| status |
+	status := myNodeGuiApp colorStatus.
+	self assert: [ status text = ( 'Color: ', ( QColor hue: 0 saturation: 200 value: 230 ) name ) ].
+	self assert: [ myNodeGuiApp swatch sizeHint = ( QSize width: 40 height: 16 ) ].
+
+	await self clickAndWait: myNodeGuiApp colorButton.
+	self assert: [ status text = ( 'Color: ', ( QColor hue: 60 saturation: 200 value: 230 ) name ) ].
+	self assert: [ myNodeGuiApp swatchColor = ( QColor hue: 60 saturation: 200 value: 230 ) ].
+!
+async testFont
+	"Click the 'Font' button through all fonts, back to the first."
+	| status |
+	status := myNodeGuiApp fontStatus.
+	self assert: [ status text = 'Arial 10' ].
+	await self clickAndWait: myNodeGuiApp fontButton.
+	self assert: [ status text = 'Courier New 11 bold' ].
+	self assert: [ myNodeGuiApp fontSample font bold ].
+	await self clickAndWait: myNodeGuiApp fontButton.
+	self assert: [ status text = 'Times New Roman 12 italic' ].
+	await self clickAndWait: myNodeGuiApp fontButton.
+	self assert: [ status text = 'Arial 10' ].
 !
 async testWindow
 	"Resizing and moving the visible window fires events. Restore the geometry afterwards."

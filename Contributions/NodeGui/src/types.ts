@@ -34,6 +34,11 @@ let qButtonGroupSignals: nodegui.QButtonGroupSignals;
 let qIcon: nodegui.QIcon;
 let qPixmap: nodegui.QPixmap;
 let qMovie: nodegui.QMovie;
+let qColor: nodegui.QColor;
+let qFont: nodegui.QFont;
+let qImage: nodegui.QImage;
+let qClipboard: nodegui.QClipboard;
+let qCursor: nodegui.QCursor;
 
 // Layout
 let qLayout: nodegui.QLayout;
@@ -86,7 +91,7 @@ let qCalendar: nodegui.QCalendarWidget;
 let qCalendarSignals: nodegui.QCalendarWidgetSignals;
 
 // Enums, used as integer constants in the ST classes.
-// Note: The QMovie signals and the QCalendarWidget header format enums are not exported by NodeGui.
+// Note: The QMovie and QClipboard signals and the QCalendarWidget header format enums are not exported by NodeGui.
 let alignmentFlag = nodegui.AlignmentFlag.AlignCenter;
 let arrowType = nodegui.ArrowType.RightArrow;
 let aspectRatioMode = nodegui.AspectRatioMode.KeepAspectRatio;
@@ -96,6 +101,12 @@ let corner = nodegui.Corner.TopRightCorner;
 let cursorShape = nodegui.CursorShape.PointingHandCursor;
 let dayOfWeek = nodegui.DayOfWeek.Sunday;
 let direction = nodegui.Direction.TopToBottom;
+let qFontCapitalization = nodegui.QFontCapitalization.SmallCaps;
+let qFontStretch = nodegui.QFontStretch.Condensed;
+let qFontWeight = nodegui.QFontWeight.Bold;
+let qIconMode = nodegui.QIconMode.Disabled;
+let qIconState = nodegui.QIconState.On;
+let qImageFormat = nodegui.QImageFormat.ARGB32;
 let echoMode = nodegui.EchoMode.Password;
 let focusPolicy = nodegui.FocusPolicy.StrongFocus;
 let lcdMode = nodegui.Mode.Dec;
@@ -105,6 +116,7 @@ let qProgressBarDirection = nodegui.QProgressBarDirection.TopToBottom;
 let qSizePolicyPolicy = nodegui.QSizePolicyPolicy.Expanding;
 let qSystemTrayIconActivationReason = nodegui.QSystemTrayIconActivationReason.Trigger;
 let shortcutContext = nodegui.ShortcutContext.WindowShortcut;
+let transformationMode = nodegui.TransformationMode.SmoothTransformation;
 let segmentStyle = nodegui.SegmentStyle.Flat;
 let selectionMode = nodegui.SelectionMode.SingleSelection;
 let shadow = nodegui.Shadow.Sunken;
