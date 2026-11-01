@@ -49,9 +49,13 @@ async close
 
 "Tools"
 
+async listTools
+	"Answer an Array of McpTool: the tools of the server."
+	^ Array fromJs: INLINE '( await this.js.listTools() ).tools' elementClass: McpTool.
+!
 async listToolNames
 	"Answer an Array with the names of the tools of the server."
-	^ Array fromJsStrings: INLINE '( await this.js.listTools() ).tools.map( tool => tool.name )'.
+	^ ( await self listTools ) map: [ :tool | tool name ].
 !
 async callTool: name arguments: toolArguments
 	"Call tool name with toolArguments, a JsObject with the input arguments.

@@ -29,6 +29,15 @@ import * as mcpClientStdio from "@modelcontextprotocol/client/stdio";
 let mcsStdioClientTransport: mcpClientStdio.StdioClientTransport;
 let mcsStdioServerParameters: mcpClientStdio.StdioServerParameters;
 
+// AI - Ollama
+import * as ollama from "ollama";
+let olOllama: ollama.Ollama;
+let olChatRequest: ollama.ChatRequest;
+let olChatResponse: ollama.ChatResponse;
+let olMessage: ollama.Message;
+let olTool: ollama.Tool;
+let olToolCall: ollama.ToolCall;
+
 // Zod - tool input schemas
 import * as Zod from "zod/v4";
 let zodObject: Zod.ZodObject;

@@ -5,13 +5,28 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			// Interactive: type MCP JSON-RPC messages, one per line, in the terminal.
-			// The Debug Console has no stdin, so the integrated terminal is used.
+			// Asks Ollama a question, using the tools of the MCP server. Ollama must be running.
 			"name": "Launch App",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceFolder}/out/main.js",
 			"args": [],
+			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
+			"skipFiles": [
+				"<node_internals>/**",
+				"**/Runtime.js"
+			],
+			"preLaunchTask": "Compile Smalltalk"
+		},
+		{
+			// Interactive: type MCP JSON-RPC messages, one per line, in the terminal.
+			// The Debug Console has no stdin, so the integrated terminal is used.
+			"name": "Launch Server",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/out/main.js",
+			"args": [ "-server" ],
 			"cwd": "${workspaceFolder}",
 			"console": "integratedTerminal",
 			"skipFiles": [
@@ -27,6 +42,7 @@
 			"program": "${workspaceFolder}/out/main.js",
 			"args": "-test",
 			"cwd": "${workspaceFolder}",
+			"envFile": "${workspaceFolder}/.env",
 			"skipFiles": [
 				"<node_internals>/**",
 				"**/Runtime.js"

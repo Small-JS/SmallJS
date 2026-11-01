@@ -3,6 +3,7 @@
 	"dependencies": {
 		"@modelcontextprotocol/client": "^2.4.0",
 		"@modelcontextprotocol/server": "^2.4.0",
+		"ollama": "^0.6.4",
 		"zod": "^4.6.7"
 	},
 	"devDependencies": {

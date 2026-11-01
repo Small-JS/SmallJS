@@ -10,7 +10,7 @@ Ollama can be downloaded here:\
 
 After Ollama is installed, open a terminal and install 2 models with:\
 `ollama run nomic-embed-text`\
-`ollama run llama3.2`
+`ollama run qwen3.5:4b`
 
 You could use other models, but these are tested to work.
 

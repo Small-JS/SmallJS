@@ -63,7 +63,7 @@ their tests in a `Test` subfolder: `Test/Test<Class>.st`.
 - `./startOllama.sh`: starts a local Ollama server.
 - `./install.sh`: installs npm dependencies and creates the SQLite database. `./update.sh -y`: updates them.
 - `./clean.sh`: removes the generated files, including the SQLite database.
-- `.env` (see `.env.example`): `OLLAMA_BASE_URL`, `OLLAMA_MODELS` (chat model),
+- `.env` (see `.env.example`): `OLLAMA_BASE_URL`, `OLLAMA_MODELS` (chat model, default `qwen3.5:4b`),
   `OLLAMA_EMBEDDING_MODELS` and `STORE_CONFIG` (SQLite file path or Postgres connection string).
   The models must be installed in Ollama. A Postgres connection string may contain a password:
   never print, commit or copy `.env`.

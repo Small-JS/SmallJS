@@ -42,9 +42,8 @@ async testChat
 	| promises statuses failures |
 	promises := aiServer aiMap values map: [ :ai |
 		Promise fromJs: ( self chatRequest: ai ) ].
-	statuses := Array
-		fromJs: ( await ( Promise allSettled: promises then: [ :results | ] ) js )
-		elementClass: PromiseStatus.
+	"The then: block receives the results already converted to an Array of PromiseStatus."
+	statuses := await ( Promise allSettled: promises then: [ :promiseStatuses | promiseStatuses ] ) js.
 	failures := statuses filter: [ :status | status status = 'rejected' ].
 	failures do: [ :status |
 		self log: 'TestAiServer: Chat request failed: ', ( Error fromJs: status reason ) message ].

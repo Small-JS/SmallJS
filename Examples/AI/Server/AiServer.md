@@ -80,8 +80,8 @@ The following AI providers are supported:
 
 With Ollama you can run models locally, so you don't need API keys and buy tokens.\
 The Ollama server software can be downloaded here: [ollama.com/download](https://ollama.com/download)\
-Ollama supports open source models. A small starter model is Llama 3.2 1B.\
-You can download, install and run it with: `ollama run llama3.2:1b`\
+Ollama supports open source models. A small starter model is Qwen 3.5 4B.\
+You can download, install and run it with: `ollama run qwen3.5:4b`\
 Start the Ollama server with `./startOllama.sh`.
 
 ### OpenAI with models GPT*

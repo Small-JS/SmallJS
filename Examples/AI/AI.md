@@ -17,5 +17,5 @@ A RetrievalAugmented Generation (RAG) node app.
 
 ## [MCP](MPC/MCP.md)
 
-A simple Model Context Protocol (MCP) server node app.
+A simple Model Context Protocol (MCP) server and host node app, using Ollama.
 

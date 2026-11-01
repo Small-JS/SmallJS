@@ -21,7 +21,7 @@ with a vectorized question.
 
 Class `OllamaRag` encapsulates access to 2 AI LLMs in Ollama:\
 - An embedding model, e.g. `nomic-embed-text`, to store and query documents.\
-- A simple query model, e.g. `llama3.2:1b`, for human readable responses\
+- A simple query model, e.g. `qwen3.5:4b`, for human readable responses\
   where the best matching embedded documents are given as context.
 
 ## Finished
