@@ -17,3 +17,4 @@ fi
 
 ./Server/update.sh -y
 ./RAG/update.sh -y
+./MPC/update.sh -y

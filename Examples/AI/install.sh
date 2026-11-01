@@ -9,3 +9,4 @@ cd "$(dirname "$0")"
 
 ./Server/install.sh
 ./RAG/install.sh
+./MPC/install.sh

@@ -15,3 +15,7 @@ A multi-model chat client for the server above.
 
 A RetrievalAugmented Generation (RAG) node app.
 
+## [MCP](MPC/MCP.md)
+
+A simple Model Context Protocol (MCP) server node app.
+

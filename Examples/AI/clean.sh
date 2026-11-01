@@ -9,3 +9,4 @@ cd "$(dirname "$0")"
 ./Server/clean.sh
 ./Client/clean.sh
 ./RAG/clean.sh
+./MPC/clean.sh
