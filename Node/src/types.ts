@@ -49,6 +49,11 @@ import { HttpTerminator } from "http-terminator";
 import express from "express";
 import session from "express-session";
 
+// WebSocket server
+import * as ws$ from "ws";
+let wsWebSocket: ws$.WebSocket;
+let wsWebSocketServer: ws$.WebSocketServer;
+
 // ==== Databases
 
 // SQLite

@@ -197,7 +197,7 @@ async statfs
 	self assert: [ stats ffree >= 0 ].
 !
 async watch
-	| controller options fileNames watching filePath |
+	| controller options fileNames watching timer filePath |
 	controller := AbortController new.
 	options := FileWatchOptions new.
 	options signal: controller signal.
@@ -208,13 +208,15 @@ async watch
 		"On macOS, FSEvents may first report earlier changes in the directory."
 		fileName = 'watched.tmp' ifTrue: [ controller abort ] ].
 	"Stop watching after a while, also if no events arrive."
-	Timer timeout: 5000 then: [ controller abort ].
+	timer := Timer timeout: 5000 then: [ controller abort ].
 
 	"Give the watcher time to start."
 	await Timer timeout: 100.
 	filePath := Path join: tempDirName with: 'watched.tmp'.
 	await Fsp writeFile: filePath data: 'Watched' options: nil.
 	await watching.
+	"Clear the timer, otherwise it keeps Node.js running after the tests."
+	timer clearTimeout.
 	self assert: [ fileNames includes: 'watched.tmp' ].
 	await Fsp unlink: filePath.
 !

@@ -38,6 +38,27 @@ their tests in `../Smalltalk/Node/<Area>/Test/Test<Class>.st`.
 - `./out` contains compiled output (JS and source maps). Do not edit files there; edit ./src or ../Smalltalk instead.
 - `package.json` has `"type": "module"`: compiled ST classes are ES modules, exported as `st<ClassName>$class`.
 
+## Coding style
+
+- Preferred way to import a Node.js or npm module in a class: a namespace import named after the module
+  with a `$` suffix, e.g. `INLINE 'import * as ws$ from "ws";'`, used as `new ws$.WebSocketServer( ... )`.
+  The `$` suffix prevents name clashes with variables.
+- Classes in the same ST module compile into one JS file, so a namespace name can be imported only once per module.
+  Other classes in that module reuse it, with a comment naming the class that has the import
+  (e.g. `WebSocketServer` uses `ws$` imported in `NodeWebSocket`).
+- Preferred way to pass an ST block as JS callback: first create an ST block named `jsBlock`
+  that converts the JS arguments to ST objects, then use `jsBlock.js` in the INLINE code, e.g.:
+  ```smalltalk
+  onConnection: block
+  	| jsBlock |
+  	jsBlock := [ :jsSocket :jsRequest |
+  		block value: ( NodeWebSocket fromJs: jsSocket ) value: ( IncomingMessage fromJs: jsRequest ) ].
+  	INLINE 'this.js.on( "connection", jsBlock.js )'.
+  ```
+  This is more concise than converting in INLINE JS code, and referencing the classes in ST
+  makes their modules import automatically, without "Force import" statements.
+  A block without arguments can be passed directly as `block.js`.
+
 ## Goal
 
 - Implement and test more libraries, but on specific requests only.

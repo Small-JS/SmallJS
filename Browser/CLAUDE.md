@@ -42,6 +42,17 @@ https://developer.mozilla.org/en-US/docs/Web/API
 
 ## Coding style
 
+- Preferred way to pass an ST block as JS callback: first create an ST block named `jsBlock`
+  that converts the JS arguments to ST objects, then use `jsBlock.js` in the INLINE code, e.g.:
+  ```smalltalk
+  onMessage: block
+  	| jsBlock |
+  	jsBlock := [ :jsEvent | block value: ( MessageEvent fromJs: jsEvent ) ].
+  	INLINE 'this.js.onmessage = jsBlock.js'.
+  ```
+  This is more concise than converting in INLINE JS code, and referencing the classes in ST
+  makes their modules import automatically, without "Force import" statements.
+  A block without arguments can be passed directly as `block.js`.
 - Do not end cascades with `yourself` when it is not necessary.
   In SmallJS a method without an explicit `^` return returns `self`,
   so a cascade ending with such a method (e.g. a setter) already returns the receiver.
