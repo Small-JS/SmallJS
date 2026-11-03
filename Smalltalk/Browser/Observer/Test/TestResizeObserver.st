@@ -68,8 +68,9 @@ async testResize
 	 With box 'border-box', a padding change is a size change, although the content size is the same.
 	 The size is changed after the block, because changing it in the block
 	 makes the browser report a 'ResizeObserver loop' error."
-	| div observer resizing sizes |
+	| div options observer resizing sizes |
 	div := self newDiv.
+	options := ResizeObserverOptions new box: 'border-box'.
 	sizes := Array new.
 	resizing := Promise new: [ :resolve :reject |
 		observer := ResizeObserver new: [ :entries |
@@ -77,7 +78,7 @@ async testResize
 			sizes length = 1 ifTrue: [ Timer timeout: 0 then: [
 				div setAttribute: 'style' value: 'width: 100px; height: 50px; padding: 20px; border: 1px solid' ] ].
 			sizes length = 2 ifTrue: [ resolve value: nil ] ].
-		observer observe: div options: ( ResizeObserverOptions new box: 'border-box' ) ].
+		observer observe: div options: options ].
 	await resizing js.
 	observer disconnect.
 	div remove.

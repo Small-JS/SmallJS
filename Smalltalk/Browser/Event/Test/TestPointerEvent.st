@@ -30,7 +30,7 @@ testOptions
 		contact: 10 @ 20;
 		pressure: 0.5; tangentialPressure: -0.25;
 		tilt: 30 @ -45; twist: 90;
-		clientX: 5; ctrlKey: true; bubbles: true.
+		client: 5 @ 6; ctrlKey: true; bubbles: true.
 	event := PointerEvent type: 'pointermove' options: options.
 	self assert: [ event class = PointerEvent ].
 	self assert: [ event type = 'pointermove' ].
@@ -43,7 +43,7 @@ testOptions
 	self assert: [ event tilt = ( 30 @ -45 ) ].
 	self assert: [ event twist = 90 ].
 	"Inherited options"
-	self assert: [ event client x = 5 ].
+	self assert: [ event client = ( 5 @ 6 ) ].
 	self assert: [ event ctrlKey ].
 	self assert: [ event bubbles ].
 

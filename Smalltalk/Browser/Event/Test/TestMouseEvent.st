@@ -24,9 +24,9 @@ testOptions
 	options := MouseEventOptions new
 		altKey: true; ctrlKey: true; metaKey: false; shiftKey: true;
 		button: 2; buttons: 3;
-		clientX: 10; clientY: 20;
-		screenX: 110; screenY: 120;
-		movementX: 1; movementY: -2;
+		client: 10 @ 20;
+		screen: 110 @ 120;
+		movement: 1 @ -2;
 		relatedTarget: Window default;
 		detail: 1; bubbles: true.
 	event := MouseEvent type: 'mousedown' options: options.
@@ -65,7 +65,7 @@ testListener
 	| div options mouseEvent pointerEvent customEvent received block |
 	div := Document new createElement: 'div'.
 	div addEventListener: 'mousedown' then: [ :event | received := event ].
-	options := MouseEventOptions new clientX: 5; clientY: 6.
+	options := MouseEventOptions new client: 5 @ 6.
 	mouseEvent := MouseEvent type: 'mousedown' options: options.
 	div dispatchEvent: mouseEvent.
 	self assert: [ received class = MouseEvent ].

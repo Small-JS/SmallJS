@@ -48,41 +48,41 @@ buttons: buttons
 
 "Positions"
 
-clientX
-	^ Float fromJs: INLINE 'this.js.clientX'.
+client
+	"Position relative to the viewport as a Point: clientX @ clientY, or nil if not set.
+	 If only one is set, the other has the JS default value 0."
+	INLINE 'if( this.js.clientX == null && this.js.clientY == null ) return stNil$'.
+	^ ( Float fromJs: INLINE 'this.js.clientX ?? 0' ) @
+		( Float fromJs: INLINE 'this.js.clientY ?? 0' ).
 !
-clientX: clientX
-	INLINE 'this.js.clientX = clientX.js'.
+client: point
+	"Position relative to the viewport as a Point: clientX @ clientY."
+	INLINE 'this.js.clientX = point.x.js'.
+	INLINE 'this.js.clientY = point.y.js'.
 !
-clientY
-	^ Float fromJs: INLINE 'this.js.clientY'.
+screen
+	"Position relative to the screen as a Point: screenX @ screenY, or nil if not set.
+	 If only one is set, the other has the JS default value 0."
+	INLINE 'if( this.js.screenX == null && this.js.screenY == null ) return stNil$'.
+	^ ( Float fromJs: INLINE 'this.js.screenX ?? 0' ) @
+		( Float fromJs: INLINE 'this.js.screenY ?? 0' ).
 !
-clientY: clientY
-	INLINE 'this.js.clientY = clientY.js'.
+screen: point
+	"Position relative to the screen as a Point: screenX @ screenY."
+	INLINE 'this.js.screenX = point.x.js'.
+	INLINE 'this.js.screenY = point.y.js'.
 !
-screenX
-	^ Float fromJs: INLINE 'this.js.screenX'.
+movement
+	"Movement since the previous mouse event as a Point: movementX @ movementY, or nil if not set.
+	 If only one is set, the other has the JS default value 0."
+	INLINE 'if( this.js.movementX == null && this.js.movementY == null ) return stNil$'.
+	^ ( Float fromJs: INLINE 'this.js.movementX ?? 0' ) @
+		( Float fromJs: INLINE 'this.js.movementY ?? 0' ).
 !
-screenX: screenX
-	INLINE 'this.js.screenX = screenX.js'.
-!
-screenY
-	^ Float fromJs: INLINE 'this.js.screenY'.
-!
-screenY: screenY
-	INLINE 'this.js.screenY = screenY.js'.
-!
-movementX
-	^ Float fromJs: INLINE 'this.js.movementX'.
-!
-movementX: movementX
-	INLINE 'this.js.movementX = movementX.js'.
-!
-movementY
-	^ Float fromJs: INLINE 'this.js.movementY'.
-!
-movementY: movementY
-	INLINE 'this.js.movementY = movementY.js'.
+movement: point
+	"Movement since the previous mouse event as a Point: movementX @ movementY."
+	INLINE 'this.js.movementX = point.x.js'.
+	INLINE 'this.js.movementY = point.y.js'.
 !
 
 "Events"

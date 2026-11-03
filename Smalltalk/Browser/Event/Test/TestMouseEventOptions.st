@@ -8,7 +8,17 @@ test
 	self assert: [ options class = MouseEventOptions ].
 	self assert: [ options altKey isNil ].
 	self assert: [ options button isNil ].
-	self assert: [ options clientX isNil ].
+	self assert: [ options client isNil ].
+	self assert: [ options screen isNil ].
+	self assert: [ options movement isNil ].
+
+	"If only one coordinate is set, the other has the JS default value 0."
+	INLINE 'options.js.clientY = 2; options.js.movementX = 5'.
+	self assert: [ options client = ( 0 @ 2 ) ].
+	self assert: [ options movement = ( 5 @ 0 ) ].
+	INLINE 'delete options.js.clientY; delete options.js.movementX'.
+	self assert: [ options client isNil ].
+	self assert: [ options movement isNil ].
 	self assert: [ options relatedTarget isNil ].
 
 	options altKey: true; ctrlKey: true; metaKey: true; shiftKey: true.
@@ -21,13 +31,10 @@ test
 	self assert: [ options button = 1 ].
 	self assert: [ options buttons = 4 ].
 
-	options clientX: 1.5; clientY: 2; screenX: 3; screenY: 4; movementX: 5; movementY: 6.
-	self assert: [ options clientX = 1.5 ].
-	self assert: [ options clientY = 2 ].
-	self assert: [ options screenX = 3 ].
-	self assert: [ options screenY = 4 ].
-	self assert: [ options movementX = 5 ].
-	self assert: [ options movementY = 6 ].
+	options client: 1.5 @ 2; screen: 3 @ 4; movement: 5 @ 6.
+	self assert: [ options client = ( 1.5 @ 2 ) ].
+	self assert: [ options screen = ( 3 @ 4 ) ].
+	self assert: [ options movement = ( 5 @ 6 ) ].
 
 	options relatedTarget: Window default.
 	self assert: [ options relatedTarget = Window default ].

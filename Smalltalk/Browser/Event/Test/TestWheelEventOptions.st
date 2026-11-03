@@ -20,8 +20,8 @@ test
 	self assert: [ options delta = ( 0 @ 5 @ 0 ) ].
 
 	"Inherited options"
-	options clientX: 4; button: 1; detail: 2; cancelable: true.
-	self assert: [ options clientX = 4 ].
+	options client: 4 @ 5; button: 1; detail: 2; cancelable: true.
+	self assert: [ options client = ( 4 @ 5 ) ].
 	self assert: [ options button = 1 ].
 	self assert: [ options detail = 2 ].
 	self assert: [ options cancelable ].

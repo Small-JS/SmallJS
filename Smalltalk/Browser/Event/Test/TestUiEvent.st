@@ -42,10 +42,22 @@ testFromJsSubEvent
 	event := UiEvent fromJsSubEvent: INLINE 'new FocusEvent( "focus" )'.
 	self assert: [ event class = FocusEvent ].
 
-	"JS subclasses without an ST class use the ST class of their nearest JS superclass."
 	event := UiEvent fromJsSubEvent: INLINE 'new DragEvent( "drag" )'.
-	self assert: [ event class = MouseEvent ].
+	self assert: [ event class = DragEvent ].
 	event := UiEvent fromJsSubEvent: INLINE 'new InputEvent( "input" )'.
+	self assert: [ event class = InputEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new CompositionEvent( "compositionstart" )'.
+	self assert: [ event class = CompositionEvent ].
+	TouchEvent available ifTrue: [
+		event := UiEvent fromJsSubEvent: INLINE 'new TouchEvent( "touchstart" )'.
+		self assert: [ event class = TouchEvent ] ].
+
+	"JS subclasses without an ST class use the ST class of their nearest JS superclass."
+	event := UiEvent fromJsSubEvent: INLINE 'new ( class MyDragEvent extends DragEvent {} )( "drag" )'.
+	self assert: [ event class = DragEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new ( class MyInputEvent extends InputEvent {} )( "input" )'.
+	self assert: [ event class = InputEvent ].
+	event := UiEvent fromJsSubEvent: INLINE 'new ( class MyUiEvent extends UIEvent {} )( "load" )'.
 	self assert: [ event class = UiEvent ].
 
 	"Fall back to Event fromJsSubEvent:"

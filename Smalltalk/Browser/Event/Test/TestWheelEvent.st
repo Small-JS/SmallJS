@@ -21,7 +21,7 @@ testOptions
 	| event options |
 	options := WheelEventOptions new
 		delta: 1.5 @ -2 @ 3; deltaMode: WheelEvent deltaLine;
-		clientX: 10; clientY: 20; ctrlKey: true; bubbles: true.
+		client: 10 @ 20; ctrlKey: true; bubbles: true.
 	event := WheelEvent type: 'wheel' options: options.
 	self assert: [ event class = WheelEvent ].
 	self assert: [ event delta = ( 1.5 @ -2 @ 3 ) ].

@@ -23,13 +23,14 @@ async waitForRecords: block
 "Tests"
 
 testCreation
-	| observer |
+	| observer options |
 	self assertError: [ MutationObserver new ].
 	observer := MutationObserver new: [ :records | ].
 	self assert: [ observer class = MutationObserver ].
 	self assert: [ observer jsClassName = 'MutationObserver' ].
 	"Observing without any of childList, attributes or characterData throws a JS TypeError."
-	self assert: [ ( [ observer observe: Document new body options: MutationObserverOptions new ]
+	options := MutationObserverOptions new.
+	self assert: [ ( [ observer observe: Document new body options: options ]
 		tryCatch: [ :error | error name ] ) = 'TypeError' ].
 !
 testOptions
@@ -46,13 +47,14 @@ testOptions
 	self assert: [ options attributeFilter = #( 'id' 'class' ) ].
 !
 async testChildList
-	| div span text records record |
+	| div span text options records record |
 	div := Document new createElement: 'div'.
 	span := Document new createElement: 'span'.
 	text := Document new createTextNode: 'Hello'.
 	div appendChild: span.
+	options := MutationObserverOptions new childList: true.
 	records := await self waitForRecords: [ :observer |
-		observer observe: div options: ( MutationObserverOptions new childList: true ).
+		observer observe: div options: options.
 		div appendChild: text.
 		span remove ].
 	self assert: [ records length = 2 ].
@@ -75,10 +77,11 @@ async testChildList
 	self assert: [ record nextSibling = text ].
 !
 async testAttributes
-	| div records record |
+	| div options records record |
 	div := ( Document new createElement: 'div' ) id: 'old'.
+	options := MutationObserverOptions new attributeFilter: #( 'id' ); attributeOldValue: true.
 	records := await self waitForRecords: [ :observer |
-		observer observe: div options: ( MutationObserverOptions new attributeFilter: #( 'id' ); attributeOldValue: true ).
+		observer observe: div options: options.
 		div className: 'ignored'.
 		div id: 'new' ].
 	self assert: [ records length = 1 ].
@@ -91,12 +94,13 @@ async testAttributes
 	self assert: [ record addedNodes isEmpty ].
 !
 async testCharacterData
-	| div text records record |
+	| div text options records record |
 	div := Document new createElement: 'div'.
 	text := Document new createTextNode: 'old'.
 	div appendChild: text.
+	options := MutationObserverOptions new subtree: true; characterDataOldValue: true.
 	records := await self waitForRecords: [ :observer |
-		observer observe: div options: ( MutationObserverOptions new subtree: true; characterDataOldValue: true ).
+		observer observe: div options: options.
 		text data: 'new' ].
 	self assert: [ records length = 1 ].
 	record := records first.
@@ -106,10 +110,11 @@ async testCharacterData
 	self assert: [ record oldValue = 'old' ].
 !
 testTakeRecords
-	| div observer records |
+	| div observer options records |
 	div := Document new createElement: 'div'.
 	observer := MutationObserver new: [ :mutationRecords | self assert: [ false ] ].
-	observer observe: div options: ( MutationObserverOptions new attributes: true ).
+	options := MutationObserverOptions new attributes: true.
+	observer observe: div options: options.
 	div id: 'id1'.
 	div id: 'id2'.
 	"Taking the pending records synchronously prevents calling the block."

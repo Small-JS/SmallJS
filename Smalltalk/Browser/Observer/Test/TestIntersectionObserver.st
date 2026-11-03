@@ -39,7 +39,7 @@ async waitForEntries: observe options: options
 "Tests"
 
 testCreation
-	| observer root |
+	| observer root options |
 	self assertError: [ IntersectionObserver new ].
 	observer := IntersectionObserver new: [ :entries | ].
 	self assert: [ observer class = IntersectionObserver ].
@@ -50,8 +50,8 @@ testCreation
 	observer disconnect.
 
 	root := Document new createElement: 'div'.
-	observer := IntersectionObserver new: [ :entries | ] options: ( IntersectionObserverOptions new
-		root: root; rootMargin: '10px 20%'; threshold: #( 1 0.5 ) ).
+	options := IntersectionObserverOptions new root: root; rootMargin: '10px 20%'; threshold: #( 1 0.5 ).
+	observer := IntersectionObserver new: [ :entries | ] options: options.
 	self assert: [ observer root = root ].
 	self assert: [ observer root class = HtmlDivElement ].
 	self assert: [ observer rootMargin = '10px 20% 10px 20%' ].
@@ -59,9 +59,11 @@ testCreation
 	observer disconnect.
 
 	"Invalid options throw a JS DOMException or RangeError, not an Error."
-	self assert: [ ( [ IntersectionObserver new: [ :entries | ] options: ( IntersectionObserverOptions new rootMargin: 'x' ) ]
+	options := IntersectionObserverOptions new rootMargin: 'x'.
+	self assert: [ ( [ IntersectionObserver new: [ :entries | ] options: options ]
 		tryCatch: [ :error | error name ] ) = 'SyntaxError' ].
-	self assert: [ ( [ IntersectionObserver new: [ :entries | ] options: ( IntersectionObserverOptions new threshold: 2 ) ]
+	options := IntersectionObserverOptions new threshold: 2.
+	self assert: [ ( [ IntersectionObserver new: [ :entries | ] options: options ]
 		tryCatch: [ :error | error name ] ) = 'RangeError' ].
 !
 testOptions
@@ -75,13 +77,14 @@ testOptions
 	self assert: [ options threshold = #( 0 1 ) ].
 !
 async testObserve
-	| root visible hidden entries entry |
+	| root visible hidden options entries entry |
 	root := self newRoot.
 	visible := root querySelector: '#visible'.
 	hidden := root querySelector: '#hidden'.
+	options := IntersectionObserverOptions new root: root.
 	entries := await self
 		waitForEntries: [ :observer | observer observe: visible; observe: hidden ]
-		options: ( IntersectionObserverOptions new root: root ).
+		options: options.
 	root remove.
 	self assert: [ entries length = 2 ].
 
@@ -106,20 +109,22 @@ async testObserve
 !
 async testRootMargin
 	"Growing the root box with rootMargin makes the hidden child intersect."
-	| root hidden entries |
+	| root hidden options entries |
 	root := self newRoot.
 	hidden := root querySelector: '#hidden'.
+	options := IntersectionObserverOptions new root: root; rootMargin: '0px 0px 200px 0px'.
 	entries := await self
 		waitForEntries: [ :observer | observer observe: hidden ]
-		options: ( IntersectionObserverOptions new root: root; rootMargin: '0px 0px 200px 0px' ).
+		options: options.
 	root remove.
 	self assert: [ entries first isIntersecting ].
 	self assert: [ entries first intersectionRatio = 1 ].
 !
 testTakeRecords
-	| root observer records |
+	| root options observer records |
 	root := self newRoot.
-	observer := IntersectionObserver new: [ :entries | ] options: ( IntersectionObserverOptions new root: root ).
+	options := IntersectionObserverOptions new root: root.
+	observer := IntersectionObserver new: [ :entries | ] options: options.
 	observer observe: ( root querySelector: '#visible' ).
 	"Some browsers, like Chrome, already compute the initial entry here, others only when rendering."
 	records := observer takeRecords.

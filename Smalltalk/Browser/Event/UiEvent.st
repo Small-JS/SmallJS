@@ -13,7 +13,7 @@ type: type options: options
 fromJsSubEvent: jsEvent
 	"Create ST UiEvent subclass object from JS UIEvent subclass object.
 	 JS subclasses without an ST class use the ST class of their nearest JS superclass,
-	 e.g. DragEvent becomes MouseEvent and InputEvent becomes UiEvent.
+	 e.g. a JS subclass of MouseEvent becomes MouseEvent.
 	 Falls back to Event for other JS events."
 
 	| jsClassName |
@@ -25,14 +25,24 @@ fromJsSubEvent: jsEvent
 	jsClassName = 'MouseEvent' ifTrue: [ ^ MouseEvent fromJs: jsEvent ].
 	jsClassName = 'PointerEvent' ifTrue: [ ^ PointerEvent fromJs: jsEvent ].
 	jsClassName = 'WheelEvent' ifTrue: [ ^ WheelEvent fromJs: jsEvent ].
+	jsClassName = 'DragEvent' ifTrue: [ ^ DragEvent fromJs: jsEvent ].
 	jsClassName = 'KeyboardEvent' ifTrue: [ ^ KeyboardEvent fromJs: jsEvent ].
 	jsClassName = 'FocusEvent' ifTrue: [ ^ FocusEvent fromJs: jsEvent ].
+	jsClassName = 'InputEvent' ifTrue: [ ^ InputEvent fromJs: jsEvent ].
+	jsClassName = 'CompositionEvent' ifTrue: [ ^ CompositionEvent fromJs: jsEvent ].
+	jsClassName = 'TouchEvent' ifTrue: [ ^ TouchEvent fromJs: jsEvent ].
 
 	( Boolean fromJs: INLINE 'jsEvent instanceof PointerEvent' ) ifTrue: [ ^ PointerEvent fromJs: jsEvent ].
 	( Boolean fromJs: INLINE 'jsEvent instanceof WheelEvent' ) ifTrue: [ ^ WheelEvent fromJs: jsEvent ].
+	( Boolean fromJs: INLINE 'jsEvent instanceof DragEvent' ) ifTrue: [ ^ DragEvent fromJs: jsEvent ].
 	( Boolean fromJs: INLINE 'jsEvent instanceof MouseEvent' ) ifTrue: [ ^ MouseEvent fromJs: jsEvent ].
 	( Boolean fromJs: INLINE 'jsEvent instanceof KeyboardEvent' ) ifTrue: [ ^ KeyboardEvent fromJs: jsEvent ].
 	( Boolean fromJs: INLINE 'jsEvent instanceof FocusEvent' ) ifTrue: [ ^ FocusEvent fromJs: jsEvent ].
+	( Boolean fromJs: INLINE 'jsEvent instanceof InputEvent' ) ifTrue: [ ^ InputEvent fromJs: jsEvent ].
+	( Boolean fromJs: INLINE 'jsEvent instanceof CompositionEvent' ) ifTrue: [ ^ CompositionEvent fromJs: jsEvent ].
+	"TouchEvent is not defined in some desktop browsers."
+	TouchEvent available ifTrue: [
+		( Boolean fromJs: INLINE 'jsEvent instanceof TouchEvent' ) ifTrue: [ ^ TouchEvent fromJs: jsEvent ] ].
 	( Boolean fromJs: INLINE 'jsEvent instanceof UIEvent' ) ifTrue: [ ^ UiEvent fromJs: jsEvent ].
 
 	^ Event fromJsSubEvent: jsEvent.
