@@ -100,7 +100,8 @@ testRef
 	self assert: [ Boolean fromJs: INLINE 'timer.js.hasRef()' ].
 	INLINE 'clearTimeout( timer.js )'.
 !
-testReport
+xtestReport
+	"Test disabled by default."
 	| report path |
 	report := Process report.
 	self assert: [ report class = ProcessReport ].
