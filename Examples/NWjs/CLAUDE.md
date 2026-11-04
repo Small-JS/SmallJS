@@ -30,11 +30,14 @@ https://nwjs.readthedocs.io/en/latest/
 
 ## Build and run
 
-- `./install.sh`: installs the npm packages, including `nw`.
+- `./install.sh`: installs the npm packages, including `nw` in the SDK flavor (version `x.y.z-sdk`),
+  which the VSCode debugger needs. It then runs `link-nwjs.js`, which links `./nwjs`
+  to the versioned NW.js folder in `node_modules/nw`; `.vscode/launch.json` starts NW.js from there.
 - `./build.sh`: compiles TypeScript (`tsc`) and SmallJS (`../../Compiler/start.sh`),
   then runs the app in test mode with the npm version of NW.js.
   The window closes automatically after the tests (`TestMyNwWindow` closes it as the last test).
-- `./start.sh`: runs the app normally with the NW.js SDK installed manually in `./bin` (see `NWjs.md`).
+- `./start.sh`: runs the app normally with the npm version of NW.js.
+- `./update.sh -y`: updates the npm packages, keeping `nw` on the SDK flavor.
 - `./clean.sh`: removes the generated files.
 
 ## Generated files

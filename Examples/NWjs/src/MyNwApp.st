@@ -50,6 +50,9 @@ setMenuBar
 	fileMenuItem submenu: fileMenu.
 
 	menuBar := NwMenu newMenuBar.
+	"On MacOS, add the builtin App, Edit and Window menus,
+	 otherwise e.g. copy and paste shortcuts do not work."
+	Window isMacos ifTrue: [ menuBar createMacBuiltin: 'My NW.js App' ].
 	menuBar append: fileMenuItem.
 
 	NwWindow get menu: menuBar.

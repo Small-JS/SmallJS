@@ -127,9 +127,6 @@ async testMinimizeMaximize
 	window focus: true.
 	await Timer timeout: 1000.
 	self assert: [ Document default hidden not ].
-
-	window resizeTo: oldSize.
-	await Timer timeout: 500.
 !
 async testMove
 	window moveTo: ( 200 @ 100 ).
@@ -199,8 +196,11 @@ async testKioskMode
 	self assert: [ window kioskMode not ].
 !
 async testAttention
+	"Only a smoke test: there is no API to check if attention is requested.
+	 2026-10-28: NW.js logs an error that the context has no associated app window."
 	window requestAttention: true.
-	await Timer timeout: 3000.
+	await Timer timeout: 500.
+	window requestAttention: false.
 !
 close
 	window close.

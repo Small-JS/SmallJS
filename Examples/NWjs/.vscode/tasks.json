@@ -15,8 +15,6 @@
 			},
 			"runOptions": {	"runOn": "folderOpen" }
 		},
-		// Must compile Node and Browser file separately
-		// because of same class names with different implementations.
 		{
 			"label": "Compile Smalltalk",
 			"type": "shell",

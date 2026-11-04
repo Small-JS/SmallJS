@@ -14,9 +14,10 @@ testMenuBar
 	menuBar := app menuBar.
 	self assert: [ menuBar class = NwMenu ].
 	self assert: [ menuBar type = 'menubar' ].
-	self assert: [ menuBar items length = 1 ].
+	"On MacOS, the builtin App, Edit and Window menus come before the File menu."
+	self assert: [ menuBar items length = ( Window isMacos ifTrue: [ 4 ] ifFalse: [ 1 ] ) ].
 
-	fileMenuItem := menuBar items first.
+	fileMenuItem := menuBar items find: [ :item | item label = 'File' ].
 	self assert: [ fileMenuItem class = NwMenuItem ].
 	self assert: [ fileMenuItem label = 'File' ].
 

@@ -1,42 +1,47 @@
 # NW.js example app
 
-This project contains as NW.js application.
+This project contains an NW.js application.
 
-NW.js is framework to make multiplatform standalone node applications\
-with a GUI that runs in a Chromium browser window, so has full HTML/JS/CSS support.\
-These apps can simultaneouly access Node.js features.
+NW.js is a framework to make multiplatform standalone Node applications\
+with a GUI that runs in a Chromium browser window, so it has full HTML/JS/CSS support.\
+These apps can simultaneously access Node.js features.
 
-Developing NW.js apps is easier than Electron and use less memory,\
+Developing NW.js apps is easier than Electron and uses less memory,\
 because there is only one JS engine running.\
-They require ~ twice the memory than say NodeGUI apps,\
-but have the advantage running exiting web apps unmodified.
+They require ~ twice the memory of, say, NodeGUI apps,\
+but have the advantage of running existing web apps unmodified.
 
 # Installation
 
 To enable debugging NW.js apps in VSCode, install this extension: "Debugger for NWjs"
 
-## Setup from VSCode
+## Setup
 
-It is currently (2025-08-30) not possible to setup the NW.js npm package \
-in a multi-platform way that supports launching (debugging) on VSCode.
-The issue has been reported here: https://github.com/nwjs/nw.js/issues/8303
+Run `./install.sh`. It installs the npm packages, including the SDK flavor of NW.js
+(the version ending in `-sdk` in package.json).\
+The SDK flavor is needed to debug in VSCode, and to open the dev tools with \[F12\].\
+The normal flavor does not open the remote debugging port that the VSCode debugger attaches to.
 
-The workaround for now is to install NW.js manually in the ./bin folder of the project.
+The npm package downloads NW.js into a folder with the version and platform in its name,\
+e.g. `node_modules/nw/nwjs-sdk-v0.119.0-win-x64`.\
+So `install.sh` then runs `link-nwjs.js`, which links the folder `./nwjs` to it.\
+VSCode starts NW.js from there (see `.vscode/launch.json`).\
+See also: https://github.com/nwjs/nw.js/issues/8303
 
-First download NW.js for your OS form here: [https://nwjs.io/downloads](https://nwjs.io/downloads)\
-Downloading the SDK version is recommended to be able to debug the app with \[F12\].\
-Then extract the downloaden to the ./bin folder,\
-making sure that the nw executable (e.g. "nw.exe") is at the highest level.
+Use `./install.sh` instead of a plain `npm install`, because only `install.sh` creates the `./nwjs` link.\
+If the link is missing or points to an old version, run `node link-nwjs.js` to recreate it.
 
-Note: The script build.sh uses the npm version of Nw.js,\
-	so it doesn't require this additional installation.
+`./update.sh -y` keeps NW.js on the SDK flavor when updating, and then runs `install.sh`.
 
 ## MacOS ARM 64 support
 
-The NWjs SDK downloaded from nwjs.io does not work on MacOS ARM 64 out of the box.\
-The reason is that the app is not signed securely.\
-To fix this ,go to the `./bin` folder and execute the command `xattr -rc nwjs.app` .
+If the NW.js SDK does not start on MacOS ARM 64 because the app is not signed securely,\
+go to the `./nwjs` folder and execute the command `xattr -rc nwjs.app` .
 
 # Running
 
-Now the app can run normally from VSCode or with the ./build.sh script.
+- From VSCode: launch configuration "NW" runs and debugs the app,\
+	"NW Test" runs and debugs it in test mode. Both compile the Smalltalk code first.
+- `./build.sh`: compiles the TypeScript and Smalltalk code, then runs the tests.\
+	The window closes automatically after the tests.
+- `./start.sh`: runs the app normally, without compiling.

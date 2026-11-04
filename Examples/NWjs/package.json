@@ -6,7 +6,7 @@
 	},
 	"dependencies": {
 		"lpad": "^3.0.0",
-		"nw": "^0.119.0"
+		"nw": "0.119.0-sdk"
 	},
 	"allowScripts": {
 		"nw": true

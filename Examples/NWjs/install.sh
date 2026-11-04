@@ -10,3 +10,5 @@ echo "==== Installing npm packages for: Example NWjs"
 npm install
 npm install-scripts approve --no-allow-scripts-pin nw
 npm rebuild nw
+# Link ./nwjs to the downloaded NW.js SDK, for debugging in VSCode (see .vscode/launch.json).
+node link-nwjs.js

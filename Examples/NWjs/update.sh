@@ -16,5 +16,7 @@ then
 fi
 
 echo "==== Nwjs"
-npx npm-check-updates -u --cooldown 7d
+npx npm-check-updates -u --cooldown 7d --reject nw
+# Keep the SDK flavor of NW.js, which is needed for debugging in VSCode.
+npx npm-check-updates -u --cooldown 7d --filter nw --target @sdk
 ./install.sh
