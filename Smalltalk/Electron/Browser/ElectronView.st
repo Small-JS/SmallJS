@@ -12,12 +12,13 @@ async callApi: apiName method: methodName
 	^ INLINE 'await window[ apiName.js ][ methodName.js ]()'.
 !
 async callApi: apiName method: methodName with: argument
-	"Like above, but with 1 argument."
-	^ INLINE 'await window[ apiName.js ][ methodName.js ]( argument )'.
+	"Like above, but with 1 argument.
+	 Only raw JS values can be passed through the contextBridge, so the argument is converted with toJs."
+	^ INLINE 'await window[ apiName.js ][ methodName.js ]( argument.$toJs() )'.
 !
 async callApi: apiName method: methodName with: arg1 with: arg2
 	"Like above, but with 2 arguments."
-	^ INLINE 'await window[ apiName.js ][ methodName.js ]( arg1, arg2 )'.
+	^ INLINE 'await window[ apiName.js ][ methodName.js ]( arg1.$toJs(), arg2.$toJs() )'.
 !
 callApi: apiName method: methodName withCallback: block
 	"Call an API method that calls back later, e.g. to listen for messages from the main process.

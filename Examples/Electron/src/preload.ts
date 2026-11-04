@@ -3,5 +3,6 @@
 
 let moduleName: string = "./MyElectronPreload.js";
 import( moduleName )
-	.then( module => { module.stMyElectronApi$class.$new().$expose(); } );
+	.then( module => { module.stMyElectronApi$class.$new().$expose(); } )
+	.catch( error => console.error( error ) );
 

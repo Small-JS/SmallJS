@@ -82,6 +82,6 @@ submenu
 "Events"
 
 click: block
-	"Note: The block receives the JS arguments: event, focusedWindow, focusedWebContents."
+	"Note: The block receives the JS arguments: menuItem, focusedWindow, event."
 	INLINE 'this.js.click = block.js'.
 !

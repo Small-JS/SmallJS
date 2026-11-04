@@ -1,14 +1,14 @@
 CLASS TestMyElectronApp EXTENDS Object MODULE TestMyElectronMain CLASSVARS ''
 	VARS 'myElectronApp'
 
-"Test ShopServer units and API.
+"Test MyElectronApp units and live functionality.
  This class is not a subclass of Test so is not called automatically with Test all."
 
 async start
 	myElectronApp := MyElectronApp new.
 	await myElectronApp start.
 
-	"For import of ElectromMain module."
+	"For import of TestElectronMain module."
 	TestElectronApp.
 
 	"The method 'all' will test all imported test classes, so only need to run it once."
@@ -25,10 +25,16 @@ async start
 	self testWindowState.
 	self testWindowMenu.
 	await self testWindowEventForwarding.
+	await self testRendererIsolation.
+	await self testSetTitle.
+	await self testPing.
 	await self testAboutWindow.
 
 	"A hanging async test stops silently, so log that all live tests have finished."
 	self log: 'TestMyElectronApp: Live tests done'.
+
+	"Tell TestMyElectronView that it can start the GUI tests."
+	await myElectronApp browserWindow webContents executeJavaScript: 'window.mainTestsDone = true'.
 
 	"Note: GUI testing is done in class TestMyElectronView."
 !
@@ -534,11 +540,37 @@ testWindowState
 	self assert: [ ( MyElectronWindowState load: path ) isNil ].
 	Fs writeFileSync: path data: '{ "x": 1 }' options: nil.
 	self assert: [ ( MyElectronWindowState load: path ) isNil ].
+	Fs writeFileSync: path data: '{ "x": 1, "y": 2, "width": 0, "height": 100 }' options: nil.
+	self assert: [ ( MyElectronWindowState load: path ) isNil ].
 	Fs unlinkSync: path.
 	self assert: [ ( MyElectronWindowState load: path ) isNil ].
 
 	window destroy.
 	other destroy.
+
+	self testWindowStateVisible.
+!
+testWindowStateVisible
+	"A window must overlap the work area enough to be dragged back."
+	| workArea state |
+
+	workArea := Rect origin: 0 @ 0 extent: 1920 @ 1080.
+	state := MyElectronWindowState new bounds: ( Rect origin: 100 @ 100 extent: 800 @ 600 ) maximized: false.
+	self assert: [ state visibleIn: workArea ].
+	state bounds: ( Rect origin: 1820 @ 100 extent: 800 @ 600 ) maximized: false.
+	self assert: [ state visibleIn: workArea ].
+	state bounds: ( Rect origin: 1821 @ 100 extent: 800 @ 600 ) maximized: false.
+	self assert: [ ( state visibleIn: workArea ) not ].
+	state bounds: ( Rect origin: 100 @ -550 extent: 800 @ 600 ) maximized: false.
+	self assert: [ state visibleIn: workArea ].
+	state bounds: ( Rect origin: 100 @ -551 extent: 800 @ 600 ) maximized: false.
+	self assert: [ ( state visibleIn: workArea ) not ].
+	state bounds: ( Rect origin: 3000 @ 100 extent: 800 @ 600 ) maximized: false.
+	self assert: [ ( state visibleIn: workArea ) not ].
+
+	"The current main window is visible on its own display."
+	state := MyElectronWindowState fromWindow: myElectronApp browserWindow.
+	self assert: [ state visibleIn: ( ElectronScreen new workAreaMatching: state bounds ) ].
 !
 labelsOf: menu
 	^ Array fromJsStrings: ( INLINE 'menu.js.items.map( item => item.label )' ).
@@ -601,6 +633,43 @@ async emitMoveUntilShown: tries
 		'document.getElementById( "windowEventSpan" ).textContent'.
 	( ( text startsWith: 'move (' ) or: [ tries <= 1 ] ) ifTrue: [ ^ text ].
 	^ await self emitMoveUntilShown: tries - 1.
+!
+async testRendererIsolation
+	"The page has no Node.js access, only the API exposed by the preload script."
+	| webContents type |
+
+	webContents := myElectronApp browserWindow webContents.
+	type := await webContents executeJavaScript: 'typeof require'.
+	self assert: [ type = 'undefined' ].
+	type := await webContents executeJavaScript: 'typeof process'.
+	self assert: [ type = 'undefined' ].
+	type := await webContents executeJavaScript: 'typeof window.myApi.setTitle'.
+	self assert: [ type = 'function' ].
+!
+async testSetTitle
+	"Calls the API in the page, which sends the title to the main process with IPC."
+	| window title |
+
+	window := myElectronApp browserWindow.
+	title := window title.
+	await window webContents executeJavaScript: 'window.myApi.setTitle( "Test title" )'.
+	await self waitUntilTitle: 'Test title' window: window tries: 50.
+	self assert: [ window title = 'Test title' ].
+	window title: title.
+!
+async testPing
+	"Calls the API in the page, which invokes the main process handler with IPC.
+	 The result must be a raw JS string, as received in the page."
+	| webContents result |
+
+	webContents := myElectronApp browserWindow webContents.
+	result := await webContents executeJavaScript: 'window.myApi.ping( "Ping" ).then( result => typeof result + ":" + result )'.
+	self assert: [ result = 'string:Pong' ].
+!
+async waitUntilTitle: title window: window tries: tries
+	( window title = title or: [ tries <= 0 ] ) ifTrue: [ ^ self ].
+	await Timer timeout: 100.
+	await self waitUntilTitle: title window: window tries: tries - 1.
 !
 async testAboutWindow
 	"Opens the modal about window, waits until it is shown and closes it."

@@ -1,5 +1,5 @@
 CLASS MyElectronApp EXTENDS ElectronApp MODULE MyElectronMain CLASSVARS ''
-	VARS 'browserWindow aboutWindow'
+	VARS 'browserWindow aboutWindow progressTimer'
 
 async start
 	await self whenReady.
@@ -7,6 +7,8 @@ async start
 	self setMenu.
 	self createWindow.
 	self restoreWindowState.
+	"The window is created hidden, so it is shown after its bounds are restored."
+	browserWindow show.
 	self forwardWindowEvents.
 	self setContextMenu.
 	self loadHtml.
@@ -18,8 +20,9 @@ async start
 "Listeners"
 
 setListeners
-	self on: 'setTitle' then: [ :event :title | self onSetTitle: title ].
-	self handle: 'ping' then: [ :event :data | self onPing: data ].
+	"The IPC arguments are raw JS values."
+	self on: 'setTitle' then: [ :event :title | self onSetTitle: ( String fromJs: title ) ].
+	self handle: 'ping' then: [ :event :data | self onPing: ( String fromJs: data ) ].
 	self on: 'quit' then: [ self onQuit ].
 !
 onSetTitle: title
@@ -248,20 +251,23 @@ onLimitSize: limit
 !
 onProgressDemo
 	"Shows progress on the taskbar button and in the window title for 5 seconds.
-	 Then flashes the taskbar button until the window gets focus again."
-	| title step timer |
+	 Then flashes the taskbar button until the window gets focus again.
+	 Only one demo can run at a time, otherwise the title of a running demo would be restored."
+	| title step |
 
+	progressTimer notNil ifTrue: [ ^ self log: 'MyElectronApp: Progress demo already running.' ].
 	self log: 'MyElectronApp: Progress demo started, see the taskbar button and window title.'.
 	title := browserWindow title.
 	step := 0.
-	timer := Timer interval: 500 then: [
+	progressTimer := Timer interval: 500 then: [
 		step := step + 1.
 		step <= 10
 			ifTrue: [
 				browserWindow progressBar: step toFloat / 10.
 				browserWindow title: title, ' - Progress ', ( step * 10 ) toString, '%' ]
 			ifFalse: [
-				timer clearInterval.
+				progressTimer clearInterval.
+				progressTimer := nil.
 				browserWindow progressBar: -1.
 				browserWindow title: title.
 				self flashUntilFocused ] ].
@@ -345,17 +351,19 @@ async pageBackgroundColor
 createWindow
 	| webPreferences options  |
 
+	"The renderer has no Node.js access, only the API exposed by the preload script.
+	 The preload script is an ES module, which needs sandbox false.
+	 The preload path must be absolute, so it is resolved from the app path, like loadFile: does."
 	webPreferences := ElectronWebPreferences new
-		nodeIntegration: true;
-		nodeIntegrationInWorker: true;
-		nodeIntegrationInSubFrames: true;
+		nodeIntegration: false;
 		contextIsolation: true;
 		sandbox: false;
-		preload: ( Path resolve: 'preload.mjs' ).
+		preload: ( Path join: self appPath with: 'preload.mjs' ).
 
 	options := BrowserWindowOptions new
 		width: 1000;
 		height: 800;
+		show: false;
 		webPreferences: webPreferences.
 
 	browserWindow := ElectronBrowserWindow new: options.
@@ -368,12 +376,14 @@ windowStatePath
 !
 restoreWindowState
 	"Restores the window bounds of the previous run, and saves them when the window closes.
+	 The bounds are not restored if the window would not be visible, e.g. when a display was removed.
 	 Not in test mode, so the tests always start with the same window."
 	| state |
 
 	self testMode ifTrue: [ ^ self ].
 	state := MyElectronWindowState load: self windowStatePath.
-	state notNil ifTrue: [ state applyTo: browserWindow ].
+	( state notNil and: [ state visibleIn: ( ElectronScreen new workAreaMatching: state bounds ) ] )
+		ifTrue: [ state applyTo: browserWindow ].
 	browserWindow onWindowEvent: 'close' then: [
 		( MyElectronWindowState fromWindow: browserWindow ) save: self windowStatePath ].
 !

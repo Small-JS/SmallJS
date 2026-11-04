@@ -9,10 +9,12 @@ let testMode = window.location.search.toLowerCase() == '?test';
 if( testMode ) {
 	let moduleName = "./TestMyElectronRenderer.js";
 	import( moduleName )
-		.then( module => { module.stTestMyElectronView$class.$new().$start(); } );
+		.then( module => { module.stTestMyElectronView$class.$new().$start(); } )
+		.catch( error => console.error( error ) );
 } else {
 	let moduleName = "./MyElectronRenderer.js";
 	import( moduleName )
-		.then( module => { module.stMyElectronView$class.$new().$start(); } );
+		.then( module => { module.stMyElectronView$class.$new().$start(); } )
+		.catch( error => console.error( error ) );
 }
 

@@ -23,7 +23,13 @@ exposeInMainWorld
 	INLINE 'electron$.contextBridge.exposeInMainWorld( this.apiName.js, this.js )'.
 !
 addMethod: methodName block: block
-	INLINE 'this.js[ methodName.js ] = block.js'.
+	"The block receives the raw JS arguments passed through the contextBridge.
+	 Its result may be a promise, and is converted with toJs, because only raw JS values can be passed back.
+	 So a method without a result should return nil, not self."
+	INLINE 'this.js[ methodName.js ] = ( ...args ) => {
+		const toJs = ( value ) => typeof value?.$toJs === "function" ? value.$toJs() : value;
+		const result = block.js( ...args );
+		return result instanceof Promise ? result.then( toJs ) : toJs( result ) }'.
 !
 send: methodName
 	INLINE 'electron$.ipcRenderer.send( methodName.js )'.

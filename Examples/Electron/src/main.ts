@@ -5,9 +5,11 @@ let testMode = process.argv.includes( '-test' );
 if( testMode ) {
 	let moduleName = "./TestMyElectronMain.js";
 	import( moduleName )
-		.then( module => { module.stTestMyElectronApp$class.$new().$start(); } );
+		.then( module => { module.stTestMyElectronApp$class.$new().$start(); } )
+		.catch( error => { console.error( error ); process.exit( 1 ); } );
 } else {
 	let moduleName = "./MyElectronMain.js";
 	import( moduleName )
-		.then( module => { module.stMyElectronApp$class.$new().$start(); } );
+		.then( module => { module.stMyElectronApp$class.$new().$start(); } )
+		.catch( error => { console.error( error ); process.exit( 1 ); } );
 }

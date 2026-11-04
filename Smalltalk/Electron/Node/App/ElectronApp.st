@@ -138,10 +138,15 @@ async resolveProxy: url
 "IPC"
 
 on: channel then: block
+	"The block receives the IPC event and the raw JS arguments sent by the renderer."
 	INLINE 'electron$.ipcMain.on( channel.js, block.js )'.
 !
 handle: channel then: block
-	INLINE 'electron$.ipcMain.handle( channel.js, block.js )'.
+	"The block receives the IPC event and the raw JS arguments sent by the renderer.
+	 Its result may be a promise, and is converted with toJs, because only raw JS values can be passed with IPC."
+	INLINE 'electron$.ipcMain.handle( channel.js, async ( ...args ) => {
+		const result = await block.js( ...args );
+		return typeof result?.$toJs === "function" ? result.$toJs() : result } )'.
 !
 
 "Testing"

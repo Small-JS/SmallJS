@@ -28,5 +28,8 @@ echo "Pre-launch script"
 # If this fails on Ubuntu, you maybe need to run this:
 #     sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
+# VSCode terminals set ELECTRON_RUN_AS_NODE, which makes Electron run as plain Node.js.
+unset ELECTRON_RUN_AS_NODE
+
 cd out
 ../node_modules/.bin/electron --no-sandbox main.js -test

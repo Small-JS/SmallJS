@@ -25,13 +25,14 @@ An Electron app has 3 parts, each compiled to its own JS module (see `Electron.m
 The renderer has no direct access to Node.js or Electron.
 It calls the API that the preload script exposes with `contextBridge.exposeInMainWorld`,
 which forwards calls to the main process with IPC (`ipcRenderer.send` / `invoke`, `ipcMain.on` / `handle`).
-Only raw JS values can be passed through the contextBridge.
+Only raw JS values can be passed through the contextBridge and IPC:
+`ElectronView` and `ElectronApi` convert arguments and results with `toJs`, the receivers wrap them with `fromJs:`.
 
 ## Library wrappers
 
 Electron wrappers in ../../Smalltalk/Electron/Node, per folder:
 `App` (app), `Window` (BaseWindow, BrowserWindow, WebContents, options), `Menu` (Menu, MenuItem),
-`Dialog` (dialog, options and results), `Shell` (shell), `Api` (contextBridge, ipcRenderer).
+`Dialog` (dialog, options and results), `Shell` (shell), `Screen` (screen), `Api` (contextBridge, ipcRenderer).
 Electron modules are imported in INLINE code with `INLINE 'import * as electron$ from "electron";'`.
 
 ## Source code

@@ -5,7 +5,7 @@ CLASS MyElectronView EXTENDS ElectronView MODULE MyElectronRenderer CLASSVARS ''
 		windowEventSpan windowEventCount'
 
 start
-	self log: 'MyView: Start'.
+	self log: 'MyElectronView: Start'.
 	self bindElements.
 	self listenForWindowEvents.
 !
@@ -51,7 +51,7 @@ async ping
  	self log: 'MyElectronView: Ping button clicked.'.
 	data := 'Ping'.
 	result := await self callApi: 'myApi' method: 'ping' with: data.
-	self onPing: result.
+	self onPing: ( String fromJs: result ).
 !
 onPing: result
 	self log: 'MyElectronView: Received result from API: ', result.
