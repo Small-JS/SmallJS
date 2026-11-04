@@ -31,7 +31,7 @@ startMoving
 
 	"Create balls."
 	balls := Array new.
-	ballCount := ballsInput value toInteger max: 1.
+	ballCount := ( ballsInput value toInteger max: 1 ) min: 100.
 	ballCount timesRepeat: [
 		balls add: ( Ball newIn: canvas size ) ].
 

@@ -31,11 +31,11 @@ test
 	ball := Ball newIn: 200 @ 100.
 	self assert: [ ball class = Ball ].
 	self assert: [ ball radius = 16 ].
-	self assert: [ ball position x >= 0 ].
-	self assert: [ ball position y >= 0 ].
+	self assert: [ ball position x >= 16 & ( ball position x <= 184 ) ].
+	self assert: [ ball position y >= 16 & ( ball position y <= 84 ) ].
 	self assert: [ self checkSpeedCoordinate: ball speed x ].
 	self assert: [ self checkSpeedCoordinate: ball speed y ].
-	self assert: [ #( 'red' 'blue' 'green' ) includes: ball color ].
+	self assert: [ Ball colors includes: ball color ].
 !
 checkSpeedCoordinate: speed
 	^ ( speed >= -10 ) & ( speed <= -2 ) |

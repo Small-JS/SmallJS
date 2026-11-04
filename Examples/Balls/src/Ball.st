@@ -5,14 +5,18 @@ CLASSMETHODS
 "Creating"
 
 newIn: bounds
-	| ball speed |
+	| ball |
 	ball := Ball new.
 	ball radius: 16.
 	ball position: ( Integer randomFrom: ball radius to: bounds x - ball radius ) @
 			( Integer randomFrom: ball radius to: bounds y - ball radius ).
 	ball speed: ( self randomSpeed ) @ ( self randomSpeed ).
-	ball color: ( #( 'red' 'blue' 'green' ) at: ( Integer randomFrom: 0 to: 2 ) ).
+	ball color: ( self colors at: ( Integer randomFrom: 0 to: self colors length - 1 ) ).
 	^ ball.
+!
+colors
+	"Possible ball colors."
+	^ #( 'red' 'blue' 'green' ).
 !
 randomSpeed
 	"Random speed for single direction, x or y."
