@@ -38,10 +38,14 @@ clearBenchmarks
 		row insertCell textContent: benchmark size.
 		3 timesRepeat: [ row insertCell ] ].
 !
-runAllButtonClicked
+async runAllButtonClicked
+	"Disable the button while running, so a new run cannot start before the current one ends."
+	runAllButton disabled: true.
 	self clearBenchmarks.
 	self setCursor: 'wait'.
-	self runBenchmarks.
+	await self runBenchmarks.
+	self setCursor: 'default'.
+	runAllButton disabled: false.
 !
 setCursor: value
 	Document default body style setProperty: 'cursor' value: value.
@@ -51,7 +55,7 @@ setCursor: value
 async runBenchmarks
 	| benchmark row |
 
-	0 to: benchmarks length - 1 do: async [ :index |
+	await 0 to: benchmarks length - 1 doAwait: async [ :index |
 		"Pause shortly between benchmarks to allow async GUI updates."
 		await Timer timeout: 100.
 		benchmark := benchmarks at: index.
@@ -59,17 +63,13 @@ async runBenchmarks
 		self runBenchmark: benchmark row: row ].
 !
 runBenchmark: benchmark row: row
-		benchmark timeRunJs.
-		( row cells at: 2 ) textContent: benchmark jsTime toString.
+	benchmark timeRunJs.
+	( row cells at: 2 ) textContent: benchmark jsTime toString.
 
-		benchmark timeRunSt.
-		( row cells at: 3 ) textContent: benchmark stTime toString.
+	benchmark timeRunSt.
+	( row cells at: 3 ) textContent: benchmark stTime toString.
 
-		( row cells at: 4 ) textContent: ( benchmark factor toFixed: 1 ).
-
-		"Restrore cursor after last benchmark."
-		benchmark = benchmarks last ifTrue: [
-			self setCursor: 'default' ].
+	( row cells at: 4 ) textContent: ( benchmark factor toFixed: 1 ).
 !
 
 "Accessing (used by tests)"

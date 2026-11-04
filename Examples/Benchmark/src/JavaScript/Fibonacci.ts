@@ -1,10 +1,10 @@
-// TS implementation of simple prime algorithm
+// TS implementation of simple Fibonacci algorithm
 
 export class Fibonacci
 {
 	// Return the n-th fibonacci number.
 
-	static fib( n: number ): BigInt
+	static fib( n: number ): bigint
 	{
 		if( n == 0 )
 			return 0n;

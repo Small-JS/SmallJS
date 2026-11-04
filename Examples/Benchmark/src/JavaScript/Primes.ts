@@ -25,7 +25,7 @@ export class Primes
 		if( num % 2 == 0 || num % 3 == 0 )
 			return false;
 
-		let divider = 5.
+		let divider = 5;
 		while( divider * divider <= num )
 		{
 			if( num % divider == 0 || num % ( divider + 2 ) == 0 )

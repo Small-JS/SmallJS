@@ -6,16 +6,16 @@ CLASS Benchmark EXTENDS Object MODULE Benchmark CLASSVARS '' VARS 'size jsTime s
 name
 	self subclassResponsibility.
 !
-runJs: size
+runJs
 	self subclassResponsibility.
 !
-runSt: size
+runSt
 	self subclassResponsibility.
 !
 
 "Size indicates the number of 'iterations' in the benchmark.
- For higher values is should take more time to complete the benchmark.
- E.g.: In the PrimesBenchmark, size is the number of primes that are calculated."
+ For higher values it should take more time to complete the benchmark.
+ E.g.: In the PrimesBenchmark, size is the number up to which primes are counted."
 
 size
 	^ size.
@@ -36,7 +36,7 @@ factor
 	^ jsTime = 0 ifTrue: [ 0.0 ] ifFalse: [ stTime toFloat / jsTime ].
 !
 
-"Time the running ot JS and ST benchmarks."
+"Time the running of JS and ST benchmarks."
 
 timeRunJs
 	^ jsTime := self time: [ self runJs ].
