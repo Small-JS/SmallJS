@@ -49,3 +49,24 @@ https://developer.mozilla.org/en-US/docs/Web/API
 ## Testing
 
 - Unit tests must not rely on user interaction, like allowing popups or permission prompts.
+
+### Running tests (for Claude)
+
+Do not use `./build.sh` to run the tests: it starts and then kills the web server on port 3000.
+Instead:
+
+1. Compile if the sources changed:
+   `tsc` and `../../Compiler/start.sh -t ../../Smalltalk/Core ../../Smalltalk/Browser +t src web/Script`
+2. Check for a web server on port 3000: `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/`
+   If none is running, start one in the background with `./startWebServer.sh`.
+   Never terminate the web server after the run: it is left running for manual testing.
+3. Run the tests only in headless Chrome, with a temporary profile folder outside this project:
+   `timeout 60 "/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu
+   --user-data-dir=<temp folder> --enable-logging=stderr http://localhost:3000/?test`
+   Do not write the profile or log files into this project folder.
+4. Check the console output (lines containing `CONSOLE`):
+   - `Successfully run sync tests: N` and `Successfully run async tests: N` report the unit tests.
+   - Assertion errors report failures.
+   - Chrome exits by itself (before the timeout) only if the GUI tests also pass,
+     because the test app closes the window after all assertions succeed.
+5. After every test run, report the number of passed sync and async tests.
