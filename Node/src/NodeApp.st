@@ -15,6 +15,7 @@ async start
 	TestExpress.
 	TestProcess.
 	TestSqlDatabaseFactory.
+	TestWebSocketServer.
 
 	"Execute all test* methods on all Test* classes."
 	await Test all.

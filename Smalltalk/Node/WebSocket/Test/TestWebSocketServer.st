@@ -1,4 +1,4 @@
-CLASS TestWebSocketServer EXTENDS TestWebSocket MODULE TestServer CLASSVARS '' VARS ''
+CLASS TestWebSocketServer EXTENDS TestWebSocket MODULE TestWebSocket CLASSVARS '' VARS ''
 
 "Tests WebSocketServer, with the Core class WebSocket as client.
  Extends TestWebSocket for its helper methods.

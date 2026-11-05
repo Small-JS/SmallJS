@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds the AI Server project.
+# This script builds the Shop projects: Server, Client and ClientSpa.
 
 # Exit script if a step fails
 set -e

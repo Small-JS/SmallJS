@@ -12,3 +12,13 @@ set: name to: value
 id
 	^ String fromJs: INLINE 'this.js.id'.
 !
+
+"Session management."
+
+async regenerate
+	"Replace the session with a new one, with a new ID and without data.
+	 Call this on login, to prevent session fixation.
+	 Afterwards, get the new session again with: IncomingMessage>>session."
+	INLINE 'await new Promise( ( resolve, reject ) =>
+		this.js.regenerate( error => error ? reject( error ) : resolve() ) )'.
+!

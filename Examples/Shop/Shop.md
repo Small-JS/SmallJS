@@ -5,7 +5,7 @@ Consists of a client (browser) and a server (NodeJS) part.\
 
 ## Shop Server
 
-The server serves users, products and orders tot the client.
+The server serves users, products and orders to the client.
 It uses the NodeJS frameworks Server and Express.
 Shop data is retrieved from a SQL database, that has to be set-up first.
 
@@ -23,4 +23,4 @@ A login is required before accessing other pages.
 Shop client with same functionality as above,
 but implemented as a Single Page Application (SPA).
 
->[./Client/ShopClient.md](./Client/ShopClientSpa.md)
+>[./ClientSpa/ShopClientSpa.md](./ClientSpa/ShopClientSpa.md)

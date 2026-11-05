@@ -12,11 +12,6 @@ fromObject: object
 		name: ( object atProperty: 'name' );
 		password: ( object atProperty: 'password' ).
 !
-fromJsObject: jsObject
-	^ self new
-		name: ( jsObject atJsProperty: 'user' );
-		password: ( jsObject atJsProperty: 'password' ).
-!
 
 METHODS
 
@@ -38,6 +33,6 @@ password: aPassword
 "Converting"
 
 toQuery
-	"Return URL query part to request this person."
-	^ '?name=', name, '&password=', password.
+	"Return URL query part to request this person, with escaped values."
+	^ '?name=', ( Uri encodeComponent: name ), '&password=', ( Uri encodeComponent: password ).
 !

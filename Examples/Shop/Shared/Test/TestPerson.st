@@ -11,4 +11,8 @@ test
 
 	person password: 'secret'.
 	self assert:[ person password = 'secret' ].
+
+	self assert:[ person toQuery = '?name=Test&password=secret' ].
+	person name: 'A&B'; password: 'p=1 #+'.
+	self assert:[ person toQuery = '?name=A%26B&password=p%3D1%20%23%2B' ].
 !

@@ -91,8 +91,8 @@ async requestLogin
 	sessionCookie := response cookie.
 	self assert: [ sessionCookie includes: 'connect.sid' ].
 !
-onLoginRequest: request response: response
-	| name password |
+async onLoginRequest: request response: response
+	| name password oldSessionId |
 
 	name := request query atProperty: 'name'.
 	self assert: [ name = 'John' ].
@@ -106,6 +106,15 @@ onLoginRequest: request response: response
 	self assert: [ request headers has: 'user-agent' ].
 
 	self assert: [ ( request sessionId isKindOf: String ) and: [ request sessionId length > 0 ] ].
+
+	"Regenerate the session on login, so it gets a new ID and loses its old data."
+	oldSessionId := request sessionId.
+	request session set: 'old' to: true.
+	await request session regenerate.
+	self assert: [ request sessionId ~= oldSessionId ].
+	self assert: [ request session id = request sessionId ].
+	self assert: [ ( request session get: 'old' ) isNil ].
+
 	request session set: 'loggedIn' to: true.
 	response send: 'Login succeeded'.
 !

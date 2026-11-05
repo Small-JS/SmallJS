@@ -33,7 +33,7 @@ startServer
 	portString isNil ifTrue: [
 		Error throw: 'Environment variable "SHOP_PORT" not set.' ].
 	port := portString toInteger.
-	( port < 1024 ) | ( port > 65535 ) ifTrue: [
+	port isNan | ( port < 1024 ) | ( port > 65535 ) ifTrue: [
 		Error throw: 'Invalid port number: ', portString ].
 
 	clientPath := Environment at: 'SHOP_CLIENT'.
@@ -81,7 +81,10 @@ async login: request response: response
 	( await dbPerson checkPassword: person password ) ifFalse: [
 		^ self sendLoginResponse: response success: false message: 'Password check failed' ].
 
-	request session set: 'user' to: dbPerson.
+	"Regenerate the session to prevent session fixation.
+	 Store only the user's id and name, not the password hash and salt."
+	await request session regenerate.
+	request session set: 'user' to: ( Person new id: dbPerson id; name: dbPerson name; yourself ).
 	self sendLoginResponse: response success: true message: 'Login succeeded'.
 !
 sendLoginResponse: response success: success message: message
@@ -92,13 +95,13 @@ sendLoginResponse: response success: success message: message
 !
 getRequestUser: request response: response
 	"Returns the logged-in user (Person) from the request or nil if it does not exist.
- 	 If the user is not found, a server response 500 is sent also.
+ 	 If the user is not found, a server response 401 (Unauthorized) is sent also.
  	 Requests can only contain serialized data, so the ST object has to be reconstructed from that."
 
 	| userObject |
 	userObject := request session get: 'user'.
 	userObject isNil ifTrue: [
-		response sendStatus: 500 message: 'Not logged in.'.
+		response sendStatus: 401 message: 'Not logged in.'.
 		^ nil ].
 
 	^ Person fromObject: userObject.

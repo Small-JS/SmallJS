@@ -1,4 +1,4 @@
-CLASS WebSocketServer EXTENDS EventEmitter MODULE Server CLASSVARS '' VARS ''
+CLASS WebSocketServer EXTENDS EventEmitter MODULE WebSocket CLASSVARS '' VARS ''
 
 "Implements the WebSocketServer class of the npm package 'ws', an EventEmitter.
  Each client connection is a NodeWebSocket, see: onConnection:.

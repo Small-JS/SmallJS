@@ -1,4 +1,4 @@
-CLASS WebSocketServerOptions EXTENDS JsObject MODULE Server CLASSVARS '' VARS ''
+CLASS WebSocketServerOptions EXTENDS JsObject MODULE WebSocket CLASSVARS '' VARS ''
 
 "Options for: WebSocketServer options:[then:].
  Set either port: to create a new HTTP server, or server: to use an existing one."

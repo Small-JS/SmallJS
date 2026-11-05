@@ -5,7 +5,7 @@ The SmallJS standard library is located in the folder: ../Smalltalk.
 
 This is an app testing the Node.js API wrappers in the SmallJS library,
 located in the folder: ../Smalltalk/Node
-(subfolders: Base, Database, Event, File, Os, Process, Server, Workers).
+(subfolders: Base, Database, Event, File, Os, Process, Server, WebSocket, Workers).
 
 The Node.js API documentation is here:
 https://nodejs.org/docs/latest/api

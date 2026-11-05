@@ -1,4 +1,4 @@
-CLASS NodeWebSocket EXTENDS WebSocket MODULE Server CLASSVARS '' VARS ''
+CLASS NodeWebSocket EXTENDS WebSocket MODULE WebSocket CLASSVARS '' VARS ''
 
 "Implements the WebSocket class of the npm package 'ws'.
  Extends the standard JS WebSocket with Node-specific methods, like ping and terminate.

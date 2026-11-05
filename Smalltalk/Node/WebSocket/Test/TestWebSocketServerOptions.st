@@ -1,4 +1,4 @@
-CLASS TestWebSocketServerOptions EXTENDS Test MODULE TestServer CLASSVARS '' VARS ''
+CLASS TestWebSocketServerOptions EXTENDS Test MODULE TestWebSocket CLASSVARS '' VARS ''
 
 METHODS
 

@@ -1,4 +1,4 @@
-CLASS TestWebSocketEcho EXTENDS TestWebSocket MODULE TestServer CLASSVARS '' VARS 'server'
+CLASS TestWebSocketEcho EXTENDS TestWebSocket MODULE TestWebSocket CLASSVARS '' VARS 'server'
 
 "Tests sending and receiving with the Core class WebSocket, using a local echo WebSocketServer.
  Only Node.js can run a server, so browsers only run the tests in the superclass TestWebSocket.

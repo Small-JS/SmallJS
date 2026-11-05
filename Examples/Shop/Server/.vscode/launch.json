@@ -33,20 +33,6 @@
 				"**/Runtime.js"
 			],
 			"preLaunchTask": "Compile server"
-		},
-		{
-			"name": "Launch Server minimized",
-			"type": "node",
-			"request": "launch",
-			"program": "${workspaceFolder}/out/main.js",
-			"args": "-test",
-			"cwd": "${workspaceFolder}",
-			"envFile": "${workspaceFolder}/.env",
-			"skipFiles": [
-				"<node_internals>/**",
-				"**/Runtime.js"
-			],
-			"preLaunchTask": "Compile server minimized"
 		}
 	]
 }

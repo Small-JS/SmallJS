@@ -1,4 +1,4 @@
-CLASS TestNodeWebSocket EXTENDS TestWebSocket MODULE TestServer CLASSVARS '' VARS 'server serverSocket'
+CLASS TestNodeWebSocket EXTENDS TestWebSocket MODULE TestWebSocket CLASSVARS '' VARS 'server serverSocket'
 
 "Tests NodeWebSocket as client and as server connection of a local WebSocketServer.
  Extends TestWebSocket for its helper methods.

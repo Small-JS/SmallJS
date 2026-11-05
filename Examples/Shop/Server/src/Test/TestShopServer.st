@@ -1,4 +1,4 @@
-CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer sessionCookie'
+CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'shopServer sessionCookie apiUrl'
 
 "Test ShopServer units and API.
  This class is not a subclass of Test so is not called automatically with Test all."
@@ -6,24 +6,32 @@ CLASS TestShopServer EXTENDS Object MODULE TestShopServer CLASSVARS '' VARS 'sho
 async start
 	shopServer := ShopServer new.
 	await shopServer start.
+	apiUrl := 'http://localhost:', ( Environment at: 'SHOP_PORT' ), '/api'.
 
-	"Run sync and async unit tests of all imported Test* classes and log results."
-	await TestPerson all.
+	"Run sync and async unit tests of all imported Test* classes and log results.
+	 Reference a class of module TestShopShared to force importing it."
+	TestPerson.
+	await Test all.
 	await self testApi.
 !
 async testApi
 	self log: 'Starting API tests.'.
 
-	"The tests are chained end-to-start because they must run async."
+	await self requestNotLoggedIn.
 	await self requestLogin.
 	await self requestProducts.
 	await self requestOrders.
 	await self stopServer.
 !
+async requestNotLoggedIn
+	| response |
+	response := await Fetch request: apiUrl, '/products'.
+	self assert: [ response status = 401 ].
+!
 async requestLogin
 	| person url response object loginResponse |
 	person := Person new name: 'John'; password: 'secret'.
-	url := 'http://localhost:3000/api/login', person toQuery.
+	url := apiUrl, '/login', person toQuery.
 	response := await Fetch request: url.
 	self assert: [ response status = 200 ].
 
@@ -38,7 +46,7 @@ async requestLogin
 !
 async requestProducts
 	| objects products product |
-	objects := await self fetchObject: 'http://localhost:3000/api/products'.
+	objects := await self fetchObject: apiUrl, '/products'.
 
 	"'objects' should contain an array of productss."
 	self assert: [ objects length = 3 ].
@@ -50,7 +58,7 @@ async requestProducts
 !
 async requestOrders
 	| object orders order products product |
-	object := await self fetchObject: 'http://localhost:3000/api/orders'.
+	object := await self fetchObject: apiUrl, '/orders'.
 
 	"'object' should contain properties 'orders' and 'products'
 	 each containting an array of objects with values of the type indicated.
