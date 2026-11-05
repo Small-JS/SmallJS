@@ -10,7 +10,7 @@ CLASSMETHODS
 
 face: face
 	"Create a new card with argument face.
-	The card is not turned by detault."
+	The card is not turned by default."
 	^ self new face: face.
 !
 empty

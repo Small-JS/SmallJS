@@ -39,6 +39,9 @@ async startGame
 	deck := await Deck new initialize: size.
 	self createDeckTable.
 
+	lastCard := nil.
+	lastCell := nil.
+
 	turns := 0.
 	self updateTurnsInput.
 	left := deck length.
@@ -58,15 +61,15 @@ createDeckTable
 !
 async onDeckTableClicked: event
 	"Turn clicked card if it was not done already."
-	| cell point card |
+	| cell point card currentDeck |
 
 	revertPending ifTrue: [ ^ nil ].
 	left = 0 ifTrue: [ ^ nil ].
 
-	"Get table cell and point clicked on."
+	"Get table cell and point clicked on.
+	Ignore clicks outside of the cells, e.g. on the table border."
 	cell := HtmlElement fromJsSubElement: event target js.
-	cell class ~= HtmlTableCellElement ifTrue: [
-		cell := cell parentElement ].
+	cell class ~= HtmlTableCellElement ifTrue: [ ^ nil ].
 	point := Point x: cell cellIndex y: cell parentElement rowIndex.
 
 	"Turn card if unturned and display face."
@@ -87,21 +90,25 @@ async onDeckTableClicked: event
 
 	"No last card"
 	lastCard ifNil: [
-		lastCard := card. lastCell := cell ^ nil ].
+		lastCard := card. lastCell := cell. ^ nil ].
 
 	"Matching last card"
 	card face = lastCard face ifTrue: [
 		lastCard := nil. lastCell := nil. ^ nil ].
 
-	"Different last card, unturn both after pause."
+	"Different last card, unturn both after pause.
+	Skip this if a new game was started during the pause."
 	revertPending := true.
+	currentDeck := deck.
 	await Timer timeout: 2000.
+	deck == currentDeck ifFalse: [ ^ nil ].
 	revertPending := false.
 	card turned: false.
 	cell replaceChildren: card display.
 	lastCard turned: false.
 	lastCell replaceChildren: lastCard display.
 	lastCard := nil.
+	lastCell := nil.
 	left := left + 2.
 	self updateLeftInput.
 !

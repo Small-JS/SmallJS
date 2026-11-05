@@ -12,18 +12,19 @@
  * in a real-world app this would be handled by your build system
  */
 
-const cacheName = "emoji-memory-pwa-v2";
+const cacheName = "emoji-memory-pwa-v3";
 const cachedUrls = [
 	"./",
+	"./cards.json",
 	"./default.css",
 	"./favicon.ico",
 	"./index.html",
+	"./logo.png",
+	"./pwa.webmanifest",
 	"./ServiceWorker.js",
-	"./Icons/",
 	"./Icons/apple-touch-icon.png",
 	"./Icons/icon-512x512.png",
 	"./Icons/icon.png",
-	"./Script/",
 	"./Script/main.js",
 	"./Script/Runtime.js",
 	"./Script/CompiledClassesJson.js",
@@ -91,19 +92,27 @@ self.addEventListener( "fetch", ( event ) =>
  * respond with the cached response immediately (if we have one)
  * even though this might be "stale" (not the most recent version).
  * In the background fetch the latest version and put that into cache
- * on next request the user will get the latest version
+ * on next request the user will get the latest version.
+ * Only successful GET responses are cached.
+ * If offline, the failed background fetch is ignored when a cached response is available.
  */
 
 async function getResponse( request )
 {
 	const cache = await self.caches.open( cacheName );
-	const cached_response = await cache.match( request );
+	const cachedResponse = await cache.match( request );
 	// Important: we do not await here, since that would defeat the point of using the cache
-	const pending_response = fetch( request ).then( ( response ) =>
+	const pendingResponse = fetch( request ).then( ( response ) =>
 	{
-		cache.put( request, response.clone() );
+		if ( request.method === "GET" && response.ok )
+			cache.put( request, response.clone() ).catch( () => {} );
 		return response;
 	} );
-	return cached_response || pending_response;
+	if ( cachedResponse )
+	{
+		pendingResponse.catch( () => {} );
+		return cachedResponse;
+	}
+	return pendingResponse;
 }
 

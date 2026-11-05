@@ -1,7 +1,7 @@
-CLASS TestDeck EXTENDS Test MODULE TestDeckApp CLASSVARS '' VARS ''
+CLASS TestDeck EXTENDS Test MODULE TestEmojiMemoryApp CLASSVARS '' VARS ''
 
 async test
-	| size deck card emptyCard x |
+	| size deck card emptyCard |
 
 	"Uneven size, so empty card will be added."
 	size := 5 @ 3.

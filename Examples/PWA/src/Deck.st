@@ -56,7 +56,7 @@ cards
 	^ cards.
 !
 length
-	"Number of cards in the desk,
+	"Number of cards in the deck,
 	not counting filler card to make it even."
 	^ cards length // 2 * 2.
 !

@@ -1,4 +1,4 @@
-CLASS TestCard EXTENDS Test MODULE TestDeckApp CLASSVARS '' VARS ''
+CLASS TestCard EXTENDS Test MODULE TestEmojiMemoryApp CLASSVARS '' VARS ''
 
 async test
 	| card card2 emptyCard |

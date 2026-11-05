@@ -15,15 +15,17 @@ to be activated when testing other websites.
 
 ## Installing
 
-When the app page is open, the browser it can be saved to a local app:\
+When the app page is open, the browser can save it as a local app:\
 On PC's, click the "Install" button in the address bar.
 On mobile, select the option "Add to phone" | "Install".
 
 ### Adapting
 
-To create you own SmallJS PWA app, start by making a copy of this project.\
-The file `web/pwa.webmanifest` describes the app version and files to be cached for offline use.\
-The file `web/ServiceWorker.js` implements he mandatory service worker process for the PWA.\
+To create your own SmallJS PWA app, start by making a copy of this project.\
+The file `web/pwa.webmanifest` describes the app name, icons and display mode.\
+The file `web/ServiceWorker.js` implements the mandatory service worker process for the PWA.\
+It lists the files to be cached for offline use in `cachedUrls`.\
+When changing these files, also change `cacheName` to replace the old cache.\
 If your app needs to communicate with a server (fetch) or use native features,\
-this file will need te be expanded.
+this file will need to be expanded.
 
