@@ -32,7 +32,10 @@ password: aPassword
 
 "Converting"
 
-toQuery
-	"Return URL query part to request this person, with escaped values."
-	^ '?name=', ( Uri encodeComponent: name ), '&password=', ( Uri encodeComponent: password ).
+toLoginJson
+	"Return the JSON body of a login request for this person.
+	 It contains only the name and password, not the id."
+	^ ( Object new
+		atProperty: 'name' put: name;
+		atProperty: 'password' put: password ) toJson.
 !

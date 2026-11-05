@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Shop login</title>
+	<title>Shop products</title>
     <link rel="stylesheet" href="Product.css" type="text/css" />
 	<script src="../Script/productMain.js" type="module"></script>
 </head>
@@ -31,7 +31,7 @@
 								<span id="productNameSpan" class="productTableHeader">Name</span>
 							</th>
 							<th scope="col">
-								<span id="productNameSpan" class="productTableHeader">Price</span>
+								<span id="productPriceSpan" class="productTableHeader">Price</span>
 							</th>
 						</tr>
 					</thead>
@@ -40,10 +40,14 @@
 				</table>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<span id="errorSpan"></span>
+			</td>
+		</tr>
 	</table>
 
+	<!-- Resolve <include></include> tags -->
+	<script type="module" src="../Script/include.js"></script>
 </body>
 </html>
-
-<!-- Resolve <include></include> tags -->
-<script type="module" src="/Script/include.js"></script>

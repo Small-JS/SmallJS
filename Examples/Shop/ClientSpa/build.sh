@@ -28,7 +28,7 @@ then
 fi
 source .env
 
-# Start Shop server and remember PID.
+# Start Shop server, serving this client.
 
 if
 	! test -f ../Server/.env
@@ -38,14 +38,22 @@ then
 	exit 0
 fi
 
-echo "Starting server."
 pushd ../Server > /dev/null
 set -o allexport
-source ../Server/.env
+source .env
 SHOP_CLIENT="../ClientSpa/web"
 set +o allexport
+
+# Do not test against (and afterwards terminate) a server that is already running.
+if
+	curl -s -o /dev/null "http://localhost:$SHOP_PORT/"
+then
+	echo "Error: port $SHOP_PORT is already in use. Stop the running server first."
+	exit 1
+fi
+
+echo "Starting Shop server on port $SHOP_PORT."
 node out/main.js &
-serverPid=$!
 popd > /dev/null
 sleep 2
 
@@ -58,7 +66,7 @@ if
 then
 	echo "Starting browser Chrome: "$browserChrome
 	sleep 2
-	"$browserChrome" --log-level=3 http://localhost:3000/?test
+	"$browserChrome" --log-level=3 http://localhost:$SHOP_PORT/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 10
@@ -68,7 +76,7 @@ if
 then
 	echo "Starting browser Edge: "$browserEdge
 	sleep 2
-	"$browserEdge" --log-level=3 http://localhost:3000/?test
+	"$browserEdge" --log-level=3 http://localhost:$SHOP_PORT/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 10
@@ -78,14 +86,14 @@ if
 then
 	echo "Starting browser Firefox: "$browserFirefox
 	sleep 2
-	"$browserFirefox" http://localhost:3000/?test
+	"$browserFirefox" http://localhost:$SHOP_PORT/?test
 	# If browser was already open, startup returns immediately.
 	# So sleep the amount of time it needs to finish tests.
 	sleep 10
 fi
 
-# Stop web server
+# Stop Shop server
 
-echo "Terminating web server"
-npx kill-port 3000
+echo "Terminating Shop server"
+npx kill-port $SHOP_PORT
 sleep 2

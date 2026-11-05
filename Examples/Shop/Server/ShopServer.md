@@ -19,9 +19,13 @@ With the default settings, the server starts on port 3000.
 
 The server provides static file hosting and these 3 web APIs to the client:
 
-	http://localhost:3000/api/login?name=John&password=secret
-	http://localhost:3000/api/orders
-	http://localhost:3000/api/products
+	POST http://localhost:3000/api/login  (JSON body: { "name": "John", "password": "secret" })
+	GET  http://localhost:3000/api/orders
+	GET  http://localhost:3000/api/products
+
+The login credentials are sent in the request body, not in the URL,
+so they do not end up in browser history or server logs.
+Orders and products require a logged-in session, otherwise the server responds with status 401.
 
 Start the Shop Client to access them from that application, see:
 [../Client/ShopClient.md](../Client/ShopClient.md)

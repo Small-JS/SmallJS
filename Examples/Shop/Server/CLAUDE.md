@@ -22,6 +22,9 @@ Overview of the whole example: ../Shop.md. Server documentation: ./ShopServer.md
 - `main.ts`: entry point. With argument `-test` it starts `TestShopServer`, otherwise `ShopServer`.
 - `ShopServer.st`: connects to the database, serves the client's static files with Express,
   and provides the JSON web API in route `/api`: `login`, `products` and `orders`.
+  `login` is a POST with the credentials in a JSON body (`Person>>toLoginJson`), never in the URL.
+  Its failure messages ('User not found: ...', 'Password check failed') are deliberately specific
+  to help human testers: this is an example, not a production app. Do not merge them into one message.
   `products` and `orders` require a logged-in session.
 - `DbPerson.st`: subclass of the shared `Person` with password salt and SHA256 hashing (server side only).
 - `Test/TestShopServer.st`: starts the server, runs the unit tests of the imported Test* classes,

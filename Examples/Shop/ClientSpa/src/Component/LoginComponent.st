@@ -1,5 +1,5 @@
 CLASS LoginComponent EXTENDS Component MODULE ShopClient CLASSVARS ''
-	VARS 'userNameInput passwordInput loginButton loginErrorSpan'
+	VARS 'loginForm userNameInput passwordInput loginButton'
 
 htmlPath
 	^ 'Login/Login.html'.
@@ -16,25 +16,37 @@ bindElements
 	passwordInput := Document getElementById: 'passwordInput' class: HtmlInputElement.
 
 	loginButton := Document getElementById: 'loginButton' class: HtmlButtonElement.
-	loginButton onClick: [ :event | self onLogin ].
 
-	loginErrorSpan := Document getElementById: 'loginErrorSpan' class: HtmlSpanElement.
+	"Submitting the form (login button or Enter key) logs in, without reloading the page."
+	loginForm := Document getElementById: 'loginForm' class: HtmlFormElement.
+	loginForm addEventListener: 'submit' then: [ :event |
+		event preventDefault.
+		self onLogin ].
 !
 async onLogin
-	| person loginApi object response |
+	| person object response |
 
 	person := Person new
 		name: userNameInput value;
 		password: passwordInput value.
-	loginApi := self app url, '/api/login', person toQuery.
-	object := await Fetch object: loginApi.
+	object := await self app fetchApi: '/api/login' options: ( self loginOptions: person ).
+	object ifNil: [ ^ nil ].
 
 	response := LoginResponse fromObject: object.
 	self log: 'ShopServer login response: ', response toString.
 
 	response success
 		ifTrue: [ self app loadComponent: ProductComponent ]
-		ifFalse: [ loginErrorSpan textContent: response message ].
+		ifFalse: [ self app showError: response message ].
+!
+loginOptions: person
+	"Return the options of a POST request to log in as person.
+	 The credentials are sent in the JSON body, not in the URL,
+	 so they do not end up in browser history or server logs."
+	^ RequestInit new
+		method: 'POST';
+		headers: ( Headers new set: 'content-type' value: 'application/json' );
+		body: person toLoginJson.
 !
 
 "Accessing (used by tests)"

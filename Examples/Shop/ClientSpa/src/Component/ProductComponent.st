@@ -16,10 +16,10 @@ async start
 "Loading"
 
 async loadProducts
-	| productsApi objects |
+	| objects |
 
-	productsApi := self app url, '/api/products'.
-	objects := await Fetch object: productsApi.
+	objects := await self app fetchApi: '/api/products'.
+	objects ifNil: [ ^ nil ].
 
 	products := objects map: [ :object | Product fromObject: object ].
 	self showProducts.
@@ -27,7 +27,7 @@ async loadProducts
 
 "Showing"
 
-async showProducts
+showProducts
 	| row |
 
 	productTable tBody innerHtml: ''.

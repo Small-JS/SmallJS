@@ -3,7 +3,6 @@
 	margin-right: auto;
 	border: 2px solid grey;
 	border-collapse: collapse;
-	border-width: 2px block;
 	border-spacing: 0px;
 	text-align: left;
 }
@@ -25,4 +24,4 @@
 
 #orderTable td:nth-child(3) {
 	text-align: right;
-}
+}

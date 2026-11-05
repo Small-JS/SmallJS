@@ -12,8 +12,8 @@ and that controllers should have *full* control over views.
 
 ## Running
 
-Set up  the server first, see: [../Server/ShopServer.md](../Server/ShopServer.md).\
-Then start the server with `./startServer.sh` form this folder,
+Set up the server first, see: [../Server/ShopServer.md](../Server/ShopServer.md).\
+Then start the server with `./startServer.sh` from this folder,
 so that the correct client version is served.
 
 You can select a supported browser in the VSCode debug configuration.

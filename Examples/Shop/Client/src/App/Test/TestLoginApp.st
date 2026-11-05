@@ -11,6 +11,7 @@ async start
 
 	await Timer timeout: 500.
 	self testLoginFields.
+	self testLoginOptions.
 
 	"Press login button.
 	 App should navigate to producs page then."
@@ -21,4 +22,12 @@ testLoginFields
 
 	self assert: [ loginApp userNameInput value = 'John' ].
 	self assert: [ loginApp passwordInput value = 'secret' ].
+!
+testLoginOptions
+	"Check if the login request is a POST with a JSON body."
+	| options |
+
+	options := loginApp loginOptions: ( Person new name: 'Test'; password: 'secret' ).
+	self assert: [ options method = 'POST' ].
+	self assert: [ ( options headers get: 'content-type' ) = 'application/json' ].
 !

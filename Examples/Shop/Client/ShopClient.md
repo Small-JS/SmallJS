@@ -5,8 +5,8 @@ It connects to the Shop server application, that must be started first.
 
 ## Running
 
-Set up  the server first, see: [../Server/ShopServer.md](../Server/ShopServer.md).\
-Then start the server with `./startServer.sh` form this folder,
+Set up the server first, see: [../Server/ShopServer.md](../Server/ShopServer.md).\
+Then start the server with `./startServer.sh` from this folder,
 so that the correct client version is served.
 
 You can select a supported browser in the VSCode debug configuration.

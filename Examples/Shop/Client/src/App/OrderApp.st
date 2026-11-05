@@ -1,4 +1,4 @@
-CLASS OrderApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS ''
+CLASS OrderApp EXTENDS ShopApp MODULE ShopClient CLASSVARS ''
 	VARS 'orderTable orders products'
 
 METHODS
@@ -9,15 +9,15 @@ async start
 	await self loadOrders.
 !
 async loadOrders
-	|  ordersApi object |
+	| object |
 
-	ordersApi := Window default location hostPath, '/api/orders'.
-	object := await Fetch object: ordersApi.
+	object := await self fetchApi: '/api/orders'.
+	object ifNil: [ ^ nil ].
 
 	products := ( object atProperty: 'products' )
-		map: [ :object | Product fromObject: object ].
+		map: [ :productObject | Product fromObject: productObject ].
 	orders := ( object atProperty: 'orders' )
-		map: [ :object | Order fromObject: object ].
+		map: [ :orderObject | Order fromObject: orderObject ].
 	"Connect orders to products by direct references, replacing product ids."
 	orders do: [ :order | order product:
 		( products find: [ :product | product id = order product ] ) ].
@@ -25,7 +25,7 @@ async loadOrders
 	self showOrders.
 !
 showOrders
-	| row priceString |
+	| row |
 
 	orderTable tBody innerHtml: ''.
 
@@ -33,8 +33,7 @@ showOrders
 		row := orderTable tBody insertRow: -1.
 		row insertCell textContent: order product name.
 		row insertCell textContent: order amount.
-		row insertCell textContent: order product priceString.
-	]
+		row insertCell textContent: order product priceString ].
 !
 
 "Accessing (used by tests)"

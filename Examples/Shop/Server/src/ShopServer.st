@@ -44,8 +44,9 @@ startServer
 
 	express := Express new.
 	express useSession.
+	express useJson.
 	express static: clientPath.
-	express get: '/api/login'
+	express post: '/api/login'
 		then: [ :request :response | self login: request response: response ].
 	express get: '/api/products'
 		then: [ :request :response | self products: request response: response ].
@@ -60,14 +61,19 @@ onListen: port
 !
 
 "Example login request:
-	localhost:3000/api/login?name=John&password=secret
+	POST localhost:3000/api/login
+	with JSON body: { name: 'John', password: 'secret' }
+ The credentials are in the body, not in the URL, so they do not end up in logs or browser history.
  Example LoginResponse:
  	{ success: true, message: 'Login succeeded' }"
 
 async login: request response: response
-	| person dbPersons dbPerson |
+	| body person dbPersons dbPerson |
 
-	person := Person fromObject: request query.
+	body := request body.
+	body ifNil: [
+		^ self sendLoginResponse: response success: false message: 'Login JSON body missing' ].
+	person := Person fromObject: body.
 	person name notNil ifFalse: [
 		^ self sendLoginResponse: response success: false message: 'Login parameter "name" missing' ].
 	person password notNil ifFalse: [

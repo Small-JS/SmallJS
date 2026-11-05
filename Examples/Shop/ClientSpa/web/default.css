@@ -28,3 +28,7 @@ body {
 	color: grey;
 	box-shadow: 10px 10px 5px grey;
 }
+
+#errorSpan {
+	color: red;
+}

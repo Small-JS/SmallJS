@@ -1,4 +1,4 @@
-CLASS ProductApp EXTENDS BrowserApp MODULE ShopClient CLASSVARS '' VARS 'productTable products'
+CLASS ProductApp EXTENDS ShopApp MODULE ShopClient CLASSVARS '' VARS 'productTable products'
 
 METHODS
 
@@ -11,17 +11,14 @@ async start
 "Loading"
 
 async loadProducts
-	| productsApi objects |
+	| objects |
 
-	productsApi := self url, '/api/products'.
-	objects := await Fetch object: productsApi.
+	objects := await self fetchApi: '/api/products'.
+	objects ifNil: [ ^ nil ].
 
 	products := objects map: [ :object | Product fromObject: object ].
 
 	self showProducts.
-!
-onLoadProductsError: error
-	self error: error message.
 !
 
 "Showing"

@@ -29,10 +29,22 @@ async requestNotLoggedIn
 	self assert: [ response status = 401 ].
 !
 async requestLogin
-	| person url response object loginResponse |
+	| person options response object loginResponse |
+
+	"Credentials in the URL are not accepted."
+	response := await Fetch request: apiUrl, '/login?name=John&password=secret'.
+	self assert: [ response status = 404 ].
+
+	loginResponse := await self login: ( Person new name: 'Nobody'; password: 'secret' ).
+	self assert: [ loginResponse success not ].
+	self assert: [ loginResponse message = 'User not found: Nobody' ].
+	loginResponse := await self login: ( Person new name: 'John'; password: 'wrong' ).
+	self assert: [ loginResponse success not ].
+	self assert: [ loginResponse message = 'Password check failed' ].
+
 	person := Person new name: 'John'; password: 'secret'.
-	url := apiUrl, '/login', person toQuery.
-	response := await Fetch request: url.
+	options := self loginOptions: person.
+	response := await Fetch request: apiUrl, '/login' options: options.
 	self assert: [ response status = 200 ].
 
 	object := await response json.
@@ -42,7 +54,20 @@ async requestLogin
 
 	sessionCookie := response cookie.
 	self assert: [ sessionCookie includes: 'connect.sid' ].
-
+!
+async login: person
+	"Return the LoginResponse of a login request for person."
+	| options object |
+	options := self loginOptions: person.
+	object := await Fetch object: apiUrl, '/login' options: options.
+	^ LoginResponse fromObject: object.
+!
+loginOptions: person
+	"Return the options of a POST request to log in as person, with the credentials in a JSON body."
+	^ RequestInit new
+		method: 'POST';
+		headers: ( Headers new set: 'content-type' value: 'application/json' );
+		body: person toLoginJson.
 !
 async requestProducts
 	| objects products product |
