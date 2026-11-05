@@ -8,11 +8,11 @@
 			"skipFiles": [ "**/Runtime.js" ],
 			// The debugger needs the SDK flavor of NW.js, which is installed by npm (see package.json).
 			// ./nwjs is a link to its versioned folder in node_modules/nw, created by install.sh.
-			"runtimeExecutable": "${workspaceRoot}/nwjs/nw",
+			"runtimeExecutable": "${workspaceRoot}/bin/nw",
 			"osx" : {
-				"runtimeExecutable": "${workspaceRoot}/nwjs/nwjs.app/Contents/MacOS/nwjs" },
+				"runtimeExecutable": "${workspaceRoot}/bin/nwjs.app/Contents/MacOS/nwjs" },
 			"windows" : {
-			 	"runtimeExecutable": "${workspaceRoot}/nwjs/nw.exe" },
+			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",
 				"--enable-features=NWESM,NWChainImportNode"
@@ -32,11 +32,11 @@
 			"skipFiles": [ "**/Runtime.js" ],
 			// The debugger needs the SDK flavor of NW.js, which is installed by npm (see package.json).
 			// ./nwjs is a link to its versioned folder in node_modules/nw, created by install.sh.
-			"runtimeExecutable": "${workspaceRoot}/nwjs/nw",
+			"runtimeExecutable": "${workspaceRoot}/bin/nw",
 			"osx" : {
-				"runtimeExecutable": "${workspaceRoot}/nwjs/nwjs.app/Contents/MacOS/nwjs" },
+				"runtimeExecutable": "${workspaceRoot}/bin/nwjs.app/Contents/MacOS/nwjs" },
 			"windows" : {
-			 	"runtimeExecutable": "${workspaceRoot}/nwjs/nw.exe" },
+			 	"runtimeExecutable": "${workspaceRoot}/bin/nw.exe" },
 			"runtimeArgs": [
 				"${workspaceRoot}/web",
 				"--enable-features=NWESM,NWChainImportNode",
