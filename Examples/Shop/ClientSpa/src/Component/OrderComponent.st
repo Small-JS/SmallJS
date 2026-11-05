@@ -30,9 +30,6 @@ async loadOrders
 		order product: ( products find: [ :product | product id = order product ] ) ].
 
 	self showOrders.
-
-	self app testMode ifTrue: [
-		TestOrderComponent new test: self ].
 !
 showOrders
 	| row |

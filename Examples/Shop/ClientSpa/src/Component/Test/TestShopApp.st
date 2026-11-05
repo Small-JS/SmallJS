@@ -1,6 +1,6 @@
 CLASS TestShopApp EXTENDS Object MODULE TestShopClient CLASSVARS '' VARS ''
 
-"Tests the GUI of the Shop client login page.
+"Tests the GUI of the Shop client SPA: runs the unit tests, then tests the login, product and order components.
  This class is not a subclass of Test so is not called automatically with Test all."
 
 async start
