@@ -27,7 +27,7 @@ onStart
 	self startWorkers.
 !
 clearResults
-	"(Re)oad worker results into table."
+	"(Re)load worker results into table."
 	| row |
 	resultsTable tBody innerHtml: ''.
 	1 to: self workerCount do: [ :index |
@@ -47,11 +47,12 @@ stopWorkers
 	workers := #().
 !
 startWorker: index
-	| worker message |
+	| options worker message |
 
-	worker := Worker new: 'Script/worker.js'
-		options: ( WorkerOptions new type: 'module' ).
+	options := WorkerOptions new type: 'module'.
+	worker := Worker new: 'Script/worker.js' options: options.
 	worker onMessage: [ :event | self onWorkerMessage: event ].
+	worker onError: [ :event | self onWorkerError: event index: index ].
 
 	message := MyMessage new id: index; size: self workerSize.
 	worker postMessage: message.
@@ -69,6 +70,20 @@ onWorkerMessage: event
 
 	cell := ( resultsTable rows at: workerId ) cells at: 1.
 	cell textContent: runTime toString.
+!
+onWorkerError: event index: index
+	"Show the error of worker number index in its result cell and in the console.
+	 The event is an ErrorEvent, or a plain Event if the browser gives no details,
+	 like when the worker script fails to load."
+	| message cell |
+
+	message := ( event isKindOf: ErrorEvent )
+		ifTrue: [ event message ]
+		ifFalse: [ 'Worker script failed to load or run: Script/worker.js' ].
+	self log: 'WebWorkersApp.onWorkerError: worker id: ', index toString, ': ', message.
+
+	cell := ( resultsTable rows at: index ) cells at: 1.
+	cell textContent: 'Error'.
 !
 
 "Accessing (used by tests)"

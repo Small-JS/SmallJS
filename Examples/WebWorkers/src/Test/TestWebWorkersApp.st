@@ -26,13 +26,12 @@ async testGui
 	webWorkersApp stop.
 !
 checkResults
-	"Check if all benchmark results contain numbers."
+	"Check if all worker results contain run times of at least 10 ms."
 	| rows |
 
 	rows := webWorkersApp resultsTable tBody rows.
 	self assert: [ rows length = 2 ].
 
 	rows do: [ :row |
-		self assert: [ ( row cells at: 1 ) textContent toInteger >= 1 ].
 		self assert: [ ( row cells at: 1 ) textContent toInteger >= 10 ] ].
 !

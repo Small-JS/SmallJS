@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script builds and tests the Benchmark project.
+# This script builds and tests the WebWorkers project.
 
 # Exit script if a step fails.
 set -e

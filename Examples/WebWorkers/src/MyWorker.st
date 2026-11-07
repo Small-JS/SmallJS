@@ -10,7 +10,7 @@ onMessage: messageEvent
 	MessageEvent. 	"Force import"
 
 	myMessage := MyMessage fromJs: messageEvent data.
-	self log: 'MyWorker received message form main: id: ', myMessage toString.
+	self log: 'MyWorker received message from main: ', myMessage toString.
 
 	"Do the work."
 	self work: myMessage size.
