@@ -3,7 +3,6 @@
 *.lnk
 *.log
 *.cmd
-*.vsix
 *.tmp
 ~$*
 .DS_Store

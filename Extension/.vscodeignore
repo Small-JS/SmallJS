@@ -2,3 +2,9 @@
 .vscode-test/**
 .gitignore
 vsc-extension-quickstart.md
+*.vsix
+*.sh
+*.code-workspace
+Test/**
+smalljs/**
+CLAUDE.md

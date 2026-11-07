@@ -20,9 +20,15 @@ None.
 ## Known Issues
 
 Unary method names have the same color as variables.
-Breakpoints can only be set on lines with method calls.
 
 ## Release Notes
+
+### 1.3.0
+
+- Marketplace page now shows this description.
+- Quotes are no longer auto-closed inside strings and comments.
+- Assignments without a space, like `x:= 1`, are no longer colored as method names.
+- Improved coloring of numbers.
 
 ### 1.0.0
 

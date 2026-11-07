@@ -25,5 +25,6 @@ method1
 method2Arg1: aVar1 arg2: aVar2
 	INLINE 'this.js = null'.
 	var1 := aVar1.
-	var2 := aVar2.
+	var2:= aVar2.
+	"Don't color var2 above as a method name."
 !
