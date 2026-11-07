@@ -46,6 +46,7 @@ test
 	self assert: [ date2 toIsoString = '1995-10-15T14:13:12.999Z' ].
 	self assert: [ date2 toJson = '1995-10-15T14:13:12.999Z' ].
 	self assert: [ date2 toLocaleDateString includes: '15' ].
+	self assert: [ ( Date utcYear: 1995 month: 10 day: 15 hours: 0 minutes: 0 seconds: 0 ) toLocaleUtcDateString includes: '15' ].
 	self assert: [ date2 toLocaleTimeString includes: '13' ].
 
 	self assert: [ date2 dstOffset <= 0 ].

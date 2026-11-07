@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en-GB">
+<html lang="en-US">
 
 <head>
 	<meta charset="utf-8" />
@@ -17,7 +17,7 @@
 		<tr>
 			<td class="title">
 				<div class="vertical-center">
-					<img id="todoImage" src="Todo.png" height="40"></img>
+					<img id="todoImage" src="Todo.png" height="40" alt="Todo logo">
 					<span>&nbsp;</span>
 					<span id="titleSpan">Todo</span>
 				</div>
@@ -30,7 +30,7 @@
 				<label id="languageLabel" for="languageSelect">Language </label>
 				<select id="languageSelect">
 					<option value="en-US">English</option>
-					<option value="es">Española</option>
+					<option value="es">Español</option>
 				</select>
 			</td>
 		</tr>
@@ -50,22 +50,23 @@
 						<tr>
 							<td>
 								<label id="newTaskTitleLabel" class="newTaskLabel"
-									for="newTaskTitleInput"><b>Title</b></label>
+									for="newTaskTitleInput">Title</label>
+							</td>
 							<td>
-								<input id="newTaskTitleInput"></input>
+								<input id="newTaskTitleInput">
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<label id="newTaskDueLabel" class="newTaskLabel"
-									for="newTaskDueInput"><b>Due</b></label>
+									for="newTaskDueInput">Due</label>
 							</td>
 							<td>
-								<input id="newTaskDueInput" type="date"></input>
+								<input id="newTaskDueInput" type="date">
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" th style="text-align: center">
+							<td colspan="2" style="text-align: center">
 								<button id="newTaskAddButton">Add</button>
 							</td>
 						</tr>
@@ -95,7 +96,7 @@
 								<span id="taskDoneSpan" class="taskTableHeader">Done</span><span> &#8597;</span>
 							</th>
 							<th scope="col">
-								<span id="taskDeleteSpan" class="taskTableHeader">&#10005</span>
+								<span id="taskDeleteSpan" class="taskTableHeader">&#10005;</span>
 							</th>
 						</tr>
 					</thead>

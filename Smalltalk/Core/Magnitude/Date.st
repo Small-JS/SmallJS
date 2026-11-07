@@ -55,6 +55,11 @@ toDateString
 toLocaleDateString
 	^ String fromJs: INLINE 'this.js.toLocaleDateString()'.
 !
+toLocaleUtcDateString
+	"Return the date in the local format, but in the UTC time zone.
+	 Use it for dates without time zone, like the value of a date input element (midnight UTC)."
+	^ String fromJs: INLINE 'this.js.toLocaleDateString( undefined, { timeZone: "UTC" } )'.
+!
 toTimeString
 	^ String fromJs: INLINE 'this.js.toTimeString()'.
 !

@@ -11,8 +11,8 @@ async start
 	await self testGui.
 !
 async testGui
-	"Click increase counter button 2 times then click reset.
-	 For every click check if counter label is updated correctly.
+	"Add, complete, delete and sort tasks and switch the language.
+	 After every action check if the tasks and the task table are updated correctly.
 	 Exit if all tests succeed."
 
 	self testTasksLoaded.
@@ -36,6 +36,7 @@ async testAddNewTask
 	self assert: [ todoApp tasks length = expectedTaskCount ].
 	self assert: [ todoApp taskTable tBody rows length = expectedTaskCount ].
 	self assert: [ ( todoApp taskTable tBody rows last cells at: 0 ) textContent = todoApp tasks last title ].
+	self assert: [ ( todoApp taskTable tBody rows last cells at: 1 ) textContent = todoApp newTaskDueInput valueAsDate toLocaleUtcDateString ].
 !
 async testCompleteTask
 	self assert: [ todoApp tasks last done not ].
@@ -66,7 +67,7 @@ async testSortTasks
 	self assert: [ todoApp taskTable tBody rows last cells first textContent = todoApp tasks last title ].
 !
 async testLanguage
-	"Select second language (Spanish) and check of GUI changed to it."
+	"Select second language (Spanish) and check if the GUI changed to it."
 
 	| changeEvent titleSpan |
 
@@ -77,6 +78,8 @@ async testLanguage
 	await Timer timeout: 1000.
 	titleSpan := Document getElementById: 'titleSpan' class: HtmlSpanElement.
 	self assert: [ titleSpan textContent = 'Hacer' ].
+	self assert: [ Document default documentElement lang = 'es' ].
+	self assert: [ ( Document getElementById: 'todoImage' class: HtmlImageElement ) alt = 'Etiqueta de hacer' ].
 !
 async stop
 	await Timer timeout: 1000 then: [

@@ -97,7 +97,7 @@ taskTableClicked: event
 	self deleteTask: position.
 !
 sortColumn: position
-	"Sort colums "
+	"Sort tasks by the clicked column. Clicking the same column again reverses the order."
 
 	| sortProperty sortBlock |
 

@@ -26,7 +26,8 @@
 	margin-bottom: 0px;
 }
 
-#languageLabel {
+#languageLabel,
+.newTaskLabel {
 	font-weight: bold;
 }
 

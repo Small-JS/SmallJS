@@ -21,7 +21,7 @@ due: aDue
 dueString
 	^ due isNil
 		ifTrue: [ '' ]
-		ifFalse: [ due toLocaleDateString ].
+		ifFalse: [ due toLocaleUtcDateString ].
 !
 
 done

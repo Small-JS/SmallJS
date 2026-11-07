@@ -47,6 +47,7 @@ async load: code
 	current := self matchCode: code.
 	fileName := 'Language/', current, '.json'.
 	translations := await Fetch object: fileName.
+	Document default documentElement lang: current.
 	translations entries do: [ :entry |
 		element := Document getElementById: ( entry at: 0 ).
 		element notNil ifTrue: [
@@ -59,7 +60,7 @@ matchCode: matchCode
 
 	| best matchLanguageCode |
 
-	supported isNil ifTrue: [ self error: 'No suported languages' ].
+	supported isNil ifTrue: [ self error: 'No supported languages' ].
 
 	matchLanguageCode := LanguageCode fromCode: matchCode.
 	supported do: [ :code |
@@ -70,5 +71,8 @@ matchCode: matchCode
 	^ best notNil ifTrue: [ best ] ifFalse: [ supported first  ].  "Default match"
 !
 setTranslationOn: element to: translation
-	element textContent: translation.
+	"Images get the translation as alternative text, other elements as text content."
+	( element isKindOf: HtmlImageElement )
+		ifTrue: [ element alt: translation ]
+		ifFalse: [ element textContent: translation ].
 !
