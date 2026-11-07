@@ -1,4 +1,6 @@
 #!/bin/bash
+# This script updates the npm dependencies of the examples.
+# This script must be called with argument "-y" to perform the update.
 
 # Exit script if a step fails
 set -e
