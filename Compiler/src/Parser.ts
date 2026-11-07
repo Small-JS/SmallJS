@@ -426,9 +426,12 @@ export class Parser
 			this.filename + ":" + this.position.line + ":" + this.position.column +
 			": Compile error: " + message;
 
+		// Playground: Cannot exit process in browser, so throw an error to stop compiling.
+		// The Evaluator catches it and reports it as the result.
+		// In Playground comment out the next 2 lines and uncomment the throw statement.
 		console.error( fullMessage )
-		// Playground: Cannot exit process in browser, so comment out next line.
 		process.exit( 1 );
+		// throw new Error( fullMessage );
 	}
 
 }

@@ -7,11 +7,11 @@ async start
 	playgroundApp := PlaygroundApp new start.
 
 	"Run sync and async tests of all imported Test* classes and log results."
-	TestPlayground all.
+	await TestPlayground all.
 	await self testGui.
 !
 async testGui
-	"Click evaluate the expression '10 factorial' and check for result '3628800'."
+	"Evaluate expressions by clicking the evaluate button and check their results."
 
 	await self testExpression: '6 factorial' result: '720'.
 	await self testExpression: '1 + 2' result: '3'.

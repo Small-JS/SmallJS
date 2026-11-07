@@ -37,7 +37,8 @@ export class Evaluator
 			{
 				Evaluator.compiledClassesJson = _module.compiledClassesJson;
 				this.evaluate2( stExpression, new EvaluateCallback( result, error ), Evaluator.compiledClassesJson );
-			} );
+			} )
+			.catch( importError => error( importError ) );
 		}
 	}
 
