@@ -5,6 +5,7 @@ test
 
 	requestInit := RequestInit new.
 	self assert: [ requestInit isEmpty ].
+	self assert: [ requestInit body isNil ].
 
 	requestInit method: 'POST'.
 	self assert: [ requestInit method = 'POST' ].
@@ -14,6 +15,16 @@ test
 
 	requestInit body: ( ArrayBuffer new: 8 ).
 	self assert: [ requestInit body byteLength = 8 ].
+
+	requestInit body: '{ "a": 1 }'.
+	self assert: [ requestInit body = '{ "a": 1 }' ].
+
+	requestInit body: ( Blob fromArray: #( 'abc' ) ).
+	self assert: [ requestInit body class = Blob ].
+	self assert: [ requestInit body size = 3 ].
+
+	requestInit body: FormData new.
+	self assertError: [ requestInit body ].
 
 	requestInit mode: 'cors'.
 	self assert: [ requestInit mode = 'cors' ].

@@ -16,7 +16,19 @@ METHODS
 "Properties"
 
 body
-	^ ArrayBuffer fromJs: INLINE 'this.js.body'.
+	"Returns the body as a String, ArrayBuffer or Blob, or nil if not set.
+	 Other body types are not supported yet."
+	| jsBody |
+	jsBody := INLINE 'this.js.body'.
+	INLINE 'if( jsBody == null ) return stNil$'.
+	( Boolean fromJs: INLINE 'typeof jsBody === "string"' ) ifTrue: [
+		^ String fromJs: jsBody ].
+	( Boolean fromJs: INLINE 'jsBody instanceof ArrayBuffer' ) ifTrue: [
+		^ ArrayBuffer fromJs: jsBody ].
+	( Boolean fromJs: INLINE 'jsBody instanceof Blob' ) ifTrue: [
+		^ Blob fromJs: jsBody ].
+	self error: 'Unsupported RequestInit body type: ',
+		( String fromJs: INLINE '( jsBody.constructor ? jsBody.constructor.name : typeof jsBody )' ).
 !
 body: body
 	INLINE 'this.js.body = body.js'.
