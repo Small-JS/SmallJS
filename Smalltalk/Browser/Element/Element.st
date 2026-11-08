@@ -55,6 +55,9 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLDataListElement' ifTrue: [ ^ HtmlDataListElement fromJs: jsElement ].
 	jsClassName = 'HTMLOptionElement' ifTrue: [ ^ HtmlOptionElement fromJs: jsElement ].
 
+	jsClassName = 'HTMLUListElement' ifTrue: [ ^ HtmlUlElement fromJs: jsElement ].
+	jsClassName = 'HTMLLIElement' ifTrue: [ ^ HtmlLiElement fromJs: jsElement ].
+
 	jsClassName = 'HTMLCanvasElement' ifTrue: [ ^ HtmlCanvasElement fromJs: jsElement ].
 
 	"Fall back to HtmlElement for elements without a specific JS class, like section and nav,
