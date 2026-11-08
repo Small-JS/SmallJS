@@ -119,3 +119,40 @@ testEscapedChars
 	self assert: [ 'Hello world!' toWellFormed = 'Hello world!' ].
 	self assert: [ 'Hello world \uD800' toWellFormed isWellFormed ].
 !
+testEscapedCodes
+	| string |
+
+	string := '\"'.
+	self assert: [ string length = 1 & ( ( string at: 0 ) = 34 ) ].
+
+	string := '\0'.
+	self assert: [ string length = 1 & ( ( string at: 0 ) = 0 ) ].
+	string := '\0a'.
+	self assert: [ string length = 2 & ( ( string at: 0 ) = 0 ) & ( ( string at: 1 ) = 97 ) ].
+
+	string := '\x41\x7a\xFF\x00'.
+	self assert: [ string length = 4 ].
+	self assert: [ ( string at: 0 ) = 65 ].
+	self assert: [ ( string at: 1 ) = 122 ].
+	self assert: [ ( string at: 2 ) = 255 ].
+	self assert: [ ( string at: 3 ) = 0 ].
+	self assert: [ '\x41BC' = 'ABC' ].
+
+	string := 'A€￿'.
+	self assert: [ string length = 3 ].
+	self assert: [ ( string at: 0 ) = 65 ].
+	self assert: [ ( string at: 1 ) = 8364 ].
+	self assert: [ ( string at: 2 ) = 65535 ].
+	self assert: [ 'A1' = 'A1' ].
+
+	self assert: [ '\u{41}' = 'A' ].
+	self assert: [ '\u{00000041}' = 'A' ].
+	string := '\u{1F600}'.
+	self assert: [ string length = 2 ].
+	self assert: [ ( string at: 0 ) = 55357 ].
+	self assert: [ ( string at: 1 ) = 56832 ].
+	self assert: [ string = ( String fromCharCode: 128512 ) ].
+	self assert: [ '\u{10FFFF}' = ( String fromCharCode: 1114111 ) ].
+
+	self assert: [ 'a\\d\x41B\u{43}\n' = ( 'a\\dABC', String newline ) ].
+!

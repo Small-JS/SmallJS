@@ -121,7 +121,11 @@ export class Parser
 				if( this.atEnd() )
 					this.error( "End of file within string escape sequence." );
 
-				char += this.nextChar();
+				// INLINE strings are JS code: their escapes are not checked.
+				if( allowControlChars )
+					char += this.nextChar();
+				else
+					char += this.parseEscape();
 			}
 
 			// Tabs are allowed, other control characters like newlines only in INLINE.
@@ -135,6 +139,57 @@ export class Parser
 		this.skipSpace();
 
 		return str;
+	}
+
+	// Parse the escape sequence after a backslash in a string and return it without the backslash.
+	// String literals are copied into the JS output as is, so only allow escapes
+	// that are valid in JS strict mode and that keep the backslash meaningful.
+	// E.g. "\1" is a JS syntax error and "\d" silently becomes "d".
+
+	parseEscape(): string
+	{
+		let char: string = this.nextChar();
+
+		if( "'\"\\bfnrtv".includes( char ) )
+			return char;
+		if( char == "0" && ( this.atEnd() || !this.atDigit() ) )
+			return char;
+		if( char == "x" )
+			return char + this.parseHexDigits( 2, "\\x" );
+		if( char == "u" ) {
+			if( this.atEnd() || this.peekChar() != "{" )
+				return char + this.parseHexDigits( 4, "\\u" );
+
+			this.nextChar();
+			let digits = "";
+			// JS allows any number of leading zeros.
+			while( !this.atEnd() && this.peekChar() != "}" )
+				digits += this.parseHexDigits( 1, "\\u{" + digits );
+			if( this.atEnd() || digits.length == 0 || parseInt( digits, 16 ) > 0x10FFFF )
+				this.error( "Illegal escape sequence in string: \\u{" + digits + ". Expected hex digits up to 10FFFF and \"}\"." );
+			this.nextChar();
+			return char + "{" + digits + "}";
+		}
+
+		let charCode = char.charCodeAt( 0 );
+		let shown = charCode < 32 ? "backslash followed by character code " + charCode :
+			"\\" + char + ( char == "0" ? this.peekChar() : "" );
+		this.error( "Illegal escape sequence in string: " + shown +
+			". Allowed are: \\' \\\" \\\\ \\b \\f \\n \\r \\t \\v \\0 \\xHH \\uHHHH \\u{H...}. Use \\\\ for a backslash." );
+		return "";
+	}
+
+	// Parse the given number of hex digits, for the escape sequence that starts with prefix.
+
+	parseHexDigits( count: number, prefix: string ): string
+	{
+		let digits = "";
+		for( let i = 0; i < count; i++ ) {
+			if( this.atEnd() || !/[0-9A-Fa-f]/.test( this.peekChar() ) )
+				this.error( "Illegal escape sequence in string: " + prefix + digits + ". Expected a hex digit." );
+			digits += this.nextChar();
+		}
+		return digits;
 	}
 
 	// Parse number as a string.
