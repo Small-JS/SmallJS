@@ -9,17 +9,17 @@ no optimization will be provided, and that choice will be documented here.
 
 - Numbers are always floats, with some test for "integer floats".\
 	ST: Implement integers separate from floats.
-- BitInts are limited in use and are treated very differently from Numbers\
-	ST: Implement LargeInteger class in unified Magnitude hierarchy
-		with automatic scaling between small and large integers.
+- BigInts are limited in use and are treated very differently from Numbers\
+	ST: Implement BigInt class next to Integer in the unified Magnitude hierarchy,
+		with common superclass AbstractInteger.
 - The value "undefined" is returned for methods that do not return a specific value, preventing message chaining.\
-	ST: Return 'self' ('this') as default for easier message changing.
+	ST: Return 'self' ('this') as default for easier message chaining.
 	ST: Use ';' operator to ignore unneeded return values.
 	ST: Always return self when no return value is created. (Don't return an unchanged argument as a pass-through.)
-- JS deals with screen coordinates a lot, put does not have an Point class.
+- JS deals with screen coordinates a lot, but does not have a Point class.
 	ST: Implement Point class and use this iso passing around separate X and Y coordinates.
 - JS has different classes for rectangles, with "loose" x, y and w, h coordinates.
-	ST: Implement single Rectangle class using Point objects for origin and extent.
+	ST: Implement single Rect class using Point objects for origin and extent.
 - JS methods can have substantially different behavior depending on argument types given.
 	ST: Implement these behaviors as separate methods with clear names.
 - JS has 'null' and 'undefined' which is unnecessary and requires extra checking.
@@ -30,7 +30,7 @@ no optimization will be provided, and that choice will be documented here.
 - Using different string type DOMString makes things complex.\
 	ST: Implement all behaviors in single String class.
 - Using different list, map and iterator types makes things complex.\
-	ST: Implement all behaviors in Array and Map (todo) class.\
+	ST: Implement all behaviors in Array and Map classes.\
 	Note: Iterating over live HTML lists is not implemented yet.
 - Having separate 'tree element' abstract base classes Node and Element is unneeded.\
 	ST: No solution, is too embedded in the whole DOM.

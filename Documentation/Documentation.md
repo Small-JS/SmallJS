@@ -8,7 +8,19 @@ How to install SmallJS.
 
 ## [SmallJS language](Language/Language.md)
 
-Design choices and tutorial for SmallJS.
+Introduction, tutorial, syntax and async execution in SmallJS.
+
+## [Testing](Testing/Testing.md)
+
+How to write and run unit tests in SmallJS.
+
+## [Deploying](Deploying/Deploying.md)
+
+How to deploy a SmallJS app.
+
+## [Design](Design/Design.md)
+
+Design choices of SmallJS and how it improves on JavaScript / DOM / HTML.
 
 ## Folders in the repo
 
@@ -38,7 +50,8 @@ A guide to installing and using supported databases with SmallJS.
 
 ### [Examples](../Examples/Examples.md)
 
-Example projects written in SmallJS: Counter, Todo and Shop.
+Example projects written in SmallJS:\
+AI, Balls, Benchmark, Counter, Electron, NWjs, PWA, Shop, Todo and WebWorkers.
 
 ### [Extension](../Extension/Extension.md)
 
@@ -49,8 +62,8 @@ The SmallJS language extension for syntax coloring and debugging in VSCode.
 A playground app where you can evaluate arbitrary Smalltalk (ST) expressions.\
 The playground is available online too: [small-js.org/Playground](https://small-js.org/Playground)
 
-## [Contributions](../Contributions/Contributions.md)
+### [Contributions](../Contributions/Contributions.md)
 
-Contributions to SmallJS that are not part of the main system.
+Contributions to SmallJS that are not part of the main system,\
 but show interesting applications.
 

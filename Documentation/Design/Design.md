@@ -1,19 +1,16 @@
 # SmallJS design
 
-There are other Smalltalks out there like, Pharo, Squeak, Dolphin and Cincom.
-SmallJS takes a different approach to these in de following ways:
+There are other Smalltalks out there, like Pharo, Squeak, Dolphin and Cincom.
+SmallJS takes a different approach to these in the following ways:
 
 - It compiles to JavaScript that can run in any modern browser and on Node.js.
 
 SmallJS is source file based (not 'image based')
 
 - So you can use your favorite, powerful IDE.
-- Apps can remain small an modular, no need for 'image stripping'
+- Apps can remain small and modular, no need for 'image stripping'
 - The IDE is safely separated from your app.
 - The ST to JS compiler is written in TypeScript, not ST. So there are no 'bootstrapping' issues, even when ST is modified at a low level.
-
-Here's a small PowerPoint presentation with the points above and more,\
-if you want to learn more or tell others: [Why_SmallJS.pdf](Why_SmallJS.pdf)
 
 ## [Design details](DesignDetails.md)
 

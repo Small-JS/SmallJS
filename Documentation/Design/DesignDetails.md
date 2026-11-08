@@ -37,14 +37,14 @@ They differ from other Smalltalk implementations...
 	- Standardize on JS naming of methods, because of familiarity.
 	- Wrap high level JS classes i.s.o. re-implementing them in ST. E.g.: class Date.
 	- Capitalized JS abbreviations are converted to ST camel-case.\
-	  E.g.: HTLMElement -> HtmlElement.
+	  E.g.: HTMLElement -> HtmlElement.
 <br><br>
 - HTML - DOM
 	- Support for direct DOM manipulation, not HTML generation.
 	- HTML & CSS used as starting templates, dynamic behavior implemented in ST for full control.
 	- Only support latest HTML version, no poly-fills, quirks or deprecated features.
 	- Only international English language support, for now.
-	- Event handling all done through single *addEventHandler* method.
+	- Event handling all done through single *addEventListener:then:* method.
 	- Only implement HTML elements for *GUI* features,\
 		other stuff (data) should be done directly in ST.
 	- All documents are HTML documents.\

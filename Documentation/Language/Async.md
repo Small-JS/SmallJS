@@ -6,14 +6,14 @@ Unfortunately in JS, the *called* method decides if it should (always) be execut
 It is not possible to circumvent this by just adding a `fork` method to the Block class,\
 as is the ST standard.
 
-In JS, it is possible to execute an 'async' method synchrounously by using the keyword `await`.\
+In JS, it is possible to execute an 'async' method synchronously by using the keyword `await`.\
 Unfortunately the calling function using `await` *must* itself then become `async` too.\
 So if there is a single async method deep down in a call stack, e.g. a file operation,\
 it is common for all methods in the call stack to become `async` using `await`'s,\
-to be table to execute the topmost method body sync.
+to be able to execute the topmost method body sync.
 
-An `async` JS function *alwas* returns a JS Promise, \
-which resolves to the return value of that function when is it fulfilled.\
+An `async` JS function *always* returns a JS Promise, \
+which resolves to the return value of that function when it is fulfilled.\
 I.e.: when the async function was executed and produces a result.
 
 ## async / await / promises in SmallJS
@@ -24,7 +24,7 @@ If you know JS promises already, the following will be straightforward.
 
 ### Basic use of async / await
 
-The `async` and `await` keywords are directly support in SmallJS.\
+The `async` and `await` keywords are directly supported in SmallJS.\
 Here's a code example using the FS promises API:
 
 ```
@@ -37,7 +37,7 @@ Here's a code example using the FS promises API:
 
 Here, the async `readFile:options:` operation on class `Fsp` is awaited.\
 Variable `text` will contain the final result of reading operation.\
-Note that the funtion `logFileText:` containing `await` must now also be `async`.
+Note that the method `logFileText:` containing `await` must now also be `async`.
 
 ### Async blocks
 
@@ -45,13 +45,13 @@ Next to methods, blocks can also be async by putting the `async` keyword before 
 ```
 	async [ object doSomething ]
 ```
-The result of of an async block can also be awaited.\
+The result of an async block can also be awaited.\
 And an async block can await internal async operations:
 ```
-	result := await async [ await object doSometingAsync ] value.
+	result := await async [ await object doSomethingAsync ] value.
 ```
 
-Catching an error form an async block can ***only*** be done,\
+Catching an error from an async block can ***only*** be done,\
 if the block is awaited using the `tryAwaitCatch:` method:\
 (The first `await` is optional for getting the error result)
 ```
@@ -60,7 +60,7 @@ if the block is awaited using the `tryAwaitCatch:` method:\
 ```
 ### Awaiting async blocks in while loops
 
-To await the results of async funtions in `while` loops\
+To await the results of async functions in `while` loops\
 the special await versions should be called:\
 (The first `await`'s are optional for awaiting the whole loop to finish)
 ```
@@ -73,7 +73,7 @@ the special await versions should be called:\
 
 ### Awaiting async blocks in counting loops
 
-To await the execution of async funtions in counting loops\
+To await the execution of async functions in counting loops\
 their special await versions must be called:\
 (The first `await`'s are optional for awaiting the whole loop to finish)
 ```
@@ -93,17 +93,18 @@ their special await versions must be called:\
 
 If you do not want to `await` an `async` function right away,\
 you can catch the JS promise it returns into an ST Promise.\
-(So  return value of `async` funcitons is a *JS* `promise`, not a ST `Promise`.\
-there is no way around that)
+(So the return value of `async` functions is a *JS* `Promise`, not an ST `Promise`.\
+There is no way around that.)
 
 ```
-	async logFileText: fileName
+	fetchApi
 		| promise |
 		promise := Promise fromJs:
-			( await Fetch: 'https://somesite.com/api` )
-			then: [ :response | self handleFetch: response  ]
+			( Fetch request: 'https://somesite.com/api' )
+			then: [ :response | self handleFetch: response ]
 			catch: [ :error | self handleError: error ].
 	!
 ```
-So this code constructs a ST Promise from the JS one\
-and then attaches handlers from it after completion and catches errors.
+So this code constructs an ST Promise from the JS one returned by the async method `request:`,\
+then attaches a handler that is called on completion and one that catches errors.\
+Note that `fetchApi` does not use `await`, so it does not have to be `async` itself.

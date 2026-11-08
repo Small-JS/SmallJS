@@ -14,19 +14,16 @@ To check for outdated global npm packages:
 To update all global packages:
 > `npm update -g`
 
-For updating specific global packages:
-
-### TypeScript
+For updating a specific global package, e.g. TypeScript:
 > `npm update -g typescript`
 
-### HTTP server
-> `npm update -g http-server`
+The packages `http-server` and `kill-port` are not installed globally.\
+They are run with `npx`, which downloads them on first use.
 
-## npm packages with the "npm Check Updates" package
-To install the npm global package updater (once):
-> `npm i -g npm-check-updates`
+## npm packages of SmallJS projects
+To update the npm dependencies of the Compiler, Node and all examples to their latest versions,\
+run this bash script in the root folder:
+> `./update.sh -y`
 
-To force update of dependencies in Node.js based projects (Node, Shop/Server), \
-type these lines in a terminal:
-> `ncu -u`\
-> `npm install`
+It uses the "npm Check Updates" package (via `npx`) and then reinstalls the npm modules.\
+Each of these projects also has its own `update.sh` script, to update only that project.

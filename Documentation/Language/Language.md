@@ -24,7 +24,7 @@ You can, because SmallJS also runs in Node.js using the same core library.
 If you're new to SmallJS or Smalltalk, no worries.\
 You can start by walking through this online tutorial:
 [small-js.org/Tutorial](https://small-js.org/Tutorial) .\
-You can testing you own code live in the online playground:
+You can test your own code live in the online playground:
 [small-js.org/Playground](https://small-js.org/Playground) .
 
 ## SmallJS syntax

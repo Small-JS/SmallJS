@@ -25,13 +25,8 @@ click on to add VSCode to the path.
 From Chrome and Edge, step debugging is built into VSCode.
 For debugging in Firefox you should install this extension: Debugger for Firefox.
 
-Note:
-If you are using Ubuntu with Firefox installed in a Snap container,\
-the extension wil not work because it does not have access to the `/tmp` dir.\
-To fix this, these lines should be added to the FireFox configurations  in  `launch.json`:
-
-        "timeout": 90000,
-        "tmpDir": "/some/folder/of/yours/with/write/perms",
+For known issues with debugging in Firefox, e.g. on Ubuntu with Firefox installed as a Snap,\
+see: [Building.md](Building.md)
 
 ### Node.js
 
@@ -47,6 +42,12 @@ Download the latest version here:
 To use TypeScript (tsc) from VSCode it needs to be installed globally, with:
 
 `npm -g install typescript`
+
+### http-server and kill-port
+
+These npm packages are used by the scripts to serve and test browser apps.\
+They do not have to be installed globally:
+`./install.sh` runs them once with `npx`, which downloads them on first use.
 
 ### OpenGL support (under Linux)
 

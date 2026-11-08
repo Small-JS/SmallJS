@@ -16,7 +16,7 @@ Other methods can be added as utility methods, and will not be called automatica
 In a test* method there are 2 main functions to call:
 
 #### True assertions
-For these standard tests, the argument block must evaluate to true for a succesful test, e.g.:
+For these standard tests, the argument block must evaluate to true for a successful test, e.g.:
 > `self assert: [ 1 + 2 = 3 ].`
 
 Any other result will throw an error.
@@ -26,7 +26,7 @@ In these tests, the argument block intentionally triggers an error.
 If an error occurs the test succeeds, e.g.:
 > `self assertError: [ 'a' * 2 ].`
 
-If no error occurs, an error with be thrown...
+If no error occurs, an error will be thrown.
 
 ### Running tests
 
@@ -36,7 +36,7 @@ To run all tests (all test* methods) of a test class instance call the 'all' met
 To run *all* tests on *all* test classes call:
 > `Test all`
 
-This will automatcally find all classes named Test* and call their methods named test*.
-To be able to 'see' the classes within a test module, that module needs te be loaded.
+This will automatically find all classes named Test* and call their methods named test*.
+To be able to 'see' the classes within a test module, that module needs to be loaded.
 This can be forced by referencing any class within the test module, e.g. by this code line:
 > `TestInteger.`

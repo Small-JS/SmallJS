@@ -6,13 +6,13 @@ First download a copy of the current repo: [SmallJS-main.zip](https://github.com
 and unzip it to a working folder on your system.
 
 You can also use your favorite Git tool to fork the repo.\
-Then you have version control and can even contributute to SmallJS development.\
+Then you have version control and can even contribute to SmallJS development.\
 If you don't know Git yet, [GitHub Desktop](https://desktop.github.com/download/)
-is user friendly way to use its functionality.
+is a user friendly way to use its functionality.
 
 ## Installing Prerequisites
 
-To install all the prerequisite delopment tools, look at: [Prerequisites.md](Prerequisites.md)
+To install all the prerequisite development tools, look at: [Prerequisites.md](Prerequisites.md)
 
 ## Install npm modules
 
@@ -35,4 +35,4 @@ Notes:
 - Browser GUI testing is disabled by default. To enable it, check out:
   > [Building.md](Building.md)
 
-Check if everything builds tests successfully before going to the next step.
+Check if everything builds and tests successfully before going to the next step.

@@ -1,7 +1,7 @@
 # SmallJS syntax
 
 Here's an example SmallJS class declaration\
-containing
+containing the main language elements:
 
 ![Syntax](Syntax.png)
 
@@ -32,14 +32,14 @@ Explanation of syntax used:
 	- `1` : Integer
 	- `3.14` : Float
 	- `true`, `false`: Boolean
-	- `nil` : Nil singelton, like JS `null`.
+	- `nil` : Nil singleton, like JS `null`.
 	- `$c` : Character
 - `var1 := 3` : variable assignment
 	- `var1 = 3` tests for equality.
 - `^ 42` : Return a value.
 - `#( 1 3.14 'aaa' )` : array with 3 values.
 - `[ 1 + 2 ]` : block, like JS lambda functions.
-	- `[ :a | :b | ^ a + b ]` : block with 2 arguments returning sum from **method** (not block).
+	- `[ :a :b | ^ a + b ]` : block with 2 arguments returning sum from **method** (not block).
 - `INLINE` : Inline JS code, not transpiled.\
   ST variables can be accessed in it using the same name
 - Control flow statements in ST use messages and blocks from above.
@@ -51,5 +51,3 @@ Explanation of syntax used:
 	  Like JS: for( n = 1; n <= 10; ++n ) { ... }
 	- `[ a > 0 ] whileTrue: [ self log: a. a decrement ]`\
 	  Like JS: while( a > 0 ) { ... }
-	- `[ self log: a. a decrement ] doWhile: [ a > 0 ]`\
-	  Like JS: do { ... } while( a > 0 )
