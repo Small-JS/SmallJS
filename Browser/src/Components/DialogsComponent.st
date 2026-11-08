@@ -1,7 +1,9 @@
 CLASS DialogsComponent EXTENDS Component MODULE MyBrowserApp CLASSVARS ''
-	VARS 'popupButton alertButton confirmButton promptButton printButton dialogResultParagraph'
+	VARS 'popupButton alertButton confirmButton promptButton printButton
+		dialogButton dialog dialogOkButton dialogCancelButton dialogResultParagraph'
 
-"Note: Testing these dialogs can only be done be done manually in the browser."
+"Note: Testing these dialogs can only be done be done manually in the browser,
+ except for the HTML dialog element."
 
 htmlPath
 	^ 'Components/DialogsComponent.html'.
@@ -24,6 +26,16 @@ bindElements
 
 	printButton := Document getElementById: 'printButton' class: HtmlButtonElement.
 	printButton onClick: [ self onPrint ].
+
+	dialogButton := Document getElementById: 'dialogButton' class: HtmlButtonElement.
+	dialogButton onClick: [ self onDialog ].
+
+	"The buttons in the dialog submit its form with method 'dialog'.
+	 This closes the dialog with the value of the button as returnValue."
+	dialog := Document getElementById: 'dialog' class: HtmlDialogElement.
+	dialog onClose: [ :event | dialogResultParagraph textContent: dialog returnValue ].
+	dialogOkButton := Document getElementById: 'dialogOkButton' class: HtmlButtonElement.
+	dialogCancelButton := Document getElementById: 'dialogCancelButton' class: HtmlButtonElement.
 
 	dialogResultParagraph := Document getElementById: 'dialogResultParagraph' class: HtmlParagraphElement.
 !
@@ -54,4 +66,27 @@ onPrompt
 !
 onPrint
 	Window default print.
+!
+onDialog
+	"Pressing Escape also closes the dialog, with an empty returnValue."
+	dialog returnValue: ''.
+	dialog showModal.
+!
+
+"Accessing"
+
+dialogButton
+	^ dialogButton.
+!
+dialog
+	^ dialog.
+!
+dialogOkButton
+	^ dialogOkButton.
+!
+dialogCancelButton
+	^ dialogCancelButton.
+!
+dialogResultParagraph
+	^ dialogResultParagraph.
 !
