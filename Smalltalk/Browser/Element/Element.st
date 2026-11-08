@@ -56,6 +56,7 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLOptionElement' ifTrue: [ ^ HtmlOptionElement fromJs: jsElement ].
 
 	jsClassName = 'HTMLUListElement' ifTrue: [ ^ HtmlUlElement fromJs: jsElement ].
+	jsClassName = 'HTMLOListElement' ifTrue: [ ^ HtmlOlElement fromJs: jsElement ].
 	jsClassName = 'HTMLLIElement' ifTrue: [ ^ HtmlLiElement fromJs: jsElement ].
 
 	jsClassName = 'HTMLAudioElement' ifTrue: [ ^ HtmlAudioElement fromJs: jsElement ].
