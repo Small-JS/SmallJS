@@ -58,6 +58,9 @@ fromJsSubElement: jsElement
 	jsClassName = 'HTMLUListElement' ifTrue: [ ^ HtmlUlElement fromJs: jsElement ].
 	jsClassName = 'HTMLLIElement' ifTrue: [ ^ HtmlLiElement fromJs: jsElement ].
 
+	jsClassName = 'HTMLAudioElement' ifTrue: [ ^ HtmlAudioElement fromJs: jsElement ].
+	jsClassName = 'HTMLVideoElement' ifTrue: [ ^ HtmlVideoElement fromJs: jsElement ].
+
 	jsClassName = 'HTMLCanvasElement' ifTrue: [ ^ HtmlCanvasElement fromJs: jsElement ].
 
 	"Fall back to HtmlElement for elements without a specific JS class, like section and nav,
