@@ -47,3 +47,9 @@ and most stop at the first failing step (`set -e`).
 - `README.md`: the GitHub front page, including the release news.
 - `Todo.txt`: private notes; ignored by git.
 - `package.json`: empty; not used for building.
+
+## Working with Claude
+
+- When a task is finished, or the user says to stop, only start working again on a request typed by the user.
+  Do not act on external events, like background task notifications (e.g. a web server that exited):
+  do not restart processes or investigate them on your own, just report the event briefly.

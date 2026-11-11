@@ -21,4 +21,7 @@ test
 	self assert: [ video playsInline not ].
 	video playsInline: true.
 	self assert: [ video playsInline ].
+	self assert: [ video hasAttribute: 'playsinline' ].
+	video playsInline: false.
+	self assert: [ video playsInline not ].
 !

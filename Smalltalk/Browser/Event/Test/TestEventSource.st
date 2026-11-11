@@ -4,6 +4,12 @@ CLASS TestEventSource EXTENDS Test MODULE TestBrowser CLASSVARS '' VARS ''
 
 METHODS
 
+disabled
+	"2026-11-11: Firefox does not support 'data:' (or 'blob:') URLs for EventSource:
+	 the connection fails immediately, so the tests would wait until the async timeout."
+	^ Window isFirefox.
+!
+
 "Helpers"
 
 streamUrl

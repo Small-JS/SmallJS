@@ -45,8 +45,10 @@ poster: poster
 	INLINE 'this.js.poster = poster.js'.
 !
 playsInline
-	^ Boolean fromJs: INLINE 'this.js.playsInline'.
+	"Uses the attribute 'playsinline', because Firefox does not support the property playsInline.
+	 In other browsers the property reflects the attribute."
+	^ self hasAttribute: 'playsinline'.
 !
 playsInline: playsInline
-	INLINE 'this.js.playsInline = playsInline.js'.
+	self toggleAttribute: 'playsinline' force: playsInline.
 !
